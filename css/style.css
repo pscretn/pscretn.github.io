@@ -162,6 +162,11 @@ background-image: linear-gradient(to right bottom, #ea138d, #f74f56, #e48437, #c
 #wd{
   width: 40%;
 }
+#wd1{
+  width: 40%;
+  padding-top:25%;
+  height: 50%;
+}
 @media only screen and (max-width: 350px) {
  
   #imgm{
@@ -173,6 +178,11 @@ background-image: linear-gradient(to right bottom, #ea138d, #f74f56, #e48437, #c
     #imcl2{
       height: 220px;
       width: auto;
+    }
+    #wd1{
+      width: 40%;
+      padding-top:40%;
+      height: 50%;
     }
  
 }
