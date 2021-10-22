@@ -13,6 +13,7 @@
   -webkit-text-fill-color: transparent;
   
 }
+
 #tclr:hover{
   background: -webkit-linear-gradient( 45deg, orange 40%, cyan);
   -webkit-background-clip: text;
@@ -66,14 +67,14 @@ footer {
   color:greenyellow;
 }
 #bgm{
-  background: linear-gradient(to top left, #3f87a6, #ebf8e1, #f69d3c);
+  background-color: black;
   text-align: center;
   height: 750px;
 }
 
 #t3{
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  color: black;
+  color:whitesmoke;
  
 }
 #t4{
@@ -88,26 +89,27 @@ footer {
   width: 200px;
 }
 #t6{
-  background-color: black;
-  color: aliceblue;
+  background: -webkit-linear-gradient(45deg,red,blue);
+  color:aliceblue;
   border-radius: 100% 30% 30% 100%;
   width: 200px;
   text-align: center;
 }
 
 #t8{
- color: blue;
+ color:aliceblue;
  font-weight: bold;
  text-align: left;
  width: 100%;
  font-size: medium;
+ background-color: #01182E;
  
 }
 #t9{
   color: gray;
 }
 #t10{
-  background: linear-gradient(to top left,#ffff66 ,#ebf8e1,#33cccc );
+  background-color: #01182E;
 }
 #t11{
   text-align: center;
@@ -124,24 +126,24 @@ footer {
   font-size:20px;
 }
 #t13{
-  color:black;
+  color:white;
 }
 #img1{
 text-align: center;
-background-image: linear-gradient(to right bottom, #ea138d, #f74f56, #e48437, #c3ad44, #a0cb78, #73d299, #40d5bf, #00d4e2, #00c2f9, #00abff, #008cff, #7a5ffb);
+background-image: linear-gradient(to right bottom,red,blue);
 }
 #t14{
-  background: linear-gradient(-45deg, #00ffcc ,#ebf8e1, #666699 );
+  background-color: black;
 }
 #t15{
   text-align: center;
 }
 #t16{
-  color:black;
+  color:white;
   font-weight: bold;
 }
 #t16:hover{
-  color:white;
+  color:greenyellow;
   font-weight: bold;
   text-decoration: none;
   background-color:black;
