@@ -1,17 +1,25 @@
+@font-face {
+  font-family: HighSchoolUsaSans;
+  src: url("../fonts/HighSchoolUsaSans-52vx.ttf");
+  font-weight: bold;
+}
+
 #tclr{
 
   text-align: center;
-  font-size: 50px;
+  font-size: 30px;
   border: 0;
   margin:0;
   padding: 0;
  font-weight: bolder;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: 'HighSchoolUsaSans','Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   letter-spacing: 1%;
-  background: -webkit-linear-gradient( 45deg, red, blue);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: black;
   
+}
+body{
+  background-color: black;
+  overflow-x: hidden;
 }
 
 #tclr:hover{
@@ -24,11 +32,9 @@ ul{
 }
 #li{
   letter-spacing: 1%;
-  background: -webkit-linear-gradient( 45deg, red, blue);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: bold;
-  font-size:20px
+  color: black;
+  font-family: 'HighSchoolUsaSans';
+  font-size:18px
 }
 #li:hover{ 
   background: -webkit-linear-gradient( 45deg, orange 40%, cyan);
@@ -97,46 +103,49 @@ footer {
 }
 
 #t8{
- color:aliceblue;
+ color:rgb(0, 0, 0);
  font-weight: bold;
  text-align: left;
  width: 100%;
  font-size: medium;
- background-color: #01182E;
  
 }
 #t9{
   color: gray;
 }
 #t10{
-  background-color: #01182E;
+  width:99.5%;
+  background-color: rgba(255, 255, 255,0.9);
+  backdrop-filter: blur(10px);                /* Optional glass effect */
+  border-radius: 20px;                        /* Rounded corners */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);  /* Soft shadow */
+  padding: 10px 10px;
 }
 #t11{
   text-align: center;
-  background: -webkit-linear-gradient(45deg, magenta 40%,orange 60%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color:black;
   font-size: 50px;
   font-weight: bold;
+  font-family: 'HighSchoolUsaSans';
 }
 #t12{
   font-weight: bold;
-  color:blue;
-  text-decoration: underline;
+  color:rgb(111, 180, 0);
   font-size:20px;
+  font-family: 'HighSchoolUsaSans';
 }
 #t13{
-  color:white;
+  color:rgb(0, 0, 0);
 }
 #img1{
 text-align: center;
-background-image: linear-gradient(to right bottom,red,blue);
 }
 #t14{
   background-color: black;
 }
 #t15{
   text-align: center;
+  
 }
 #t16{
   color:white;
@@ -148,6 +157,13 @@ background-image: linear-gradient(to right bottom,red,blue);
   text-decoration: none;
   background-color:black;
 }
+#t17{
+  text-align: center;
+  color:rgb(255, 255, 255);
+  font-size: 50px;
+  font-weight: bold;
+  font-family: 'HighSchoolUsaSans';
+}
 
 #imcl1{
   height: 400px;
@@ -158,9 +174,6 @@ background-image: linear-gradient(to right bottom,red,blue);
 #phimg2{
  width: 95%;
 }
-#imgl:hover{
-  width: 10%;
-}
 #wd{
   width: 40%;
 }
@@ -169,6 +182,16 @@ background-image: linear-gradient(to right bottom,red,blue);
   padding-top:25%;
   height: 50%;
 }
+
+.custom-navbar {
+  background-color: rgba(255, 255, 255,0.9); /* Transparent white */
+  backdrop-filter: blur(10px);                /* Optional glass effect */
+  border-radius: 20px;                        /* Rounded corners */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);  /* Soft shadow */
+  margin: 2px 2px;                          /* Optional spacing */
+  padding: 10px 20px;
+}
+
 @media only screen and (max-width: 350px) {
  
   #imgm{
@@ -268,9 +291,6 @@ background-image: linear-gradient(to right bottom,red,blue);
     .change .bar3 {
       -webkit-transform: rotate(45deg) translate(-4px, -4px);
       transform: rotate(45deg) translate(-4px, -4px);
-    }
-    #imgl:hover{
-      width: 20%;
     }
     #wd{
       width: 10%;
