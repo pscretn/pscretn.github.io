@@ -434,6 +434,9 @@ text-align: center;
     height: 235px;
     width: auto;
   }
+  #imgl{
+    padding: 1%;
+  }
 }
 @media only screen and (min-width: 401px) and (max-width: 449px) {
  
@@ -444,6 +447,9 @@ text-align: center;
   #imcl2{
     height: 278px;
     width: auto;
+  }
+  #imgl{
+    padding: 1%;
   }
 
 }
@@ -457,4 +463,8 @@ text-align: center;
     height: 315px;
     width: auto;
   }
+  #imgl{
+    padding: 1%;
+  }
+
 }
