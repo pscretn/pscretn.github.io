@@ -376,6 +376,7 @@ text-align: center;
   #bgm{
     width: 100%;
     padding: 0%;
+    height: auto;
   }
   #navbar-1{
     width: 100%;
@@ -420,9 +421,12 @@ text-align: center;
     #wd{
       width: 10%;
     }
-    #t11{
-      font-size: 40px;
-    }
+   #t11{
+    font-size: 30px;
+  }
+  #t17{
+    font-size: 30px;
+  }
 }
 @media only screen and (min-width: 351px) and (max-width: 400px) {
 
@@ -436,6 +440,12 @@ text-align: center;
   }
   #imgl{
     padding: 1%;
+  }
+  #bgm{
+    height:auto;
+  }
+  #tll{
+    font-size: 10px;
   }
 }
 @media only screen and (min-width: 401px) and (max-width: 449px) {
@@ -451,6 +461,13 @@ text-align: center;
   #imgl{
     padding: 1%;
   }
+  #bgm{
+    height:auto;
+  }
+  #tll{
+    font-size: 10px;
+  }
+ 
 
 }
 @media only screen and (min-width: 450px) and (max-width: 500px) {
@@ -465,6 +482,12 @@ text-align: center;
   }
   #imgl{
     padding: 1%;
+  }
+  #bgm{
+    height:auto;
+  }
+  #tll{
+    font-size: 10px;
   }
 
 }
