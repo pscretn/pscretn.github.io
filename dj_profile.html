@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Coming Soon | DJ Theme</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at center, #111 0%, #000 100%);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      color: #fff;
+      flex-direction: column;
+    }
+
+    .vinyl {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: repeating-radial-gradient(#222, #111 10px);
+      border: 4px solid #0ff;
+      animation: spin 4s linear infinite;
+      box-shadow: 0 0 25px #0ff;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .vinyl::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 30px;
+      height: 30px;
+      background: #ff00cc;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      box-shadow: 0 0 10px #ff00cc;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    h1 {
+      font-size: 3rem;
+      text-shadow: 0 0 15px #0ff;
+      margin: 0;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #ccc;
+      margin-top: 10px;
+      text-shadow: 0 0 5px #000;
+    }
+
+    .glow-line {
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, #ff00cc, #0ff, #ff00cc);
+      background-size: 300% 100%;
+      animation: glowMove 6s linear infinite;
+      margin-top: 20px;
+    }
+
+    @keyframes glowMove {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="vinyl"></div>
+  <h1>Coming Soon</h1>
+  <p>We're mixing something amazing behind the decks.</p>
+  <div class="glow-line"></div>
+</body>
+</html>
