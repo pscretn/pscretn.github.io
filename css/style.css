@@ -41,6 +41,17 @@ ul{
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+#sli{
+  letter-spacing: 1%;
+  color: rgb(255, 122, 33);
+  font-family: 'HighSchoolUsaSans';
+  font-size:18px
+}
+#sli:hover{ 
+  background-color: rgb(255, 122, 33);
+  color: rgb(0, 0, 0);
+  border-radius: 20px;
+}
 footer {
   text-align: center;
   background-color:black;
@@ -422,6 +433,17 @@ text-align: center;
       background-color:black;
       text-align: center;
       padding: 2%;
+      border-radius: 20px;
+      border: solid white;
+    }
+    #sli{
+      color:aliceblue;
+      font-weight: bold;
+      font-size: medium;
+      background-color:black;
+      text-align: center;
+      padding: 2%;
+      border-radius: 20px;
       border: solid white;
     }
     .bar1, .bar2, .bar3 {
@@ -615,3 +637,24 @@ text-align: center;
       text-align: center;
     }
   }
+
+  /* Target only the TrilitLabs and DJ links */
+.trilitlabs, 
+.dj {
+  color: #ff6f43;
+  font-family: 'HighSchoolUsaSans';
+  font-size:18px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.trilitlabs:hover,
+.dj:hover {
+  background-color: #FF5722;
+  color: #000000;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+
+
