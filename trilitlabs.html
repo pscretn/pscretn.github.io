@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Coming Soon | Light Show</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      font-family: 'Orbitron', sans-serif;
+      overflow: hidden;
+      color: white;
+    }
+
+    h1 {
+      font-size: 4rem;
+      text-shadow: 0 0 10px #0ff, 0 0 20px #f0f, 0 0 40px #0ff;
+      animation: flicker 2s infinite;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-top: -10px;
+      color: #ccc;
+      text-shadow: 0 0 5px #0ff;
+    }
+
+    .lights {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .light-beam {
+      position: absolute;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(255, 0, 255, 0.5), transparent);
+      animation: beamMove 3s linear infinite;
+      opacity: 0.6;
+    }
+
+    .light-beam:nth-child(1) {
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .light-beam:nth-child(2) {
+      left: 30%;
+      animation-delay: 0.5s;
+    }
+
+    .light-beam:nth-child(3) {
+      left: 50%;
+      animation-delay: 1s;
+    }
+
+    .light-beam:nth-child(4) {
+      left: 70%;
+      animation-delay: 1.5s;
+    }
+
+    .light-beam:nth-child(5) {
+      left: 90%;
+      animation-delay: 2s;
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      45% { opacity: 0.5; }
+      60% { opacity: 0.9; }
+      75% { opacity: 0.3; }
+    }
+
+    @keyframes beamMove {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100%); }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <h1>Coming Soon</h1>
+  <p>Lighting up the future with TrilitLabs</p>
+
+  <div class="lights">
+    <div class="light-beam"></div>
+    <div class="light-beam"></div>
+    <div class="light-beam"></div>
+    <div class="light-beam"></div>
+    <div class="light-beam"></div>
+  </div>
+</body>
+</html>
