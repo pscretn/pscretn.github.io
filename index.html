@@ -8,6 +8,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="javascript/script.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="css/style.css">
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -59,74 +60,126 @@
 
 <div class="container-fluid p-0 custom-shadow1" id="t10">
   <a id="services"></a>
-  <h1 id="t17" class="text-center mb-5">Our Services</h1>
-  <div class="row justify-content-center">
-    <!-- CCTV Installation -->
-    <div class="col-md-4 mb-4 d-flex">
-      <div class="glass-card">
-        <div class="image-wrapper">
-          <img src="images/cctv_installation.webp" alt="CCTV Installation">
+  <h1 id="t17" class="text-center mb-4">Our Services</h1>
+ <div class="row justify-content-center">
+  <!-- CCTV Installation -->
+  <div class="col-md-3 mb-4 d-flex">
+    <div class="glass-card">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="image-wrapper">
+            <img src="images/cctv_installation.webp" alt="CCTV Installation">
+          </div>
+          <div class="card-body">
+            <h5>CCTV Installation & Services</h5>
+            <p>Professional setup and remote-access-enabled CCTV systems for home or commercial security.</p>
+          </div>
         </div>
-        <div class="card-body">
-          <h5>CCTV Installation & Services</h5>
-          <p>Professional setup and remote-access-enabled CCTV systems for home or commercial security.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Custom & Gaming PC Builds -->
-    <div class="col-md-4 mb-4 d-flex">
-      <div class="glass-card">
-        <div class="image-wrapper">
-          <img src="images/pc_build.webp" alt="Gaming PC">
-        </div>
-        <div class="card-body">
-          <h5>Custom & Gaming PC Builds</h5>
-          <p>Tailored high-performance PC builds, optimized for gaming, editing, and productivity tasks.</p>
+        <div class="card-back">
+          <video class="preview-video" muted loop>
+            <source src="videos/dummy.webm" type="video/webm">
+            Your browser does not support the video tag.
+          </video>
         </div>
       </div>
     </div>
-
-    <!-- Home Automation & IoT -->
-    <div class="col-md-4 mb-4 d-flex">
-      <div class="glass-card">
-        <div class="image-wrapper">
-          <img src="images/home_automation.webp" alt="Home Automation">
-        </div>
-        <div class="card-body">
-          <h5>Home Automation & IoT</h5>
-          <p>Smart home solutions for lights, appliances, and security with intuitive app or voice control.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 3D Printing -->
-    <div class="col-md-6 mb-4 d-flex">
-      <div class="glass-card">
-        <div class="image-wrapper">
-          <img src="images/3d_printing.webp" alt="3D Printing">
-        </div>
-        <div class="card-body">
-          <h5>3D Printing (Coming Soon)</h5>
-          <p>High-precision PLA/ABS 3D printing services for prototyping, miniatures, and functional parts.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Laser Engraving -->
-    <div class="col-md-6 mb-4 d-flex">
-      <div class="glass-card">
-        <div class="image-wrapper">
-          <img src="images/laser_engraving.webp" alt="Laser Engraving">
-        </div>
-        <div class="card-body">
-          <h5>Laser Engraving (Coming Soon)</h5>
-          <p>Precision laser engraving on wood, acrylic, or metal for gifts, signage, and branding solutions.</p>
-        </div>
-      </div>
-    </div>
-
   </div>
+
+  <!-- Custom & Gaming PC Builds -->
+  <div class="col-md-3 mb-4 d-flex">
+    <div class="glass-card">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="image-wrapper">
+            <img src="images/pc_build.webp" alt="Gaming PC">
+          </div>
+          <div class="card-body">
+            <h5>Custom & Gaming PC Builds</h5>
+            <p>Tailored high-performance PC builds, optimized for gaming, editing, and productivity tasks.</p>
+          </div>
+        </div>
+        <div class="card-back">
+          <video class="preview-video" muted loop>
+            <source src="videos/cctv_installation_preview.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Home Automation & IoT -->
+  <div class="col-md-3 mb-4 d-flex">
+    <div class="glass-card">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="image-wrapper">
+            <img src="images/home_automation.webp" alt="Home Automation">
+          </div>
+          <div class="card-body">
+            <h5>Home Automation & IoT</h5>
+            <p>Smart home solutions for lights, appliances, and security with intuitive app or voice control.</p>
+          </div>
+        </div>
+        <div class="card-back">
+          <video class="preview-video" muted loop>
+            <source src="videos/cctv_installation_preview.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row justify-content-center">
+  <!-- 3D Printing -->
+  <div class="col-md-3 mb-4 d-flex">
+    <div class="glass-card">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="image-wrapper">
+            <img src="images/3d_printing.webp" alt="3D Printing">
+          </div>
+          <div class="card-body">
+            <h5>3D Printing (Coming Soon)</h5>
+            <p>High-precision PLA/ABS 3D printing services for prototyping, miniatures, and functional parts.</p>
+          </div>
+        </div>
+        <div class="card-back">
+          <video class="preview-video" muted loop>
+            <source src="videos/3d_printing.webm" type="video/webm">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Laser Engraving -->
+  <div class="col-md-3 mb-3 d-flex">
+    <div class="glass-card">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="image-wrapper">
+            <img src="images/laser_engraving.webp" alt="Laser Engraving">
+          </div>
+          <div class="card-body">
+            <h5>Laser Engraving (Coming Soon)</h5>
+            <p>Precision laser engraving on wood, acrylic, or metal for gifts, signage, and branding solutions.</p>
+          </div>
+        </div>
+        <div class="card-back">
+          <video class="preview-video" muted loop>
+            <source src="videos/laser_engraving.webm" type="video/webm">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 </div>
 
 
