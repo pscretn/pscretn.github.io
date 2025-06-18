@@ -3,15 +3,40 @@ document.addEventListener("DOMContentLoaded", () => {
     const video = card.querySelector('.preview-video');
 
     if (video) {
+      // Desktop: Hover play
       card.addEventListener('mouseenter', () => {
-        video.currentTime = 0;
-        video.play();
+        if (!isTouchDevice()) {
+          video.currentTime = 0;
+          video.play();
+        }
       });
 
       card.addEventListener('mouseleave', () => {
-        video.pause();
-        video.currentTime = 0;
+        if (!isTouchDevice()) {
+          video.pause();
+          video.currentTime = 0;
+        }
+      });
+
+      // Mobile: Tap toggle
+      let playing = false;
+      card.addEventListener('click', () => {
+        if (isTouchDevice()) {
+          if (!playing) {
+            video.currentTime = 0;
+            video.play();
+            playing = true;
+          } else {
+            video.pause();
+            video.currentTime = 0;
+            playing = false;
+          }
+        }
       });
     }
   });
+
+  function isTouchDevice() {
+    return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  }
 });
