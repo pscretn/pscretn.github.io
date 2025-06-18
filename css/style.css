@@ -517,13 +517,14 @@ text-align: center;
     width: auto;
   }
   #imgl{
-    padding: 1%;
+    padding: 1% 0% 1% 4%;
+    align-items: flex-end;
   }
   #bgm{
     height:auto;
   }
   .glass-card {
-    height: 75vh;
+    height: 125vw;
   }
 }
 @media only screen and (min-width: 401px) and (max-width: 449px) {
