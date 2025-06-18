@@ -523,7 +523,7 @@ text-align: center;
     height:auto;
   }
   .glass-card {
-    height: 80vh;
+    height: 75vh;
   }
 }
 @media only screen and (min-width: 401px) and (max-width: 449px) {
@@ -541,6 +541,9 @@ text-align: center;
   }
   #bgm{
     height:auto;
+  }
+  .glass-card {
+    height: 100vh;
   }
  
 
