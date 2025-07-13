@@ -303,8 +303,7 @@ text-align: center;
 .glass-card {
   width: 100%;
   max-width: 90vw; /* Take up 90% of the viewport width on small screens */
-  height: 60vh;     /* Make height proportional to width */
-  max-height: 90vh;
+  height: 550px;     /* Make height proportional to width */
   perspective: 1000px;
   background: transparent;
   border-radius: 20px;
@@ -534,7 +533,7 @@ text-align: center;
     height:auto;
   }
   .glass-card {
-    height: 55vh;
+    height: 455px;
   }
 }
 @media only screen and (min-width: 401px) and (max-width: 449px) {
@@ -554,7 +553,7 @@ text-align: center;
     height:auto;
   }
   .glass-card {
-    height: 60vh;
+    height: 505px;
   }
  
 
@@ -578,7 +577,9 @@ text-align: center;
   #tll{
     font-size: 10px;
   }
-
+  .glass-card {
+    height: 555px;
+  }
 }
 
 
