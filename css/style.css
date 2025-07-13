@@ -225,7 +225,7 @@ text-align: center;
 }
 
 .custom-shadow1 {
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(0, 0, 0, 0.9);
   backdrop-filter: blur(10px);
   border-radius: 30px;
   margin: 20px auto;
@@ -244,9 +244,9 @@ text-align: center;
   border-radius: 30px;
   pointer-events: none;
   z-index: -1;
-  background: linear-gradient(45deg, rgba(255, 0, 0, 0.6), rgb(0, 0, 0),rgba(0, 0, 255, 0.6));
+  background: linear-gradient(45deg,rgba(255, 0, 0, 0.6),rgb(0, 0, 0), rgba(0, 0, 255, 0.6));
   background-size: 400% 400%;
-  animation: rainbowGlow 12s linear infinite;
+  animation: rainbowGlow 6s linear infinite;
   filter: blur(8px);
 }
 
@@ -277,7 +277,7 @@ text-align: center;
 }
 
 .navbar {
-  background-color: rgba(0, 0, 0, 0.9);
+
   backdrop-filter: blur(10px);
   border-radius: 30px;
   margin: 2px auto;
@@ -303,7 +303,7 @@ text-align: center;
 .glass-card {
   width: 100%;
   max-width: 90vw; /* Take up 90% of the viewport width on small screens */
-  height: 65vh;     /* Make height proportional to width */
+  height: 60vh;     /* Make height proportional to width */
   max-height: 90vh;
   perspective: 1000px;
   background: transparent;
@@ -333,7 +333,7 @@ text-align: center;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.078);
   backdrop-filter: blur(10px);
 }
 
@@ -385,6 +385,12 @@ text-align: center;
 @media (max-width: 768px) {
   .glass-card:hover .card-inner {
   transform: none;
+  }
+  .custom-shadow1::before {
+  background-size: 800% 200%;
+  }
+  .custom-shadow2::before {
+  background-size: 800% 200%;
   }
 }
 
@@ -507,7 +513,7 @@ text-align: center;
     font-size: 30px;
   }
   .glass-card {
-    height: 100vh;
+    height: 60vh;
   }
 }
 @media only screen and (min-width: 351px) and (max-width: 400px) {
@@ -528,7 +534,7 @@ text-align: center;
     height:auto;
   }
   .glass-card {
-    height: 125vw;
+    height: 65vh;
   }
 }
 @media only screen and (min-width: 401px) and (max-width: 449px) {
@@ -548,7 +554,7 @@ text-align: center;
     height:auto;
   }
   .glass-card {
-    height: 100vh;
+    height: 70vh;
   }
  
 
