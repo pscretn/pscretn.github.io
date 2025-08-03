@@ -1,104 +1,124 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Coming Soon | Light Show</title>
-  <style>
-    body {
-      margin: 0;
-      background: #000;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      font-family: 'Orbitron', sans-serif;
-      overflow: hidden;
-      color: white;
-    }
+<div class="bg-container">
+  <!-- LED PAR -->
+  <svg class="led-par" viewBox="0 0 320 180" width="160" height="90" aria-label="LED PAR Light">
+    <!-- Simplified PAR shape -->
+    <rect x="20" y="50" width="160" height="80" rx="25" ry="25" fill="#222" />
+    <ellipse cx="180" cy="90" rx="30" ry="40" fill="#0ff" opacity="0.3" />
+    <!-- Glowing LEDs -->
+    <circle cx="165" cy="75" r="8" fill="#0ff" class="led-glow" />
+    <circle cx="195" cy="75" r="8" fill="#0ff" class="led-glow delay1" />
+    <circle cx="165" cy="105" r="8" fill="#0ff" class="led-glow delay2" />
+    <circle cx="195" cy="105" r="8" fill="#0ff" class="led-glow delay3" />
+  </svg>
 
-    h1 {
-      font-size: 4rem;
-      text-shadow: 0 0 10px #0ff, 0 0 20px #f0f, 0 0 40px #0ff;
-      animation: flicker 2s infinite;
-    }
+  <!-- Laser beam -->
+  <div class="laser-beam"></div>
 
-    p {
-      font-size: 1.2rem;
-      margin-top: -10px;
-      color: #ccc;
-      text-shadow: 0 0 5px #0ff;
-    }
-
-    .lights {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
-    .light-beam {
-      position: absolute;
-      width: 3px;
-      height: 100%;
-      background: linear-gradient(to bottom, rgba(255, 0, 255, 0.5), transparent);
-      animation: beamMove 3s linear infinite;
-      opacity: 0.6;
-    }
-
-    .light-beam:nth-child(1) {
-      left: 10%;
-      animation-delay: 0s;
-    }
-
-    .light-beam:nth-child(2) {
-      left: 30%;
-      animation-delay: 0.5s;
-    }
-
-    .light-beam:nth-child(3) {
-      left: 50%;
-      animation-delay: 1s;
-    }
-
-    .light-beam:nth-child(4) {
-      left: 70%;
-      animation-delay: 1.5s;
-    }
-
-    .light-beam:nth-child(5) {
-      left: 90%;
-      animation-delay: 2s;
-    }
-
-    @keyframes flicker {
-      0%, 100% { opacity: 1; }
-      45% { opacity: 0.5; }
-      60% { opacity: 0.9; }
-      75% { opacity: 0.3; }
-    }
-
-    @keyframes beamMove {
-      0% { transform: translateY(-100%); }
-      100% { transform: translateY(100%); }
-    }
-  </style>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
-</head>
-<body>
-  <h1>Coming Soon</h1>
-  <p>Lighting up the future with TrilitLabs</p>
-
-  <div class="lights">
-    <div class="light-beam"></div>
-    <div class="light-beam"></div>
-    <div class="light-beam"></div>
-    <div class="light-beam"></div>
-    <div class="light-beam"></div>
+  <!-- Video Display Board -->
+  <div class="video-display">
+    <div class="pixel-row">
+      <span class="pixel on"></span><span class="pixel"></span><span class="pixel on"></span>
+      <span class="pixel"></span><span class="pixel on"></span><span class="pixel"></span>
+    </div>
+    <div class="pixel-row">
+      <span class="pixel"></span><span class="pixel on"></span><span class="pixel"></span>
+      <span class="pixel on"></span><span class="pixel"></span><span class="pixel on"></span>
+    </div>
+    <!-- Repeat or animate these rows -->
   </div>
-</body>
-</html>
+
+  <!-- Text Display Board -->
+  <div class="text-display">
+    <marquee behavior="scroll" direction="left" scrollamount="4" style="color:#0ff; font-weight:bold; font-family: monospace;">
+      Welcome to Trilit Labs - Your Source for LED PAR, Laser Lights, Video & Text Displays!
+    </marquee>
+  </div>
+</div>
+
+<style>
+  .bg-container {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    overflow: hidden;
+    z-index: -1;
+  }
+
+  /* LED PAR LED pulses */
+  .led-glow {
+    filter: drop-shadow(0 0 6px #0ff);
+    animation: pulse 3s infinite ease-in-out;
+  }
+  .led-glow.delay1 { animation-delay: 0.5s; }
+  .led-glow.delay2 { animation-delay: 1s; }
+  .led-glow.delay3 { animation-delay: 1.5s; }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  /* Laser beam */
+  .laser-beam {
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    width: 2px;
+    height: 60vh;
+    background: linear-gradient(180deg, #0ff, transparent);
+    box-shadow: 0 0 12px #0ff, 0 0 20px #0ff;
+    animation: laser-scan 4s infinite alternate ease-in-out;
+    transform-origin: top center;
+  }
+  @keyframes laser-scan {
+    0% { transform: rotate(-10deg); }
+    100% { transform: rotate(10deg); }
+  }
+
+  /* Video Display Board */
+  .video-display {
+    position: absolute;
+    bottom: 10%;
+    right: 10%;
+    background: #111;
+    padding: 10px;
+    border-radius: 6px;
+    display: grid;
+    grid-template-rows: repeat(6, 10px);
+    gap: 3px;
+  }
+  .pixel-row {
+    display: flex;
+    gap: 3px;
+  }
+  .pixel {
+    width: 10px;
+    height: 10px;
+    background: #222;
+    border-radius: 2px;
+    transition: background 0.3s;
+  }
+  .pixel.on {
+    background: #0ff;
+    box-shadow: 0 0 5px #0ff;
+    animation: pixel-flash 2s infinite alternate;
+  }
+  .pixel.on:nth-child(odd) {
+    animation-delay: 0.3s;
+  }
+
+  @keyframes pixel-flash {
+    0% { background: #055; box-shadow: 0 0 3px #0ff; }
+    100% { background: #0ff; box-shadow: 0 0 8px #0ff; }
+  }
+
+  /* Text Display Board */
+  .text-display {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background: rgba(0, 255, 255, 0.1);
+    font-size: 1.1rem;
+    padding: 6px 0;
+  }
+</style>
