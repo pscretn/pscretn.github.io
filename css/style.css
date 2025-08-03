@@ -276,6 +276,31 @@ text-align: center;
   filter: blur(8px);
 }
 
+.custom-shadow3 {
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 30px;
+  margin: 20px auto;
+  z-index: 1;
+  overflow: visible;
+  width: 99%;
+}
+
+.custom-shadow3::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  left: -4px;
+  right: -4px;
+  border-radius: 30px;
+  pointer-events: none;
+  z-index: -1;
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.4), black,rgb(198, 168, 255));
+  background-size: 400% 400%;
+  animation: rainbowGlow 6s linear infinite;
+  filter: blur(8px);
+}
 .navbar {
 
   backdrop-filter: blur(10px);
@@ -303,12 +328,15 @@ text-align: center;
 .glass-card {
   width: 100%;
   max-width: 90vw; /* Take up 90% of the viewport width on small screens */
-  height: 550px;     /* Make height proportional to width */
+  height: 450px;     /* Make height proportional to width */
   perspective: 1000px;
   background: transparent;
   border-radius: 20px;
   margin: auto;
 }
+.glass-card:hover {
+      transform: scale(1.03);
+    }
 
 .card-inner {
   position: relative;
@@ -317,10 +345,6 @@ text-align: center;
   transform-style: preserve-3d;
   transition: transform 0.8s ease;
   border-radius: 20px;
-}
-
-.glass-card:hover .card-inner {
-  transform: rotateY(180deg);
 }
 
 .card-front, .card-back {
@@ -381,14 +405,60 @@ text-align: center;
   display: block;
 }
 
+.glass-card1 {
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 20px;
+      color: #000000;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+      height: 100%;
+    }
+
+    .glass-card1:hover {
+      transform: scale(1.03);
+    }
+
+    .square-image-container {
+      position: relative;
+      width: 100%;
+      padding-top: 100%; /* 1:1 aspect ratio */
+      margin-bottom: 15px;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    .square-image-container img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-title {
+      font-size: 1.25rem;
+      font-weight: bolder;
+      margin-bottom: 8px;
+      color: white;
+    }
+
+    .product-detail {
+      font-size: 1rem;
+      color: white;
+    }
+
 @media (max-width: 768px) {
-  .glass-card:hover .card-inner {
-  transform: none;
-  }
   .custom-shadow1::before {
   background-size: 800% 200%;
   }
   .custom-shadow2::before {
+  background-size: 800% 200%;
+  }
+  .custom-shadow3::before {
   background-size: 800% 200%;
   }
 }
