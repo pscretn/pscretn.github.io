@@ -328,7 +328,7 @@ text-align: center;
 .glass-card {
   width: 100%;
   max-width: 90vw; /* Take up 90% of the viewport width on small screens */
-  height: 450px;     /* Make height proportional to width */
+  aspect-ratio: 9 / 12;     /* Make height proportional to width */
   perspective: 1000px;
   background: transparent;
   border-radius: 20px;
