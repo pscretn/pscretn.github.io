@@ -1,124 +1,180 @@
-<div class="bg-container">
-  <!-- LED PAR -->
-  <svg class="led-par" viewBox="0 0 320 180" width="160" height="90" aria-label="LED PAR Light">
-    <!-- Simplified PAR shape -->
-    <rect x="20" y="50" width="160" height="80" rx="25" ry="25" fill="#222" />
-    <ellipse cx="180" cy="90" rx="30" ry="40" fill="#0ff" opacity="0.3" />
-    <!-- Glowing LEDs -->
-    <circle cx="165" cy="75" r="8" fill="#0ff" class="led-glow" />
-    <circle cx="195" cy="75" r="8" fill="#0ff" class="led-glow delay1" />
-    <circle cx="165" cy="105" r="8" fill="#0ff" class="led-glow delay2" />
-    <circle cx="195" cy="105" r="8" fill="#0ff" class="led-glow delay3" />
-  </svg>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trilit Labs | Smart Lighting Solutions</title>
 
-  <!-- Laser beam -->
-  <div class="laser-beam"></div>
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- Video Display Board -->
-  <div class="video-display">
-    <div class="pixel-row">
-      <span class="pixel on"></span><span class="pixel"></span><span class="pixel on"></span>
-      <span class="pixel"></span><span class="pixel on"></span><span class="pixel"></span>
-    </div>
-    <div class="pixel-row">
-      <span class="pixel"></span><span class="pixel on"></span><span class="pixel"></span>
-      <span class="pixel on"></span><span class="pixel"></span><span class="pixel on"></span>
-    </div>
-    <!-- Repeat or animate these rows -->
-  </div>
-
-  <!-- Text Display Board -->
-  <div class="text-display">
-    <marquee behavior="scroll" direction="left" scrollamount="4" style="color:#0ff; font-weight:bold; font-family: monospace;">
-      Welcome to Trilit Labs - Your Source for LED PAR, Laser Lights, Video & Text Displays!
-    </marquee>
-  </div>
-</div>
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-  .bg-container {
-    position: fixed;
-    inset: 0;
-    background: #000;
-    overflow: hidden;
-    z-index: -1;
-  }
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #0f0f1a;
+    color: white;
+    scroll-behavior: smooth;
+}
 
-  /* LED PAR LED pulses */
-  .led-glow {
-    filter: drop-shadow(0 0 6px #0ff);
-    animation: pulse 3s infinite ease-in-out;
-  }
-  .led-glow.delay1 { animation-delay: 0.5s; }
-  .led-glow.delay2 { animation-delay: 1s; }
-  .led-glow.delay3 { animation-delay: 1.5s; }
+.navbar {
+    background-color: rgba(0,0,0,0.8);
+}
 
-  @keyframes pulse {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
-  }
-
-  /* Laser beam */
-  .laser-beam {
-    position: absolute;
-    top: 20%;
-    left: 10%;
-    width: 2px;
-    height: 60vh;
-    background: linear-gradient(180deg, #0ff, transparent);
-    box-shadow: 0 0 12px #0ff, 0 0 20px #0ff;
-    animation: laser-scan 4s infinite alternate ease-in-out;
-    transform-origin: top center;
-  }
-  @keyframes laser-scan {
-    0% { transform: rotate(-10deg); }
-    100% { transform: rotate(10deg); }
-  }
-
-  /* Video Display Board */
-  .video-display {
-    position: absolute;
-    bottom: 10%;
-    right: 10%;
-    background: #111;
-    padding: 10px;
-    border-radius: 6px;
-    display: grid;
-    grid-template-rows: repeat(6, 10px);
-    gap: 3px;
-  }
-  .pixel-row {
+.hero {
+    height: 100vh;
+    background: linear-gradient(to right, #111, #1a0033);
     display: flex;
-    gap: 3px;
-  }
-  .pixel {
-    width: 10px;
-    height: 10px;
-    background: #222;
-    border-radius: 2px;
-    transition: background 0.3s;
-  }
-  .pixel.on {
-    background: #0ff;
-    box-shadow: 0 0 5px #0ff;
-    animation: pixel-flash 2s infinite alternate;
-  }
-  .pixel.on:nth-child(odd) {
-    animation-delay: 0.3s;
-  }
+    align-items: center;
+    text-align: center;
+}
 
-  @keyframes pixel-flash {
-    0% { background: #055; box-shadow: 0 0 3px #0ff; }
-    100% { background: #0ff; box-shadow: 0 0 8px #0ff; }
-  }
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+}
 
-  /* Text Display Board */
-  .text-display {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    background: rgba(0, 255, 255, 0.1);
-    font-size: 1.1rem;
-    padding: 6px 0;
-  }
+.hero span {
+    color: #a855f7;
+}
+
+.section-title {
+    font-weight: 700;
+    margin-bottom: 40px;
+}
+
+.card {
+    background-color: #1a1a2e;
+    border: none;
+    border-radius: 15px;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+}
+
+.btn-custom {
+    background-color: #a855f7;
+    border: none;
+}
+
+.btn-custom:hover {
+    background-color: #9333ea;
+}
+
+footer {
+    background-color: #0d0d15;
+    padding: 20px;
+    text-align: center;
+}
 </style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+<div class="container">
+<a class="navbar-brand fw-bold" href="#">Trilit Labs</a>
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+<span class="navbar-toggler-icon"></span>
+</button>
+
+<div class="collapse navbar-collapse" id="navmenu">
+<ul class="navbar-nav ms-auto">
+<li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+<li class="nav-item"><a class="nav-link" href="#products">Products</a></li>
+<li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+</ul>
+</div>
+</div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+<div class="container">
+<h1>Smart Lighting. <span>Wireless Control.</span><br>Limitless Creativity.</h1>
+<p class="mt-4">Professional Event Solutions & Wireless DMX Controllers</p>
+<a href="#contact" class="btn btn-custom btn-lg mt-3">Book Your Event</a>
+</div>
+</section>
+
+<!-- Services -->
+<section id="services" class="py-5">
+<div class="container text-center">
+<h2 class="section-title">Our Services</h2>
+
+<div class="row g-4">
+
+<div class="col-md-4">
+<div class="card p-4">
+<h4>Event Lighting</h4>
+<p>Wedding lighting, DJ setup, concerts, corporate events with professional moving heads & LED systems.</p>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="card p-4">
+<h4>LED Displays</h4>
+<p>P4, P10 LED walls, advertising boards, custom display installations.</p>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="card p-4">
+<h4>Custom Installations</h4>
+<p>Architectural lighting, smart control systems, permanent lighting solutions.</p>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- Products -->
+<section id="products" class="py-5 bg-dark">
+<div class="container text-center">
+<h2 class="section-title">Wireless DMX Controller</h2>
+
+<div class="row justify-content-center">
+<div class="col-md-6">
+<div class="card p-4">
+<h4>2.4GHz Wireless DMX</h4>
+<p>✔ Long Range Transmission<br>
+✔ Low Latency Signal<br>
+✔ Mobile App Control<br>
+✔ Works with Moving Heads, PARs, Lasers<br>
+✔ Custom Firmware Support</p>
+
+<a href="#contact" class="btn btn-custom mt-3">Get Product Info</a>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="py-5">
+<div class="container text-center">
+<h2 class="section-title">Contact Us</h2>
+
+<p>Email: trilitlabs@gmail.com</p>
+<p>Phone: +91 XXXXX XXXXX</p>
+
+<a href="https://wa.me/91XXXXXXXXXX" class="btn btn-success mt-3">Chat on WhatsApp</a>
+</div>
+</section>
+
+<!-- Footer -->
+<footer>
+<p>© 2026 Trilit Labs. All Rights Reserved.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
