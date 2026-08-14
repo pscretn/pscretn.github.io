@@ -10,14 +10,17 @@
 <title>Two Years, Abhiramy</title>
 <style>
   :root {
-    --ink: #0A0D15;
-    --ink-raised: #131826;
-    --ink-line: #232A3B;
-    --warm: #EFE7DA;
-    --muted: #818A9E;
-    --amber: #E8A85C;
-    --amber-deep: #B96F35;
-    --rose: #D98A8A;
+    /* plum-black ground so the pinks read warm rather than candy */
+    --ink: #0B0910;
+    --ink-raised: #171220;
+    --ink-line: #2E2436;
+    --warm: #F2E9EC;
+    --muted: #9C8D99;
+
+    --rose: #E87F9B;      /* primary accent */
+    --blush: #F5BCCB;     /* light pink */
+    --deep-rose: #B85570;
+    --amber: #E8A85C;     /* secondary warmth, used sparingly */
 
     --serif: Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, "Times New Roman", serif;
     --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -42,23 +45,29 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* the lamp */
+  /* two soft lights: pink above, a warm ember low down */
   .glow {
     position: fixed;
-    top: -30vh; left: 50%;
-    width: 120vw; height: 90vh;
+    top: -32vh; left: 50%;
+    width: 130vw; height: 95vh;
     transform: translateX(-50%);
-    background: radial-gradient(ellipse at center, rgba(232,168,92,0.13), rgba(185,111,53,0.05) 42%, transparent 68%);
+    background: radial-gradient(ellipse at center, rgba(232,127,155,0.20), rgba(184,85,112,0.07) 45%, transparent 70%);
     pointer-events: none; z-index: 0;
   }
 
-  /* drifting hearts */
-  #hearts {
+  .glow-low {
     position: fixed;
-    inset: 0;
+    bottom: -40vh; left: 50%;
+    width: 120vw; height: 80vh;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse at center, rgba(232,168,92,0.10), transparent 62%);
+    pointer-events: none; z-index: 0;
+  }
+
+  #hearts {
+    position: fixed; inset: 0;
     width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 1;
+    pointer-events: none; z-index: 1;
   }
 
   .page {
@@ -104,7 +113,11 @@
   }
 
   .hero-name .em {
-    display: block; font-style: italic; color: var(--amber);
+    display: block; font-style: italic;
+    background: linear-gradient(100deg, var(--blush), var(--rose) 55%, var(--deep-rose));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: var(--rose);
+    padding-bottom: .08em;
   }
 
   .counter { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
@@ -127,22 +140,21 @@
 
   .counter-clock {
     font-family: var(--mono); font-variant-numeric: tabular-nums;
-    font-size: 0.8125rem; letter-spacing: 0.1em; color: var(--amber);
+    font-size: 0.8125rem; letter-spacing: 0.1em; color: var(--rose);
   }
 
-  .scroll-cue {
-    display: flex; flex-direction: column; align-items: center; gap: .6rem;
-  }
+  .scroll-cue { display: flex; flex-direction: column; align-items: center; gap: .6rem; }
 
   .scroll-cue .rule {
     width: 1px; height: 3.5rem;
-    background: linear-gradient(to bottom, var(--ink-line), transparent);
+    background: linear-gradient(to bottom, var(--rose), transparent);
+    opacity: .5;
     animation: drop 2.6s ease-in-out infinite;
   }
 
   @keyframes drop {
-    0%, 100% { opacity: .35; transform: scaleY(.7); transform-origin: top; }
-    50% { opacity: 1; transform: scaleY(1); transform-origin: top; }
+    0%, 100% { opacity: .3; transform: scaleY(.7); transform-origin: top; }
+    50% { opacity: .9; transform: scaleY(1); transform-origin: top; }
   }
 
   /* ---------- letter ---------- */
@@ -158,7 +170,7 @@
 
   .letter p:first-of-type {
     font-size: 1.5rem; line-height: 1.4;
-    color: var(--amber); font-style: italic;
+    color: var(--rose); font-style: italic;
   }
 
   .letter .lede { font-size: 1.1875rem; }
@@ -170,59 +182,45 @@
     color: var(--warm); font-size: 1.25rem; margin-top: 0.25rem;
   }
 
-  /* ---------- days & photos ---------- */
-  .day { padding: 3.5rem 0 0; }
-
-  .day-head {
-    display: flex; align-items: baseline; gap: 1rem;
-    margin-bottom: 1.75rem; padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--ink-line);
+  /* ---------- scrolling reel ---------- */
+  .reel {
+    position: relative;
+    width: 100vw; margin-left: 50%; transform: translateX(-50%);
+    overflow: hidden;
+    padding: 1.25rem 0;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
   }
 
-  .day-date {
-    font-size: 1.5rem; font-style: italic; color: var(--warm);
-    margin: 0; font-weight: 400;
+  .reel + .reel { padding-top: 0; }
+
+  .reel-track {
+    display: flex; gap: .75rem; width: max-content;
+    animation: slide 70s linear infinite;
   }
 
-  .day-count {
-    font-family: var(--mono); font-size: 0.75rem; color: var(--muted);
-    margin-left: auto; white-space: nowrap;
+  .reel-track.rev { animation-direction: reverse; animation-duration: 88s; }
+
+  .reel:hover .reel-track, .reel:focus-within .reel-track { animation-play-state: paused; }
+
+  @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  .reel-shot {
+    flex: 0 0 auto; padding: 0; border: 0; background: none;
+    border-radius: 3px; overflow: hidden; cursor: zoom-in;
+    line-height: 0; position: relative;
   }
 
-  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
-
-  .shot {
-    position: relative; margin: 0; padding: 0; border: 0;
-    background: var(--ink-raised); border-radius: 2px;
-    overflow: hidden; cursor: zoom-in; display: block; width: 100%;
-    opacity: 0; transform: translateY(20px) scale(.96);
-    transition: opacity .8s cubic-bezier(.2,.7,.3,1), transform .8s cubic-bezier(.2,.7,.3,1);
+  .reel-shot img {
+    height: 210px; width: auto; display: block;
+    filter: saturate(.92) brightness(.9);
+    transition: filter .5s ease, transform .5s ease;
   }
 
-  .shot.seen { opacity: 1; transform: none; }
-  .shot.wide { grid-column: span 2; }
-
-  .shot img {
-    display: block; width: 100%; height: 100%;
-    object-fit: cover; aspect-ratio: 3 / 4;
-    transition: transform .9s ease, filter .9s ease;
-    filter: saturate(0.94);
+  .reel-shot:hover img, .reel-shot:focus-visible img {
+    filter: saturate(1.06) brightness(1);
+    transform: scale(1.04);
   }
-
-  .shot.wide img { aspect-ratio: 4 / 3; }
-
-  .shot:hover img, .shot:focus-visible img {
-    transform: scale(1.05); filter: saturate(1.06);
-  }
-
-  .shot-time {
-    position: absolute; left: 0.625rem; bottom: 0.5rem;
-    font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.06em;
-    color: rgba(239,231,218,0.92); text-shadow: 0 1px 6px rgba(10,13,21,0.9);
-    opacity: 0; transition: opacity .35s ease;
-  }
-
-  .shot:hover .shot-time, .shot:focus-visible .shot-time { opacity: 1; }
 
   /* ---------- film ---------- */
   .films { padding: 4.5rem 0 0; }
@@ -245,10 +243,9 @@
   .sound {
     position: absolute; right: .75rem; bottom: .75rem; z-index: 2;
     display: inline-flex; align-items: center; gap: .4rem;
-    background: rgba(10,13,21,0.62);
-    -webkit-backdrop-filter: blur(6px);
-    backdrop-filter: blur(6px);
-    border: 1px solid rgba(239,231,218,0.22);
+    background: rgba(11,9,16,0.62);
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    border: 1px solid rgba(242,233,236,0.22);
     color: var(--warm);
     font-family: var(--sans); font-size: .6875rem;
     letter-spacing: .12em; text-transform: uppercase;
@@ -256,14 +253,12 @@
     transition: background .3s ease, border-color .3s ease;
   }
 
-  .sound:hover { background: rgba(10,13,21,0.85); border-color: var(--amber); }
+  .sound:hover { background: rgba(11,9,16,0.85); border-color: var(--rose); }
 
-  /* shown only if the browser refuses to autoplay (iOS Low Power Mode) */
   .playcue {
     position: absolute; inset: 0; z-index: 1;
     display: none; align-items: center; justify-content: center;
-    background: rgba(10,13,21,0.32); border: 0; cursor: pointer;
-    -webkit-backdrop-filter: blur(1px); backdrop-filter: blur(1px);
+    background: rgba(11,9,16,0.32); border: 0; cursor: pointer;
   }
 
   .film-frame.needs-tap .playcue { display: flex; }
@@ -271,8 +266,8 @@
   .playcue span {
     display: inline-flex; align-items: center; justify-content: center;
     width: 66px; height: 66px; border-radius: 50%;
-    background: rgba(10,13,21,0.66);
-    border: 1px solid rgba(232,168,92,0.55);
+    background: rgba(11,9,16,0.66);
+    border: 1px solid rgba(232,127,155,0.6);
     animation: beat 1.9s ease-in-out infinite;
   }
 
@@ -287,7 +282,7 @@
 
   .close p {
     font-size: clamp(1.5rem, 4.5vw, 2rem); line-height: 1.35;
-    font-style: italic; color: var(--amber);
+    font-style: italic; color: var(--rose);
     text-wrap: balance; margin: 0 0 2rem;
     opacity: 0; transform: translateY(16px);
     transition: opacity 1s ease, transform 1s ease;
@@ -301,10 +296,117 @@
     animation: beat 1.9s ease-in-out infinite;
   }
 
+  /* ---------- the heart she presses ---------- */
+  .heartbox { padding: 2rem 0 1rem; text-align: center; }
+
+  .bigheart {
+    display: block; margin: 0 auto; padding: 0;
+    width: 104px; height: 96px;
+    background: none; border: 0; cursor: pointer;
+    animation: beat 1.9s ease-in-out infinite;
+    transition: transform .35s cubic-bezier(.2,.7,.3,1);
+  }
+
+  .bigheart svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .bigheart .fill { fill: transparent; transition: fill .9s ease; }
+  .bigheart .line { stroke: var(--rose); stroke-width: 1.5; fill: none; }
+  .bigheart:hover { transform: scale(1.07); }
+  .bigheart.pressed .fill { fill: url(#heartGrad); }
+  .bigheart.pop { animation: pop .7s cubic-bezier(.2,.8,.3,1); }
+
+  @keyframes pop {
+    0% { transform: scale(1); }
+    35% { transform: scale(1.28); }
+    100% { transform: scale(1); }
+  }
+
+  .press-hint {
+    font-family: var(--sans); font-size: .625rem;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--muted); margin: 1.25rem 0 0;
+    transition: opacity .6s ease;
+  }
+
+  .press-hint.hide { opacity: 0; }
+
+  .reveal {
+    font-size: clamp(1.75rem, 7vw, 3rem);
+    line-height: 1.2; font-style: italic;
+    margin: 1.5rem 0 0; min-height: 1.2em;
+    background: linear-gradient(100deg, var(--blush), var(--rose) 50%, var(--deep-rose));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: var(--rose);
+    opacity: 0; transform: translateY(14px) scale(.95);
+    transition: opacity 1s ease, transform 1s cubic-bezier(.2,.7,.3,1);
+  }
+
+  .reveal.shown { opacity: 1; transform: none; }
+
+  /* ---------- opening gate ---------- */
+  /* browsers refuse to play sound until someone taps, so the tap is the doorway */
+  .gate {
+    position: fixed; inset: 0; z-index: 80;
+    background:
+      radial-gradient(ellipse at 50% 38%, rgba(232,127,155,0.18), transparent 62%),
+      var(--ink);
+    display: none;
+    flex-direction: column; align-items: center; justify-content: center;
+    gap: 1.6rem; text-align: center; padding: 2rem;
+    transition: opacity 1s ease, visibility 1s ease;
+  }
+
+  .gate.on { display: flex; }
+  .gate.gone { opacity: 0; visibility: hidden; pointer-events: none; }
+
+  .gate-heart { width: 44px; height: 44px; animation: beat 1.9s ease-in-out infinite; }
+
+  .gate-title {
+    font-size: clamp(2rem, 8vw, 3.25rem);
+    line-height: 1.1; margin: 0; font-weight: 400;
+    font-style: italic; color: var(--blush);
+  }
+
+  .gate-open {
+    display: inline-flex; align-items: center; gap: .6rem;
+    background: none; color: var(--warm);
+    border: 1px solid rgba(232,127,155,0.55);
+    font-family: var(--sans); font-size: .75rem;
+    letter-spacing: .2em; text-transform: uppercase;
+    padding: .9rem 1.7rem; border-radius: 999px; cursor: pointer;
+    transition: background .35s ease, border-color .35s ease;
+  }
+
+  .gate-open:hover { background: rgba(232,127,155,0.12); border-color: var(--rose); }
+
+  .gate-note { font-family: var(--sans); font-size: .625rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+
+  /* ---------- music toggle ---------- */
+  .music {
+    position: fixed; right: 1rem; bottom: 1rem; z-index: 40;
+    display: none; align-items: center; gap: .5rem;
+    background: rgba(11,9,16,0.72);
+    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    border: 1px solid rgba(242,233,236,0.2);
+    color: var(--warm); font-family: var(--sans);
+    font-size: .625rem; letter-spacing: .14em; text-transform: uppercase;
+    padding: .6rem .85rem; border-radius: 999px; cursor: pointer;
+  }
+
+  .music.on { display: inline-flex; }
+  .music:hover { border-color: var(--rose); }
+
+  .eq { display: inline-flex; align-items: flex-end; gap: 2px; height: 11px; }
+  .eq i { width: 2px; background: var(--rose); height: 4px; border-radius: 1px; }
+  .music.playing .eq i { animation: eq .9s ease-in-out infinite; }
+  .music.playing .eq i:nth-child(2) { animation-delay: .15s; }
+  .music.playing .eq i:nth-child(3) { animation-delay: .3s; }
+
+  @keyframes eq { 0%,100% { height: 3px; } 50% { height: 11px; } }
+
   /* ---------- lightbox ---------- */
   .lb {
-    position: fixed; inset: 0; z-index: 50;
-    background: rgba(6,8,13,0.96);
+    position: fixed; inset: 0; z-index: 90;
+    background: rgba(7,5,10,0.96);
     display: none; align-items: center; justify-content: center;
     padding: 1.5rem; cursor: zoom-out;
   }
@@ -323,45 +425,53 @@
     padding: 0.5rem 0.875rem; border-radius: 2px; cursor: pointer;
   }
 
-  :focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+  :focus-visible { outline: 2px solid var(--rose); outline-offset: 3px; }
 
   @media (min-width: 40rem) {
-    .grid { grid-template-columns: repeat(3, 1fr); gap: 0.875rem; }
-    .shot.wide { grid-column: span 2; }
-    .day, .films { padding-top: 5rem; }
+    .films { padding-top: 5rem; }
+    .reel-shot img { height: 260px; }
   }
 
-  /* touch devices never hover, so nothing may hide behind :hover */
   @media (hover: none) {
-    .shot-time { opacity: 1; }
-    .shot:hover img, .shot:focus-visible img { transform: none; filter: saturate(0.94); }
+    .reel-shot:hover img { transform: none; }
     .sound { padding: .6rem .9rem; font-size: .75rem; }
   }
 
   @media (max-width: 26rem) {
     .page { padding-left: 1rem; padding-right: 1rem; }
-    .grid { gap: .5rem; }
-    .day-head { flex-wrap: wrap; gap: .35rem; }
-    .day-count { margin-left: 0; width: 100%; }
     .film-cap { flex-wrap: wrap; gap: .25rem; }
     .film-cap .m { margin-left: 0; width: 100%; }
     .lb { padding: .75rem; }
+    .reel-shot img { height: 165px; }
+    .reel-track { gap: .5rem; }
+    .music { right: .65rem; bottom: .65rem; }
   }
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     #hearts { display: none; }
-    .up, .shot, .film, .letter p, .close p { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
-    .shot img { transition: none; }
-    .shot-time { opacity: 1; }
-    .beating, .close-heart, .scroll-cue .rule { animation: none !important; }
+    .up, .film, .letter p, .close p { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
+    .beating, .close-heart, .gate-heart, .scroll-cue .rule, .playcue span { animation: none !important; }
+    .reel-track { animation: none !important; }
+    .reel { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
   }
 </style>
 </head>
 <body>
 
 <div class="glow"></div>
+<div class="glow-low"></div>
 <canvas id="hearts" aria-hidden="true"></canvas>
+
+<div class="gate" id="gate">
+  <svg class="gate-heart" viewBox="0 0 32 29" aria-hidden="true">
+    <path d="M16 28C16 28 1 18.5 1 9.2 1 4.4 4.6 1 9 1c3 0 5.6 1.8 7 4.4C17.4 2.8 20 1 23 1c4.4 0 8 3.4 8 8.2C31 18.5 16 28 16 28z" fill="none" stroke="#E87F9B" stroke-width="1.5"/>
+  </svg>
+  <p class="label">For Abhiramy</p>
+  <h1 class="gate-title">Two years</h1>
+  <button class="gate-open" id="gateOpen" type="button">Open</button>
+  <p class="gate-note">Turn your sound on</p>
+</div>
 
 <main class="page">
 
@@ -378,9 +488,7 @@
       <div class="counter-clock" id="clock">&nbsp;</div>
     </div>
 
-    <div class="scroll-cue up d4">
-      <span class="rule"></span>
-    </div>
+    <div class="scroll-cue up d4"><span class="rule"></span></div>
   </section>
 
   <section class="letter col">
@@ -399,10 +507,8 @@
     <p class="sign">All my heart,<strong>Paul</strong></p>
   </section>
 
-  <section class="days">
-    <p class="label" style="padding-top:3rem">Three days, twenty-one frames</p>
-    <article class="day"><header class="day-head"><h2 class="day-date">24 April 2025</h2><span class="day-count">5 frames</span></header><div class="grid"><button class="shot" type="button" data-full="media/20250424_092027.jpg"><img src="media/20250424_092027_t.jpg" width="507" height="900" alt="Paul and Abhiramy, 24 April 2025 at 09:20" loading="lazy" decoding="async"><span class="shot-time">09:20</span></button><button class="shot" type="button" data-full="media/20250424_092028.jpg"><img src="media/20250424_092028_t.jpg" width="507" height="900" alt="Paul and Abhiramy, 24 April 2025 at 09:20" loading="lazy" decoding="async"><span class="shot-time">09:20</span></button><button class="shot" type="button" data-full="media/20250424_112616.jpg"><img src="media/20250424_112616_t.jpg" width="507" height="900" alt="Paul and Abhiramy, 24 April 2025 at 11:26" loading="lazy" decoding="async"><span class="shot-time">11:26</span></button><button class="shot" type="button" data-full="media/20250424_112619.jpg"><img src="media/20250424_112619_t.jpg" width="507" height="900" alt="Paul and Abhiramy, 24 April 2025 at 11:26" loading="lazy" decoding="async"><span class="shot-time">11:26</span></button><button class="shot" type="button" data-full="media/20250424_120016.jpg"><img src="media/20250424_120016_t.jpg" width="675" height="900" alt="Paul and Abhiramy, 24 April 2025 at 12:00" loading="lazy" decoding="async"><span class="shot-time">12:00</span></button></div></article><article class="day"><header class="day-head"><h2 class="day-date">29 April 2025</h2><span class="day-count">15 frames</span></header><div class="grid"><button class="shot" type="button" data-full="media/20250429_120402.jpg"><img src="media/20250429_120402_t.jpg" width="675" height="900" alt="Paul and Abhiramy, 29 April 2025 at 12:04" loading="lazy" decoding="async"><span class="shot-time">12:04</span></button><button class="shot" type="button" data-full="media/20250429_120448.jpg"><img src="media/20250429_120448_t.jpg" width="675" height="900" alt="Paul and Abhiramy, 29 April 2025 at 12:04" loading="lazy" decoding="async"><span class="shot-time">12:04</span></button><button class="shot" type="button" data-full="media/20250429_120524.jpg"><img src="media/20250429_120524_t.jpg" width="675" height="900" alt="Paul and Abhiramy, 29 April 2025 at 12:05" loading="lazy" decoding="async"><span class="shot-time">12:05</span></button><button class="shot" type="button" data-full="media/20250429_120543.jpg"><img src="media/20250429_120543_t.jpg" width="675" height="900" alt="Paul and Abhiramy, 29 April 2025 at 12:05" loading="lazy" decoding="async"><span class="shot-time">12:05</span></button><button class="shot" type="button" data-full="media/20250429_120545.jpg"><img src="media/20250429_120545_t.jpg" width="675" height="900" alt="Paul and Abhiramy, 29 April 2025 at 12:05" loading="lazy" decoding="async"><span class="shot-time">12:05</span></button><button class="shot" type="button" data-full="media/20250429_120705.jpg"><img src="media/20250429_120705_t.jpg" width="675" height="900" alt="Paul and Abhiramy, 29 April 2025 at 12:07" loading="lazy" decoding="async"><span class="shot-time">12:07</span></button><button class="shot" type="button" data-full="media/20250429_120708.jpg"><img src="media/20250429_120708_t.jpg" width="675" height="900" alt="Paul and Abhiramy, 29 April 2025 at 12:07" loading="lazy" decoding="async"><span class="shot-time">12:07</span></button><button class="shot" type="button" data-full="media/20250429_120942.jpg"><img src="media/20250429_120942_t.jpg" width="675" height="900" alt="Paul and Abhiramy, 29 April 2025 at 12:09" loading="lazy" decoding="async"><span class="shot-time">12:09</span></button><button class="shot" type="button" data-full="media/20250429_120943.jpg"><img src="media/20250429_120943_t.jpg" width="675" height="900" alt="Paul and Abhiramy, 29 April 2025 at 12:09" loading="lazy" decoding="async"><span class="shot-time">12:09</span></button><button class="shot wide" type="button" data-full="media/20250429_145601.jpg"><img src="media/20250429_145601_t.jpg" width="900" height="675" alt="Paul and Abhiramy, 29 April 2025 at 14:56" loading="lazy" decoding="async"><span class="shot-time">14:56</span></button><button class="shot wide" type="button" data-full="media/20250429_145611.jpg"><img src="media/20250429_145611_t.jpg" width="900" height="675" alt="Paul and Abhiramy, 29 April 2025 at 14:56" loading="lazy" decoding="async"><span class="shot-time">14:56</span></button><button class="shot wide" type="button" data-full="media/20250429_145613.jpg"><img src="media/20250429_145613_t.jpg" width="900" height="675" alt="Paul and Abhiramy, 29 April 2025 at 14:56" loading="lazy" decoding="async"><span class="shot-time">14:56</span></button><button class="shot wide" type="button" data-full="media/20250429_150413.jpg"><img src="media/20250429_150413_t.jpg" width="900" height="675" alt="Paul and Abhiramy, 29 April 2025 at 15:04" loading="lazy" decoding="async"><span class="shot-time">15:04</span></button><button class="shot wide" type="button" data-full="media/20250429_150425.jpg"><img src="media/20250429_150425_t.jpg" width="900" height="675" alt="Paul and Abhiramy, 29 April 2025 at 15:04" loading="lazy" decoding="async"><span class="shot-time">15:04</span></button><button class="shot" type="button" data-full="media/20250429_151239.jpg"><img src="media/20250429_151239_t.jpg" width="675" height="900" alt="Paul and Abhiramy, 29 April 2025 at 15:12" loading="lazy" decoding="async"><span class="shot-time">15:12</span></button></div></article><article class="day"><header class="day-head"><h2 class="day-date">3 May 2025</h2><span class="day-count">1 frame</span></header><div class="grid"><button class="shot wide" type="button" data-full="media/20250503_175239.jpg"><img src="media/20250503_175239_t.jpg" width="900" height="675" alt="Paul and Abhiramy, 3 May 2025 at 17:52" loading="lazy" decoding="async"><span class="shot-time">17:52</span></button></div></article>
-  </section>
+  <p class="label" style="padding-top:2rem">Us</p>
+  <section class="reel"><div class="reel-track"><button class="reel-shot" type="button" data-full="media/20250424_092027.jpg"><img src="media/20250424_092027_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250424_092028.jpg"><img src="media/20250424_092028_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250424_112616.jpg"><img src="media/20250424_112616_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250424_112619.jpg"><img src="media/20250424_112619_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250424_120016.jpg"><img src="media/20250424_120016_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_120402.jpg"><img src="media/20250429_120402_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_120448.jpg"><img src="media/20250429_120448_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250424_092027.jpg" tabindex="-1" aria-hidden="true"><img src="media/20250424_092027_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250424_092028.jpg" tabindex="-1" aria-hidden="true"><img src="media/20250424_092028_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250424_112616.jpg" tabindex="-1" aria-hidden="true"><img src="media/20250424_112616_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250424_112619.jpg" tabindex="-1" aria-hidden="true"><img src="media/20250424_112619_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250424_120016.jpg" tabindex="-1" aria-hidden="true"><img src="media/20250424_120016_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_120402.jpg" tabindex="-1" aria-hidden="true"><img src="media/20250429_120402_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_120448.jpg" tabindex="-1" aria-hidden="true"><img src="media/20250429_120448_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button></div></section><section class="reel"><div class="reel-track rev"><button class="reel-shot" type="button" data-full="media/20250429_120524.jpg"><img src="media/20250429_120524_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_120543.jpg"><img src="media/20250429_120543_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_120545.jpg"><img src="media/20250429_120545_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_120705.jpg"><img src="media/20250429_120705_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_120708.jpg"><img src="media/20250429_120708_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_120942.jpg"><img src="media/20250429_120942_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_120943.jpg"><img src="media/20250429_120943_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_120524.jpg" tabindex="-1" aria-hidden="true"><img src="media/20250429_120524_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_120543.jpg" tabindex="-1" aria-hidden="true"><img src="media/20250429_120543_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_120545.jpg" tabindex="-1" aria-hidden="true"><img src="media/20250429_120545_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_120705.jpg" tabindex="-1" aria-hidden="true"><img src="media/20250429_120705_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_120708.jpg" tabindex="-1" aria-hidden="true"><img src="media/20250429_120708_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_120942.jpg" tabindex="-1" aria-hidden="true"><img src="media/20250429_120942_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_120943.jpg" tabindex="-1" aria-hidden="true"><img src="media/20250429_120943_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button></div></section><section class="reel"><div class="reel-track"><button class="reel-shot" type="button" data-full="media/20250429_145601.jpg"><img src="media/20250429_145601_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_145611.jpg"><img src="media/20250429_145611_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_145613.jpg"><img src="media/20250429_145613_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_150413.jpg"><img src="media/20250429_150413_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_150425.jpg"><img src="media/20250429_150425_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_151239.jpg"><img src="media/20250429_151239_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250503_175239.jpg"><img src="media/20250503_175239_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_145601.jpg" tabindex="-1" aria-hidden="true"><img src="media/20250429_145601_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_145611.jpg" tabindex="-1" aria-hidden="true"><img src="media/20250429_145611_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_145613.jpg" tabindex="-1" aria-hidden="true"><img src="media/20250429_145613_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_150413.jpg" tabindex="-1" aria-hidden="true"><img src="media/20250429_150413_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_150425.jpg" tabindex="-1" aria-hidden="true"><img src="media/20250429_150425_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250429_151239.jpg" tabindex="-1" aria-hidden="true"><img src="media/20250429_151239_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button><button class="reel-shot" type="button" data-full="media/20250503_175239.jpg" tabindex="-1" aria-hidden="true"><img src="media/20250503_175239_t.jpg" alt="Paul and Abhiramy" loading="lazy" decoding="async"></button></div></section>
 
   <section class="films">
     <p class="label">Moving</p>
@@ -413,7 +519,7 @@
           <source src="media/driving.mp4" type="video/mp4">
         </video>
         <button class="playcue" type="button" data-for="v1" aria-label="Play video">
-          <span><svg width="20" height="24" viewBox="0 0 20 24" aria-hidden="true"><path d="M0 0l20 12L0 24z" fill="#EFE7DA"/></svg></span>
+          <span><svg width="20" height="24" viewBox="0 0 20 24" aria-hidden="true"><path d="M0 0l20 12L0 24z" fill="#F2E9EC"/></svg></span>
         </button>
         <button class="sound" type="button" data-for="v1" aria-pressed="false">Sound on</button>
       </div>
@@ -429,7 +535,7 @@
           <source src="media/holding.mp4" type="video/mp4">
         </video>
         <button class="playcue" type="button" data-for="v2" aria-label="Play video">
-          <span><svg width="20" height="24" viewBox="0 0 20 24" aria-hidden="true"><path d="M0 0l20 12L0 24z" fill="#EFE7DA"/></svg></span>
+          <span><svg width="20" height="24" viewBox="0 0 20 24" aria-hidden="true"><path d="M0 0l20 12L0 24z" fill="#F2E9EC"/></svg></span>
         </button>
         <button class="sound" type="button" data-for="v2" aria-pressed="false">Sound on</button>
       </div>
@@ -440,15 +546,41 @@
     </figure>
   </section>
 
+  <section class="heartbox col">
+    <button class="bigheart" id="bigheart" type="button" aria-label="Press the heart">
+      <svg viewBox="0 0 32 29" aria-hidden="true">
+        <defs>
+          <linearGradient id="heartGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#F5BCCB"/>
+            <stop offset="55%" stop-color="#E87F9B"/>
+            <stop offset="100%" stop-color="#B85570"/>
+          </linearGradient>
+        </defs>
+        <path class="fill" d="M16 28C16 28 1 18.5 1 9.2 1 4.4 4.6 1 9 1c3 0 5.6 1.8 7 4.4C17.4 2.8 20 1 23 1c4.4 0 8 3.4 8 8.2C31 18.5 16 28 16 28z"/>
+        <path class="line" d="M16 28C16 28 1 18.5 1 9.2 1 4.4 4.6 1 9 1c3 0 5.6 1.8 7 4.4C17.4 2.8 20 1 23 1c4.4 0 8 3.4 8 8.2C31 18.5 16 28 16 28z"/>
+      </svg>
+    </button>
+
+    <p class="press-hint" id="pressHint">Press the heart</p>
+    <p class="reveal" id="reveal" role="status" aria-live="polite"></p>
+  </section>
+
   <section class="close col">
     <svg class="close-heart" viewBox="0 0 32 29" aria-hidden="true">
-      <path d="M16 28C16 28 1 18.5 1 9.2 1 4.4 4.6 1 9 1c3 0 5.6 1.8 7 4.4C17.4 2.8 20 1 23 1c4.4 0 8 3.4 8 8.2C31 18.5 16 28 16 28z" fill="none" stroke="#E8A85C" stroke-width="1.5"/>
+      <path d="M16 28C16 28 1 18.5 1 9.2 1 4.4 4.6 1 9 1c3 0 5.6 1.8 7 4.4C17.4 2.8 20 1 23 1c4.4 0 8 3.4 8 8.2C31 18.5 16 28 16 28z" fill="none" stroke="#E87F9B" stroke-width="1.5"/>
     </svg>
     <p>I'd choose you again. And again. And again.</p>
     <span class="label">Paul &amp; Abhiramy — 15.08.2024</span>
   </section>
 
 </main>
+
+<audio id="song" loop preload="auto" src="media/song.mp3"></audio>
+
+<button class="music" id="music" type="button" aria-pressed="false">
+  <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>
+  <span id="musicLabel">Music</span>
+</button>
 
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo">
   <button class="lb-close" id="lbClose" type="button">CLOSE</button>
@@ -458,9 +590,6 @@
 <script>
 (function () {
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* ---------- entrance ---------- */
-  requestAnimationFrame(function () { document.body.classList.add('lit'); });
 
   /* ---------- counter ---------- */
   var START = new Date(2024, 7, 15, 0, 0, 0);
@@ -479,11 +608,12 @@
   }
 
   var target = Math.floor((Date.now() - START.getTime()) / 86400000);
+  var counted = false;
 
-  if (reduce) {
-    daysEl.textContent = target;
-    daysEl.classList.add('beating');
-  } else {
+  function countUp() {
+    if (counted) return;
+    counted = true;
+    if (reduce) { daysEl.textContent = target; daysEl.classList.add('beating'); return; }
     var t0 = null, dur = 1900;
     function ease(x) { return 1 - Math.pow(1 - x, 4); }
     function run(ts) {
@@ -493,18 +623,86 @@
       if (p < 1) requestAnimationFrame(run);
       else { daysEl.textContent = target; daysEl.classList.add('beating'); }
     }
-    setTimeout(function () { requestAnimationFrame(run); }, 700);
+    setTimeout(function () { requestAnimationFrame(run); }, 600);
   }
 
   tick();
   setInterval(tick, 1000);
 
+  /* ---------- music ---------- */
+  var song = document.getElementById('song');
+  var musicBtn = document.getElementById('music');
+  var musicLabel = document.getElementById('musicLabel');
+  var gate = document.getElementById('gate');
+  var gateOpen = document.getElementById('gateOpen');
+  var hasSong = !!(song.getAttribute('src') || '').trim();
+
+  function setMusicUI(playing) {
+    musicBtn.classList.toggle('playing', playing);
+    musicBtn.setAttribute('aria-pressed', playing ? 'true' : 'false');
+    musicLabel.textContent = playing ? 'Pause' : 'Play';
+  }
+
+  function playSong() {
+    var p = song.play();
+    if (p && p.then) p.then(function () { setMusicUI(true); }).catch(function () { setMusicUI(false); });
+  }
+
+  if (hasSong) {
+    song.volume = 0;
+    musicBtn.classList.add('on');
+    setMusicUI(false);
+
+    musicBtn.addEventListener('click', function () {
+      if (song.paused) { song.volume = 0.55; playSong(); }
+      else { song.pause(); setMusicUI(false); }
+    });
+  }
+
+  /* fade the song in rather than starting at full volume */
+  function fadeTo(target, ms) {
+    var from = song.volume, t0 = null;
+    function step(ts) {
+      if (t0 === null) t0 = ts;
+      var p = Math.min((ts - t0) / ms, 1);
+      song.volume = Math.max(0, Math.min(1, from + (target - from) * p));
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  /* ---------- the doorway ---------- */
+  function begin() {
+    document.body.classList.add('lit');
+    countUp();
+  }
+
+  if (hasSong) {
+    gate.classList.add('on');
+    document.body.style.overflow = 'hidden';
+
+    gateOpen.addEventListener('click', function () {
+      gate.classList.add('gone');
+      document.body.style.overflow = '';
+      song.volume = 0;
+      playSong();
+      fadeTo(0.55, 2600);
+      begin();
+      setTimeout(function () { gate.classList.remove('on'); }, 1100);
+    });
+  } else {
+    requestAnimationFrame(begin);
+  }
+
   /* ---------- drifting hearts ---------- */
+  var burstAt = function () {};   /* replaced below when the canvas is live */
+
   if (!reduce) {
     var cv = document.getElementById('hearts');
     var ctx = cv.getContext('2d');
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
     var W = 0, H = 0, hearts = [];
+    var TINT = ['#E87F9B', '#F5BCCB', '#E87F9B', '#B85570', '#E8A85C'];
 
     function resize() {
       W = window.innerWidth; H = window.innerHeight;
@@ -518,12 +716,12 @@
         hearts.push({
           x: Math.random() * W,
           y: Math.random() * H,
-          s: 5 + Math.random() * 11,
-          sp: 0.12 + Math.random() * 0.34,
-          sw: 0.4 + Math.random() * 1.1,
+          s: 5 + Math.random() * 12,
+          sp: 0.12 + Math.random() * 0.36,
+          sw: 0.4 + Math.random() * 1.2,
           ph: Math.random() * Math.PI * 2,
-          a: 0.06 + Math.random() * 0.22,
-          rose: Math.random() > 0.55
+          a: 0.07 + Math.random() * 0.26,
+          c: TINT[Math.floor(Math.random() * TINT.length)]
         });
       }
     }
@@ -538,32 +736,66 @@
       ctx.closePath();
     }
 
+    /* one-off hearts thrown outward when the button is pressed */
+    var spray = [];
+
+    burstAt = function (cx, cy, n) {
+      for (var i = 0; i < n; i++) {
+        var ang = (Math.PI * 2 * i) / n + Math.random() * 0.5;
+        var v = 2.6 + Math.random() * 4.4;
+        spray.push({
+          x: cx, y: cy,
+          vx: Math.cos(ang) * v,
+          vy: Math.sin(ang) * v - 1.4,
+          s: 8 + Math.random() * 15,
+          life: 1,
+          decay: 0.008 + Math.random() * 0.009,
+          c: TINT[Math.floor(Math.random() * TINT.length)]
+        });
+      }
+    };
+
     var t = 0;
     function draw() {
       ctx.clearRect(0, 0, W, H);
       t += 0.01;
+
       for (var i = 0; i < hearts.length; i++) {
         var p = hearts[i];
         p.y -= p.sp;
         var x = p.x + Math.sin(t + p.ph) * p.sw * 9;
         if (p.y < -30) { p.y = H + 20; p.x = Math.random() * W; }
         ctx.globalAlpha = p.a;
-        ctx.fillStyle = p.rose ? '#D98A8A' : '#E8A85C';
+        ctx.fillStyle = p.c;
         path(x, p.y, p.s);
         ctx.fill();
       }
+
+      for (var j = spray.length - 1; j >= 0; j--) {
+        var q = spray[j];
+        q.x += q.vx; q.y += q.vy;
+        q.vy += 0.10;          /* gravity */
+        q.vx *= 0.99;
+        q.life -= q.decay;
+        if (q.life <= 0) { spray.splice(j, 1); continue; }
+        ctx.globalAlpha = Math.max(0, q.life) * 0.85;
+        ctx.fillStyle = q.c;
+        path(q.x, q.y, q.s * (0.5 + q.life * 0.5));
+        ctx.fill();
+      }
+
       ctx.globalAlpha = 1;
       requestAnimationFrame(draw);
     }
 
     resize();
-    seed(window.innerWidth < 640 ? 16 : 30);
+    seed(window.innerWidth < 640 ? 18 : 34);
     draw();
 
     var rt;
     window.addEventListener('resize', function () {
       clearTimeout(rt);
-      rt = setTimeout(function () { resize(); seed(window.innerWidth < 640 ? 16 : 30); }, 200);
+      rt = setTimeout(function () { resize(); seed(window.innerWidth < 640 ? 18 : 34); }, 200);
     });
   }
 
@@ -574,14 +806,7 @@
     });
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
 
-  document.querySelectorAll('.shot').forEach(function (el, i) {
-    el.style.transitionDelay = (i % 3) * 90 + 'ms';
-    obs.observe(el);
-  });
-
-  document.querySelectorAll('.film, .letter p, .close p').forEach(function (el) {
-    obs.observe(el);
-  });
+  document.querySelectorAll('.film, .letter p, .close p').forEach(function (el) { obs.observe(el); });
 
   /* ---------- video plays on scroll ---------- */
   var vids = document.querySelectorAll('.film video');
@@ -595,26 +820,34 @@
     }
   }
 
-  // phones use a lower threshold — a portrait video can fill the whole screen
-  var thresh = window.innerWidth < 640 ? 0.25 : 0.5;
-
+  /* start each video the first time it comes near, then let it loop forever —
+     it is never paused on scroll, so it keeps running while she reads */
   var vObs = new IntersectionObserver(function (es) {
     es.forEach(function (e) {
+      if (!e.isIntersecting) return;
       var v = e.target;
-      if (e.isIntersecting) {
-        if (!v.dataset.loaded) { v.load(); v.dataset.loaded = '1'; }
-        attempt(v);
-      } else {
-        v.pause();
-      }
+      if (!v.dataset.loaded) { v.load(); v.dataset.loaded = '1'; }
+      attempt(v);
+      vObs.unobserve(v);
     });
-  }, { threshold: thresh });
+  }, { rootMargin: '200px 0px', threshold: 0.01 });
 
   vids.forEach(function (v) {
     vObs.observe(v);
     v.addEventListener('click', function () {
-      if (v.paused) attempt(v); else v.pause();
+      if (v.paused) { v.dataset.userPaused = '0'; attempt(v); }
+      else { v.dataset.userPaused = '1'; v.pause(); }
     });
+    /* if the browser ever stalls or a tab-switch pauses it, pick it back up */
+    v.addEventListener('pause', function () {
+      if (v.dataset.userPaused === '1' || document.hidden) return;
+      setTimeout(function () { if (v.paused && !document.hidden) attempt(v); }, 300);
+    });
+  });
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) return;
+    vids.forEach(function (v) { if (v.dataset.loaded && v.paused && v.dataset.userPaused !== '1') attempt(v); });
   });
 
   document.querySelectorAll('.playcue').forEach(function (btn) {
@@ -622,10 +855,12 @@
       e.stopPropagation();
       var v = document.getElementById(btn.dataset.for);
       if (!v.dataset.loaded) { v.load(); v.dataset.loaded = '1'; }
+      v.dataset.userPaused = '0';
       attempt(v);
     });
   });
 
+  /* a video's own sound and the song should never talk over each other */
   document.querySelectorAll('.sound').forEach(function (btn) {
     btn.addEventListener('click', function (e) {
       e.stopPropagation();
@@ -633,8 +868,52 @@
       v.muted = !v.muted;
       btn.textContent = v.muted ? 'Sound on' : 'Sound off';
       btn.setAttribute('aria-pressed', v.muted ? 'false' : 'true');
-      if (!v.muted && v.paused) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+
+      if (!v.muted) {
+        vids.forEach(function (o) { if (o !== v) o.muted = true; });
+        document.querySelectorAll('.sound').forEach(function (o) {
+          if (o !== btn) { o.textContent = 'Sound on'; o.setAttribute('aria-pressed', 'false'); }
+        });
+        if (hasSong && !song.paused) fadeTo(0.06, 600);
+        if (v.paused) attempt(v);
+      } else if (hasSong && !song.paused) {
+        fadeTo(0.55, 900);
+      }
     });
+  });
+
+  /* ---------- the heart she presses ---------- */
+  var bigheart = document.getElementById('bigheart');
+  var reveal = document.getElementById('reveal');
+  var pressHint = document.getElementById('pressHint');
+  var MESSAGE = 'I love you, Abhiramy.';
+  var typed = false;
+
+  bigheart.addEventListener('click', function () {
+    var r = bigheart.getBoundingClientRect();
+    burstAt(r.left + r.width / 2, r.top + r.height / 2, 22);
+
+    bigheart.classList.add('pressed');
+    bigheart.classList.remove('pop');
+    void bigheart.offsetWidth;          /* restart the pop each press */
+    bigheart.classList.add('pop');
+    pressHint.classList.add('hide');
+
+    if (typed) return;
+    typed = true;
+
+    if (reduce) {
+      reveal.textContent = MESSAGE;
+      reveal.classList.add('shown');
+      return;
+    }
+
+    reveal.classList.add('shown');
+    var i = 0;
+    (function type() {
+      reveal.textContent = MESSAGE.slice(0, i);
+      if (i++ <= MESSAGE.length) setTimeout(type, 55);
+    })();
   });
 
   /* ---------- lightbox ---------- */
@@ -643,7 +922,7 @@
       lbClose = document.getElementById('lbClose'),
       lastFocus = null;
 
-  function open(src, alt) {
+  function openLb(src, alt) {
     lastFocus = document.activeElement;
     lbImg.src = src; lbImg.alt = alt || '';
     lb.classList.add('open');
@@ -651,24 +930,24 @@
     lbClose.focus();
   }
 
-  function close() {
+  function closeLb() {
     lb.classList.remove('open');
     lbImg.src = '';
     document.body.style.overflow = '';
     if (lastFocus) lastFocus.focus();
   }
 
-  document.querySelectorAll('.shot').forEach(function (btn) {
+  document.querySelectorAll('.shot, .reel-shot').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var img = btn.querySelector('img');
-      open(btn.dataset.full, img.alt);
+      openLb(btn.dataset.full || img.src, img.alt);
     });
   });
 
-  lb.addEventListener('click', function (e) { if (e.target !== lbImg) close(); });
-  lbClose.addEventListener('click', close);
+  lb.addEventListener('click', function (e) { if (e.target !== lbImg) closeLb(); });
+  lbClose.addEventListener('click', closeLb);
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && lb.classList.contains('open')) close();
+    if (e.key === 'Escape' && lb.classList.contains('open')) closeLb();
   });
 })();
 </script>
