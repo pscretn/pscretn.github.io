@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0A0D15">
+<meta name="description" content="Two years. For Abhiramy, from Paul.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Ctext y=%2226%22 font-size=%2226%22%3E%F0%9F%92%9B%3C/text%3E%3C/svg%3E">
+<title>Two Years, Abhiramy</title>
+<style>
+  :root {
+    --ink: #0A0D15;
+    --ink-raised: #131826;
+    --ink-line: #232A3B;
+    --warm: #EFE7DA;
+    --muted: #818A9E;
+    --amber: #E8A85C;
+    --amber-deep: #B96F35;
+    --rose: #D98A8A;
+
+    --serif: Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, "Times New Roman", serif;
+    --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, "Cascadia Code", "SF Mono", Consolas, "Liberation Mono", monospace;
+
+    --measure: 34rem;
+    --wide: 60rem;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--ink);
+    color: var(--warm);
+    font-family: var(--serif);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* the lamp */
+  .glow {
+    position: fixed;
+    top: -30vh; left: 50%;
+    width: 120vw; height: 90vh;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse at center, rgba(232,168,92,0.13), rgba(185,111,53,0.05) 42%, transparent 68%);
+    pointer-events: none; z-index: 0;
+  }
+
+  /* drifting hearts */
+  #hearts {
+    position: fixed;
+    inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .page {
+    position: relative; z-index: 2;
+    width: 100%; max-width: var(--wide);
+    margin: 0 auto;
+    padding: 0 1.5rem 6rem;
+  }
+
+  .col { max-width: var(--measure); margin: 0 auto; }
+
+  .label {
+    font-family: var(--sans);
+    font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ---------- entrance ---------- */
+  .up { opacity: 0; transform: translateY(18px); }
+  .lit .up { animation: rise 1s cubic-bezier(.2,.7,.3,1) forwards; }
+  .lit .d1 { animation-delay: .15s; }
+  .lit .d2 { animation-delay: .45s; }
+  .lit .d3 { animation-delay: .8s; }
+  .lit .d4 { animation-delay: 1.15s; }
+
+  @keyframes rise { to { opacity: 1; transform: none; } }
+
+  /* ---------- hero ---------- */
+  .hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    text-align: center; gap: 2rem;
+    padding: 5rem 0 4rem;
+  }
+
+  .hero-name {
+    font-size: clamp(2.75rem, 11vw, 5.5rem);
+    line-height: 1.02; font-weight: 400; margin: 0;
+    text-wrap: balance; letter-spacing: -0.02em;
+  }
+
+  .hero-name .em {
+    display: block; font-style: italic; color: var(--amber);
+  }
+
+  .counter { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+
+  .counter-days {
+    font-family: var(--mono); font-variant-numeric: tabular-nums;
+    font-size: clamp(3.5rem, 16vw, 7rem); line-height: 1;
+    font-weight: 300; letter-spacing: -0.03em;
+    transform-origin: center;
+  }
+
+  .beating { animation: beat 1.9s ease-in-out infinite; }
+
+  @keyframes beat {
+    0%, 62%, 100% { transform: scale(1); }
+    12% { transform: scale(1.045); }
+    24% { transform: scale(1); }
+    36% { transform: scale(1.03); }
+  }
+
+  .counter-clock {
+    font-family: var(--mono); font-variant-numeric: tabular-nums;
+    font-size: 0.8125rem; letter-spacing: 0.1em; color: var(--amber);
+  }
+
+  .scroll-cue {
+    display: flex; flex-direction: column; align-items: center; gap: .6rem;
+  }
+
+  .scroll-cue .rule {
+    width: 1px; height: 3.5rem;
+    background: linear-gradient(to bottom, var(--ink-line), transparent);
+    animation: drop 2.6s ease-in-out infinite;
+  }
+
+  @keyframes drop {
+    0%, 100% { opacity: .35; transform: scaleY(.7); transform-origin: top; }
+    50% { opacity: 1; transform: scaleY(1); transform-origin: top; }
+  }
+
+  /* ---------- letter ---------- */
+  .letter { padding: 5rem 0; }
+
+  .letter p {
+    margin: 0 0 1.4em;
+    opacity: 0; transform: translateY(16px);
+    transition: opacity .9s ease, transform .9s ease;
+  }
+
+  .letter p.seen { opacity: 1; transform: none; }
+
+  .letter p:first-of-type {
+    font-size: 1.5rem; line-height: 1.4;
+    color: var(--amber); font-style: italic;
+  }
+
+  .letter .lede { font-size: 1.1875rem; }
+
+  .sign { margin-top: 2.5rem; font-style: italic; color: var(--muted); }
+
+  .sign strong {
+    display: block; font-style: normal; font-weight: 400;
+    color: var(--warm); font-size: 1.25rem; margin-top: 0.25rem;
+  }
+
+  /* ---------- days & photos ---------- */
+  .day { padding: 3.5rem 0 0; }
+
+  .day-head {
+    display: flex; align-items: baseline; gap: 1rem;
+    margin-bottom: 1.75rem; padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--ink-line);
+  }
+
+  .day-date {
+    font-size: 1.5rem; font-style: italic; color: var(--warm);
+    margin: 0; font-weight: 400;
+  }
+
+  .day-count {
+    font-family: var(--mono); font-size: 0.75rem; color: var(--muted);
+    margin-left: auto; white-space: nowrap;
+  }
+
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+
+  .shot {
+    position: relative; margin: 0; padding: 0; border: 0;
+    background: var(--ink-raised); border-radius: 2px;
+    overflow: hidden; cursor: zoom-in; display: block; width: 100%;
+    opacity: 0; transform: translateY(20px) scale(.96);
+    transition: opacity .8s cubic-bezier(.2,.7,.3,1), transform .8s cubic-bezier(.2,.7,.3,1);
+  }
+
+  .shot.seen { opacity: 1; transform: none; }
+  .shot.wide { grid-column: span 2; }
+
+  .shot img {
+    display: block; width: 100%; height: 100%;
+    object-fit: cover; aspect-ratio: 3 / 4;
+    transition: transform .9s ease, filter .9s ease;
+    filter: saturate(0.94);
+  }
+
+  .shot.wide img { aspect-ratio: 4 / 3; }
+
+  .shot:hover img, .shot:focus-visible img {
+    transform: scale(1.05); filter: saturate(1.06);
+  }
+
+  .shot-time {
+    position: absolute; left: 0.625rem; bottom: 0.5rem;
+    font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.06em;
+    color: rgba(239,231,218,0.92); text-shadow: 0 1px 6px rgba(10,13,21,0.9);
+    opacity: 0; transition: opacity .35s ease;
+  }
+
+  .shot:hover .shot-time, .shot:focus-visible .shot-time { opacity: 1; }
+
+  /* ---------- film ---------- */
+  .films { padding: 4.5rem 0 0; }
+
+  .film {
+    margin: 0 0 2.5rem;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity .9s ease, transform .9s ease;
+  }
+
+  .film.seen { opacity: 1; transform: none; }
+
+  .film-frame {
+    position: relative; border-radius: 2px; overflow: hidden;
+    background: var(--ink-raised); cursor: pointer;
+  }
+
+  .film video { display: block; width: 100%; }
+
+  .sound {
+    position: absolute; right: .75rem; bottom: .75rem; z-index: 2;
+    display: inline-flex; align-items: center; gap: .4rem;
+    background: rgba(10,13,21,0.62);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(239,231,218,0.22);
+    color: var(--warm);
+    font-family: var(--sans); font-size: .6875rem;
+    letter-spacing: .12em; text-transform: uppercase;
+    padding: .55rem .8rem; border-radius: 999px; cursor: pointer;
+    transition: background .3s ease, border-color .3s ease;
+  }
+
+  .sound:hover { background: rgba(10,13,21,0.85); border-color: var(--amber); }
+
+  /* shown only if the browser refuses to autoplay (iOS Low Power Mode) */
+  .playcue {
+    position: absolute; inset: 0; z-index: 1;
+    display: none; align-items: center; justify-content: center;
+    background: rgba(10,13,21,0.32); border: 0; cursor: pointer;
+    -webkit-backdrop-filter: blur(1px); backdrop-filter: blur(1px);
+  }
+
+  .film-frame.needs-tap .playcue { display: flex; }
+
+  .playcue span {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 66px; height: 66px; border-radius: 50%;
+    background: rgba(10,13,21,0.66);
+    border: 1px solid rgba(232,168,92,0.55);
+    animation: beat 1.9s ease-in-out infinite;
+  }
+
+  .playcue svg { margin-left: 3px; }
+
+  .film-cap { display: flex; align-items: baseline; gap: 0.75rem; margin-top: 0.75rem; }
+  .film-cap .t { font-style: italic; color: var(--warm); }
+  .film-cap .m { font-family: var(--mono); font-size: 0.6875rem; color: var(--muted); margin-left: auto; }
+
+  /* ---------- close ---------- */
+  .close { padding: 6rem 0 2rem; text-align: center; }
+
+  .close p {
+    font-size: clamp(1.5rem, 4.5vw, 2rem); line-height: 1.35;
+    font-style: italic; color: var(--amber);
+    text-wrap: balance; margin: 0 0 2rem;
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+
+  .close p.seen { opacity: 1; transform: none; }
+  .close .label { display: block; }
+
+  .close-heart {
+    display: block; margin: 0 auto 2rem; width: 26px; height: 26px;
+    animation: beat 1.9s ease-in-out infinite;
+  }
+
+  /* ---------- lightbox ---------- */
+  .lb {
+    position: fixed; inset: 0; z-index: 50;
+    background: rgba(6,8,13,0.96);
+    display: none; align-items: center; justify-content: center;
+    padding: 1.5rem; cursor: zoom-out;
+  }
+
+  .lb.open { display: flex; animation: fadein .3s ease; }
+
+  @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+
+  .lb img { max-width: 100%; max-height: 92vh; object-fit: contain; border-radius: 2px; }
+
+  .lb-close {
+    position: absolute; top: 1rem; right: 1rem;
+    background: none; border: 1px solid var(--ink-line);
+    color: var(--warm); font-family: var(--sans);
+    font-size: 0.75rem; letter-spacing: 0.12em;
+    padding: 0.5rem 0.875rem; border-radius: 2px; cursor: pointer;
+  }
+
+  :focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+
+  @media (min-width: 40rem) {
+    .grid { grid-template-columns: repeat(3, 1fr); gap: 0.875rem; }
+    .shot.wide { grid-column: span 2; }
+    .day, .films { padding-top: 5rem; }
+  }
+
+  /* touch devices never hover, so nothing may hide behind :hover */
+  @media (hover: none) {
+    .shot-time { opacity: 1; }
+    .shot:hover img, .shot:focus-visible img { transform: none; filter: saturate(0.94); }
+    .sound { padding: .6rem .9rem; font-size: .75rem; }
+  }
+
+  @media (max-width: 26rem) {
+    .page { padding-left: 1rem; padding-right: 1rem; }
+    .grid { gap: .5rem; }
+    .day-head { flex-wrap: wrap; gap: .35rem; }
+    .day-count { margin-left: 0; width: 100%; }
+    .film-cap { flex-wrap: wrap; gap: .25rem; }
+    .film-cap .m { margin-left: 0; width: 100%; }
+    .lb { padding: .75rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    #hearts { display: none; }
+    .up, .shot, .film, .letter p, .close p { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
+    .shot img { transition: none; }
+    .shot-time { opacity: 1; }
+    .beating, .close-heart, .scroll-cue .rule { animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="glow"></div>
+<canvas id="hearts" aria-hidden="true"></canvas>
+
+<main class="page">
+
+  <section class="hero">
+    <p class="label up d1">Fifteenth of August, Two Thousand Twenty-Four</p>
+
+    <h1 class="hero-name up d2">
+      Two years<span class="em">Abhiramy</span>
+    </h1>
+
+    <div class="counter up d3">
+      <div class="counter-days" id="days">—</div>
+      <p class="label" style="letter-spacing:0.22em">Days, and counting</p>
+      <div class="counter-clock" id="clock">&nbsp;</div>
+    </div>
+
+    <div class="scroll-cue up d4">
+      <span class="rule"></span>
+    </div>
+  </section>
+
+  <section class="letter col">
+    <p>Two years.</p>
+
+    <p class="lede">I keep trying to find the big words for it, and they don't come. What comes instead are small things. The way you say my name when you're half asleep. The sound of you laughing at something before you've even finished telling me what it was. The fact that I've stopped counting how many times you've made an ordinary Tuesday feel like something worth remembering.</p>
+
+    <p>I think that's the secret nobody tells you about love. It isn't the grand moments. It's that somewhere along the way you became the person I want to tell things to first — the good news, the bad news, the stupid thought I had at two in the morning. You became my default.</p>
+
+    <p>Two years ago I didn't know what we'd become. Today I know, and I still want more of it.</p>
+
+    <p>Thank you for choosing me on the easy days and on the hard ones. Thank you for being loud in my quiet life.</p>
+
+    <p>Happy anniversary, my love. Here's to the next two, and the two after that, and every one that follows.</p>
+
+    <p class="sign">All my heart,<strong>Paul</strong></p>
+  </section>
+
+  <section class="days">
+    <p class="label" style="padding-top:3rem">Three days, twenty-one frames</p>
+    <article class="day"><header class="day-head"><h2 class="day-date">24 April 2025</h2><span class="day-count">5 frames</span></header><div class="grid"><button class="shot" type="button" data-full="media/20250424_092027.jpg"><img src="media/20250424_092027_t.jpg" width="507" height="900" alt="Paul and Abhiramy, 24 April 2025 at 09:20" loading="lazy" decoding="async"><span class="shot-time">09:20</span></button><button class="shot" type="button" data-full="media/20250424_092028.jpg"><img src="media/20250424_092028_t.jpg" width="507" height="900" alt="Paul and Abhiramy, 24 April 2025 at 09:20" loading="lazy" decoding="async"><span class="shot-time">09:20</span></button><button class="shot" type="button" data-full="media/20250424_112616.jpg"><img src="media/20250424_112616_t.jpg" width="507" height="900" alt="Paul and Abhiramy, 24 April 2025 at 11:26" loading="lazy" decoding="async"><span class="shot-time">11:26</span></button><button class="shot" type="button" data-full="media/20250424_112619.jpg"><img src="media/20250424_112619_t.jpg" width="507" height="900" alt="Paul and Abhiramy, 24 April 2025 at 11:26" loading="lazy" decoding="async"><span class="shot-time">11:26</span></button><button class="shot" type="button" data-full="media/20250424_120016.jpg"><img src="media/20250424_120016_t.jpg" width="675" height="900" alt="Paul and Abhiramy, 24 April 2025 at 12:00" loading="lazy" decoding="async"><span class="shot-time">12:00</span></button></div></article><article class="day"><header class="day-head"><h2 class="day-date">29 April 2025</h2><span class="day-count">15 frames</span></header><div class="grid"><button class="shot" type="button" data-full="media/20250429_120402.jpg"><img src="media/20250429_120402_t.jpg" width="675" height="900" alt="Paul and Abhiramy, 29 April 2025 at 12:04" loading="lazy" decoding="async"><span class="shot-time">12:04</span></button><button class="shot" type="button" data-full="media/20250429_120448.jpg"><img src="media/20250429_120448_t.jpg" width="675" height="900" alt="Paul and Abhiramy, 29 April 2025 at 12:04" loading="lazy" decoding="async"><span class="shot-time">12:04</span></button><button class="shot" type="button" data-full="media/20250429_120524.jpg"><img src="media/20250429_120524_t.jpg" width="675" height="900" alt="Paul and Abhiramy, 29 April 2025 at 12:05" loading="lazy" decoding="async"><span class="shot-time">12:05</span></button><button class="shot" type="button" data-full="media/20250429_120543.jpg"><img src="media/20250429_120543_t.jpg" width="675" height="900" alt="Paul and Abhiramy, 29 April 2025 at 12:05" loading="lazy" decoding="async"><span class="shot-time">12:05</span></button><button class="shot" type="button" data-full="media/20250429_120545.jpg"><img src="media/20250429_120545_t.jpg" width="675" height="900" alt="Paul and Abhiramy, 29 April 2025 at 12:05" loading="lazy" decoding="async"><span class="shot-time">12:05</span></button><button class="shot" type="button" data-full="media/20250429_120705.jpg"><img src="media/20250429_120705_t.jpg" width="675" height="900" alt="Paul and Abhiramy, 29 April 2025 at 12:07" loading="lazy" decoding="async"><span class="shot-time">12:07</span></button><button class="shot" type="button" data-full="media/20250429_120708.jpg"><img src="media/20250429_120708_t.jpg" width="675" height="900" alt="Paul and Abhiramy, 29 April 2025 at 12:07" loading="lazy" decoding="async"><span class="shot-time">12:07</span></button><button class="shot" type="button" data-full="media/20250429_120942.jpg"><img src="media/20250429_120942_t.jpg" width="675" height="900" alt="Paul and Abhiramy, 29 April 2025 at 12:09" loading="lazy" decoding="async"><span class="shot-time">12:09</span></button><button class="shot" type="button" data-full="media/20250429_120943.jpg"><img src="media/20250429_120943_t.jpg" width="675" height="900" alt="Paul and Abhiramy, 29 April 2025 at 12:09" loading="lazy" decoding="async"><span class="shot-time">12:09</span></button><button class="shot wide" type="button" data-full="media/20250429_145601.jpg"><img src="media/20250429_145601_t.jpg" width="900" height="675" alt="Paul and Abhiramy, 29 April 2025 at 14:56" loading="lazy" decoding="async"><span class="shot-time">14:56</span></button><button class="shot wide" type="button" data-full="media/20250429_145611.jpg"><img src="media/20250429_145611_t.jpg" width="900" height="675" alt="Paul and Abhiramy, 29 April 2025 at 14:56" loading="lazy" decoding="async"><span class="shot-time">14:56</span></button><button class="shot wide" type="button" data-full="media/20250429_145613.jpg"><img src="media/20250429_145613_t.jpg" width="900" height="675" alt="Paul and Abhiramy, 29 April 2025 at 14:56" loading="lazy" decoding="async"><span class="shot-time">14:56</span></button><button class="shot wide" type="button" data-full="media/20250429_150413.jpg"><img src="media/20250429_150413_t.jpg" width="900" height="675" alt="Paul and Abhiramy, 29 April 2025 at 15:04" loading="lazy" decoding="async"><span class="shot-time">15:04</span></button><button class="shot wide" type="button" data-full="media/20250429_150425.jpg"><img src="media/20250429_150425_t.jpg" width="900" height="675" alt="Paul and Abhiramy, 29 April 2025 at 15:04" loading="lazy" decoding="async"><span class="shot-time">15:04</span></button><button class="shot" type="button" data-full="media/20250429_151239.jpg"><img src="media/20250429_151239_t.jpg" width="675" height="900" alt="Paul and Abhiramy, 29 April 2025 at 15:12" loading="lazy" decoding="async"><span class="shot-time">15:12</span></button></div></article><article class="day"><header class="day-head"><h2 class="day-date">3 May 2025</h2><span class="day-count">1 frame</span></header><div class="grid"><button class="shot wide" type="button" data-full="media/20250503_175239.jpg"><img src="media/20250503_175239_t.jpg" width="900" height="675" alt="Paul and Abhiramy, 3 May 2025 at 17:52" loading="lazy" decoding="async"><span class="shot-time">17:52</span></button></div></article>
+  </section>
+
+  <section class="films">
+    <p class="label">Moving</p>
+
+    <figure class="film">
+      <div class="film-frame">
+        <video id="v1" muted loop playsinline preload="none" poster="media/poster-driving.jpg">
+          <source src="media/driving.mp4" type="video/mp4">
+        </video>
+        <button class="playcue" type="button" data-for="v1" aria-label="Play video">
+          <span><svg width="20" height="24" viewBox="0 0 20 24" aria-hidden="true"><path d="M0 0l20 12L0 24z" fill="#EFE7DA"/></svg></span>
+        </button>
+        <button class="sound" type="button" data-for="v1" aria-pressed="false">Sound on</button>
+      </div>
+      <figcaption class="film-cap">
+        <span class="t">Driving, with you next to me.</span>
+        <span class="m">29 APR 2025</span>
+      </figcaption>
+    </figure>
+
+    <figure class="film">
+      <div class="film-frame">
+        <video id="v2" muted loop playsinline preload="none" poster="media/poster-holding.jpg">
+          <source src="media/holding.mp4" type="video/mp4">
+        </video>
+        <button class="playcue" type="button" data-for="v2" aria-label="Play video">
+          <span><svg width="20" height="24" viewBox="0 0 20 24" aria-hidden="true"><path d="M0 0l20 12L0 24z" fill="#EFE7DA"/></svg></span>
+        </button>
+        <button class="sound" type="button" data-for="v2" aria-pressed="false">Sound on</button>
+      </div>
+      <figcaption class="film-cap">
+        <span class="t">Holding you.</span>
+        <span class="m">29 APR 2025 — eighteen minutes later</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <section class="close col">
+    <svg class="close-heart" viewBox="0 0 32 29" aria-hidden="true">
+      <path d="M16 28C16 28 1 18.5 1 9.2 1 4.4 4.6 1 9 1c3 0 5.6 1.8 7 4.4C17.4 2.8 20 1 23 1c4.4 0 8 3.4 8 8.2C31 18.5 16 28 16 28z" fill="none" stroke="#E8A85C" stroke-width="1.5"/>
+    </svg>
+    <p>I'd choose you again. And again. And again.</p>
+    <span class="label">Paul &amp; Abhiramy — 15.08.2024</span>
+  </section>
+
+</main>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo">
+  <button class="lb-close" id="lbClose" type="button">CLOSE</button>
+  <img id="lbImg" src="" alt="">
+</div>
+
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- entrance ---------- */
+  requestAnimationFrame(function () { document.body.classList.add('lit'); });
+
+  /* ---------- counter ---------- */
+  var START = new Date(2024, 7, 15, 0, 0, 0);
+  var daysEl = document.getElementById('days');
+  var clockEl = document.getElementById('clock');
+
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+  function tick() {
+    var ms = Date.now() - START.getTime();
+    var d = Math.floor(ms / 86400000);
+    var rem = ms - d * 86400000;
+    clockEl.textContent = pad(Math.floor(rem / 3600000)) + ' : ' +
+                          pad(Math.floor((rem % 3600000) / 60000)) + ' : ' +
+                          pad(Math.floor((rem % 60000) / 1000));
+  }
+
+  var target = Math.floor((Date.now() - START.getTime()) / 86400000);
+
+  if (reduce) {
+    daysEl.textContent = target;
+    daysEl.classList.add('beating');
+  } else {
+    var t0 = null, dur = 1900;
+    function ease(x) { return 1 - Math.pow(1 - x, 4); }
+    function run(ts) {
+      if (t0 === null) t0 = ts;
+      var p = Math.min((ts - t0) / dur, 1);
+      daysEl.textContent = Math.round(ease(p) * target);
+      if (p < 1) requestAnimationFrame(run);
+      else { daysEl.textContent = target; daysEl.classList.add('beating'); }
+    }
+    setTimeout(function () { requestAnimationFrame(run); }, 700);
+  }
+
+  tick();
+  setInterval(tick, 1000);
+
+  /* ---------- drifting hearts ---------- */
+  if (!reduce) {
+    var cv = document.getElementById('hearts');
+    var ctx = cv.getContext('2d');
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var W = 0, H = 0, hearts = [];
+
+    function resize() {
+      W = window.innerWidth; H = window.innerHeight;
+      cv.width = W * dpr; cv.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function seed(n) {
+      hearts = [];
+      for (var i = 0; i < n; i++) {
+        hearts.push({
+          x: Math.random() * W,
+          y: Math.random() * H,
+          s: 5 + Math.random() * 11,
+          sp: 0.12 + Math.random() * 0.34,
+          sw: 0.4 + Math.random() * 1.1,
+          ph: Math.random() * Math.PI * 2,
+          a: 0.06 + Math.random() * 0.22,
+          rose: Math.random() > 0.55
+        });
+      }
+    }
+
+    function path(x, y, s) {
+      ctx.beginPath();
+      ctx.moveTo(x, y + s * 0.28);
+      ctx.bezierCurveTo(x, y, x - s / 2, y, x - s / 2, y + s * 0.28);
+      ctx.bezierCurveTo(x - s / 2, y + s * 0.62, x, y + s * 0.82, x, y + s);
+      ctx.bezierCurveTo(x, y + s * 0.82, x + s / 2, y + s * 0.62, x + s / 2, y + s * 0.28);
+      ctx.bezierCurveTo(x + s / 2, y, x, y, x, y + s * 0.28);
+      ctx.closePath();
+    }
+
+    var t = 0;
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      t += 0.01;
+      for (var i = 0; i < hearts.length; i++) {
+        var p = hearts[i];
+        p.y -= p.sp;
+        var x = p.x + Math.sin(t + p.ph) * p.sw * 9;
+        if (p.y < -30) { p.y = H + 20; p.x = Math.random() * W; }
+        ctx.globalAlpha = p.a;
+        ctx.fillStyle = p.rose ? '#D98A8A' : '#E8A85C';
+        path(x, p.y, p.s);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(draw);
+    }
+
+    resize();
+    seed(window.innerWidth < 640 ? 16 : 30);
+    draw();
+
+    var rt;
+    window.addEventListener('resize', function () {
+      clearTimeout(rt);
+      rt = setTimeout(function () { resize(); seed(window.innerWidth < 640 ? 16 : 30); }, 200);
+    });
+  }
+
+  /* ---------- reveal on scroll ---------- */
+  var obs = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('seen'); obs.unobserve(e.target); }
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+
+  document.querySelectorAll('.shot').forEach(function (el, i) {
+    el.style.transitionDelay = (i % 3) * 90 + 'ms';
+    obs.observe(el);
+  });
+
+  document.querySelectorAll('.film, .letter p, .close p').forEach(function (el) {
+    obs.observe(el);
+  });
+
+  /* ---------- video plays on scroll ---------- */
+  var vids = document.querySelectorAll('.film video');
+
+  function attempt(v) {
+    var frame = v.closest('.film-frame');
+    var pr = v.play();
+    if (pr && pr.then) {
+      pr.then(function () { frame.classList.remove('needs-tap'); })
+        .catch(function () { frame.classList.add('needs-tap'); });
+    }
+  }
+
+  // phones use a lower threshold — a portrait video can fill the whole screen
+  var thresh = window.innerWidth < 640 ? 0.25 : 0.5;
+
+  var vObs = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      var v = e.target;
+      if (e.isIntersecting) {
+        if (!v.dataset.loaded) { v.load(); v.dataset.loaded = '1'; }
+        attempt(v);
+      } else {
+        v.pause();
+      }
+    });
+  }, { threshold: thresh });
+
+  vids.forEach(function (v) {
+    vObs.observe(v);
+    v.addEventListener('click', function () {
+      if (v.paused) attempt(v); else v.pause();
+    });
+  });
+
+  document.querySelectorAll('.playcue').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var v = document.getElementById(btn.dataset.for);
+      if (!v.dataset.loaded) { v.load(); v.dataset.loaded = '1'; }
+      attempt(v);
+    });
+  });
+
+  document.querySelectorAll('.sound').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var v = document.getElementById(btn.dataset.for);
+      v.muted = !v.muted;
+      btn.textContent = v.muted ? 'Sound on' : 'Sound off';
+      btn.setAttribute('aria-pressed', v.muted ? 'false' : 'true');
+      if (!v.muted && v.paused) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+    });
+  });
+
+  /* ---------- lightbox ---------- */
+  var lb = document.getElementById('lb'),
+      lbImg = document.getElementById('lbImg'),
+      lbClose = document.getElementById('lbClose'),
+      lastFocus = null;
+
+  function open(src, alt) {
+    lastFocus = document.activeElement;
+    lbImg.src = src; lbImg.alt = alt || '';
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    lbClose.focus();
+  }
+
+  function close() {
+    lb.classList.remove('open');
+    lbImg.src = '';
+    document.body.style.overflow = '';
+    if (lastFocus) lastFocus.focus();
+  }
+
+  document.querySelectorAll('.shot').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var img = btn.querySelector('img');
+      open(btn.dataset.full, img.alt);
+    });
+  });
+
+  lb.addEventListener('click', function (e) { if (e.target !== lbImg) close(); });
+  lbClose.addEventListener('click', close);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && lb.classList.contains('open')) close();
+  });
+})();
+</script>
+</body>
+</html>
