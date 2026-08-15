@@ -112,12 +112,14 @@
     text-wrap: balance; letter-spacing: -0.02em;
   }
 
+  /* the padding is load-bearing: background-clip paints only inside the
+     box, so the descender on the y would come out invisible without it */
   .hero-name .em {
     display: block; font-style: italic;
+    line-height: 1.18; padding-bottom: .18em;
     background: linear-gradient(100deg, var(--blush), var(--rose) 55%, var(--deep-rose));
     -webkit-background-clip: text; background-clip: text;
     -webkit-text-fill-color: transparent; color: var(--rose);
-    padding-bottom: .08em;
   }
 
   .counter { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
@@ -305,6 +307,7 @@
     background: none; border: 0; cursor: pointer;
     animation: beat 1.9s ease-in-out infinite;
     transition: transform .35s cubic-bezier(.2,.7,.3,1);
+    -webkit-tap-highlight-color: transparent;
   }
 
   .bigheart svg { width: 100%; height: 100%; display: block; overflow: visible; }
@@ -328,19 +331,6 @@
   }
 
   .press-hint.hide { opacity: 0; }
-
-  .reveal {
-    font-size: clamp(1.75rem, 7vw, 3rem);
-    line-height: 1.2; font-style: italic;
-    margin: 1.5rem 0 0; min-height: 1.2em;
-    background: linear-gradient(100deg, var(--blush), var(--rose) 50%, var(--deep-rose));
-    -webkit-background-clip: text; background-clip: text;
-    -webkit-text-fill-color: transparent; color: var(--rose);
-    opacity: 0; transform: translateY(14px) scale(.95);
-    transition: opacity 1s ease, transform 1s cubic-bezier(.2,.7,.3,1);
-  }
-
-  .reveal.shown { opacity: 1; transform: none; }
 
   /* ---------- opening gate ---------- */
   /* browsers refuse to play sound until someone taps, so the tap is the doorway */
@@ -463,7 +453,11 @@
 <div class="glow-low"></div>
 <canvas id="hearts" aria-hidden="true"></canvas>
 
-<div class="gate" id="gate">
+<!-- without JS the card could never be dismissed, so it must not appear -->
+<noscript><style>.gate{display:none!important}.up{opacity:1!important;transform:none!important}</style></noscript>
+
+<!-- up by default so blocked autoplay never flashes the page first -->
+<div class="gate on" id="gate">
   <svg class="gate-heart" viewBox="0 0 32 29" aria-hidden="true">
     <path d="M16 28C16 28 1 18.5 1 9.2 1 4.4 4.6 1 9 1c3 0 5.6 1.8 7 4.4C17.4 2.8 20 1 23 1c4.4 0 8 3.4 8 8.2C31 18.5 16 28 16 28z" fill="none" stroke="#E87F9B" stroke-width="1.5"/>
   </svg>
@@ -547,7 +541,7 @@
   </section>
 
   <section class="heartbox col">
-    <button class="bigheart" id="bigheart" type="button" aria-label="Press the heart">
+    <a class="bigheart" id="bigheart" href="love.html" aria-label="Press the heart">
       <svg viewBox="0 0 32 29" aria-hidden="true">
         <defs>
           <linearGradient id="heartGrad" x1="0" y1="0" x2="1" y2="1">
@@ -559,10 +553,9 @@
         <path class="fill" d="M16 28C16 28 1 18.5 1 9.2 1 4.4 4.6 1 9 1c3 0 5.6 1.8 7 4.4C17.4 2.8 20 1 23 1c4.4 0 8 3.4 8 8.2C31 18.5 16 28 16 28z"/>
         <path class="line" d="M16 28C16 28 1 18.5 1 9.2 1 4.4 4.6 1 9 1c3 0 5.6 1.8 7 4.4C17.4 2.8 20 1 23 1c4.4 0 8 3.4 8 8.2C31 18.5 16 28 16 28z"/>
       </svg>
-    </button>
+    </a>
 
-    <p class="press-hint" id="pressHint">Press the heart</p>
-    <p class="reveal" id="reveal" role="status" aria-live="polite"></p>
+    <p class="press-hint">Press the heart</p>
   </section>
 
   <section class="close col">
@@ -677,20 +670,40 @@
     countUp();
   }
 
-  if (hasSong) {
-    gate.classList.add('on');
-    document.body.style.overflow = 'hidden';
+  function openPage(fade) {
+    gate.classList.add('gone');
+    document.body.style.overflow = '';
+    begin();
+    setTimeout(function () { gate.classList.remove('on'); }, fade ? 1100 : 0);
+  }
 
+  if (hasSong) {
+    document.body.style.overflow = 'hidden';
+    song.volume = 0;
+
+    /* the card is always wired, so a tap works whatever the browser decides */
     gateOpen.addEventListener('click', function () {
-      gate.classList.add('gone');
-      document.body.style.overflow = '';
       song.volume = 0;
       playSong();
       fadeTo(0.55, 2600);
-      begin();
-      setTimeout(function () { gate.classList.remove('on'); }, 1100);
+      openPage(true);
     });
+
+    /* try to start the song the moment the page opens. Chrome allows this
+       once the domain has enough media engagement; a first-time visitor on
+       Safari or any phone will be refused, and gets the card instead. */
+    var auto = song.play();
+    if (auto && auto.then) {
+      auto.then(function () {
+        setMusicUI(true);
+        fadeTo(0.55, 2600);
+        gate.classList.remove('on');       /* straight in, no card at all */
+        document.body.style.overflow = '';
+        begin();
+      }).catch(function () { /* refused; the card is already up */ });
+    }
   } else {
+    gate.classList.remove('on');
     requestAnimationFrame(begin);
   }
 
@@ -884,36 +897,20 @@
 
   /* ---------- the heart she presses ---------- */
   var bigheart = document.getElementById('bigheart');
-  var reveal = document.getElementById('reveal');
-  var pressHint = document.getElementById('pressHint');
-  var MESSAGE = 'I love you, Abhiramy.';
-  var typed = false;
+  var going = false;
 
-  bigheart.addEventListener('click', function () {
+  bigheart.addEventListener('click', function (e) {
+    e.preventDefault();
+    if (going) return;
+    going = true;
+
     var r = bigheart.getBoundingClientRect();
-    burstAt(r.left + r.width / 2, r.top + r.height / 2, 22);
+    burstAt(r.left + r.width / 2, r.top + r.height / 2, 26);
 
-    bigheart.classList.add('pressed');
-    bigheart.classList.remove('pop');
-    void bigheart.offsetWidth;          /* restart the pop each press */
-    bigheart.classList.add('pop');
-    pressHint.classList.add('hide');
+    bigheart.classList.add('pressed', 'pop');
 
-    if (typed) return;
-    typed = true;
-
-    if (reduce) {
-      reveal.textContent = MESSAGE;
-      reveal.classList.add('shown');
-      return;
-    }
-
-    reveal.classList.add('shown');
-    var i = 0;
-    (function type() {
-      reveal.textContent = MESSAGE.slice(0, i);
-      if (i++ <= MESSAGE.length) setTimeout(type, 55);
-    })();
+    /* let the burst read for a moment, then open her page */
+    setTimeout(function () { window.location.href = 'love.html'; }, reduce ? 0 : 620);
   });
 
   /* ---------- lightbox ---------- */

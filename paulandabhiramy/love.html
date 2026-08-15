@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#12040A">
+<meta name="description" content="I love you, Babyramy.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Ctext y=%2226%22 font-size=%2226%22%3E%E2%9D%A4%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<title>I Love You, Babyramy</title>
+<style>
+  :root {
+    --ground: #12040A;
+    --red: #E4143C;
+    --red-hot: #FF2E52;
+    --rose: #E87F9B;
+    --blush: #F7C3CE;
+    --warm: #FFF0F2;
+    --muted: #B08A94;
+    --serif: Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+    --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--warm);
+    font-family: var(--serif);
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* the room breathes on the same beat as the heart */
+  .breath {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse at 50% 42%, rgba(228,20,60,0.34), transparent 60%),
+      radial-gradient(ellipse at 50% 104%, rgba(255,46,82,0.20), transparent 55%),
+      radial-gradient(ellipse at 12% 12%, rgba(255,92,120,0.12), transparent 45%);
+    animation: breathe 1.7s ease-in-out infinite;
+  }
+
+  @keyframes breathe {
+    0%, 62%, 100% { opacity: .82; transform: scale(1); }
+    12% { opacity: 1; transform: scale(1.035); }
+    24% { opacity: .88; transform: scale(1); }
+    36% { opacity: .96; transform: scale(1.02); }
+  }
+
+  #sky { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 1; }
+
+  .stage {
+    position: relative; z-index: 2;
+    min-height: 100vh; min-height: 100svh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 2rem 1.25rem;
+  }
+
+  .bloom {
+    position: absolute; z-index: -1;
+    width: min(80vw, 500px); aspect-ratio: 32 / 29;
+    opacity: .24;
+    animation: beat 1.7s ease-in-out infinite;
+    filter: drop-shadow(0 0 40px rgba(228,20,60,.5));
+  }
+
+  .bloom svg { width: 100%; height: 100%; display: block; }
+
+  @keyframes beat {
+    0%, 62%, 100% { transform: scale(1); }
+    12% { transform: scale(1.07); }
+    24% { transform: scale(1); }
+    36% { transform: scale(1.045); }
+  }
+
+  .lead {
+    font-family: var(--sans);
+    font-size: clamp(.7rem, 2.4vw, .82rem);
+    letter-spacing: .34em; text-transform: uppercase;
+    color: var(--blush); margin: 0 0 .5rem;
+    opacity: 0; animation: rise 1s ease .2s forwards;
+  }
+
+  .lead span { display: inline-block; animation: bob 2.6s ease-in-out infinite; }
+
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+
+  .big {
+    font-size: clamp(3rem, 15vw, 8.5rem);
+    line-height: 1.06; margin: 0; font-weight: 400; font-style: italic;
+    letter-spacing: -0.02em;
+    display: flex; justify-content: center; flex-wrap: wrap;
+    align-items: flex-end;
+  }
+
+  /* each letter arrives on its own, then never quite settles.
+     the padding matters: background-clip paints only inside the box,
+     so a descender hanging past it would render invisible */
+  .big i {
+    display: inline-block; font-style: italic;
+    line-height: 1.2;
+    padding-bottom: .18em;
+    background: linear-gradient(100deg, var(--blush), var(--red-hot) 45%, var(--red));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: var(--red-hot);
+    text-shadow: 0 0 50px rgba(228,20,60,0.5);
+    opacity: 0;
+    animation:
+      drop 1s cubic-bezier(.2,.9,.3,1) forwards,
+      sway 3.4s ease-in-out infinite;
+    animation-delay: var(--d), calc(var(--d) + 1s);
+  }
+
+  @keyframes drop {
+    0% { opacity: 0; transform: translateY(-70px) rotate(-14deg) scale(.5); }
+    70% { opacity: 1; transform: translateY(6px) rotate(3deg) scale(1.08); }
+    100% { opacity: 1; transform: none; }
+  }
+
+  @keyframes sway {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-9px) rotate(1.6deg); }
+  }
+
+  .sig {
+    font-size: clamp(1rem, 3.6vw, 1.4rem);
+    font-style: italic; color: var(--blush);
+    margin: 2.5rem 0 0;
+    opacity: 0; animation: rise 1.1s ease 2.1s forwards;
+  }
+
+  .sig b {
+    display: block; font-style: normal; font-weight: 400;
+    color: var(--warm); font-size: 1.2em; margin-top: .2rem;
+    text-shadow: 0 0 26px rgba(255,240,242,.35);
+    animation: shimmer 3.6s ease-in-out infinite 2.6s;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { text-shadow: 0 0 26px rgba(255,240,242,.3); }
+    50% { text-shadow: 0 0 46px rgba(255,92,120,.75); }
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(22px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .hint {
+    position: fixed; left: 0; right: 0; bottom: 4.35rem;
+    font-family: var(--sans); font-size: .625rem;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--muted); margin: 0; z-index: 3;
+    opacity: 0; animation: rise 1s ease 3s forwards, bob 3s ease-in-out infinite 4s;
+    pointer-events: none;
+  }
+
+  .back {
+    position: fixed; left: 50%; bottom: 1.5rem; z-index: 4;
+    display: inline-flex; align-items: center; gap: .55rem;
+    background: rgba(18,4,10,0.6);
+    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,240,242,0.22);
+    color: var(--warm); text-decoration: none;
+    font-family: var(--sans); font-size: .625rem;
+    letter-spacing: .18em; text-transform: uppercase;
+    padding: .65rem 1.1rem; border-radius: 999px;
+    transform: translateX(-50%);
+    opacity: 0; animation: backin 1s ease 3s forwards;
+    transition: border-color .3s ease, background .3s ease;
+  }
+
+  @keyframes backin {
+    from { opacity: 0; transform: translateX(-50%) translateY(16px); }
+    to { opacity: 1; transform: translateX(-50%); }
+  }
+
+  .back:hover { border-color: var(--red-hot); background: rgba(18,4,10,0.85); }
+
+  .sound {
+    position: fixed; right: 1rem; top: 1rem; z-index: 4;
+    display: none; align-items: center; gap: .45rem;
+    background: rgba(18,4,10,0.66);
+    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,240,242,0.24);
+    color: var(--warm); cursor: pointer;
+    font-family: var(--sans); font-size: .625rem;
+    letter-spacing: .16em; text-transform: uppercase;
+    padding: .6rem .9rem; border-radius: 999px;
+    animation: beat 1.7s ease-in-out infinite;
+  }
+
+  .sound.on { display: inline-flex; }
+  .sound:hover { border-color: var(--red-hot); }
+
+  @media (max-width: 26rem) {
+    .sig { margin-top: 1.9rem; }
+    .hint { bottom: 3.9rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #sky, .breath { animation: none !important; }
+    #sky { display: none; }
+    .bloom { animation: none; opacity: .26; }
+    .lead, .sig, .hint, .big i { opacity: 1 !important; animation: none !important; transform: none !important; }
+    .sig b { animation: none !important; }
+    .back { opacity: 1 !important; animation: none !important; transform: translateX(-50%) !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="breath" aria-hidden="true"></div>
+<canvas id="sky" aria-hidden="true"></canvas>
+
+<main class="stage">
+  <div class="bloom" aria-hidden="true">
+    <svg viewBox="0 0 32 29">
+      <defs>
+        <radialGradient id="bg" cx="50%" cy="38%" r="70%">
+          <stop offset="0%" stop-color="#FF2E52"/>
+          <stop offset="100%" stop-color="#8E0022"/>
+        </radialGradient>
+      </defs>
+      <path d="M16 28C16 28 1 18.5 1 9.2 1 4.4 4.6 1 9 1c3 0 5.6 1.8 7 4.4C17.4 2.8 20 1 23 1c4.4 0 8 3.4 8 8.2C31 18.5 16 28 16 28z" fill="url(#bg)"/>
+    </svg>
+  </div>
+
+  <p class="lead" id="lead">I Love you</p>
+  <h1 class="big" id="big" aria-label="Babyramy"></h1>
+
+  <p class="sig">with love,<b>your paulu</b></p>
+</main>
+
+<p class="hint">Tap anywhere for more hearts</p>
+
+<a class="back" href="./">Back to our two years</a>
+
+<button class="sound" id="sound" type="button">Play the song</button>
+
+<audio id="song" src="media/love-song.mp3" loop preload="auto"></audio>
+
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- letters ---------- */
+  var NAME = 'Babyramy';
+  var big = document.getElementById('big');
+  for (var i = 0; i < NAME.length; i++) {
+    var el = document.createElement('i');
+    el.textContent = NAME[i];
+    el.style.setProperty('--d', (0.55 + i * 0.09).toFixed(2) + 's');
+    big.appendChild(el);
+  }
+
+  var lead = document.getElementById('lead');
+  var words = lead.textContent.split(' ');
+  lead.textContent = '';
+  words.forEach(function (w, k) {
+    var s = document.createElement('span');
+    s.textContent = w;
+    s.style.animationDelay = (k * 0.22) + 's';
+    lead.appendChild(s);
+    if (k < words.length - 1) lead.appendChild(document.createTextNode(' '));
+  });
+
+  /* ---------- this page has its own song ---------- */
+  var song = document.getElementById('song');
+  var soundBtn = document.getElementById('sound');
+  song.volume = 0;
+
+  /* fade up so the track opens rather than starts */
+  function fadeTo(target, ms) {
+    var from = song.volume, t0 = null;
+    function step(ts) {
+      if (t0 === null) t0 = ts;
+      var p = Math.min((ts - t0) / ms, 1);
+      song.volume = Math.max(0, Math.min(1, from + (target - from) * p));
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  var pr = song.play();
+  if (pr && pr.then) {
+    /* Chrome usually allows this, since she pressed the heart to get here
+       and has already played audio on this domain; Safari and iOS will
+       not, so offer a button instead */
+    pr.then(function () { fadeTo(0.6, 1800); })
+      .catch(function () { soundBtn.classList.add('on'); });
+  }
+
+  soundBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    song.play().then(function () {
+      soundBtn.classList.remove('on');
+      fadeTo(0.6, 1200);
+    }).catch(function () {});
+  });
+
+  if (reduce) return;
+
+  /* ---------- canvas ---------- */
+  var cv = document.getElementById('sky');
+  var ctx = cv.getContext('2d');
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var W, H;
+  var floaters = [], spray = [], rings = [], sparks = [];
+  var REDS = ['#E4143C', '#FF2E52', '#C10E33', '#E87F9B', '#FF5C78', '#8E0022'];
+  var small = window.innerWidth < 640;
+
+  function pick() { return REDS[Math.floor(Math.random() * REDS.length)]; }
+
+  function resize() {
+    W = window.innerWidth; H = window.innerHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function seed() {
+    floaters = [];
+    var n = small ? 26 : 46;
+    for (var i = 0; i < n; i++) {
+      var depth = Math.random();               /* 0 far, 1 near */
+      floaters.push({
+        x: Math.random() * W,
+        y: Math.random() * H * 1.5,
+        d: depth,
+        s: 16 + depth * 74,                    /* near hearts are big */
+        sp: 0.18 + depth * 0.95,
+        sw: 0.5 + Math.random() * 1.8,
+        ph: Math.random() * Math.PI * 2,
+        rot: (Math.random() - 0.5) * 0.55,
+        spin: (Math.random() - 0.5) * 0.006,
+        a: 0.12 + depth * 0.4,
+        c: pick()
+      });
+    }
+    sparks = [];
+    for (var j = 0; j < (small ? 26 : 46); j++) {
+      sparks.push({
+        x: Math.random() * W, y: Math.random() * H,
+        r: 0.7 + Math.random() * 1.9,
+        ph: Math.random() * Math.PI * 2,
+        sp: 0.4 + Math.random() * 1.5
+      });
+    }
+  }
+
+  function path(x, y, s) {
+    ctx.beginPath();
+    ctx.moveTo(x, y + s * 0.28);
+    ctx.bezierCurveTo(x, y, x - s / 2, y, x - s / 2, y + s * 0.28);
+    ctx.bezierCurveTo(x - s / 2, y + s * 0.62, x, y + s * 0.82, x, y + s);
+    ctx.bezierCurveTo(x, y + s * 0.82, x + s / 2, y + s * 0.62, x + s / 2, y + s * 0.28);
+    ctx.bezierCurveTo(x + s / 2, y, x, y, x, y + s * 0.28);
+    ctx.closePath();
+  }
+
+  function heart(x, y, s, rot, alpha, color, stroke) {
+    ctx.save();
+    ctx.translate(x + s / 2, y + s / 2);
+    ctx.rotate(rot);
+    ctx.translate(-(x + s / 2), -(y + s / 2));
+    ctx.globalAlpha = alpha;
+    path(x, y, s);
+    if (stroke) { ctx.strokeStyle = color; ctx.lineWidth = stroke; ctx.stroke(); }
+    else { ctx.fillStyle = color; ctx.fill(); }
+    ctx.restore();
+  }
+
+  function burst(cx, cy, n) {
+    for (var i = 0; i < n; i++) {
+      var ang = (Math.PI * 2 * i) / n + Math.random() * 0.6;
+      var v = 4 + Math.random() * 8;
+      spray.push({
+        x: cx, y: cy,
+        vx: Math.cos(ang) * v,
+        vy: Math.sin(ang) * v - 2.4,
+        s: 18 + Math.random() * 46,
+        rot: (Math.random() - 0.5) * 1.3,
+        spin: (Math.random() - 0.5) * 0.09,
+        life: 1,
+        decay: 0.005 + Math.random() * 0.007,
+        c: pick()
+      });
+    }
+    rings.push({ x: cx, y: cy, r: 10, life: 1, c: pick() });
+  }
+
+  var t = 0;
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+    t += 0.01;
+
+    /* twinkles behind everything */
+    for (var k = 0; k < sparks.length; k++) {
+      var sp = sparks[k];
+      sp.y -= sp.sp * 0.35;
+      if (sp.y < -6) { sp.y = H + 6; sp.x = Math.random() * W; }
+      ctx.globalAlpha = 0.25 + Math.abs(Math.sin(t * 2.2 + sp.ph)) * 0.55;
+      ctx.fillStyle = '#FFD9DF';
+      ctx.beginPath();
+      ctx.arc(sp.x, sp.y, sp.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    /* the drifting field, far ones first */
+    for (var i = 0; i < floaters.length; i++) {
+      var f = floaters[i];
+      f.y -= f.sp;
+      f.rot += f.spin;
+      if (f.y < -f.s - 50) { f.y = H + f.s + Math.random() * 80; f.x = Math.random() * W; }
+      heart(f.x + Math.sin(t + f.ph) * f.sw * 16, f.y, f.s, f.rot, f.a, f.c);
+    }
+
+    /* expanding outlines from every burst */
+    for (var m = rings.length - 1; m >= 0; m--) {
+      var rg = rings[m];
+      rg.r += 7;
+      rg.life -= 0.016;
+      if (rg.life <= 0) { rings.splice(m, 1); continue; }
+      heart(rg.x - rg.r / 2, rg.y - rg.r / 2, rg.r, 0, rg.life * 0.5, rg.c, 2);
+    }
+
+    /* thrown hearts, in front */
+    for (var j = spray.length - 1; j >= 0; j--) {
+      var q = spray[j];
+      q.x += q.vx; q.y += q.vy;
+      q.vy += 0.13; q.vx *= 0.99;
+      q.rot += q.spin;
+      q.life -= q.decay;
+      if (q.life <= 0) { spray.splice(j, 1); continue; }
+      heart(q.x, q.y, q.s * (0.55 + q.life * 0.45), q.rot, Math.max(0, q.life) * 0.92, q.c);
+    }
+
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(frame);
+  }
+
+  resize();
+  seed();
+  frame();
+
+  /* an arrival worth having */
+  setTimeout(function () { burst(W / 2, H * 0.46, 34); }, 300);
+  setTimeout(function () { burst(W * 0.28, H * 0.4, 20); }, 1100);
+  setTimeout(function () { burst(W * 0.72, H * 0.5, 20); }, 1600);
+
+  /* and it keeps going on its own */
+  setInterval(function () {
+    if (document.hidden) return;
+    burst(W * (0.18 + Math.random() * 0.64), H * (0.25 + Math.random() * 0.5), 16);
+  }, 3200);
+
+  /* more whenever she touches it */
+  document.addEventListener('pointerdown', function (e) {
+    if (e.target.closest('a, button')) return;
+    burst(e.clientX, e.clientY, 24);
+  });
+
+  /* a trail under her finger */
+  var lastTrail = 0;
+  document.addEventListener('pointermove', function (e) {
+    var now = Date.now();
+    if (now - lastTrail < 90) return;
+    lastTrail = now;
+    spray.push({
+      x: e.clientX, y: e.clientY,
+      vx: (Math.random() - 0.5) * 1.6,
+      vy: -0.8 - Math.random(),
+      s: 12 + Math.random() * 20,
+      rot: (Math.random() - 0.5) * 0.8,
+      spin: (Math.random() - 0.5) * 0.05,
+      life: 1, decay: 0.016,
+      c: pick()
+    });
+  });
+
+  var rt;
+  window.addEventListener('resize', function () {
+    clearTimeout(rt);
+    rt = setTimeout(function () { small = window.innerWidth < 640; resize(); seed(); }, 200);
+  });
+})();
+</script>
+</body>
+</html>
