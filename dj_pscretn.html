@@ -206,6 +206,78 @@
   .meta-k { font-family: var(--mono); font-size: .6875rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 0 .25rem; }
   .meta-v { font-size: .9375rem; font-weight: 600; margin: 0; }
 
+  /* ---------- lasers sweeping the hero ---------- */
+  .lasers { position: absolute; inset: 0; z-index: 1; overflow: hidden; pointer-events: none; }
+
+  .laser {
+    position: absolute; top: -30%; left: 50%;
+    width: 42vw; height: 160%;
+    transform-origin: top center;
+    background: linear-gradient(to bottom, rgba(139,92,255,0.20), transparent 62%);
+    clip-path: polygon(48% 0, 52% 0, 100% 100%, 0 100%);
+    filter: blur(6px);
+    animation: sweep-l 11s ease-in-out infinite;
+  }
+
+  .laser.b {
+    background: linear-gradient(to bottom, rgba(255,46,154,0.18), transparent 62%);
+    animation-duration: 14s; animation-delay: -4s;
+  }
+
+  .laser.c {
+    background: linear-gradient(to bottom, rgba(47,230,255,0.13), transparent 58%);
+    animation-duration: 17s; animation-delay: -9s;
+  }
+
+  @keyframes sweep-l {
+    0%, 100% { transform: translateX(-50%) rotate(-26deg); opacity: .55; }
+    50% { transform: translateX(-50%) rotate(26deg); opacity: 1; }
+  }
+
+  /* ---------- waveform divider ---------- */
+  .wave {
+    display: flex; align-items: flex-end; justify-content: center;
+    gap: 3px; height: 46px; padding: 0 1.5rem; overflow: hidden;
+  }
+
+  .wave i {
+    display: block; width: 3px; border-radius: 2px;
+    background: linear-gradient(to top, var(--violet), var(--pink));
+    animation: bounce 1.1s ease-in-out infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { height: 5px; opacity: .3; }
+    50% { height: 30px; opacity: .85; }
+  }
+
+  /* ---------- eyebrow gets a level meter ---------- */
+  .eyebrow { display: flex; align-items: center; gap: .6rem; }
+
+  .eyebrow::before {
+    content: ""; width: 21px; height: 11px; flex: 0 0 auto;
+    background:
+      linear-gradient(var(--violet), var(--violet)) 0 100%/3px 45% no-repeat,
+      linear-gradient(var(--pink), var(--pink)) 6px 100%/3px 100% no-repeat,
+      linear-gradient(var(--violet), var(--violet)) 12px 100%/3px 60% no-repeat,
+      linear-gradient(var(--cyan), var(--cyan)) 18px 100%/3px 80% no-repeat;
+    animation: meter 1.4s ease-in-out infinite;
+  }
+
+  @keyframes meter { 0%,100% { opacity: .9; } 50% { opacity: .3; } }
+
+  /* ---------- a light sweeps across cards on hover ---------- */
+  .card::before, .deck::before {
+    content: ""; position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(115deg, transparent 35%, rgba(139,92,255,0.14) 50%, transparent 65%);
+    background-size: 260% 100%; background-position: 130% 0;
+    transition: background-position .9s ease; pointer-events: none;
+  }
+
+  .card:hover::before, .deck:hover::before { background-position: -30% 0; }
+
+  .deck { position: relative; overflow: hidden; }
+
   /* ---------- ticker ---------- */
   .ticker {
     border-top: 1px solid var(--line-solid);
@@ -267,21 +339,55 @@
   .reel-head { display: flex; align-items: flex-end; gap: 1rem; flex-wrap: wrap; }
   .reel-head .lede { margin-right: auto; }
 
+  .reel-wrap { position: relative; }
+
   .reel-scroll {
-    display: flex; gap: 1rem; margin-top: 2.5rem;
+    display: flex; gap: .75rem; margin-top: 2rem;
     overflow-x: auto; scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;   /* swiping the reel must not pull the page */
     padding-bottom: 1rem;
-    /* let the row run to the screen edge so it reads as scrollable */
+    /* run to the screen edge so it reads as scrollable */
     margin-left: -1.5rem; margin-right: -1.5rem;
     padding-left: 1.5rem; padding-right: 1.5rem;
-    scrollbar-width: thin; scrollbar-color: var(--line-solid) transparent;
+    scrollbar-width: none;
   }
 
-  .reel-scroll::-webkit-scrollbar { height: 6px; }
-  .reel-scroll::-webkit-scrollbar-track { background: transparent; }
-  .reel-scroll::-webkit-scrollbar-thumb { background: var(--line-solid); border-radius: 99px; }
+  .reel-scroll::-webkit-scrollbar { display: none; }
 
-  .clip { flex: 0 0 auto; width: 63vw; max-width: 240px; scroll-snap-align: start; margin: 0; }
+  /* a card and a bit, so the cut-off next one signals "keep swiping" */
+  .clip { flex: 0 0 auto; width: 68vw; max-width: 260px; scroll-snap-align: center; margin: 0; }
+
+  /* progress bar under the row, driven by scroll position */
+  .reel-bar {
+    height: 3px; border-radius: 99px; background: var(--line-solid);
+    overflow: hidden; margin-top: .25rem;
+  }
+
+  .reel-bar i {
+    display: block; height: 100%; width: 20%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--violet), var(--pink));
+    transition: transform .12s linear;
+  }
+
+  /* desktop arrows; hidden where touch is the input */
+  .reel-nav {
+    position: absolute; top: 38%; z-index: 3;
+    width: 42px; height: 42px; border-radius: 50%;
+    display: none; align-items: center; justify-content: center;
+    background: rgba(7,7,11,0.82);
+    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    border: 1px solid var(--line-solid); color: var(--white);
+    cursor: pointer; padding: 0;
+    transition: border-color .25s ease, opacity .25s ease;
+  }
+
+  .reel-nav:hover { border-color: var(--violet); }
+  .reel-nav[disabled] { opacity: .25; cursor: default; }
+  .reel-nav.prev { left: -14px; }
+  .reel-nav.next { right: -14px; }
+  .reel-nav svg { width: 16px; height: 16px; fill: currentColor; }
 
   .clip-frame {
     position: relative; overflow: hidden;
@@ -310,48 +416,98 @@
   .clip figcaption h3 { font-size: .875rem; font-weight: 600; }
   .clip figcaption p { font-size: .75rem; }
 
-  /* ---------- sets ---------- */
-  .sets { display: grid; gap: 1.25rem; margin-top: 2.5rem; }
-
-  .set { margin: 0; }
-
-  /* a still with a play button; the real player only loads on click,
-     so the page is not paying for YouTube's iframe on every visit */
-  .set-frame {
-    position: relative; display: block; width: 100%;
-    aspect-ratio: 16 / 9; overflow: hidden;
-    border: 1px solid var(--line-solid); border-radius: 14px;
-    background: var(--raised); cursor: pointer; padding: 0;
+  /* ---------- jog wheel ---------- */
+  .jog-stage {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 2rem; margin-top: 3rem;
   }
 
-  .set-frame img {
-    width: 100%; height: 100%; object-fit: cover;
-    filter: saturate(.9) brightness(.72);
-    transition: filter .4s ease, transform .6s ease;
+  .jog {
+    position: relative; flex: 0 0 auto;
+    width: min(72vw, 300px); aspect-ratio: 1;
+    border-radius: 50%;
+    cursor: grab; touch-action: none;   /* we handle the drag ourselves */
+    user-select: none; -webkit-user-select: none;
   }
 
-  .set-frame:hover img { filter: saturate(1) brightness(.85); transform: scale(1.03); }
+  .jog.grabbing { cursor: grabbing; }
 
-  .set-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
-
-  .set-play {
-    position: absolute; inset: 0; display: flex;
-    align-items: center; justify-content: center; pointer-events: none;
+  /* the metal ring around the platter */
+  .jog-rim {
+    position: absolute; inset: 0; border-radius: 50%;
+    background: conic-gradient(#2A2A3B, #3E3E55 12%, #23233A 26%, #45455E 44%,
+                               #24243A 62%, #3E3E55 82%, #2A2A3B);
+    box-shadow: 0 20px 60px -20px rgba(139,92,255,0.5), inset 0 0 0 1px #3A3A50;
   }
 
-  .set-play i {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 64px; height: 64px; border-radius: 50%;
+  /* the vinyl itself — this is the part that rotates */
+  .jog-face {
+    position: absolute; inset: 5%; border-radius: 50%;
+    background:
+      repeating-radial-gradient(circle at center,
+        rgba(255,255,255,0.035) 0 1px, transparent 1px 4px),
+      radial-gradient(circle at 32% 28%, #23233A, #0C0C14 62%);
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.85);
+    will-change: transform;
+  }
+
+  /* the dot that makes the rotation readable at a glance */
+  .jog-marker {
+    position: absolute; top: 6%; left: 50%;
+    width: 10px; height: 10px; margin-left: -5px;
+    border-radius: 50%;
+    background: linear-gradient(var(--pink), var(--violet));
+    box-shadow: 0 0 14px var(--pink);
+  }
+
+  .jog-centre {
+    position: absolute; inset: 33%; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, var(--violet), var(--pink));
+    box-shadow: 0 0 26px -4px rgba(255,46,154,0.7);
+  }
+
+  .jog-centre img { width: 46%; height: 46%; object-fit: contain; opacity: .95; }
+
+  .jog-centre::after {
+    content: ""; position: absolute; width: 7px; height: 7px;
+    border-radius: 50%; background: var(--ink);
+  }
+
+  .jog-meta { text-align: center; }
+
+  .jog-read {
+    display: flex; align-items: baseline; justify-content: center; gap: .4rem;
+    margin: 0;
+  }
+
+  .jog-read b {
+    font-family: var(--mono); font-size: 2.75rem; font-weight: 700;
+    letter-spacing: -0.03em; font-variant-numeric: tabular-nums;
     background: linear-gradient(100deg, var(--violet), var(--pink));
-    box-shadow: 0 8px 34px -6px rgba(255,46,154,0.7);
-    transition: transform .3s ease;
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: var(--violet);
   }
 
-  .set-frame:hover .set-play i { transform: scale(1.1); }
+  .jog-read small {
+    font-family: var(--mono); font-size: .75rem; letter-spacing: .18em;
+    color: var(--muted);
+  }
 
-  .set figcaption { margin-top: .9rem; }
-  .set figcaption h3 { margin: 0; font-size: 1rem; font-weight: 700; line-height: 1.35; }
-  .set figcaption p { margin: .2rem 0 0; font-size: .8125rem; color: var(--muted); }
+  .jog-hint {
+    margin: .5rem 0 0; font-size: .75rem; font-weight: 600;
+    letter-spacing: .2em; text-transform: uppercase; color: var(--violet);
+    transition: opacity .5s ease;
+  }
+
+  .jog-hint.gone { opacity: 0; }
+
+  .jog-note { margin: 1rem 0 0; font-size: .8125rem; color: var(--muted); max-width: 26ch; }
+
+  /* holding it near 33 RPM lights the ring */
+  .jog.locked .jog-rim {
+    box-shadow: 0 20px 70px -18px rgba(47,230,255,0.75), inset 0 0 0 1px var(--cyan);
+  }
 
   /* ---------- gigs ---------- */
   .gigs { display: grid; gap: .6rem; margin-top: 2.5rem; }
@@ -481,7 +637,9 @@
     .split { grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
     .cards { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
     #why .cards { grid-template-columns: repeat(2, 1fr); }
-    .sets { grid-template-columns: repeat(2, 1fr); }
+    .jog-stage { flex-direction: row; justify-content: center; gap: 4rem; }
+    .jog-meta { text-align: left; }
+    .jog-read { justify-content: flex-start; }
     .clip { width: 220px; }
     .reel-scroll { margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; }
     .decks { grid-template-columns: repeat(2, 1fr); }
@@ -489,11 +647,77 @@
     section { padding: 7.5rem 0; }
   }
 
+  /* arrows only where there is a mouse; touch just swipes */
+  @media (hover: hover) and (pointer: fine) and (min-width: 48rem) {
+    .reel-nav { display: inline-flex; }
+  }
+
+  /* ---------- phones ---------- */
+  @media (max-width: 30rem) {
+    section { padding: 3.5rem 0; }
+    .wrap { padding: 0 1.15rem; }
+
+    .nav { padding: .7rem 1.15rem; gap: .6rem; }
+    .nav-brand img { width: 22px; height: 22px; }
+    .nav-brand span { font-size: .875rem; }
+    .btn { padding: .6rem 1rem; font-size: .75rem; }
+
+    .hero { padding: 6rem 0 3.5rem; }
+    .hero-live { margin-bottom: 1.25rem; font-size: .625rem; }
+    .hero-name { margin-bottom: 1.15rem; }
+    .hero-tag { font-size: 1rem; margin-bottom: 1.75rem; }
+    .hero-cta { flex-direction: column; align-items: stretch; }
+    .hero-cta .btn { width: 100%; }
+
+    /* four loose flex items become a tidy two-column block */
+    .hero-meta {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1.15rem 1rem; margin-top: 2.5rem; padding-top: 1.5rem;
+    }
+    .meta-v { font-size: .875rem; }
+
+    h2 { font-size: 1.75rem; }
+    .lede { font-size: 1rem; }
+
+    .reel-scroll { margin-left: -1.15rem; margin-right: -1.15rem; padding-left: 1.15rem; padding-right: 1.15rem; }
+    .clip { width: 72vw; }
+
+    .card { padding: 1.35rem; border-radius: 12px; }
+    .cards { gap: .75rem; }
+
+    /* the date block and tag would crush the title at this width */
+    .gig { grid-template-columns: auto 1fr; gap: .85rem; padding: .95rem 1rem; }
+    .gig-tag { grid-column: 2; justify-self: start; margin-top: .3rem; }
+
+    .deck { padding: 1.1rem 1.15rem; gap: 1rem; }
+    .platter { width: 46px; height: 46px; }
+
+    .jog-stage { margin-top: 2rem; gap: 1.5rem; }
+    .jog-read b { font-size: 2.25rem; }
+
+    .book { padding: 1.75rem 1.35rem; border-radius: 16px; }
+    .crow { padding: .8rem .9rem; }
+    .crow b { font-size: .875rem; }
+    .book .btn { width: 100%; }
+
+    .wave { height: 34px; }
+    footer { padding: 2.5rem 0; }
+  }
+
+  /* very narrow: stop the long email overflowing its row */
+  @media (max-width: 22.5rem) {
+    .crow b { font-size: .8125rem; word-break: break-all; }
+    .hero-meta { grid-template-columns: 1fr; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     #viz { display: none; }
     .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
     .ticker-track, .platter, .hero-name .word, .dot { animation: none !important; }
+    .laser, .wave i, .eyebrow::before { animation: none !important; }
+    .lasers { display: none; }
+    .wave { display: none; }
   }
 </style>
 </head>
@@ -507,7 +731,7 @@
   <div class="nav-links">
     <a href="#reel">Gigs</a>
     <a href="#play">What I Play</a>
-    <a href="#sets">Listen</a>
+    <a href="#deck">Decks</a>
     <a href="#gigs">Dates</a>
     <a href="#setup">Setup</a>
     <a href="index.html">Main site</a>
@@ -517,6 +741,11 @@
 
 <header class="hero">
   <div class="hero-glow"></div>
+  <div class="lasers" aria-hidden="true">
+    <span class="laser"></span>
+    <span class="laser b"></span>
+    <span class="laser c"></span>
+  </div>
   <canvas id="viz" aria-hidden="true"></canvas>
 
   <div class="wrap">
@@ -527,7 +756,7 @@
       <span class="word">pscretn</span>
     </h1>
 
-    <p class="hero-tag">Do what moves you until your heart stops beating. <em>Angamaly, Kerala.</em></p>
+    <p class="hero-tag">Weddings, receptions and college nights. <em>Playing across Kerala.</em></p>
 
     <div class="hero-cta">
       <a class="btn btn-hot" href="#book">Book a date</a>
@@ -547,6 +776,8 @@
   <div class="ticker-track" id="ticker"></div>
 </div>
 
+<div class="wave" aria-hidden="true" data-wave></div>
+
 <section id="reel">
   <div class="wrap">
     <div class="reveal reel-head">
@@ -554,8 +785,16 @@
         <p class="eyebrow">On the decks</p>
         <h2>Real nights, real floors.</h2>
       </div>
-      <p class="lede">Clips from recent gigs. Tap the speaker to hear one.</p>
+      <p class="lede">Clips from recent gigs, playing themselves. Touch to take over, or tap the speaker to hear one.</p>
     </div>
+
+    <div class="reel-wrap">
+      <button class="reel-nav prev" id="reelPrev" type="button" aria-label="Previous clips">
+        <svg viewBox="0 0 24 24"><path d="M15.4 4.6 13.9 3l-9 9 9 9 1.5-1.6L8 12z"/></svg>
+      </button>
+      <button class="reel-nav next" id="reelNext" type="button" aria-label="More clips">
+        <svg viewBox="0 0 24 24"><path d="M8.6 4.6 10.1 3l9 9-9 9-1.5-1.6L16 12z"/></svg>
+      </button>
 
     <div class="reel-scroll" id="reelScroll">
       <figure class="clip">
@@ -600,6 +839,16 @@
 
       <figure class="clip">
         <div class="clip-frame">
+          <video muted loop playsinline preload="none" poster="videos/dj/gig06.jpg">
+            <source src="videos/dj/gig06.mp4" type="video/mp4">
+          </video>
+          <button class="clip-sound" type="button" aria-label="Unmute"></button>
+        </div>
+        <figcaption><h3>Behind the decks</h3><p>April 2026</p></figcaption>
+      </figure>
+
+      <figure class="clip">
+        <div class="clip-frame">
           <video muted loop playsinline preload="none" poster="videos/dj/FRPbIUj1FLI.jpg">
             <source src="videos/dj/FRPbIUj1FLI.mp4" type="video/mp4">
           </video>
@@ -607,6 +856,9 @@
         </div>
         <figcaption><h3>From Keyboard to Jog Wheel</h3><p>Software engineer by day</p></figcaption>
       </figure>
+    </div>
+
+      <div class="reel-bar" aria-hidden="true"><i id="reelBar"></i></div>
     </div>
   </div>
 </section>
@@ -660,41 +912,33 @@
   </div>
 </section>
 
-<section id="sets" style="background:var(--ink-2);border-top:1px solid var(--line-solid);border-bottom:1px solid var(--line-solid)">
+<section id="deck" style="background:var(--ink-2);border-top:1px solid var(--line-solid);border-bottom:1px solid var(--line-solid)">
   <div class="wrap">
     <div class="reveal">
-      <p class="eyebrow">Listen</p>
-      <h2>Hear it before you book it.</h2>
-      <p class="lede">A mashup and a mixing breakdown. More on the channel.</p>
+      <p class="eyebrow">Have a go</p>
+      <h2>Give it a spin.</h2>
+      <p class="lede">Drag the platter — it carries momentum, just like the real thing.</p>
     </div>
 
-    <div class="sets">
-      <figure class="set reveal">
-        <button class="set-frame" type="button" data-yt="X4-RowK6h1E" aria-label="Play the Hosaina Hosaina x Animal mashup">
-          <img src="https://i.ytimg.com/vi/X4-RowK6h1E/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
-          <span class="set-play"><i><svg width="18" height="22" viewBox="0 0 18 22" aria-hidden="true"><path d="M0 0l18 11L0 22z" fill="#fff"/></svg></i></span>
-        </button>
-        <figcaption>
-          <h3>Hosaina Hosaina × Animal — Mashup</h3>
-          <p>Chathikkatha Chanthu against Martin Garrix · 2:40</p>
-        </figcaption>
-      </figure>
+    <div class="jog-stage reveal">
+      <div class="jog" id="jog" role="slider" tabindex="0"
+           aria-label="Jog wheel — drag to spin, or use arrow keys"
+           aria-valuemin="0" aria-valuemax="100" aria-valuenow="33">
+        <div class="jog-rim"></div>
+        <div class="jog-face" id="jogFace">
+          <span class="jog-marker"></span>
+          <span class="jog-centre">
+            <img src="images/pscretn_logo_white.webp" alt="">
+          </span>
+        </div>
+      </div>
 
-      <figure class="set reveal">
-        <button class="set-frame" type="button" data-yt="LB9aaM4C2oc" aria-label="Play Phase Mixing">
-          <img src="https://i.ytimg.com/vi/LB9aaM4C2oc/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
-          <span class="set-play"><i><svg width="18" height="22" viewBox="0 0 18 22" aria-hidden="true"><path d="M0 0l18 11L0 22z" fill="#fff"/></svg></i></span>
-        </button>
-        <figcaption>
-          <h3>Phase Mixing — Baby Steps into DJing</h3>
-          <p>How the beatmatching actually works · 6:38</p>
-        </figcaption>
-      </figure>
+      <div class="jog-meta">
+        <p class="jog-read"><b id="rpm">0.0</b><small>RPM</small></p>
+        <p class="jog-hint" id="jogHint">Drag me</p>
+        <p class="jog-note">A real platter runs at 33⅓. See how close you can hold it.</p>
+      </div>
     </div>
-
-    <p style="margin-top:2rem">
-      <a class="btn" href="https://www.youtube.com/channel/UC6LTgFTohfKty7aJJJbshhw" target="_blank" rel="noopener">More on YouTube</a>
-    </p>
   </div>
 </section>
 
@@ -741,6 +985,8 @@
     </div>
   </div>
 </section>
+
+<div class="wave" aria-hidden="true" data-wave></div>
 
 <section id="why" style="background:var(--ink-2);border-top:1px solid var(--line-solid);border-bottom:1px solid var(--line-solid)">
   <div class="wrap">
@@ -832,6 +1078,18 @@
   function onScroll() { nav.classList.toggle('stuck', window.scrollY > 12); }
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* ---------- waveform dividers ---------- */
+  document.querySelectorAll('[data-wave]').forEach(function (w) {
+    var n = Math.min(90, Math.round(window.innerWidth / 12));
+    for (var i = 0; i < n; i++) {
+      var bar = document.createElement('i');
+      /* stagger the phase so it reads as a wave, not a row blinking together */
+      bar.style.animationDelay = (Math.sin(i * 0.45) * 0.5 + (i % 7) * 0.09).toFixed(2) + 's';
+      bar.style.animationDuration = (0.9 + (i % 5) * 0.14).toFixed(2) + 's';
+      w.appendChild(bar);
+    }
+  });
 
   /* ---------- ticker ---------- */
   var WORDS = ['Malayalam', 'Tamil', 'Bollywood', 'Punjabi', 'EDM', 'House',
@@ -932,6 +1190,102 @@
     });
   });
 
+  /* ---------- reel scrolling ---------- */
+  var reel = document.getElementById('reelScroll');
+  var reelBar = document.getElementById('reelBar');
+  var reelPrev = document.getElementById('reelPrev');
+  var reelNext = document.getElementById('reelNext');
+
+  function step() {
+    var first = reel.querySelector('.clip');
+    return first ? first.getBoundingClientRect().width + 12 : 260;
+  }
+
+  function syncReel() {
+    var max = reel.scrollWidth - reel.clientWidth;
+    var p = max > 0 ? reel.scrollLeft / max : 0;
+
+    /* the bar is 20% wide, so it travels the remaining 80% */
+    reelBar.style.transform = 'translateX(' + (p * 400).toFixed(1) + '%)';
+
+    reelPrev.disabled = reel.scrollLeft < 4;
+    reelNext.disabled = reel.scrollLeft > max - 4;
+  }
+
+  reelPrev.addEventListener('click', function () {
+    reel.scrollBy({ left: -step(), behavior: 'smooth' });
+  });
+
+  reelNext.addEventListener('click', function () {
+    reel.scrollBy({ left: step(), behavior: 'smooth' });
+  });
+
+  reel.addEventListener('scroll', syncReel, { passive: true });
+  window.addEventListener('resize', syncReel);
+  syncReel();
+
+  /* ---------- the reel advances on its own ----------
+     it only runs while the section is on screen and nobody is touching
+     it, and it stops entirely for anyone who asked for less motion */
+  var AUTO_MS = 5000;
+  var autoTimer = null;
+  var held = false;      /* pointer is on the reel */
+  var onScreen = false;
+
+  function advance() {
+    var max = reel.scrollWidth - reel.clientWidth;
+    if (reel.scrollLeft >= max - 6) {
+      reel.scrollTo({ left: 0, behavior: 'smooth' });   /* round the loop */
+    } else {
+      reel.scrollBy({ left: step(), behavior: 'smooth' });
+    }
+  }
+
+  function autoOn() {
+    if (reduce || autoTimer || held || !onScreen || document.hidden) return;
+    autoTimer = setInterval(advance, AUTO_MS);
+  }
+
+  function autoOff() {
+    clearInterval(autoTimer);
+    autoTimer = null;
+  }
+
+  /* touching it hands control back to the visitor, with a pause before
+     the reel starts moving again under their finger */
+  var resumeAfter;
+  function hold() {
+    held = true;
+    autoOff();
+    clearTimeout(resumeAfter);
+  }
+
+  function letGo() {
+    clearTimeout(resumeAfter);
+    resumeAfter = setTimeout(function () { held = false; autoOn(); }, 4000);
+  }
+
+  reel.addEventListener('pointerenter', hold);
+  reel.addEventListener('pointerleave', letGo);
+  reel.addEventListener('pointerdown', hold);
+  reel.addEventListener('touchstart', hold, { passive: true });
+  reel.addEventListener('touchend', letGo, { passive: true });
+  reel.addEventListener('focusin', hold);
+  reel.addEventListener('focusout', letGo);
+
+  [reelPrev, reelNext].forEach(function (b) {
+    b.addEventListener('click', function () { hold(); letGo(); });
+  });
+
+  new IntersectionObserver(function (es) {
+    onScreen = es[0].isIntersecting;
+    if (onScreen) autoOn(); else autoOff();
+  }, { threshold: 0.25 }).observe(reel);
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) autoOff(); else autoOn();
+  });
+
   var clipObs = new IntersectionObserver(function (es) {
     es.forEach(function (e) {
       var v = e.target;
@@ -952,24 +1306,85 @@
 
   clips.forEach(function (v) { clipObs.observe(v); });
 
-  /* ---------- sets: swap the still for the real player on click ---------- */
-  document.querySelectorAll('.set-frame').forEach(function (frame) {
-    frame.addEventListener('click', function () {
-      var id = frame.dataset.yt;
-      if (!id || frame.dataset.live) return;
-      frame.dataset.live = '1';
+  /* ---------- jog wheel ----------
+     drag rotates the platter and builds angular velocity; let go and
+     friction bleeds it off, the way a real platter coasts down. */
+  var jog = document.getElementById('jog');
+  var face = document.getElementById('jogFace');
+  var rpmEl = document.getElementById('rpm');
+  var hint = document.getElementById('jogHint');
 
-      var f = document.createElement('iframe');
-      f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
-      f.title = frame.getAttribute('aria-label') || 'Video';
-      f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-      f.referrerPolicy = 'strict-origin-when-cross-origin';
-      f.allowFullscreen = true;
+  var angle = 0;        /* degrees */
+  var vel = 0;          /* degrees per frame */
+  var dragging = false;
+  var lastAngle = 0;
+  var touched = false;
 
-      frame.innerHTML = '';
-      frame.appendChild(f);
-    });
+  function angleFrom(e) {
+    var r = jog.getBoundingClientRect();
+    return Math.atan2(e.clientY - (r.top + r.height / 2),
+                      e.clientX - (r.left + r.width / 2)) * 180 / Math.PI;
+  }
+
+  jog.addEventListener('pointerdown', function (e) {
+    dragging = true;
+    vel = 0;
+    lastAngle = angleFrom(e);
+    jog.classList.add('grabbing');
+    jog.setPointerCapture(e.pointerId);
+    if (!touched) { touched = true; hint.classList.add('gone'); }
   });
+
+  jog.addEventListener('pointermove', function (e) {
+    if (!dragging) return;
+    var a = angleFrom(e);
+    var d = a - lastAngle;
+    /* crossing the -180/180 seam must not read as a huge jump */
+    if (d > 180) d -= 360;
+    if (d < -180) d += 360;
+    angle += d;
+    vel = d;              /* the throw speed is whatever the last move was */
+    lastAngle = a;
+  });
+
+  function release(e) {
+    if (!dragging) return;
+    dragging = false;
+    jog.classList.remove('grabbing');
+    if (e && e.pointerId != null && jog.hasPointerCapture(e.pointerId)) {
+      jog.releasePointerCapture(e.pointerId);
+    }
+  }
+
+  jog.addEventListener('pointerup', release);
+  jog.addEventListener('pointercancel', release);
+
+  /* keyboard: arrows nudge it, so it is not mouse-only */
+  jog.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { vel += 3; e.preventDefault(); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { vel -= 3; e.preventDefault(); }
+    if (!touched) { touched = true; hint.classList.add('gone'); }
+  });
+
+  function spin() {
+    if (!dragging) {
+      angle += vel;
+      vel *= 0.975;                       /* friction */
+      if (Math.abs(vel) < 0.02) vel = 0;
+    }
+
+    face.style.transform = 'rotate(' + angle.toFixed(2) + 'deg)';
+
+    /* deg/frame -> RPM, assuming 60fps */
+    var rpm = Math.abs(vel) * 60 * 60 / 360;
+    rpmEl.textContent = rpm.toFixed(1);
+    jog.setAttribute('aria-valuenow', Math.round(rpm));
+    jog.classList.toggle('locked', rpm > 31.5 && rpm < 35.2);
+
+    requestAnimationFrame(spin);
+  }
+
+  requestAnimationFrame(spin);
 
   /* ---------- reveal ---------- */
   var obs = new IntersectionObserver(function (es) {
