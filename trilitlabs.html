@@ -1,180 +1,955 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trilit Labs | Smart Lighting Solutions</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Trilit Labs — wireless DMX and Art-Net controllers, isolated DMX splitters, the WaveLink DMX app, stage fixtures and 3D printed lamps. A pscretn brand.">
+<meta name="theme-color" content="#08111C">
+<title>Trilit Labs</title>
+<link rel="icon" href="images/trilitlabs_logo.webp" type="image/x-icon">
 
-<!-- Bootstrap -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<meta property="og:title" content="Trilit Labs">
+<meta property="og:description" content="Wireless DMX and Art-Net controllers, isolated splitters, and the WaveLink DMX app.">
+<meta property="og:type" content="website">
 
 <style>
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #0f0f1a;
-    color: white;
-    scroll-behavior: smooth;
-}
+  @font-face {
+    font-family: HighSchoolUsaSans;
+    src: url("fonts/HighSchoolUsaSans-52vx.ttf");
+    font-weight: bold;
+    font-display: swap;
+  }
 
-.navbar {
-    background-color: rgba(0,0,0,0.8);
-}
+  :root {
+    --ink: #08111C;
+    --ink-2: #0C1826;
+    --raised: #122234;
+    --line: #1E3348;
+    --white: #EDF4FA;
+    --muted: #7E96AC;
 
-.hero {
-    height: 100vh;
-    background: linear-gradient(to right, #111, #1a0033);
-    display: flex;
-    align-items: center;
-    text-align: center;
-}
+    /* taken straight off the logo: mint, amber and blue cube faces */
+    --mint: #2DD4BF;
+    --teal: #14B8A6;
+    --amber: #F5B84C;
+    --blue: #47A6EA;
 
-.hero h1 {
-    font-size: 3rem;
-    font-weight: 700;
-}
+    --c: var(--mint);
 
-.hero span {
-    color: #a855f7;
-}
+    --display: HighSchoolUsaSans, "Arial Black", sans-serif;
+    --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    --mono: ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace;
 
-.section-title {
-    font-weight: 700;
-    margin-bottom: 40px;
-}
+    --wide: 74rem;
+  }
 
-.card {
-    background-color: #1a1a2e;
-    border: none;
-    border-radius: 15px;
-    transition: 0.3s;
-}
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
-.card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
-}
+  body {
+    margin: 0; background: var(--ink); color: var(--white);
+    font-family: var(--sans); font-size: 1rem; line-height: 1.65;
+    overflow-x: hidden; -webkit-tap-highlight-color: transparent;
+  }
 
-.btn-custom {
-    background-color: #a855f7;
-    border: none;
-}
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
 
-.btn-custom:hover {
-    background-color: #9333ea;
-}
+  .wrap { width: 100%; max-width: var(--wide); margin: 0 auto; padding: 0 1.25rem; }
+  section { padding: 4.5rem 0; position: relative; }
 
-footer {
-    background-color: #0d0d15;
-    padding: 20px;
-    text-align: center;
-}
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: .55rem;
+    font-size: .6875rem; font-weight: 700; letter-spacing: .22em;
+    text-transform: uppercase; color: var(--c); margin: 0 0 1rem;
+  }
+
+  .eyebrow::before {
+    content: ""; width: 24px; height: 2px; border-radius: 2px;
+    background: linear-gradient(90deg, var(--c), transparent);
+  }
+
+  h2 {
+    font-family: var(--display);
+    font-size: clamp(1.9rem, 6vw, 3rem); line-height: 1.06;
+    margin: 0 0 1rem; font-weight: 800; letter-spacing: -0.025em;
+  }
+
+  .lede { color: var(--muted); font-size: 1.03rem; max-width: 54ch; margin: 0; }
+
+  .grad {
+    background: linear-gradient(100deg, var(--amber), var(--mint) 40%, var(--blue));
+    background-size: 220% auto;
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: var(--mint);
+    animation: shift 8s ease-in-out infinite;
+  }
+
+  @keyframes shift { 0%,100% { background-position: 0% center; } 50% { background-position: 100% center; } }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
+    font-size: .875rem; font-weight: 600; padding: .8rem 1.4rem;
+    border-radius: 99px; border: 1px solid var(--line); color: var(--white);
+    background: transparent; cursor: pointer; white-space: nowrap;
+    transition: border-color .25s, background .25s, transform .2s;
+  }
+
+  .btn:hover { border-color: var(--mint); background: rgba(45,212,191,.12); }
+  .btn:active { transform: translateY(1px); }
+
+  .btn-hot {
+    border: 0; color: #fff; font-weight: 700;
+    background: linear-gradient(100deg, var(--teal), var(--mint) 55%, var(--amber));
+    box-shadow: 0 10px 34px -10px rgba(45,212,191,.75);
+  }
+
+  /* ---------- nav ---------- */
+  .nav {
+    position: fixed; inset: 0 0 auto 0; z-index: 60;
+    display: flex; align-items: center; gap: 1rem; padding: .8rem 1.25rem;
+    background: rgba(8,17,28,.72);
+    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+    border-bottom: 1px solid transparent; transition: border-color .3s, background .3s;
+  }
+
+  .nav.stuck { border-bottom-color: var(--line); background: rgba(8,17,28,.93); }
+
+  .brand { display: inline-flex; align-items: center; gap: .6rem; margin-right: auto; }
+
+  .brand .mark {
+    width: 38px; height: 38px; flex: 0 0 auto;
+    object-fit: contain; display: block;
+    animation: hover-mark 5s ease-in-out infinite;
+  }
+
+  @keyframes hover-mark {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-3px) rotate(-3deg); }
+  }
+
+  .brand b { font-family: var(--display); font-size: 1.1rem; font-weight: 800; letter-spacing: -.01em; }
+  .brand small { display: block; font-size: .5rem; letter-spacing: .28em; text-transform: uppercase; color: var(--muted); }
+
+  .links { display: none; align-items: center; gap: 1.6rem; }
+  .links a { position: relative; font-size: .875rem; font-weight: 500; color: var(--muted); transition: color .25s; }
+  .links a:hover { color: var(--white); }
+
+  .links a::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px;
+    background: linear-gradient(90deg, var(--mint), var(--blue));
+    transform: scaleX(0); transform-origin: left; transition: transform .3s;
+  }
+
+  .links a:hover::after { transform: scaleX(1); }
+
+  .links a.up { color: var(--muted); border: 1px solid var(--line); border-radius: 99px; padding: .35rem .85rem; }
+  .links a.up::after { display: none; }
+  .links a.up:hover { border-color: var(--mint); color: var(--white); }
+
+  .burger {
+    display: inline-flex; flex-direction: column; justify-content: center; gap: 5px;
+    width: 42px; height: 38px; padding: 0 9px; cursor: pointer;
+    background: none; border: 1px solid var(--line); border-radius: 10px;
+  }
+
+  .burger i { display: block; height: 2px; background: var(--white); border-radius: 2px; transition: transform .3s, opacity .25s; }
+  .burger.on i:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .burger.on i:nth-child(2) { opacity: 0; }
+  .burger.on i:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .drawer {
+    position: fixed; inset: 0; z-index: 55; background: rgba(8,17,28,.97);
+    -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+    display: flex; flex-direction: column; justify-content: center; gap: .4rem; padding: 2rem;
+    opacity: 0; visibility: hidden; transition: opacity .35s, visibility .35s;
+  }
+
+  .drawer.open { opacity: 1; visibility: visible; }
+  .drawer a { font-family: var(--display); font-size: 2rem; font-weight: 800; padding: .5rem 0; border-bottom: 1px solid var(--line); opacity: 0; transform: translateY(14px); }
+  .drawer.open a { animation: dropin .5s cubic-bezier(.2,.7,.3,1) forwards; }
+  .drawer.open a:nth-child(2) { animation-delay: .06s; }
+  .drawer.open a:nth-child(3) { animation-delay: .12s; }
+  .drawer.open a:nth-child(4) { animation-delay: .18s; }
+  .drawer.open a:nth-child(5) { animation-delay: .24s; }
+
+  @keyframes dropin { to { opacity: 1; transform: none; } }
+
+  /* ---------- hero ---------- */
+  .hero { position: relative; min-height: 100svh; display: flex; align-items: center; padding: 7rem 0 3rem; overflow: hidden; }
+
+  #beams { position: absolute; inset: 0; z-index: 0; }
+
+  .hero-glow {
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(40rem 30rem at 20% 0%, rgba(20,184,166,.30), transparent 62%),
+      radial-gradient(36rem 26rem at 80% 18%, rgba(245,184,76,.20), transparent 62%),
+      radial-gradient(34rem 26rem at 50% 100%, rgba(71,166,234,.16), transparent 62%);
+  }
+
+  .hero .wrap { position: relative; z-index: 2; }
+
+  .hero-inner { display: grid; gap: 2.5rem; align-items: center; }
+
+  /* the cube turns slowly and breathes its own glow */
+  .cube-stage { position: relative; display: flex; justify-content: center; }
+
+  .cube {
+    width: min(62vw, 300px); height: auto;
+    animation: turn 14s ease-in-out infinite;
+    filter: drop-shadow(0 0 34px rgba(45,212,191,.45));
+  }
+
+  @keyframes turn {
+    0%, 100% { transform: translateY(0) rotate(-4deg) scale(1); }
+    33% { transform: translateY(-14px) rotate(3deg) scale(1.03); }
+    66% { transform: translateY(6px) rotate(-2deg) scale(.99); }
+  }
+
+  .cube-ring {
+    position: absolute; top: 50%; left: 50%;
+    width: min(74vw, 360px); aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    border: 1px solid rgba(45,212,191,.18); border-radius: 50%;
+    animation: ripple 4.5s ease-out infinite;
+  }
+
+  .cube-ring.b { animation-delay: 1.5s; }
+  .cube-ring.c { animation-delay: 3s; }
+
+  @keyframes ripple {
+    0% { transform: translate(-50%, -50%) scale(.55); opacity: 0; }
+    35% { opacity: .8; }
+    100% { transform: translate(-50%, -50%) scale(1.25); opacity: 0; }
+  }
+
+  .chip {
+    display: inline-flex; align-items: center; gap: .5rem; font-size: .6875rem;
+    font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--muted);
+    border: 1px solid var(--line); border-radius: 99px; padding: .4rem .9rem; margin-bottom: 1.4rem;
+  }
+
+  .pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 10px var(--amber); animation: blink 2s ease-in-out infinite; }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+
+  h1 { font-family: var(--display); font-size: clamp(2.6rem, 9.5vw, 5rem); line-height: 1.02; margin: 0 0 1.15rem; font-weight: 900; letter-spacing: -0.035em; }
+
+  .hero p.sub { color: var(--muted); font-size: 1.06rem; margin: 0 0 2rem; max-width: 46ch; }
+  .cta { display: flex; flex-wrap: wrap; gap: .7rem; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 3rem; padding-top: 1.75rem; border-top: 1px solid var(--line); }
+  .stat b { display: block; font-family: var(--mono); font-size: 1.5rem; font-weight: 700; color: var(--c); }
+  .stat span { font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+
+  /* a data line, running the way DMX does: one direction, in packets */
+  .signal { position: relative; height: 2px; overflow: hidden; background: var(--line); }
+
+  .signal i {
+    position: absolute; top: 0; left: 0; height: 100%; width: 22%;
+    background: linear-gradient(90deg, transparent, var(--mint), var(--amber), transparent);
+    animation: packet 3.4s linear infinite;
+  }
+
+  .signal i:nth-child(2) { animation-delay: 1.1s; }
+  .signal i:nth-child(3) { animation-delay: 2.2s; }
+
+  @keyframes packet {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(560%); }
+  }
+
+  /* ---------- cards ---------- */
+  .cards { display: grid; gap: 1rem; margin-top: 2.5rem; }
+
+  .card {
+    position: relative; overflow: hidden; background: var(--raised);
+    border: 1px solid var(--line); border-radius: 16px; padding: 1.6rem;
+    transition: transform .4s cubic-bezier(.2,.7,.3,1), border-color .35s;
+  }
+
+  .card:hover { transform: translateY(-6px); border-color: var(--c); }
+
+  .card::after {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--c), transparent);
+    transform: scaleX(0); transform-origin: left; transition: transform .45s cubic-bezier(.2,.7,.3,1);
+  }
+
+  .card:hover::after { transform: scaleX(1); }
+
+  .ico {
+    width: 44px; height: 44px; border-radius: 12px; margin-bottom: 1rem;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: color-mix(in srgb, var(--c) 16%, transparent);
+    border: 1px solid color-mix(in srgb, var(--c) 40%, transparent);
+  }
+
+  .ico svg { width: 21px; height: 21px; stroke: var(--c); fill: none; stroke-width: 1.8; }
+
+  .ico {
+    transition: transform .45s cubic-bezier(.2,.7,.3,1), box-shadow .45s;
+  }
+
+  .card:hover .ico {
+    transform: translateY(-3px) scale(1.06);
+    box-shadow: 0 0 26px -6px var(--c);
+  }
+
+  /* a slow sheen crossing each card */
+  .card::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(115deg, transparent 38%, color-mix(in srgb, var(--c) 10%, transparent) 50%, transparent 62%);
+    background-size: 250% 100%; background-position: 130% 0;
+    transition: background-position 1s ease;
+  }
+
+  .card:hover::before { background-position: -30% 0; }
+
+  .card h3 { font-size: 1.08rem; margin: 0 0 .45rem; font-weight: 700; transition: color .3s; }
+  .card:hover h3 { color: var(--c); }
+  .card p { margin: 0; color: var(--muted); font-size: .89rem; }
+
+  .card ul { margin: .8rem 0 0; padding-left: 1.05rem; color: var(--muted); font-size: .85rem; }
+  .card li { margin-bottom: .3rem; }
+
+  .tagline { display: inline-block; margin-top: 1rem; font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--c); }
+
+  /* ---------- app ---------- */
+  .app {
+    position: relative; overflow: hidden;
+    display: grid; gap: 2rem; align-items: center; margin-top: 2.5rem;
+    background: linear-gradient(150deg, rgba(20,184,166,.16), rgba(245,184,76,.06) 55%, transparent);
+    border: 1px solid var(--line); border-radius: 22px; padding: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .app::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+    background: linear-gradient(120deg, rgba(45,212,191,.16), transparent 40%, rgba(245,184,76,.12));
+    opacity: .7;
+  }
+
+  .app > * { position: relative; z-index: 1; }
+
+  .app h3 { font-family: var(--display); font-size: clamp(1.5rem, 4.4vw, 2.2rem); margin: 0 0 .6rem; font-weight: 800; letter-spacing: -.02em; }
+  .app p { color: var(--muted); margin: 0 0 1.25rem; }
+
+  .feat { display: grid; gap: .55rem; margin: 0 0 1.5rem; padding: 0; list-style: none; }
+  .feat li { display: flex; align-items: flex-start; gap: .6rem; font-size: .9rem; color: var(--muted); }
+  .feat svg { width: 16px; height: 16px; flex: 0 0 auto; margin-top: .28rem; stroke: var(--mint); fill: none; stroke-width: 2.4; }
+
+  /* a phone showing a fader bank, drawn rather than screenshotted */
+  .phone {
+    position: relative; width: min(200px, 60vw); aspect-ratio: 9/18;
+    margin: 0 auto; border-radius: 26px; padding: 9px;
+    background: linear-gradient(160deg, #1E3348, #0C1826);
+    border: 1px solid var(--line);
+    box-shadow: 0 30px 70px -25px rgba(45,212,191,.7);
+  }
+
+  .screen { width: 100%; height: 100%; border-radius: 19px; background: #071019; overflow: hidden; padding: 14px 11px; display: flex; flex-direction: column; gap: 9px; }
+  .screen .bar { height: 5px; border-radius: 3px; background: linear-gradient(90deg, var(--mint), var(--amber)); opacity: .85; }
+  .faders { display: flex; align-items: flex-end; gap: 5px; flex: 1; }
+  .faders i { flex: 1; border-radius: 3px; background: linear-gradient(to top, var(--teal), var(--blue)); animation: fade 2.4s ease-in-out infinite; }
+  @keyframes fade { 0%,100% { height: 22%; } 50% { height: 88%; } }
+
+  .app-visual { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+
+  .app-icon {
+    width: 104px; height: 104px; border-radius: 24px;
+    box-shadow: 0 18px 46px -14px rgba(45,212,191,.6);
+    animation: hover-mark 5s ease-in-out infinite;
+  }
+
+  /* ---------- supply ---------- */
+  .supply { display: grid; gap: 1rem; margin-top: 2.5rem; }
+
+  .kit {
+    display: flex; align-items: center; gap: 1rem; padding: 1.15rem 1.25rem;
+    background: var(--raised); border: 1px solid var(--line); border-radius: 14px;
+    transition: border-color .3s, transform .3s;
+  }
+
+  .kit:hover { border-color: var(--c); transform: translateX(4px); box-shadow: 0 0 30px -14px var(--c); }
+  .kit .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--c); box-shadow: 0 0 14px var(--c); flex: 0 0 auto; }
+  .kit b { display: block; font-size: .95rem; }
+  .kit small { color: var(--muted); font-size: .8rem; }
+
+  /* ---------- videos ---------- */
+  .vids { display: grid; gap: 1rem; margin-top: 2.5rem; }
+
+  .vid { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: var(--raised); display: block; }
+  .vid .thumb { position: relative; aspect-ratio: 16/9; overflow: hidden; }
+  .vid img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.72) saturate(.95); transition: transform .6s, filter .4s; }
+  .vid:hover img { transform: scale(1.06); filter: brightness(.9) saturate(1.05); }
+
+  .vid .play {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  }
+
+  .vid .play i {
+    width: 54px; height: 54px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, var(--teal), var(--amber));
+    box-shadow: 0 8px 30px -6px rgba(245,184,76,.8);
+    transition: transform .3s;
+  }
+
+  .vid:hover .play i { transform: scale(1.12); }
+  .vid figcaption { padding: .9rem 1.05rem 1.1rem; font-size: .875rem; font-weight: 600; }
+  .vid figcaption small { display: block; color: var(--muted); font-weight: 500; font-size: .75rem; margin-top: .15rem; }
+
+  /* ---------- contact ---------- */
+  .rows { display: grid; gap: .7rem; margin-top: 2rem; }
+
+  .row-i {
+    display: flex; align-items: center; gap: .9rem; padding: .9rem 1rem;
+    border: 1px solid var(--line); border-radius: 12px; background: var(--raised);
+    transition: border-color .25s, transform .25s;
+  }
+
+  .row-i:hover { border-color: var(--c); transform: translateX(3px); }
+  .row-i svg { width: 18px; height: 18px; flex: 0 0 auto; }
+  .row-i b { font-weight: 600; font-size: .9rem; }
+  .row-i small { display: block; color: var(--muted); font-size: .74rem; }
+
+  footer { border-top: 1px solid var(--line); padding: 2.5rem 0; text-align: center; background: var(--ink-2); }
+  .foot-t { color: var(--muted); font-size: .8rem; margin: 0; }
+  .foot-t a { color: var(--white); border-bottom: 1px solid var(--line); }
+
+  .rv { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.3,1); }
+  .rv.seen { opacity: 1; transform: none; }
+
+  @media (min-width: 40rem) {
+    .cards { grid-template-columns: repeat(2, 1fr); gap: 1.15rem; }
+    .supply { grid-template-columns: repeat(2, 1fr); }
+    .vids { grid-template-columns: repeat(3, 1fr); }
+    .rows { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (min-width: 60rem) {
+    .wrap { padding: 0 2rem; }
+    section { padding: 6.5rem 0; }
+    .links { display: flex; }
+    .burger { display: none; }
+    .nav { padding: 1rem 2rem; }
+    .cards { grid-template-columns: repeat(3, 1fr); }
+    .app { grid-template-columns: 1.1fr .9fr; gap: 3rem; }
+    .app .app-visual { order: 2; }
+    .hero-inner { grid-template-columns: 1.05fr .95fr; gap: 3rem; }
+  }
+
+  /* ---------- phones ---------- */
+  @media (max-width: 30rem) {
+    section { padding: 3.5rem 0; }
+    .wrap { padding: 0 1.1rem; }
+
+    .nav { padding: .7rem 1.1rem; gap: .6rem; }
+    .brand .mark { width: 32px; height: 32px; }
+    .brand b { font-size: .95rem; }
+    .brand small { font-size: .45rem; letter-spacing: .22em; }
+
+    .hero { padding: 6rem 0 3rem; }
+    .hero-inner { gap: 1.75rem; }
+    .cube { width: 54vw; }
+    .cube-ring { width: 66vw; }
+    h1 { margin-bottom: .9rem; }
+    .hero p.sub { font-size: 1rem; margin-bottom: 1.6rem; }
+    .cta { flex-direction: column; align-items: stretch; }
+    .cta .btn { width: 100%; }
+
+    .stats { gap: .6rem; margin-top: 2.25rem; padding-top: 1.35rem; }
+    .stat b { font-size: 1.05rem; }
+    .stat span { font-size: .58rem; letter-spacing: .06em; }
+
+    h2 { font-size: 1.85rem; }
+    .card { padding: 1.35rem; }
+    .app { padding: 1.35rem; border-radius: 16px; }
+    .app-visual { gap: 1rem; }
+    .app-icon { width: 84px; height: 84px; border-radius: 20px; }
+    .phone { width: 46vw; }
+    .kit { padding: 1rem; }
+    .vid figcaption { padding: .8rem .9rem 1rem; }
+    footer { padding: 2rem 0; }
+  }
+
+  @media (max-width: 22.5rem) {
+    .stats { grid-template-columns: 1fr 1fr; }
+    .stats .stat:last-child { grid-column: span 2; }
+    .row-i b { font-size: .82rem; word-break: break-word; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    #beams { display: none; }
+    .rv { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .grad, .pulse, .faders i, .drawer.open a, .cube, .cube-ring, .brand .mark, .app-icon, .signal i { animation: none !important; }
+    .drawer a { opacity: 1; transform: none; }
+    .card:hover, .kit:hover { transform: none; }
+  }
 </style>
 </head>
-
 <body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-<div class="container">
-<a class="navbar-brand fw-bold" href="#">Trilit Labs</a>
-<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
-<span class="navbar-toggler-icon"></span>
-</button>
+<nav class="nav" id="nav">
+  <a class="brand" href="#top">
+    <img class="mark" src="images/trilitlabs_logo.webp" alt="Trilit Labs logo" width="38" height="38">
+    <span><b>Trilit Labs</b><small>A pscretn brand</small></span>
+  </a>
 
-<div class="collapse navbar-collapse" id="navmenu">
-<ul class="navbar-nav ms-auto">
-<li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-<li class="nav-item"><a class="nav-link" href="#products">Products</a></li>
-<li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-</ul>
-</div>
-</div>
+  <div class="links">
+    <a href="#build">What We Build</a>
+    <a href="#app">WaveLink App</a>
+    <a href="#supply">Supply</a>
+    <a href="#contact">Contact</a>
+    <a href="https://www.instagram.com/trilitlabs/" target="_blank" rel="noopener">Instagram</a>
+    <a class="up" href="index.html">pscretn</a>
+  </div>
+
+  <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false"><i></i><i></i><i></i></button>
 </nav>
 
-<!-- Hero -->
-<section class="hero">
-<div class="container">
-<h1>Smart Lighting. <span>Wireless Control.</span><br>Limitless Creativity.</h1>
-<p class="mt-4">Professional Event Solutions & Wireless DMX Controllers</p>
-<a href="#contact" class="btn btn-custom btn-lg mt-3">Book Your Event</a>
+<div class="drawer" id="drawer">
+  <a href="#build">What We Build</a>
+  <a href="#app">WaveLink App</a>
+  <a href="#supply">Supply</a>
+  <a href="#contact">Contact</a>
+  <a href="index.html">pscretn</a>
 </div>
+
+<header class="hero" id="top">
+  <canvas id="beams" aria-hidden="true"></canvas>
+  <div class="hero-glow"></div>
+
+  <div class="wrap">
+   <div class="hero-inner">
+    <div>
+    <span class="chip"><i class="pulse"></i> Lighting control · Angamaly, Kerala</span>
+
+    <h1>DMX control,<br><span class="grad">built here.</span></h1>
+
+    <p class="sub">
+      Wireless DMX and Art-Net controllers, isolated splitters, and the WaveLink DMX
+      app — designed and made in-house. Plus the fixtures and lamps to run on them.
+    </p>
+
+    <div class="cta">
+      <a class="btn btn-hot" href="#app">Get the WaveLink app</a>
+      <a class="btn" href="#build">See what we build</a>
+    </div>
+
+    <div class="stats">
+      <div class="stat" style="--c:var(--amber)"><b>DMX512</b><span>Protocol</span></div>
+      <div class="stat" style="--c:var(--blue)"><b>Art-Net</b><span>Over network</span></div>
+      <div class="stat" style="--c:var(--mint)"><b>2.4 GHz</b><span>Wireless</span></div>
+    </div>
+    </div>
+
+    <div class="cube-stage" aria-hidden="true">
+      <span class="cube-ring"></span>
+      <span class="cube-ring b"></span>
+      <span class="cube-ring c"></span>
+      <img class="cube" src="images/trilitlabs_logo.webp" alt="" width="512" height="512">
+    </div>
+   </div>
+  </div>
+</header>
+
+<section id="build">
+  <div class="wrap">
+    <div class="rv">
+      <p class="eyebrow">Hardware</p>
+      <h2>What we build.</h2>
+      <p class="lede">Our own controllers and distribution gear, designed for real stages.</p>
+    </div>
+
+    <div class="cards">
+      <article class="card rv" style="--c:var(--mint)">
+        <span class="ico"><svg viewBox="0 0 24 24"><path d="M4 20V10M9 20V4M14 20v-8M19 20V7"/></svg></span>
+        <h3>Wireless DMX Controller</h3>
+        <p>2.4 GHz control for moving heads, PARs and lasers, driven from the WaveLink app.</p>
+        <ul>
+          <li>Long-range transmission</li>
+          <li>Low-latency signal</li>
+          <li>Custom firmware support</li>
+        </ul>
+      </article>
+
+      <article class="card rv" style="--c:var(--blue)">
+        <span class="ico"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/><circle cx="12" cy="12" r="9"/></svg></span>
+        <h3>Art-Net Controller</h3>
+        <p>DMX over standard network, so a whole rig runs from one Ethernet or Wi-Fi backbone.</p>
+        <ul>
+          <li>DMX512 over IP</li>
+          <li>Multiple universes</li>
+          <li>Works with standard consoles</li>
+        </ul>
+      </article>
+
+      <article class="card rv" style="--c:var(--mint)">
+        <span class="ico"><svg viewBox="0 0 24 24"><path d="M12 3v6M12 9 6 15v6M12 9l6 6v6"/></svg></span>
+        <h3>Isolated DMX Splitter</h3>
+        <p>Optically isolated distribution that protects your console and fixtures from ground loops and surges.</p>
+        <ul>
+          <li>Full optical isolation</li>
+          <li>Clean signal regeneration</li>
+          <li>Protects the whole chain</li>
+        </ul>
+      </article>
+    </div>
+  </div>
 </section>
 
-<!-- Services -->
-<section id="services" class="py-5">
-<div class="container text-center">
-<h2 class="section-title">Our Services</h2>
+<div class="signal" aria-hidden="true"><i></i><i></i><i></i></div>
+<section id="app" style="--c:var(--amber);background:var(--ink-2);border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="rv">
+      <p class="eyebrow">On Google Play</p>
+      <h2>WaveLink DMX</h2>
+      <p class="lede">A professional DMX lighting controller, in your pocket.</p>
+    </div>
 
-<div class="row g-4">
+    <div class="app rv">
+      <div>
+        <h3>Run the rig from your phone.</h3>
+        <p>Pair with our wireless controller and take command of the whole rig — no console, no laptop, no cable run across the venue.</p>
 
-<div class="col-md-4">
-<div class="card p-4">
-<h4>Event Lighting</h4>
-<p>Wedding lighting, DJ setup, concerts, corporate events with professional moving heads & LED systems.</p>
-</div>
-</div>
+        <ul class="feat">
+          <li><svg viewBox="0 0 24 24"><path d="m4 12 6 6L20 6"/></svg> Control moving heads, PARs and lasers</li>
+          <li><svg viewBox="0 0 24 24"><path d="m4 12 6 6L20 6"/></svg> Live faders and scene recall</li>
+          <li><svg viewBox="0 0 24 24"><path d="m4 12 6 6L20 6"/></svg> No analytics, no ads, no tracking SDKs</li>
+          <li><svg viewBox="0 0 24 24"><path d="m4 12 6 6L20 6"/></svg> Free to download</li>
+        </ul>
 
-<div class="col-md-4">
-<div class="card p-4">
-<h4>LED Displays</h4>
-<p>P4, P10 LED walls, advertising boards, custom display installations.</p>
-</div>
-</div>
+        <div class="cta">
+          <a class="btn btn-hot" href="https://play.google.com/store/apps/details?id=com.trilitlabs.wavelinkdmx" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.6 2.3 13 11.7l-9.4 9.4a1.7 1.7 0 0 1-.5-1.2V3.5c0-.5.2-.9.5-1.2zm11 8.1L5.9 1.7l10.6 6a1 1 0 0 1 .1.1zM17.9 8.6l2.8 1.6c.9.5.9 1.8 0 2.3l-2.8 1.6-3-3zM16.6 16.2 5.9 22.2l8.7-8.6z"/></svg>
+            Get it on Google Play
+          </a>
+          <a class="btn" href="WaveLinkDMX/privacy.html">Privacy policy</a>
+        </div>
+      </div>
 
-<div class="col-md-4">
-<div class="card p-4">
-<h4>Custom Installations</h4>
-<p>Architectural lighting, smart control systems, permanent lighting solutions.</p>
-</div>
-</div>
-
-</div>
-</div>
+      <div class="app-visual">
+      <img class="app-icon" src="images/wavelink_icon.webp" alt="WaveLink DMX app icon" width="320" height="320">
+      <div class="phone" aria-hidden="true">
+        <div class="screen">
+          <span class="bar"></span>
+          <div class="faders">
+            <i style="animation-delay:0s"></i><i style="animation-delay:.2s"></i>
+            <i style="animation-delay:.4s"></i><i style="animation-delay:.6s"></i>
+            <i style="animation-delay:.8s"></i><i style="animation-delay:1s"></i>
+          </div>
+          <span class="bar" style="opacity:.5"></span>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- Products -->
-<section id="products" class="py-5 bg-dark">
-<div class="container text-center">
-<h2 class="section-title">Wireless DMX Controller</h2>
+<div class="signal" aria-hidden="true"><i></i><i></i><i></i></div>
+<section id="supply">
+  <div class="wrap">
+    <div class="rv">
+      <p class="eyebrow">Also available</p>
+      <h2>What else we sell.</h2>
+      <p class="lede">Stage fixtures alongside our own control gear — and lamps we print ourselves.</p>
+    </div>
 
-<div class="row justify-content-center">
-<div class="col-md-6">
-<div class="card p-4">
-<h4>2.4GHz Wireless DMX</h4>
-<p>✔ Long Range Transmission<br>
-✔ Low Latency Signal<br>
-✔ Mobile App Control<br>
-✔ Works with Moving Heads, PARs, Lasers<br>
-✔ Custom Firmware Support</p>
+    <div class="supply">
+      <div class="kit rv" style="--c:var(--blue)">
+        <span class="dot"></span>
+        <span><b>Sharpy beam moving heads</b><small>Tested on our own controllers</small></span>
+      </div>
 
-<a href="#contact" class="btn btn-custom mt-3">Get Product Info</a>
-</div>
-</div>
-</div>
+      <div class="kit rv" style="--c:var(--amber)">
+        <span class="dot"></span>
+        <span><b>PAR cans &amp; LED wash</b><small>Stage and event wash lighting</small></span>
+      </div>
 
-</div>
+      <div class="kit rv" style="--c:var(--mint)">
+        <span class="dot"></span>
+        <span><b>3D printed lamps</b><small>Designed and printed in-house</small></span>
+      </div>
+
+      <div class="kit rv" style="--c:var(--blue)">
+        <span class="dot"></span>
+        <span><b>Custom builds</b><small>Tell us the rig and we'll spec it</small></span>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- Contact -->
-<section id="contact" class="py-5">
-<div class="container text-center">
-<h2 class="section-title">Contact Us</h2>
+<div class="signal" aria-hidden="true"><i></i><i></i><i></i></div>
+<section id="proof" style="--c:var(--blue);background:var(--ink-2);border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="rv">
+      <p class="eyebrow">In action</p>
+      <h2>Watch it run.</h2>
+      <p class="lede">Our gear under test, on the pscretn channel.</p>
+    </div>
 
-<p>Email: trilitlabs@gmail.com</p>
-<p>Phone: +91 XXXXX XXXXX</p>
+    <div class="vids">
+      <a class="vid rv" href="https://www.youtube.com/watch?v=OG5cqAQ3L_8" target="_blank" rel="noopener">
+        <figure style="margin:0">
+          <div class="thumb">
+            <img src="https://i.ytimg.com/vi/OG5cqAQ3L_8/hqdefault.jpg" alt="" loading="lazy">
+            <span class="play"><i><svg width="16" height="19" viewBox="0 0 16 19" aria-hidden="true"><path d="M0 0l16 9.5L0 19z" fill="#fff"/></svg></i></span>
+          </div>
+          <figcaption>200 W Sharpy test<small>Driven by the WaveLink controller</small></figcaption>
+        </figure>
+      </a>
 
-<a href="https://wa.me/91XXXXXXXXXX" class="btn btn-success mt-3">Chat on WhatsApp</a>
-</div>
+      <a class="vid rv" href="https://www.youtube.com/watch?v=DVa2hs1xDjI" target="_blank" rel="noopener">
+        <figure style="margin:0">
+          <div class="thumb">
+            <img src="https://i.ytimg.com/vi/DVa2hs1xDjI/hqdefault.jpg" alt="" loading="lazy">
+            <span class="play"><i><svg width="16" height="19" viewBox="0 0 16 19" aria-hidden="true"><path d="M0 0l16 9.5L0 19z" fill="#fff"/></svg></i></span>
+          </div>
+          <figcaption>How the wireless controller works<small>Full walkthrough</small></figcaption>
+        </figure>
+      </a>
+
+      <a class="vid rv" href="https://www.youtube.com/watch?v=atWsFbq_OFg" target="_blank" rel="noopener">
+        <figure style="margin:0">
+          <div class="thumb">
+            <img src="https://i.ytimg.com/vi/atWsFbq_OFg/hqdefault.jpg" alt="" loading="lazy">
+            <span class="play"><i><svg width="16" height="19" viewBox="0 0 16 19" aria-hidden="true"><path d="M0 0l16 9.5L0 19z" fill="#fff"/></svg></i></span>
+          </div>
+          <figcaption>Major app update<small>What changed in WaveLink</small></figcaption>
+        </figure>
+      </a>
+    </div>
+  </div>
 </section>
 
-<!-- Footer -->
+<div class="signal" aria-hidden="true"><i></i><i></i><i></i></div>
+<section id="contact" style="--c:var(--mint)">
+  <div class="wrap">
+    <div class="rv">
+      <p class="eyebrow">Contact</p>
+      <h2>Talk to us.</h2>
+      <p class="lede">Controllers, splitters, fixtures, or a custom build — tell us what the rig needs.</p>
+    </div>
+
+    <div class="rows rv">
+      <a class="row-i" href="mailto:trilitlabs@gmail.com?subject=Trilit%20Labs%20enquiry">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#2DD4BF" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+        <span><b>trilitlabs@gmail.com</b><small>Email us</small></span>
+      </a>
+
+      <a class="row-i" href="https://www.instagram.com/trilitlabs/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#F5B84C" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#F5B84C" stroke="none"/></svg>
+        <span><b>@trilitlabs</b><small>Builds, lamps &amp; tests</small></span>
+      </a>
+    </div>
+  </div>
+</section>
+
 <footer>
-<p>© 2026 Trilit Labs. All Rights Reserved.</p>
+  <div class="wrap">
+    <p class="foot-t">
+      Trilit Labs — a <a href="index.html">pscretn</a> brand · Angamaly, Kerala<br>
+      © 2026 Trilit Labs
+    </p>
+  </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var nav = document.getElementById('nav');
+  function onScroll() { nav.classList.toggle('stuck', window.scrollY > 10); }
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  var burger = document.getElementById('burger');
+  var drawer = document.getElementById('drawer');
+
+  function setMenu(open) {
+    burger.classList.toggle('on', open);
+    drawer.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+
+  burger.addEventListener('click', function () { setMenu(!drawer.classList.contains('open')); });
+  drawer.addEventListener('click', function (e) { if (e.target.tagName === 'A') setMenu(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
+
+  var obs = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('seen');
+      obs.unobserve(e.target);
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+
+  document.querySelectorAll('.rv').forEach(function (el, i) {
+    el.style.transitionDelay = (i % 3) * 80 + 'ms';
+    obs.observe(el);
+  });
+
+  if (reduce) return;
+
+  /* ---------- the rig ----------
+     three fixture types sharing one canvas, drawn additively so the
+     beams brighten where they cross, the way real haze behaves:
+       sharpies — narrow hard-edged beams that pan
+       lasers   — thin fans that sweep and flicker
+       pars     — soft wash pools along the floor                     */
+  var cv = document.getElementById('beams');
+  var ctx = cv.getContext('2d');
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var W, H, sharpies = [], lasers = [], pars = [], small = false;
+
+  var MINT = '45,212,191', AMBER = '245,184,76', BLUE = '71,166,234', TEAL = '20,184,166';
+  var HUE = [MINT, AMBER, BLUE, TEAL];
+
+  function size() {
+    var r = cv.getBoundingClientRect();
+    W = r.width; H = r.height;
+    cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    small = W < 640;
+  }
+
+  function seed() {
+    var n = small ? 4 : 6, i;
+
+    sharpies = [];
+    for (i = 0; i < n; i++) {
+      sharpies.push({
+        x: (W / (n + 1)) * (i + 1),
+        a: Math.random() * Math.PI * 2,
+        sp: 0.004 + Math.random() * 0.006,
+        w: 7 + Math.random() * 9,          /* sharpies are tight */
+        c: HUE[i % HUE.length]
+      });
+    }
+
+    lasers = [];
+    var ln = small ? 1 : 2;
+    for (i = 0; i < ln; i++) {
+      lasers.push({
+        x: W * (i === 0 ? 0.22 : 0.78),
+        a: Math.random() * Math.PI * 2,
+        sp: 0.0075 + Math.random() * 0.004,
+        rays: small ? 7 : 11,
+        spread: 0.34 + Math.random() * 0.16,
+        c: i === 0 ? MINT : BLUE
+      });
+    }
+
+    pars = [];
+    var pn = small ? 3 : 5;
+    for (i = 0; i < pn; i++) {
+      pars.push({
+        x: (W / (pn + 1)) * (i + 1),
+        a: Math.random() * Math.PI * 2,
+        sp: 0.012 + Math.random() * 0.014,
+        r: 90 + Math.random() * 90,
+        c: HUE[(i + 1) % HUE.length]
+      });
+    }
+  }
+
+  function sharpy(b) {
+    b.a += b.sp;
+    var tip = b.x + Math.sin(b.a) * (W * 0.33);
+
+    var g = ctx.createLinearGradient(b.x, -30, tip, H);
+    g.addColorStop(0, 'rgba(' + b.c + ',0.30)');
+    g.addColorStop(0.5, 'rgba(' + b.c + ',0.10)');
+    g.addColorStop(1, 'rgba(' + b.c + ',0)');
+
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.moveTo(b.x - 3, -30);
+    ctx.lineTo(b.x + 3, -30);
+    ctx.lineTo(tip + b.w, H);
+    ctx.lineTo(tip - b.w, H);
+    ctx.closePath();
+    ctx.fill();
+
+    /* the hot core that makes a sharpy read as a sharpy */
+    var core = ctx.createLinearGradient(b.x, -30, tip, H);
+    core.addColorStop(0, 'rgba(255,255,255,0.34)');
+    core.addColorStop(0.35, 'rgba(' + b.c + ',0.16)');
+    core.addColorStop(1, 'rgba(' + b.c + ',0)');
+    ctx.strokeStyle = core;
+    ctx.lineWidth = 1.6;
+    ctx.beginPath();
+    ctx.moveTo(b.x, -30);
+    ctx.lineTo(tip, H);
+    ctx.stroke();
+  }
+
+  function laser(L) {
+    L.a += L.sp;
+    var base = Math.sin(L.a) * 0.5;
+    /* a touch of flicker, as lasers never sit perfectly still */
+    var flick = 0.72 + Math.random() * 0.28;
+
+    for (var i = 0; i < L.rays; i++) {
+      var t = (i / (L.rays - 1)) - 0.5;
+      var ang = Math.PI / 2 + base + t * L.spread;
+      var len = H * 1.5;
+
+      var g = ctx.createLinearGradient(L.x, -20, L.x + Math.cos(ang) * len, Math.sin(ang) * len);
+      g.addColorStop(0, 'rgba(' + L.c + ',' + (0.34 * flick).toFixed(3) + ')');
+      g.addColorStop(0.6, 'rgba(' + L.c + ',' + (0.09 * flick).toFixed(3) + ')');
+      g.addColorStop(1, 'rgba(' + L.c + ',0)');
+
+      ctx.strokeStyle = g;
+      ctx.lineWidth = 1.15;
+      ctx.beginPath();
+      ctx.moveTo(L.x, -20);
+      ctx.lineTo(L.x + Math.cos(ang) * len, Math.sin(ang) * len);
+      ctx.stroke();
+    }
+  }
+
+  function par(p) {
+    p.a += p.sp;
+    var pulse = 0.45 + (Math.sin(p.a) * 0.5 + 0.5) * 0.55;
+    var r = p.r * (0.85 + pulse * 0.25);
+    var y = H * 0.94;
+
+    var g = ctx.createRadialGradient(p.x, y, 0, p.x, y, r);
+    g.addColorStop(0, 'rgba(' + p.c + ',' + (0.26 * pulse).toFixed(3) + ')');
+    g.addColorStop(0.55, 'rgba(' + p.c + ',' + (0.09 * pulse).toFixed(3) + ')');
+    g.addColorStop(1, 'rgba(' + p.c + ',0)');
+
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(p.x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.globalCompositeOperation = 'lighter';
+
+    var i;
+    for (i = 0; i < pars.length; i++) par(pars[i]);
+    for (i = 0; i < sharpies.length; i++) sharpy(sharpies[i]);
+    for (i = 0; i < lasers.length; i++) laser(lasers[i]);
+
+    ctx.globalCompositeOperation = 'source-over';
+    requestAnimationFrame(draw);
+  }
+
+  size(); seed(); draw();
+
+  var rt;
+  window.addEventListener('resize', function () {
+    clearTimeout(rt);
+    rt = setTimeout(function () { size(); seed(); }, 200);
+  });
+})();
+</script>
 </body>
 </html>
