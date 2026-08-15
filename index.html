@@ -1,266 +1,1000 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="description" content="Welcome to main page of pscretn #Tech-Defined" />
-        <meta name="viewport" content="width=device-width,intial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="javascript/script.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="css/style.css">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>pscretn homepage</title>
-        <link rel = "icon" href ="images/pscretn_logo.webp" type = "image/x-icon">
-    </head>
-    <body class="loaded">
-      <div id="loader-wrapper">
-        <div id="loader"></div>
-     
-        <div class="loader-section section-left"></div>
-        <div class="loader-section section-right"></div>
-     
-    </div>
-    <div>
-        <nav class="navbar navbar-expand-lg " id="navbar-1">
-          <div class="container-fluid p-0">
-            <img id="imgl"src="images\pscretn_logo_white.webp"  width="3%" >
-              <a class="navbar-brand" id="tclr">pscretn</a>
-              <button class="navbar-toggler navbar-toggler-right " onclick="myFunction(this)" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <div class="bar1"></div>
-                <div class="bar2"></div>
-                <div class="bar3"></div>
-                <script>
-                  function myFunction(x) {
-                    x.classList.toggle("change");
-                  }
-                  </script>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarResponsive">
-                  <ul class="navbar-nav ml-auto">
-                      <li class="nav-item"><a id="li"class="nav-link js-scroll-trigger" href="#about">About</a></li>
-                      <li class="nav-item"><a  id="li" class="nav-link js-scroll-trigger" href="#services">Services</a></li>
-                      <li class="nav-item"><a id="li" class="nav-link js-scroll-trigger" href="#contact">Contact</a></li>
-                      <li class="nav-item"><a id="sli" class="nav-link js-scroll-trigger" href="trilitlabs.html" target="_blank">TrilitLabs</a></li>
-                      <li class="nav-item"><a id="sli" class="nav-link js-scroll-trigger" href="dj_pscretn.html" target="_blank">&nbsp;&nbsp;DJ&nbsp;&nbsp;</a></li>
-                  </ul>
-              </div>
-          </div>
-      </nav>
-    </div>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="pscretn — CCTV, custom PC builds, home automation, 3D printing and laser engraving. Angamaly, Kerala.">
+<meta name="theme-color" content="#08090D">
+<title>pscretn</title>
+<link rel="icon" href="images/pscretn_logo.webp" type="image/x-icon">
 
-        <div class="container-fluid p-0 class="custom-shadow"" id="img1">
-              <video autoplay muted loop playsinline width="65%">
-                <source src="videos/pscretn-animation.webm" type="video/webm">
-                Your browser does not support the video tag.
-              </video>
-            </div>
+<meta property="og:title" content="pscretn">
+<meta property="og:description" content="CCTV, custom PC builds, home automation, 3D printing and laser engraving. Angamaly, Kerala.">
+<meta property="og:type" content="website">
 
+<style>
+  @font-face {
+    font-family: HighSchoolUsaSans;
+    src: url("fonts/HighSchoolUsaSans-52vx.ttf");
+    font-weight: bold;
+    font-display: swap;
+  }
 
-<div class="container-fluid p-0 custom-shadow1" id="t10">
-  <a id="services"></a>
-  <h1 id="t17" class="text-center mb-4">Our Services</h1>
- <div class="row justify-content-center">
-  <!-- CCTV Installation -->
-  <div class="col-md-3 mb-4 d-flex">
-    <div class="glass-card">
-      <div class="card-inner">
-        <div class="card-front">
-          <div class="image-wrapper">
-            <img src="images/cctv_installation.webp" alt="CCTV Installation">
-          </div>
-          <div class="card-body">
-            <h5>CCTV Installation & Services</h5>
-            <p>Professional setup and remote-access-enabled CCTV systems for home or commercial security.</p>
-          </div>
+  :root {
+    --ink: #08090D;
+    --ink-2: #0E1017;
+    --raised: #14171F;
+    --line: #232733;
+    --white: #F2F4F8;
+    --muted: #8C93A3;
+
+    --orange: #FF7A21;
+    --amber: #FFB347;
+    --cyan: #22D3EE;
+    --violet: #A855F7;
+    --pink: #EC4899;
+    --lime: #84CC16;
+    --sky: #38BDF8;
+
+    /* every card sets its own --c; this is the fallback */
+    --c: var(--orange);
+
+    --display: HighSchoolUsaSans, "Arial Black", sans-serif;
+    --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    --mono: ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace;
+
+    --wide: 74rem;
+    --r: 16px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--ink);
+    color: var(--white);
+    font-family: var(--sans);
+    font-size: 1rem; line-height: 1.65;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+
+  .wrap { width: 100%; max-width: var(--wide); margin: 0 auto; padding: 0 1.25rem; }
+
+  section { padding: 4.5rem 0; position: relative; }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: .55rem;
+    font-size: .6875rem; font-weight: 700;
+    letter-spacing: .22em; text-transform: uppercase;
+    color: var(--c); margin: 0 0 1rem;
+  }
+
+  .eyebrow::before {
+    content: ""; width: 24px; height: 2px; border-radius: 2px;
+    background: linear-gradient(90deg, var(--c), transparent);
+  }
+
+  h2 {
+    font-family: var(--display);
+    font-size: clamp(1.9rem, 6vw, 3.1rem);
+    line-height: 1.05; margin: 0 0 1rem;
+    font-weight: bold; letter-spacing: -0.01em;
+  }
+
+  .lede { color: var(--muted); font-size: 1.03rem; max-width: 52ch; margin: 0; }
+
+  .grad {
+    background: linear-gradient(100deg, var(--amber), var(--orange) 22%, var(--pink) 45%, var(--violet) 66%, var(--cyan));
+    background-size: 260% auto;
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: var(--orange);
+    animation: shift 8s ease-in-out infinite;
+  }
+
+  @keyframes shift {
+    0%, 100% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+  }
+
+  /* ---------- buttons ---------- */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+    font-family: var(--sans); font-size: .875rem; font-weight: 600;
+    padding: .8rem 1.4rem; border-radius: 99px;
+    border: 1px solid var(--line); color: var(--white);
+    background: transparent; cursor: pointer;
+    transition: border-color .25s, background .25s, transform .2s;
+    white-space: nowrap;
+  }
+
+  .btn:hover { border-color: var(--orange); background: rgba(255,122,33,.1); }
+  .btn:active { transform: translateY(1px); }
+
+  .btn-hot {
+    border: 0; color: #150A02; font-weight: 700;
+    background: linear-gradient(100deg, var(--amber), var(--orange));
+    box-shadow: 0 8px 30px -8px rgba(255,122,33,.65);
+  }
+
+  .btn-hot:hover { background: linear-gradient(100deg, var(--orange), var(--amber)); }
+
+  /* ---------- nav ---------- */
+  .nav {
+    position: fixed; inset: 0 0 auto 0; z-index: 60;
+    display: flex; align-items: center; gap: 1rem;
+    padding: .8rem 1.25rem;
+    background: rgba(8,9,13,.7);
+    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s, background .3s;
+  }
+
+  .nav.stuck { border-bottom-color: var(--line); background: rgba(8,9,13,.9); }
+
+  .brand { display: inline-flex; align-items: center; gap: .55rem; margin-right: auto; }
+  .brand img { width: 30px; height: 30px; object-fit: contain; }
+  .brand b { font-family: var(--display); font-size: 1.15rem; letter-spacing: .02em; }
+  .brand span { display: block; font-size: .5rem; letter-spacing: .3em; color: var(--muted); text-transform: uppercase; }
+
+  .links { display: none; align-items: center; gap: 1.6rem; }
+
+  .links a {
+    position: relative; font-size: .875rem; font-weight: 500; color: var(--muted);
+    transition: color .25s;
+  }
+
+  .links a:hover { color: var(--white); }
+
+  .links a::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px;
+    background: linear-gradient(90deg, var(--orange), var(--cyan));
+    transform: scaleX(0); transform-origin: left; transition: transform .3s;
+  }
+
+  .links a:hover::after { transform: scaleX(1); }
+
+  .links a.tag {
+    border: 1px solid rgba(255,122,33,.45); border-radius: 99px;
+    padding: .35rem .85rem; color: var(--orange);
+  }
+
+  .links a.tag::after { display: none; }
+  .links a.tag:hover { background: rgba(255,122,33,.12); }
+
+  .burger {
+    display: inline-flex; flex-direction: column; justify-content: center; gap: 5px;
+    width: 42px; height: 38px; padding: 0 9px; cursor: pointer;
+    background: none; border: 1px solid var(--line); border-radius: 10px;
+  }
+
+  .burger i { display: block; height: 2px; background: var(--white); border-radius: 2px; transition: transform .3s, opacity .25s; }
+  .burger.on i:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .burger.on i:nth-child(2) { opacity: 0; }
+  .burger.on i:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .drawer {
+    position: fixed; inset: 0; z-index: 55;
+    background: rgba(8,9,13,.97);
+    -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+    display: flex; flex-direction: column; justify-content: center; gap: .5rem;
+    padding: 2rem;
+    opacity: 0; visibility: hidden; transition: opacity .35s, visibility .35s;
+  }
+
+  .drawer.open { opacity: 1; visibility: visible; }
+
+  .drawer a {
+    font-family: var(--display); font-size: 2rem; padding: .5rem 0;
+    border-bottom: 1px solid var(--line);
+    opacity: 0; transform: translateY(14px);
+  }
+
+  .drawer.open a { animation: dropin .5s cubic-bezier(.2,.7,.3,1) forwards; }
+  .drawer.open a:nth-child(2) { animation-delay: .06s; }
+  .drawer.open a:nth-child(3) { animation-delay: .12s; }
+  .drawer.open a:nth-child(4) { animation-delay: .18s; }
+  .drawer.open a:nth-child(5) { animation-delay: .24s; }
+
+  @keyframes dropin { to { opacity: 1; transform: none; } }
+
+  /* ---------- hero ---------- */
+  .hero {
+    position: relative; min-height: 100svh;
+    display: flex; align-items: center;
+    padding: 7rem 0 3rem; overflow: hidden;
+  }
+
+  #grid { position: absolute; inset: 0; z-index: 0; opacity: .55; }
+
+  .hero-glow {
+    position: absolute; z-index: 0; pointer-events: none; inset: 0;
+    background:
+      radial-gradient(42rem 30rem at 12% -5%, rgba(255,122,33,.24), transparent 60%),
+      radial-gradient(38rem 28rem at 82% 12%, rgba(168,85,247,.20), transparent 62%),
+      radial-gradient(40rem 30rem at 55% 95%, rgba(34,211,238,.17), transparent 62%),
+      radial-gradient(30rem 24rem at 95% 70%, rgba(236,72,153,.14), transparent 62%);
+  }
+
+  .hero .wrap { position: relative; z-index: 2; }
+
+  .hero-grid { display: grid; gap: 2.5rem; align-items: center; }
+
+  .chip {
+    display: inline-flex; align-items: center; gap: .5rem;
+    font-size: .6875rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--muted); border: 1px solid var(--line);
+    border-radius: 99px; padding: .4rem .9rem; margin-bottom: 1.4rem;
+  }
+
+  .pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 10px var(--cyan); animation: blink 2s ease-in-out infinite; }
+
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(2.6rem, 11vw, 5.4rem);
+    line-height: .95; margin: 0 0 1.15rem; font-weight: bold;
+    letter-spacing: -0.02em;
+  }
+
+  .hero p.sub { color: var(--muted); font-size: 1.06rem; margin: 0 0 2rem; max-width: 44ch; }
+
+  .cta { display: flex; flex-wrap: wrap; gap: .7rem; }
+
+  .hero-video { position: relative; }
+
+  .hero-video video {
+    width: 100%; border-radius: 22px;
+    border: 1px solid var(--line);
+    box-shadow: 0 40px 90px -40px rgba(255,122,33,.6);
+  }
+
+  .stats {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+    margin-top: 3rem; padding-top: 1.75rem; border-top: 1px solid var(--line);
+  }
+
+  .stat b { display: block; font-family: var(--mono); font-size: 1.7rem; font-weight: 700; letter-spacing: -.02em; color: var(--c); }
+  .stat span { font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+
+  /* ---------- ticker ---------- */
+  .ticker { border-block: 1px solid var(--line); background: var(--ink-2); overflow: hidden; padding: .9rem 0; }
+  .ticker-track { display: flex; gap: 2.5rem; width: max-content; animation: roll 30s linear infinite; }
+
+  .ticker-track span {
+    font-family: var(--display); font-size: 1.35rem; white-space: nowrap;
+    color: transparent; -webkit-text-stroke: 1px var(--line);
+    display: inline-flex; align-items: center; gap: 2.5rem;
+  }
+
+  .ticker-track span::after { content: "◆"; font-size: .45em; -webkit-text-stroke: 0; color: var(--orange); }
+  .ticker-track span.on { color: var(--white); -webkit-text-stroke: 0; }
+
+  @keyframes roll { to { transform: translateX(-50%); } }
+
+  /* ---------- cards ---------- */
+  .cards { display: grid; gap: 1rem; margin-top: 2.5rem; }
+
+  .card {
+    position: relative; overflow: hidden;
+    background: var(--raised); border: 1px solid var(--line);
+    border-radius: var(--r);
+    transition: transform .4s cubic-bezier(.2,.7,.3,1), border-color .35s;
+  }
+
+  .card:hover { transform: translateY(-6px); border-color: var(--c); }
+
+  /* a colour bar that wipes across the top edge on hover */
+  .card::after {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; z-index: 3;
+    background: linear-gradient(90deg, var(--c), transparent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .45s cubic-bezier(.2,.7,.3,1);
+  }
+
+  .card:hover::after { transform: scaleX(1); }
+
+  .card:hover .card-body h3 { color: var(--c); }
+  .card-body h3 { transition: color .3s; }
+
+  .shot { position: relative; aspect-ratio: 16/10; overflow: hidden; background: var(--ink-2); }
+
+  .shot img, .shot video {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform .7s cubic-bezier(.2,.7,.3,1), opacity .4s;
+  }
+
+  .shot video { position: absolute; inset: 0; opacity: 0; }
+
+  .card:hover .shot img { transform: scale(1.08); }
+  .card.playing .shot video { opacity: 1; }
+
+  .shot::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(20,23,31,.95), transparent 55%);
+  }
+
+  .card-body { padding: 1.25rem 1.35rem 1.5rem; position: relative; z-index: 1; }
+  .card-body h3 { font-size: 1.05rem; margin: 0 0 .4rem; font-weight: 700; }
+  .card-body p { margin: 0; color: var(--muted); font-size: .875rem; }
+
+  .soon {
+    position: absolute; top: .8rem; right: .8rem; z-index: 2;
+    font-size: .6rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    background: rgba(8,9,13,.8); border: 1px solid var(--line);
+    color: var(--amber); padding: .3rem .6rem; border-radius: 99px;
+  }
+
+  /* ---------- store ---------- */
+  .store { display: grid; gap: 1rem; margin-top: 2.5rem; }
+
+  .prod {
+    background: var(--raised); border: 1px solid var(--line);
+    border-radius: var(--r); overflow: hidden;
+    transition: transform .4s cubic-bezier(.2,.7,.3,1), border-color .35s;
+  }
+
+  .prod:hover { transform: translateY(-6px); border-color: var(--c); }
+  .prod:hover .prod-b h3 { color: var(--c); }
+  .prod-b h3 { transition: color .3s; }
+  .prod .sq { aspect-ratio: 1; overflow: hidden; background: var(--ink-2); }
+  .prod img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s cubic-bezier(.2,.7,.3,1); }
+  .prod:hover img { transform: scale(1.07); }
+
+  .prod-b { padding: 1rem 1.1rem 1.2rem; }
+  .prod-b h3 { font-size: .95rem; margin: 0 0 .3rem; font-weight: 700; }
+  .prod-b .dim { font-size: .72rem; color: var(--muted); margin: 0 0 .6rem; font-family: var(--mono); }
+
+  .price {
+    font-family: var(--mono); font-size: 1.15rem; font-weight: 700;
+    background: linear-gradient(100deg, #fff, var(--c) 70%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: var(--c);
+  }
+
+  /* ---------- sub-brand band ---------- */
+  .brands { display: grid; gap: 1.15rem; margin-top: 2.5rem; }
+
+  .bcard {
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column; gap: 1rem;
+    padding: 1.75rem; border-radius: 18px;
+    background: var(--raised); border: 1px solid var(--line);
+    transition: transform .4s cubic-bezier(.2,.7,.3,1), border-color .35s;
+  }
+
+  .bcard:hover { transform: translateY(-6px); border-color: var(--c); }
+
+  .bcard::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(22rem 14rem at 88% 0%, color-mix(in srgb, var(--c) 18%, transparent), transparent 62%);
+  }
+
+  .bcard > * { position: relative; z-index: 1; }
+
+  .bcard-top { display: flex; align-items: center; gap: .9rem; }
+  .bcard-top img { width: 52px; height: 52px; object-fit: contain; flex: 0 0 auto; }
+  .bcard h3 { margin: 0; font-family: var(--display); font-size: 1.4rem; }
+  .bcard .kicker { display: block; font-size: .6rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--c); }
+  .bcard p { margin: 0; color: var(--muted); font-size: .92rem; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: .4rem; }
+
+  .chips span {
+    font-size: .68rem; font-weight: 600; letter-spacing: .04em;
+    padding: .3rem .65rem; border-radius: 99px;
+    border: 1px solid var(--line); color: var(--muted);
+  }
+
+  /* ---------- about ---------- */
+  .about-grid { display: grid; gap: 2.5rem; }
+
+  .about-card {
+    background: linear-gradient(160deg, rgba(255,122,33,.1), transparent 55%);
+    border: 1px solid var(--line); border-radius: 20px; padding: 1.75rem;
+  }
+
+  .about-card p { color: var(--muted); margin: 0 0 1rem; font-size: .95rem; }
+  .about-card p:last-child { margin: 0; }
+
+  /* ---------- contact ---------- */
+  .contact-grid { display: grid; gap: 2rem; }
+
+  .rows { display: grid; gap: .7rem; margin-top: 1.75rem; }
+
+  .row-i {
+    display: flex; align-items: center; gap: .9rem;
+    padding: .9rem 1rem; border: 1px solid var(--line);
+    border-radius: 12px; background: var(--raised);
+    transition: border-color .25s, transform .25s;
+  }
+
+  .row-i:hover { border-color: var(--orange); transform: translateX(3px); }
+  .row-i svg { width: 18px; height: 18px; flex: 0 0 auto; }
+  .row-i b { font-weight: 600; font-size: .9rem; }
+  .row-i small { display: block; color: var(--muted); font-size: .72rem; }
+
+  .map { border-radius: 18px; overflow: hidden; border: 1px solid var(--line); min-height: 300px; }
+  .map iframe { width: 100%; height: 100%; min-height: 300px; border: 0; display: block; filter: saturate(.85) contrast(1.05); }
+
+  /* ---------- footer ---------- */
+  footer { border-top: 1px solid var(--line); padding: 3rem 0 2.5rem; text-align: center; background: var(--ink-2); }
+
+  .socials { display: flex; justify-content: center; flex-wrap: wrap; gap: .55rem; margin-bottom: 1.5rem; }
+
+  .socials a {
+    width: 42px; height: 42px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 1px solid var(--line); color: var(--muted);
+    transition: color .25s, border-color .25s, transform .25s, background .25s;
+  }
+
+  .socials a:hover { color: var(--white); border-color: var(--orange); background: rgba(255,122,33,.12); transform: translateY(-3px); }
+  .socials svg { width: 17px; height: 17px; fill: currentColor; }
+
+  .foot-t { color: var(--muted); font-size: .8rem; margin: 0; }
+
+  /* ---------- reveal ---------- */
+  .rv { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.3,1); }
+  .rv.seen { opacity: 1; transform: none; }
+
+  /* ---------- breakpoints ---------- */
+  @media (min-width: 40rem) {
+    .cards, .store { grid-template-columns: repeat(2, 1fr); gap: 1.15rem; }
+    .contact-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (min-width: 60rem) {
+    .wrap { padding: 0 2rem; }
+    section { padding: 6.5rem 0; }
+    .links { display: flex; }
+    .burger { display: none; }
+    .nav { padding: 1rem 2rem; }
+    .hero-grid { grid-template-columns: 1.05fr .95fr; gap: 3.5rem; }
+    .cards { grid-template-columns: repeat(3, 1fr); }
+    .store { grid-template-columns: repeat(4, 1fr); }
+    .about-grid { grid-template-columns: 1fr 1fr; align-items: center; }
+    .brands { grid-template-columns: 1fr 1fr; }
+    .stat b { font-size: 2rem; }
+  }
+
+  /* ---------- phones ---------- */
+  @media (max-width: 30rem) {
+    section { padding: 3.5rem 0; }
+    .wrap { padding: 0 1.1rem; }
+
+    .nav { padding: .7rem 1.1rem; gap: .6rem; }
+    .brand img { width: 26px; height: 26px; }
+    .brand b { font-size: 1rem; }
+    .brand span { font-size: .45rem; letter-spacing: .22em; }
+
+    .hero { padding: 6rem 0 3rem; }
+    .hero-grid { gap: 1.75rem; }
+    h1 { margin-bottom: .9rem; }
+    .hero p.sub { font-size: 1rem; margin-bottom: 1.6rem; }
+    .cta { flex-direction: column; align-items: stretch; }
+    .cta .btn { width: 100%; }
+    .hero-video video { border-radius: 16px; }
+
+    .stats { gap: .6rem; margin-top: 2.25rem; padding-top: 1.35rem; }
+    .stat b { font-size: 1.3rem; }
+    .stat span { font-size: .58rem; letter-spacing: .06em; }
+
+    h2 { font-size: 1.85rem; }
+    .card-body { padding: 1.1rem 1.15rem 1.3rem; }
+    .prod-b { padding: .9rem 1rem 1.1rem; }
+    .about-card { padding: 1.35rem; border-radius: 16px; }
+    .bcard { padding: 1.35rem; border-radius: 14px; }
+    .bcard-top img { width: 44px; height: 44px; }
+    .rows { gap: .6rem; }
+    .row-i { padding: .8rem .9rem; }
+    .map, .map iframe { min-height: 240px; }
+    .socials a { width: 38px; height: 38px; }
+    footer { padding: 2.25rem 0 2rem; }
+  }
+
+  /* the email would push the page sideways on the narrowest phones */
+  @media (max-width: 22.5rem) {
+    .row-i b { font-size: .82rem; word-break: break-word; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .stats .stat:last-child { grid-column: span 2; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    #grid { display: none; }
+    .rv { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .ticker-track, .grad, .pulse, .drawer.open a { animation: none !important; }
+    .drawer a { opacity: 1; transform: none; }
+    .card:hover, .prod:hover { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a class="brand" href="#top">
+    <img src="images/pscretn_logo_white.webp" alt="pscretn logo">
+    <span style="display:block"><b>pscretn</b><span>Angamaly, Kerala</span></span>
+  </a>
+
+  <div class="links">
+    <a href="#services">Services</a>
+    <a href="#store">Store</a>
+    <a href="#brands">Brands</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <a class="tag" href="trilitlabs.html" target="_blank" rel="noopener">TrilitLabs</a>
+    <a class="tag" href="dj_pscretn.html" target="_blank" rel="noopener">DJ</a>
+  </div>
+
+  <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false">
+    <i></i><i></i><i></i>
+  </button>
+</nav>
+
+<div class="drawer" id="drawer">
+  <a href="#services">Services</a>
+  <a href="#store">Store</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+  <a href="trilitlabs.html">Trilit Labs</a>
+  <a href="dj_pscretn.html">DJ pscretn</a>
+</div>
+
+<header class="hero" id="top">
+  <canvas id="grid" aria-hidden="true"></canvas>
+  <div class="hero-glow"></div>
+
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="chip"><i class="pulse"></i> Angamaly, Kerala · Since 2021</span>
+
+        <h1>Build it<br><span class="grad">properly.</span></h1>
+
+        <p class="sub">
+          CCTV, custom PC builds, home automation, 3D printing and laser engraving —
+          designed, installed and supported by the people who made them.
+        </p>
+
+        <div class="cta">
+          <a class="btn btn-hot" href="#contact">Get in touch</a>
+          <a class="btn" href="#services">See what we do</a>
         </div>
+
+        <div class="stats">
+          <div class="stat" style="--c:var(--amber)"><b data-count="2021">—</b><span>Founded</span></div>
+          <div class="stat" style="--c:var(--violet)"><b data-count="5">—</b><span>Services</span></div>
+          <div class="stat" style="--c:var(--cyan)"><b data-count="4">—</b><span>Products</span></div>
+        </div>
+      </div>
+
+      <div class="hero-video">
+        <video autoplay muted loop playsinline poster="images/pscretn_logo.webp">
+          <source src="videos/pscretn-animation.webm" type="video/webm">
+        </video>
       </div>
     </div>
   </div>
+</header>
 
-  <!-- Custom & Gaming PC Builds -->
-  <div class="col-md-3 mb-4 d-flex">
-    <div class="glass-card">
-      <div class="card-inner">
-        <div class="card-front">
-          <div class="image-wrapper">
-            <img src="images/pc_build.webp" alt="Gaming PC">
-          </div>
-          <div class="card-body">
-            <h5>Custom & Gaming PC Builds</h5>
-            <p>Tailored high-performance PC builds, optimized for gaming, editing, and productivity tasks.</p>
+<div class="ticker" aria-hidden="true"><div class="ticker-track" id="ticker"></div></div>
+
+<section id="services">
+  <div class="wrap">
+    <div class="rv">
+      <p class="eyebrow">What we do</p>
+      <h2>Services</h2>
+      <p class="lede">Five things, done properly. Hover a card to see it in motion.</p>
+    </div>
+
+    <div class="cards">
+      <article class="card rv" style="--c:var(--cyan)" data-vid="videos/3d_printing.webm">
+        <div class="shot">
+          <img src="images/3d_printing.webp" alt="3D printing" loading="lazy">
+        </div>
+        <div class="card-body">
+          <h3>3D Printing</h3>
+          <p>High-precision PLA/ABS 3D printing for prototyping, miniatures and functional parts.</p>
+        </div>
+      </article>
+
+      <article class="card rv" style="--c:var(--violet)" data-vid="videos/pc_build.webm">
+        <div class="shot">
+          <img src="images/pc_build.webp" alt="Custom gaming PC build" loading="lazy">
+        </div>
+        <div class="card-body">
+          <h3>Custom &amp; Gaming PC Builds</h3>
+          <p>Tailored high-performance builds, optimised for gaming, editing and productivity.</p>
+        </div>
+      </article>
+
+      <article class="card rv" style="--c:var(--lime)">
+        <div class="shot">
+          <img src="images/cctv_installation.webp" alt="CCTV installation" loading="lazy">
+        </div>
+        <div class="card-body">
+          <h3>CCTV Installation &amp; Services</h3>
+          <p>Professional setup with remote access, for home or commercial security.</p>
+        </div>
+      </article>
+
+      <article class="card rv" style="--c:var(--pink)">
+        <div class="shot">
+          <img src="images/home_automation.webp" alt="Home automation" loading="lazy">
+        </div>
+        <div class="card-body">
+          <h3>Home Automation &amp; IoT</h3>
+          <p>Smart lights, appliances and security with app or voice control.</p>
+        </div>
+      </article>
+
+      <article class="card rv" style="--c:var(--orange)" data-vid="videos/laser_engraving.webm">
+        <span class="soon">Coming soon</span>
+        <div class="shot">
+          <img src="images/laser_engraving.webp" alt="Laser engraving" loading="lazy">
+        </div>
+        <div class="card-body">
+          <h3>Laser Engraving</h3>
+          <p>Precision engraving on wood, acrylic or metal for gifts, signage and branding.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="store" style="--c:var(--cyan);background:var(--ink-2);border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="rv">
+      <p class="eyebrow">Made in-house</p>
+      <h2>3D Print Store</h2>
+      <p class="lede">Printed to order at our workshop in Angamaly.</p>
+    </div>
+
+    <div class="store">
+      <article class="prod rv" style="--c:var(--amber)">
+        <div class="sq"><img src="images/Lithophane_lamps.webp" alt="Lithophane lamp" loading="lazy"></div>
+        <div class="prod-b">
+          <h3>Lithophane Lamp</h3>
+          <p class="dim">7.2 × 7.2 × 10.8 cm</p>
+          <span class="price">₹899</span>
+        </div>
+      </article>
+
+      <article class="prod rv" style="--c:var(--pink)">
+        <div class="sq"><img src="images/3D_printed_keychain.webp" alt="Custom 3D printed keychain" loading="lazy"></div>
+        <div class="prod-b">
+          <h3>Customised Keychains</h3>
+          <p class="dim">up to 9 × 2.2 × 0.4 cm</p>
+          <span class="price">₹99</span>
+        </div>
+      </article>
+
+      <article class="prod rv" style="--c:var(--lime)">
+        <div class="sq"><img src="images/spiral_flower_pot.webp" alt="Spiral plant pot" loading="lazy"></div>
+        <div class="prod-b">
+          <h3>Spiral Plant Pot</h3>
+          <p class="dim">9.6 × 9.6 × 8 cm</p>
+          <span class="price">₹199</span>
+        </div>
+      </article>
+
+      <article class="prod rv" style="--c:var(--sky)">
+        <div class="sq"><img src="images/lithophane_plane.webp" alt="Lithophane plane" loading="lazy"></div>
+        <div class="prod-b">
+          <h3>Lithophane Plane</h3>
+          <p class="dim">10 × 10 × 0.4 cm</p>
+          <span class="price">₹199</span>
+        </div>
+      </article>
+    </div>
+
+    <p style="margin-top:2rem">
+      <a class="btn btn-hot" href="#contact">Order or ask for a custom print</a>
+    </p>
+  </div>
+</section>
+
+<section id="brands" style="--c:var(--cyan)">
+  <div class="wrap">
+    <div class="rv">
+      <p class="eyebrow">Our brands</p>
+      <h2>Two names,<br><span class="grad">one workshop.</span></h2>
+      <p class="lede">Specialist work runs under its own name.</p>
+    </div>
+
+    <div class="brands">
+      <a class="bcard rv" href="trilitlabs.html" style="--c:#2DD4BF">
+        <div class="bcard-top">
+          <img src="images/trilitlabs_logo.webp" alt="Trilit Labs logo">
+          <div>
+            <span class="kicker">Stage lighting</span>
+            <h3>Trilit Labs</h3>
           </div>
         </div>
+        <p>Wireless DMX and Art-Net controllers, isolated splitters, and the WaveLink DMX app on Google Play — plus stage fixtures and 3D printed lamps.</p>
+        <div class="chips"><span>DMX512</span><span>Art-Net</span><span>WaveLink app</span><span>Sharpy &amp; PAR</span></div>
+        <span class="btn" style="align-self:flex-start">Visit Trilit Labs →</span>
+      </a>
+
+      <a class="bcard rv" href="dj_pscretn.html" style="--c:#A855F7">
+        <div class="bcard-top">
+          <img src="images/pscretn_logo_white.webp" alt="">
+          <div>
+            <span class="kicker">Events</span>
+            <h3>DJ pscretn</h3>
+          </div>
+        </div>
+        <p>Weddings, receptions and college nights across Kerala, played on a Pioneer DDJ-FLX4.</p>
+        <div class="chips"><span>Weddings</span><span>College fests</span><span>Private parties</span></div>
+        <span class="btn" style="align-self:flex-start">Visit DJ pscretn →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="about" style="--c:var(--violet)">
+  <div class="wrap about-grid">
+    <div class="rv">
+      <p class="eyebrow">About</p>
+      <h2>Technology,<br><span class="grad">defined.</span></h2>
+    </div>
+
+    <div class="about-card rv">
+      <p>
+        pscretn is a forward-thinking technology organization dedicated to empowering
+        innovation and technical excellence.
+      </p>
+      <p>
+        Founded in 2021, pscretn began with a simple yet powerful mission — to grow into
+        a hub for creativity, learning, and hands-on development.
+      </p>
+      <p>
+        We specialize in providing cutting-edge solutions and custom services across a
+        wide range of technological fields.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="--c:var(--pink);background:var(--ink-2);border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="rv">
+      <p class="eyebrow">Contact</p>
+      <h2>Let's talk.</h2>
+      <p class="lede">
+        Questions about a product, need support, or want something custom built —
+        get in touch and we'll come back to you.
+      </p>
+    </div>
+
+    <div class="contact-grid" style="margin-top:2.5rem">
+      <div class="rv">
+        <div class="rows" style="margin-top:0">
+          <a class="row-i" href="https://maps.google.com/?q=East+Nagar,+Kavaraparmbu,+Angamaly,+Kerala+683572" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#FF7A21" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span><b>East Nagar, Kavaraparmbu</b><small>Angamaly, Kerala 683572</small></span>
+          </a>
+
+          <a class="row-i" href="tel:+917907873500">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+            <span><b>+91 79078 73500</b><small>Call us</small></span>
+          </a>
+
+          <a class="row-i" href="mailto:pscretn@gmail.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#FFB347" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+            <span><b>pscretn@gmail.com</b><small>Email us</small></span>
+          </a>
+        </div>
+      </div>
+
+      <div class="map rv">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125770.32415828641!2d76.3119106!3d10.1888022!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b0807b59c0a2697%3A0xe33980b506fbf8c!2sEast%20Nagar%2C%20Kavaraparmbu%2C%20Angamaly%2C%20Kerala%20683572!5e0!3m2!1sen!2sin!4v1718554000000!5m2!1sen!2sin"
+          title="pscretn location" loading="lazy" allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- Home Automation & IoT -->
-  <div class="col-md-3 mb-4 d-flex">
-    <div class="glass-card">
-      <div class="card-inner">
-        <div class="card-front">
-          <div class="image-wrapper">
-            <img src="images/home_automation.webp" alt="Home Automation">
-          </div>
-          <div class="card-body">
-            <h5>Home Automation & IoT</h5>
-            <p>Smart home solutions for lights, appliances, and security with intuitive app or voice control.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="row justify-content-center">
-  <!-- 3D Printing -->
-  <div class="col-md-3 mb-4 d-flex">
-    <div class="glass-card">
-      <div class="card-inner">
-        <div class="card-front">
-          <div class="image-wrapper">
-            <img src="images/3d_printing.webp" alt="3D Printing">
-          </div>
-          <div class="card-body">
-            <h5>3D Printing</h5>
-            <p>High-precision PLA/ABS 3D printing services for prototyping, miniatures, and functional parts.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Laser Engraving -->
-  <div class="col-md-3 mb-3 d-flex">
-    <div class="glass-card">
-      <div class="card-inner">
-        <div class="card-front">
-          <div class="image-wrapper">
-            <img src="images/laser_engraving.webp" alt="Laser Engraving">
-          </div>
-          <div class="card-body">
-            <h5>Laser Engraving (Coming Soon)</h5>
-            <p>Precision laser engraving on wood, acrylic, or metal for gifts, signage, and branding solutions.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-
-<div class="gap"></div>
-
-<div class="container-fluid p-0 custom-shadow3" id="t10">
-  <h1 id="t17" class="text-center mb-4">3D Print Store</h1>
- <div class="row justify-content-left">
-  <!-- Product 1 -->
-    <div class="col-md-2 mb-4">
-      <div class="glass-card1">
-        <div class="square-image-container">
-          <img src="images/Lithophane_lamps.webp" alt="Lithophane Lamp">
-        </div>
-        <div class="product-title">Lithophane Lamp</div>
-        <div class="product-detail"><b>Size :</b> 7.2cm x 7.2cm x 10.8cm (L x W x H)</div>
-        <div class="product-detail"><b>Price :</b> ₹ 899</div>
-      </div>
-    </div>
-
-    <!-- Product 2 -->
-    <div class="col-md-2 mb-4">
-      <div class="glass-card1">
-        <div class="square-image-container">
-          <img src="images/3D_printed_keychain.webp" alt="3D Printed keychain">
-        </div>
-        <div class="product-title">Customised Keychains</div>
-        <div class="product-detail"><b>Size :</b> upto 9cm x 2.2cm x 0.4 cm (L x W x H)</div>
-        <div class="product-detail"><b>Price :</b> ₹ 99</div>
-      </div>
-    </div>
-
-    <!-- Product 3 -->
-    <div class="col-md-2 mb-4">
-      <div class="glass-card1">
-        <div class="square-image-container">
-          <img src="images/spiral_flower_pot.webp" alt="spiral flower pot">
-        </div>
-        <div class="product-title">Spiral Plant Pot</div>
-        <div class="product-detail"><b>Size :</b> 9.6cm x 9.6cm x 8cm (L x W x H)</div>
-        <div class="product-detail"><b>Price :</b> ₹ 199</div>
-      </div>
-    </div>
-  
-    <!-- Product 4 -->
-    <div class="col-md-2 mb-4">
-      <div class="glass-card1">
-        <div class="square-image-container">
-          <img src="images/lithophane_plane.webp" alt="Lithophane Plane">
-        </div>
-        <div class="product-title">Lithophane Plane</div>
-        <div class="product-detail"><b>Size :</b> 10cm x 10cm x 0.4cm (L x W x H)</div>
-        <div class="product-detail"><b>Price :</b> ₹ 199</div>
-      </div>
-    </div>
-  
-</div>
-</div>
-
-<div class="container-fluid p-0 " id="bgm"><a id="about"></a>
-<header id="t17" class="container">About</header>
-<p id="t3" >pscretn is a forward-thinking technology organization dedicated to empowering innovation and technical excellence.<br> 
-  Founded in 2021, pscretn began with a simple yet powerful mission — to grow into a hub for creativity, learning, and hands-on development.<br> 
-  We specialize in providing cutting-edge solutions and custom services across a wide range of technological fields.<br>
-</p>
-</div>
-
-<div class="container-fluid custom-shadow2" id="contact-section"><a id="contact"></a>
-  <div id="contact-info">
-    <h1 id="t17" >Contact Us</h1>
-    <p>We’re here to help you ! Whether you have a question about our products, need support, or just want to give feedback — feel free to reach out.</p>
-
-    <div class="info-item">
-      <i class="fa fa-map-marker ic1"></i>
-      <div class="info-text">East Nagar, Kavaraparmbu, Angamaly, Kerala 683572</div>
-    </div>
-
-    <div class="info-item">
-      <i class="fa fa-phone ic2"></i>
-      <div class="info-text">+91 7907873500</div>
-    </div>
-
-    <div class="info-item">
-      <i class="fa fa-envelope ic3"></i>
-      <div class="info-text">pscretn@gmail.com</div>
-    </div>
-  </div>
-
-  <div id="contact-map">
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125770.32415828641!2d76.3119106!3d10.1888022!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b0807b59c0a2697%3A0xe33980b506fbf8c!2sEast%20Nagar%2C%20Kavaraparmbu%2C%20Angamaly%2C%20Kerala%20683572!5e0!3m2!1sen!2sin!4v1718554000000!5m2!1sen!2sin"
-      allowfullscreen=""
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
-  </div>
-</div>
-
-</div>
-</body>
 <footer>
-    <div id=space></div>
-    <p id=t1>Connect with us on <br></p>
-<a target="_blank" href="https://www.facebook.com/profile.php?id=100011476530466" class="fa fa-facebook" id="ic"></a>&nbsp;&nbsp;&nbsp;
-<a target="_blank" href="https://twitter.com/pscretn" class="fa fa-twitter" id="ic"></a>&nbsp;&nbsp;&nbsp;
-<a target="_blank" href="https://in.linkedin.com/in/paul-sabu-22520b1b8" class="fa fa-linkedin"id="ic"></a>&nbsp;&nbsp;&nbsp;
-<a target="_blank" href="https://www.instagram.com/pscretn/" class="fa fa-instagram" id="ic"></a>&nbsp;&nbsp;&nbsp;
-<a target="_blank" href="https://github.com/pscretn" class="fa fa-github" id="ic"></a>&nbsp;&nbsp;&nbsp;
-<a target="_blank" href="https://www.youtube.com/channel/UC6LTgFTohfKty7aJJJbshhw" class="fa fa-youtube" id="ic"></a>&nbsp;&nbsp;&nbsp;
-<a  target="_blank" href="https://pscretn.medium.com/" class="fa fa-medium" id="ic"></a><br><br><br>
-<p id="t9"> © 2025 pscretn</p>
+  <div class="wrap">
+    <div class="socials">
+      <a href="https://www.instagram.com/pscretn/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3.2A6.6 6.6 0 1 0 18.6 12 6.6 6.6 0 0 0 12 5.4zm0 10.9A4.3 4.3 0 1 1 16.3 12 4.3 4.3 0 0 1 12 16.3zm6.9-11.1a1.5 1.5 0 1 1-1.5-1.5 1.5 1.5 0 0 1 1.5 1.5z"/></svg></a>
+      <a href="https://github.com/pscretn" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.4-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7 0-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .3.3.7 1 .7 2v2.9c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg></a>
+      <a href="https://in.linkedin.com/in/paul-sabu-22520b1b8" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1a4.2 4.2 0 0 1 3.8-2c4 0 4.8 2.6 4.8 6.1V21h-4v-5.5c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9V21H9z"/></svg></a>
+      <a href="https://www.youtube.com/channel/UC6LTgFTohfKty7aJJJbshhw" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.7-1.7C19.3 5.2 12 5.2 12 5.2s-7.3 0-8.9.4A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.7 1.7c1.6.4 8.9.4 8.9.4s7.3 0 8.9-.4a2.5 2.5 0 0 0 1.7-1.7C23 15.2 23 12 23 12zM9.8 15.3V8.7l6 3.3z"/></svg></a>
+      <a href="https://www.facebook.com/profile.php?id=100011476530466" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7h-2.5V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"/></svg></a>
+      <a href="https://twitter.com/pscretn" target="_blank" rel="noopener" aria-label="Twitter"><svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7 8 8.2 12h-6.4l-5-7.3L6 22H2.9l7.5-8.6L2.5 2H9l4.5 6.7zM17.8 20.1h1.7L7.3 3.8H5.5z"/></svg></a>
+      <a href="https://pscretn.medium.com/" target="_blank" rel="noopener" aria-label="Medium"><svg viewBox="0 0 24 24"><path d="M13.5 12a6.75 6.75 0 1 1-13.5 0 6.75 6.75 0 0 1 13.5 0zM20.9 12c0 3.5-1.5 6.3-3.4 6.3S14.1 15.5 14.1 12s1.5-6.3 3.4-6.3S20.9 8.5 20.9 12zM24 12c0 3.1-.5 5.6-1.2 5.6s-1.2-2.5-1.2-5.6.5-5.6 1.2-5.6S24 8.9 24 12z"/></svg></a>
+    </div>
+    <p class="foot-t">
+      pscretn · East Nagar, Kavaraparmbu, Angamaly, Kerala 683572<br>
+      © 2026 pscretn
+    </p>
+  </div>
 </footer>
-    
+
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- nav ---------- */
+  var nav = document.getElementById('nav');
+  function onScroll() { nav.classList.toggle('stuck', window.scrollY > 10); }
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* ---------- mobile drawer ---------- */
+  var burger = document.getElementById('burger');
+  var drawer = document.getElementById('drawer');
+
+  function setMenu(open) {
+    burger.classList.toggle('on', open);
+    drawer.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+
+  burger.addEventListener('click', function () { setMenu(!drawer.classList.contains('open')); });
+  drawer.addEventListener('click', function (e) { if (e.target.tagName === 'A') setMenu(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
+
+  /* ---------- ticker ---------- */
+  var WORDS = ['CCTV', '3D Printing', 'PC Builds', 'Home Automation',
+               'Laser Engraving', 'IoT', 'Prototyping', 'Support'];
+  var TINT = ['--orange', '--cyan', '--violet', '--pink', '--lime', '--amber', '--sky'];
+  var t = document.getElementById('ticker');
+
+  for (var p = 0; p < 2; p++) {
+    WORDS.forEach(function (w, i) {
+      var s = document.createElement('span');
+      s.textContent = w;
+      /* every other word is filled, in its own colour */
+      if (i % 2 === 1) {
+        s.className = 'on';
+        s.style.color = 'var(' + TINT[i % TINT.length] + ')';
+      } else {
+        s.style.webkitTextStroke = '1px var(' + TINT[i % TINT.length] + ')';
+        s.style.opacity = '.55';
+      }
+      t.appendChild(s);
+    });
+  }
+
+  /* ---------- reveal ---------- */
+  var obs = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('seen');
+      obs.unobserve(e.target);
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+
+  document.querySelectorAll('.rv').forEach(function (el, i) {
+    el.style.transitionDelay = (i % 4) * 80 + 'ms';
+    obs.observe(el);
+  });
+
+  /* ---------- counters ---------- */
+  var cObs = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var el = e.target, to = +el.dataset.count, t0 = null;
+      cObs.unobserve(el);
+
+      if (reduce) { el.textContent = to; return; }
+
+      /* years shouldn't count up from zero — start near the value */
+      var from = to > 1900 ? to - 25 : 0;
+
+      requestAnimationFrame(function run(ts) {
+        if (t0 === null) t0 = ts;
+        var k = Math.min((ts - t0) / 1400, 1);
+        var e2 = 1 - Math.pow(1 - k, 4);
+        el.textContent = Math.round(from + (to - from) * e2);
+        if (k < 1) requestAnimationFrame(run);
+      });
+    });
+  }, { threshold: 0.4 });
+
+  document.querySelectorAll('[data-count]').forEach(function (el) { cObs.observe(el); });
+
+  /* ---------- service cards play their clip on hover ---------- */
+  document.querySelectorAll('.card[data-vid]').forEach(function (card) {
+    var shot = card.querySelector('.shot');
+    var v = null;
+
+    function build() {
+      if (v) return v;
+      v = document.createElement('video');
+      v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'none';
+      v.src = card.dataset.vid;
+      shot.appendChild(v);
+      return v;
+    }
+
+    card.addEventListener('pointerenter', function () {
+      if (reduce) return;
+      var vid = build();
+      vid.currentTime = 0;
+      vid.play().then(function () { card.classList.add('playing'); }).catch(function () {});
+    });
+
+    card.addEventListener('pointerleave', function () {
+      if (!v) return;
+      card.classList.remove('playing');
+      v.pause();
+    });
+  });
+
+  if (reduce) return;
+
+  /* ---------- hero grid ----------
+     a slow perspective grid, drawn rather than tiled so the lines stay
+     crisp on any screen and fade out before they reach the copy */
+  var cv = document.getElementById('grid');
+  var ctx = cv.getContext('2d');
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var W, H, off = 0;
+
+  function size() {
+    var r = cv.getBoundingClientRect();
+    W = r.width; H = r.height;
+    cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    var horizon = H * 0.42, gap = 46;
+
+    ctx.lineWidth = 1;
+
+    /* lines running to the vanishing point, tinted across the palette
+       so the floor reads as a lit stage rather than one flat colour */
+    var RAYS = [[255,122,33], [236,72,153], [168,85,247], [56,189,248], [132,204,22]];
+
+    for (var x = -14; x <= 14; x++) {
+      var rgb = RAYS[(Math.abs(x) + RAYS.length) % RAYS.length];
+      ctx.strokeStyle = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',0.17)';
+      ctx.beginPath();
+      ctx.moveTo(W / 2 + x * gap * 2.6, H);
+      ctx.lineTo(W / 2 + x * 5, horizon);
+      ctx.stroke();
+    }
+
+    /* rungs, spaced so they appear to rush toward the viewer */
+    off = (off + 0.55) % gap;
+    for (var i = 0; i < 22; i++) {
+      var d = i * gap + off;
+      var y = horizon + (d * d) / (H * 0.9);
+      if (y > H) break;
+      var a = 0.16 * (1 - (y - horizon) / (H - horizon));
+      ctx.strokeStyle = 'rgba(34,211,238,' + Math.max(0, a).toFixed(3) + ')';
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(W, y);
+      ctx.stroke();
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  size();
+  draw();
+
+  var rt;
+  window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(size, 200); });
+})();
+</script>
+</body>
 </html>
