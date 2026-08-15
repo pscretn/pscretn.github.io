@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="DJ pscretn — Paul Sabu. Weddings, college fests, clubs and private parties across Kerala. Malayalam, Tamil, Bollywood, EDM and commercial sets.">
+<meta name="theme-color" content="#07070B">
+<title>DJ pscretn | Paul Sabu</title>
+<link rel="icon" href="images/pscretn_logo.webp" type="image/x-icon">
+
+<meta property="og:title" content="DJ pscretn — Paul Sabu">
+<meta property="og:description" content="Weddings, college fests, clubs and private parties across Kerala.">
+<meta property="og:type" content="website">
+
+<style>
+  :root {
+    --ink: #07070B;
+    --ink-2: #0E0E16;
+    --raised: #14141F;
+    --line: #23233250;
+    --line-solid: #232332;
+    --white: #F4F3F8;
+    --muted: #8A88A0;
+
+    --violet: #8B5CFF;
+    --pink: #FF2E9A;
+    --cyan: #2FE6FF;
+
+    --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    --mono: ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace;
+
+    --wide: 72rem;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--ink);
+    color: var(--white);
+    font-family: var(--sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  a { color: inherit; }
+
+  .wrap { width: 100%; max-width: var(--wide); margin: 0 auto; padding: 0 1.5rem; }
+
+  .eyebrow {
+    font-size: .6875rem; font-weight: 600;
+    letter-spacing: .22em; text-transform: uppercase;
+    color: var(--muted); margin: 0 0 1rem;
+  }
+
+  h2 {
+    font-size: clamp(1.75rem, 5vw, 2.75rem);
+    line-height: 1.1; margin: 0 0 1.25rem;
+    font-weight: 800; letter-spacing: -0.03em;
+  }
+
+  .lede { color: var(--muted); font-size: 1.0625rem; max-width: 46ch; margin: 0; }
+
+  /* ---------- nav ---------- */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; align-items: center; gap: 1rem;
+    padding: .85rem 1.5rem;
+    background: rgba(7,7,11,0.72);
+    -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s ease, background .3s ease;
+  }
+
+  .nav.stuck { border-bottom-color: var(--line-solid); }
+
+  .nav-brand {
+    display: inline-flex; align-items: center; gap: .6rem;
+    text-decoration: none; font-weight: 700; letter-spacing: -0.01em;
+    margin-right: auto;
+  }
+
+  .nav-brand img { width: 26px; height: 26px; object-fit: contain; }
+  .nav-brand span { font-size: .95rem; }
+  .nav-brand small {
+    display: block; font-size: .5625rem; font-weight: 600;
+    letter-spacing: .2em; text-transform: uppercase; color: var(--muted);
+    line-height: 1;
+  }
+
+  .nav-links { display: none; gap: 1.75rem; align-items: center; }
+
+  .nav-links a {
+    text-decoration: none; font-size: .8125rem; font-weight: 500;
+    color: var(--muted); transition: color .25s ease;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+    font-family: inherit; font-size: .8125rem; font-weight: 600;
+    letter-spacing: .02em; text-decoration: none;
+    padding: .7rem 1.25rem; border-radius: 999px;
+    border: 1px solid var(--line-solid); color: var(--white);
+    background: transparent; cursor: pointer;
+    transition: border-color .25s ease, background .25s ease, transform .25s ease;
+    white-space: nowrap;
+  }
+
+  .btn:hover { border-color: var(--violet); background: rgba(139,92,255,0.12); }
+  .btn:active { transform: translateY(1px); }
+
+  .btn-hot {
+    border: 0; color: #fff;
+    background: linear-gradient(100deg, var(--violet), var(--pink));
+    box-shadow: 0 6px 30px -8px rgba(255,46,154,0.6);
+  }
+
+  .btn-hot:hover { background: linear-gradient(100deg, var(--pink), var(--violet)); }
+
+  /* ---------- hero ---------- */
+  .hero {
+    position: relative;
+    min-height: 100vh; min-height: 100svh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 7rem 0 5rem; overflow: hidden;
+  }
+
+  #viz { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+
+  .hero-glow {
+    position: absolute; z-index: 0; pointer-events: none;
+    top: 8%; left: 50%; transform: translateX(-50%);
+    width: 130vw; height: 70vh;
+    background:
+      radial-gradient(ellipse at 35% 40%, rgba(139,92,255,0.30), transparent 58%),
+      radial-gradient(ellipse at 68% 55%, rgba(255,46,154,0.22), transparent 60%);
+  }
+
+  .hero .wrap { position: relative; z-index: 2; }
+
+  .hero-live {
+    display: inline-flex; align-items: center; gap: .55rem;
+    font-size: .6875rem; font-weight: 600; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--muted);
+    border: 1px solid var(--line-solid); border-radius: 999px;
+    padding: .4rem .85rem; margin-bottom: 1.75rem;
+  }
+
+  .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--cyan); box-shadow: 0 0 10px var(--cyan);
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+
+  .hero-name {
+    font-size: clamp(3.25rem, 15vw, 10rem);
+    line-height: .86; margin: 0 0 1.5rem;
+    font-weight: 900; letter-spacing: -0.045em;
+  }
+
+  .hero-name .dj {
+    display: block; font-size: .26em; letter-spacing: .42em;
+    font-weight: 700; color: var(--muted); margin-bottom: .5em;
+    padding-left: .3em;
+  }
+
+  .hero-name .word {
+    display: block;
+    background: linear-gradient(100deg, #fff 8%, var(--violet) 46%, var(--pink) 78%, var(--cyan));
+    background-size: 200% auto;
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: var(--violet);
+    animation: sweep 9s ease-in-out infinite;
+    padding-bottom: .06em;
+  }
+
+  @keyframes sweep {
+    0%, 100% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+  }
+
+  .hero-tag {
+    font-size: clamp(1rem, 2.6vw, 1.3rem);
+    color: var(--white); margin: 0 0 2.25rem;
+    max-width: 34ch; font-weight: 500;
+  }
+
+  .hero-tag em { font-style: normal; color: var(--muted); }
+
+  .hero-cta { display: flex; flex-wrap: wrap; gap: .75rem; }
+
+  .hero-meta {
+    display: flex; flex-wrap: wrap; gap: 1.5rem 2.5rem;
+    margin-top: 3.5rem; padding-top: 2rem;
+    border-top: 1px solid var(--line-solid);
+  }
+
+  .meta-k { font-family: var(--mono); font-size: .6875rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 0 .25rem; }
+  .meta-v { font-size: .9375rem; font-weight: 600; margin: 0; }
+
+  /* ---------- ticker ---------- */
+  .ticker {
+    border-top: 1px solid var(--line-solid);
+    border-bottom: 1px solid var(--line-solid);
+    background: var(--ink-2);
+    overflow: hidden; padding: 1rem 0;
+  }
+
+  .ticker-track {
+    display: flex; gap: 3rem; width: max-content;
+    animation: roll 32s linear infinite;
+  }
+
+  .ticker-track span {
+    font-size: clamp(1.1rem, 3.4vw, 1.75rem);
+    font-weight: 800; letter-spacing: -0.02em;
+    color: transparent; -webkit-text-stroke: 1px var(--line-solid);
+    white-space: nowrap; display: inline-flex; align-items: center; gap: 3rem;
+  }
+
+  .ticker-track span::after {
+    content: "◆"; font-size: .5em; -webkit-text-stroke: 0;
+    color: var(--violet);
+  }
+
+  .ticker-track span.hot { color: var(--white); -webkit-text-stroke: 0; }
+
+  @keyframes roll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ---------- sections ---------- */
+  section { padding: 6rem 0; }
+
+  .reveal { opacity: 0; transform: translateY(26px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.3,1); }
+  .reveal.seen { opacity: 1; transform: none; }
+
+  .split { display: grid; gap: 3rem; }
+
+  .cards { display: grid; gap: 1rem; margin-top: 2.5rem; }
+
+  .card {
+    position: relative; overflow: hidden;
+    background: var(--raised);
+    border: 1px solid var(--line-solid);
+    border-radius: 14px; padding: 1.75rem;
+    transition: border-color .3s ease, transform .3s ease;
+  }
+
+  .card:hover { border-color: rgba(139,92,255,0.5); transform: translateY(-3px); }
+
+  .card-n {
+    font-family: var(--mono); font-size: .6875rem;
+    color: var(--violet); letter-spacing: .1em; margin: 0 0 .9rem;
+  }
+
+  .card h3 { font-size: 1.125rem; margin: 0 0 .5rem; font-weight: 700; letter-spacing: -0.01em; }
+  .card p { margin: 0; color: var(--muted); font-size: .9375rem; }
+
+  /* ---------- reel: vertical gig clips ---------- */
+  .reel-head { display: flex; align-items: flex-end; gap: 1rem; flex-wrap: wrap; }
+  .reel-head .lede { margin-right: auto; }
+
+  .reel-scroll {
+    display: flex; gap: 1rem; margin-top: 2.5rem;
+    overflow-x: auto; scroll-snap-type: x mandatory;
+    padding-bottom: 1rem;
+    /* let the row run to the screen edge so it reads as scrollable */
+    margin-left: -1.5rem; margin-right: -1.5rem;
+    padding-left: 1.5rem; padding-right: 1.5rem;
+    scrollbar-width: thin; scrollbar-color: var(--line-solid) transparent;
+  }
+
+  .reel-scroll::-webkit-scrollbar { height: 6px; }
+  .reel-scroll::-webkit-scrollbar-track { background: transparent; }
+  .reel-scroll::-webkit-scrollbar-thumb { background: var(--line-solid); border-radius: 99px; }
+
+  .clip { flex: 0 0 auto; width: 63vw; max-width: 240px; scroll-snap-align: start; margin: 0; }
+
+  .clip-frame {
+    position: relative; overflow: hidden;
+    aspect-ratio: 9 / 16; border-radius: 16px;
+    border: 1px solid var(--line-solid); background: var(--raised);
+  }
+
+  .clip-frame video {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+
+  .clip-sound {
+    position: absolute; right: .5rem; bottom: .5rem; z-index: 2;
+    width: 34px; height: 34px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(7,7,11,0.66);
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    border: 1px solid rgba(244,243,248,0.24);
+    color: var(--white); cursor: pointer; padding: 0;
+  }
+
+  .clip-sound:hover { border-color: var(--violet); }
+  .clip-sound svg { width: 15px; height: 15px; fill: currentColor; }
+
+  .clip figcaption { margin-top: .75rem; }
+  .clip figcaption h3 { font-size: .875rem; font-weight: 600; }
+  .clip figcaption p { font-size: .75rem; }
+
+  /* ---------- sets ---------- */
+  .sets { display: grid; gap: 1.25rem; margin-top: 2.5rem; }
+
+  .set { margin: 0; }
+
+  /* a still with a play button; the real player only loads on click,
+     so the page is not paying for YouTube's iframe on every visit */
+  .set-frame {
+    position: relative; display: block; width: 100%;
+    aspect-ratio: 16 / 9; overflow: hidden;
+    border: 1px solid var(--line-solid); border-radius: 14px;
+    background: var(--raised); cursor: pointer; padding: 0;
+  }
+
+  .set-frame img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: saturate(.9) brightness(.72);
+    transition: filter .4s ease, transform .6s ease;
+  }
+
+  .set-frame:hover img { filter: saturate(1) brightness(.85); transform: scale(1.03); }
+
+  .set-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+  .set-play {
+    position: absolute; inset: 0; display: flex;
+    align-items: center; justify-content: center; pointer-events: none;
+  }
+
+  .set-play i {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 64px; height: 64px; border-radius: 50%;
+    background: linear-gradient(100deg, var(--violet), var(--pink));
+    box-shadow: 0 8px 34px -6px rgba(255,46,154,0.7);
+    transition: transform .3s ease;
+  }
+
+  .set-frame:hover .set-play i { transform: scale(1.1); }
+
+  .set figcaption { margin-top: .9rem; }
+  .set figcaption h3 { margin: 0; font-size: 1rem; font-weight: 700; line-height: 1.35; }
+  .set figcaption p { margin: .2rem 0 0; font-size: .8125rem; color: var(--muted); }
+
+  /* ---------- gigs ---------- */
+  .gigs { display: grid; gap: .6rem; margin-top: 2.5rem; }
+
+  .gig {
+    display: grid; grid-template-columns: auto 1fr auto;
+    align-items: center; gap: 1rem;
+    padding: 1.1rem 1.25rem;
+    border: 1px solid var(--line-solid); border-radius: 12px;
+    background: var(--raised);
+    transition: border-color .3s ease, transform .3s ease;
+  }
+
+  .gig:hover { border-color: rgba(139,92,255,0.45); transform: translateX(3px); }
+
+  .gig.next {
+    background: linear-gradient(100deg, rgba(139,92,255,0.16), rgba(255,46,154,0.06) 60%, var(--raised));
+    border-color: rgba(139,92,255,0.5);
+  }
+
+  .gig-date {
+    text-align: center; min-width: 3.4rem;
+    font-family: var(--mono); line-height: 1.1;
+  }
+
+  .gig-date b { display: block; font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; }
+  .gig-date small { display: block; font-size: .625rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+
+  .gig-what h3 { margin: 0; font-size: 1rem; font-weight: 700; }
+  .gig-what p { margin: .15rem 0 0; font-size: .8125rem; color: var(--muted); }
+
+  .gig-tag {
+    font-size: .625rem; font-weight: 700; letter-spacing: .14em;
+    text-transform: uppercase; padding: .35rem .7rem;
+    border-radius: 999px; white-space: nowrap;
+    border: 1px solid var(--line-solid); color: var(--muted);
+  }
+
+  .gig.next .gig-tag {
+    border: 0; color: #fff;
+    background: linear-gradient(100deg, var(--violet), var(--pink));
+  }
+
+  .gig-empty {
+    margin-top: 2.5rem; padding: 3rem 2rem; text-align: center;
+    border: 1px dashed var(--line-solid); border-radius: 16px;
+  }
+
+  .gig-empty p { color: var(--muted); margin: 0 0 1.5rem; font-size: 1.0625rem; }
+
+  /* ---------- decks ---------- */
+  .decks { display: grid; gap: 1rem; margin-top: 2.5rem; }
+
+  .deck {
+    display: flex; align-items: center; gap: 1.25rem;
+    background: var(--raised); border: 1px solid var(--line-solid);
+    border-radius: 14px; padding: 1.25rem 1.5rem;
+  }
+
+  .platter {
+    flex: 0 0 auto; width: 56px; height: 56px; border-radius: 50%;
+    background:
+      repeating-radial-gradient(circle at center, #1B1B27 0 1px, #12121C 1px 3px);
+    border: 1px solid #2C2C3D;
+    position: relative;
+    animation: spin 3.2s linear infinite;
+  }
+
+  .platter::after {
+    content: ""; position: absolute; inset: 42%;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--violet), var(--pink));
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .deck-t { margin: 0; font-weight: 700; font-size: 1rem; }
+  .deck-s { margin: .15rem 0 0; color: var(--muted); font-size: .875rem; }
+
+  /* ---------- booking ---------- */
+  .book {
+    background: linear-gradient(160deg, rgba(139,92,255,0.14), rgba(255,46,154,0.08) 55%, transparent);
+    border: 1px solid var(--line-solid);
+    border-radius: 20px; padding: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .contact-rows { display: grid; gap: .75rem; margin: 2rem 0 2.25rem; }
+
+  .crow {
+    display: flex; align-items: center; gap: .9rem;
+    text-decoration: none; padding: .85rem 1rem;
+    border: 1px solid var(--line-solid); border-radius: 12px;
+    background: rgba(7,7,11,0.4);
+    transition: border-color .25s ease, background .25s ease;
+  }
+
+  .crow:hover { border-color: var(--violet); background: rgba(139,92,255,0.1); }
+
+  .crow svg { flex: 0 0 auto; width: 18px; height: 18px; }
+  .crow b { font-weight: 600; font-size: .9375rem; }
+  .crow small { display: block; color: var(--muted); font-size: .75rem; font-weight: 500; }
+
+  /* ---------- footer ---------- */
+  footer {
+    border-top: 1px solid var(--line-solid);
+    padding: 3rem 0; text-align: center;
+  }
+
+  .socials { display: flex; justify-content: center; flex-wrap: wrap; gap: .6rem; margin-bottom: 1.75rem; }
+
+  .socials a {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 1px solid var(--line-solid); color: var(--muted);
+    text-decoration: none; transition: color .25s ease, border-color .25s ease, transform .25s ease;
+  }
+
+  .socials a:hover { color: var(--white); border-color: var(--violet); transform: translateY(-2px); }
+  .socials svg { width: 17px; height: 17px; fill: currentColor; }
+
+  .foot-note { color: var(--muted); font-size: .8125rem; margin: 0; }
+  .foot-note a { color: var(--white); text-decoration: none; border-bottom: 1px solid var(--line-solid); }
+
+  @media (min-width: 48rem) {
+    .nav { padding: 1rem 2.5rem; }
+    .nav-links { display: flex; }
+    .split { grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .cards { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    #why .cards { grid-template-columns: repeat(2, 1fr); }
+    .sets { grid-template-columns: repeat(2, 1fr); }
+    .clip { width: 220px; }
+    .reel-scroll { margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; }
+    .decks { grid-template-columns: repeat(2, 1fr); }
+    .contact-rows { grid-template-columns: repeat(2, 1fr); }
+    section { padding: 7.5rem 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    #viz { display: none; }
+    .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .ticker-track, .platter, .hero-name .word, .dot { animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a class="nav-brand" href="index.html">
+    <img src="images/pscretn_logo_white.webp" alt="">
+    <span>pscretn<small>Disc Jockey</small></span>
+  </a>
+  <div class="nav-links">
+    <a href="#reel">Gigs</a>
+    <a href="#play">What I Play</a>
+    <a href="#sets">Listen</a>
+    <a href="#gigs">Dates</a>
+    <a href="#setup">Setup</a>
+    <a href="index.html">Main site</a>
+  </div>
+  <a class="btn btn-hot" href="#book">Book a date</a>
+</nav>
+
+<header class="hero">
+  <div class="hero-glow"></div>
+  <canvas id="viz" aria-hidden="true"></canvas>
+
+  <div class="wrap">
+    <span class="hero-live"><i class="dot"></i> Available for bookings</span>
+
+    <h1 class="hero-name">
+      <span class="dj">DJ</span>
+      <span class="word">pscretn</span>
+    </h1>
+
+    <p class="hero-tag">Do what moves you until your heart stops beating. <em>Angamaly, Kerala.</em></p>
+
+    <div class="hero-cta">
+      <a class="btn btn-hot" href="#book">Book a date</a>
+      <a class="btn" href="https://www.instagram.com/pscretn/" target="_blank" rel="noopener">See the gigs on Instagram</a>
+    </div>
+
+    <div class="hero-meta">
+      <div><p class="meta-k">Based in</p><p class="meta-v">Angamaly, Kerala</p></div>
+      <div><p class="meta-k">Plays</p><p class="meta-v">Malayalam · Tamil · Hindi · EDM</p></div>
+      <div><p class="meta-k">Decks</p><p class="meta-v">Pioneer DDJ-FLX4</p></div>
+      <div><p class="meta-k">Booking</p><p class="meta-v">+91 73561 31568</p></div>
+    </div>
+  </div>
+</header>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track" id="ticker"></div>
+</div>
+
+<section id="reel">
+  <div class="wrap">
+    <div class="reveal reel-head">
+      <div>
+        <p class="eyebrow">On the decks</p>
+        <h2>Real nights, real floors.</h2>
+      </div>
+      <p class="lede">Clips from recent gigs. Tap the speaker to hear one.</p>
+    </div>
+
+    <div class="reel-scroll" id="reelScroll">
+      <figure class="clip">
+        <div class="clip-frame">
+          <video muted loop playsinline preload="none" poster="videos/dj/oGxf5sh81SQ.jpg">
+            <source src="videos/dj/oGxf5sh81SQ.mp4" type="video/mp4">
+          </video>
+          <button class="clip-sound" type="button" aria-label="Unmute"></button>
+        </div>
+        <figcaption><h3>The Ultimate Come Back</h3><p>Baptism · Baby Zhea Lyn</p></figcaption>
+      </figure>
+
+      <figure class="clip">
+        <div class="clip-frame">
+          <video muted loop playsinline preload="none" poster="videos/dj/YS2YEAbdOZM.jpg">
+            <source src="videos/dj/YS2YEAbdOZM.mp4" type="video/mp4">
+          </video>
+          <button class="clip-sound" type="button" aria-label="Unmute"></button>
+        </div>
+        <figcaption><h3>JoeAnn</h3><p>Reception floor</p></figcaption>
+      </figure>
+
+      <figure class="clip">
+        <div class="clip-frame">
+          <video muted loop playsinline preload="none" poster="videos/dj/r9wS7trd8OA.jpg">
+            <source src="videos/dj/r9wS7trd8OA.mp4" type="video/mp4">
+          </video>
+          <button class="clip-sound" type="button" aria-label="Unmute"></button>
+        </div>
+        <figcaption><h3>Dibin &amp; Jeema</h3><p>Madhuram Veppu</p></figcaption>
+      </figure>
+
+      <figure class="clip">
+        <div class="clip-frame">
+          <video muted loop playsinline preload="none" poster="videos/dj/1WjzQ9Howkc.jpg">
+            <source src="videos/dj/1WjzQ9Howkc.mp4" type="video/mp4">
+          </video>
+          <button class="clip-sound" type="button" aria-label="Unmute"></button>
+        </div>
+        <figcaption><h3>Madhuram Veppu</h3><p>Engagement night</p></figcaption>
+      </figure>
+
+      <figure class="clip">
+        <div class="clip-frame">
+          <video muted loop playsinline preload="none" poster="videos/dj/FRPbIUj1FLI.jpg">
+            <source src="videos/dj/FRPbIUj1FLI.mp4" type="video/mp4">
+          </video>
+          <button class="clip-sound" type="button" aria-label="Unmute"></button>
+        </div>
+        <figcaption><h3>From Keyboard to Jog Wheel</h3><p>Software engineer by day</p></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap split">
+    <div class="reveal">
+      <p class="eyebrow">About</p>
+      <h2>I read the floor, then I play it.</h2>
+    </div>
+    <div class="reveal">
+      <p class="lede">
+        I'm Paul Sabu — the same hands behind pscretn's tech work, on the decks on weekends.
+        The job is simple to describe and hard to do: watch who's actually dancing, work out
+        what they want next, and get there without breaking the energy.
+      </p>
+      <p class="lede" style="margin-top:1.25rem">
+        No fixed setlist. Malayalam and Tamil floor-fillers, Hindi and Punjabi when the crowd
+        leans that way, commercial and EDM when the night needs lifting. A wedding reception
+        and a college fest are not the same room, and they don't get the same set.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="play" style="background:var(--ink-2);border-top:1px solid var(--line-solid);border-bottom:1px solid var(--line-solid)">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow">What I play</p>
+      <h2>Built for the room it's in.</h2>
+      <p class="lede">Every event gets a different set. These are the nights I take.</p>
+    </div>
+
+    <div class="cards">
+      <div class="card reveal">
+        <p class="card-n">01</p>
+        <h3>Weddings &amp; receptions</h3>
+        <p>From the entry track to the last dance. Family-safe early, opened up once the floor is ready.</p>
+      </div>
+      <div class="card reveal">
+        <p class="card-n">02</p>
+        <h3>College fests &amp; campus nights</h3>
+        <p>High tempo, current tracks, remixes that land with a young crowd who know every drop.</p>
+      </div>
+      <div class="card reveal">
+        <p class="card-n">03</p>
+        <h3>Private parties &amp; clubs</h3>
+        <p>Birthdays, house parties, pub nights. Longer sets, more room to build and hold a groove.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sets" style="background:var(--ink-2);border-top:1px solid var(--line-solid);border-bottom:1px solid var(--line-solid)">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow">Listen</p>
+      <h2>Hear it before you book it.</h2>
+      <p class="lede">A mashup and a mixing breakdown. More on the channel.</p>
+    </div>
+
+    <div class="sets">
+      <figure class="set reveal">
+        <button class="set-frame" type="button" data-yt="X4-RowK6h1E" aria-label="Play the Hosaina Hosaina x Animal mashup">
+          <img src="https://i.ytimg.com/vi/X4-RowK6h1E/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
+          <span class="set-play"><i><svg width="18" height="22" viewBox="0 0 18 22" aria-hidden="true"><path d="M0 0l18 11L0 22z" fill="#fff"/></svg></i></span>
+        </button>
+        <figcaption>
+          <h3>Hosaina Hosaina × Animal — Mashup</h3>
+          <p>Chathikkatha Chanthu against Martin Garrix · 2:40</p>
+        </figcaption>
+      </figure>
+
+      <figure class="set reveal">
+        <button class="set-frame" type="button" data-yt="LB9aaM4C2oc" aria-label="Play Phase Mixing">
+          <img src="https://i.ytimg.com/vi/LB9aaM4C2oc/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
+          <span class="set-play"><i><svg width="18" height="22" viewBox="0 0 18 22" aria-hidden="true"><path d="M0 0l18 11L0 22z" fill="#fff"/></svg></i></span>
+        </button>
+        <figcaption>
+          <h3>Phase Mixing — Baby Steps into DJing</h3>
+          <p>How the beatmatching actually works · 6:38</p>
+        </figcaption>
+      </figure>
+    </div>
+
+    <p style="margin-top:2rem">
+      <a class="btn" href="https://www.youtube.com/channel/UC6LTgFTohfKty7aJJJbshhw" target="_blank" rel="noopener">More on YouTube</a>
+    </p>
+  </div>
+</section>
+
+<section id="gigs">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow">Gigs</p>
+      <h2>Where I've been playing.</h2>
+      <p class="lede">Upcoming dates and recent nights.</p>
+    </div>
+
+    <div id="gigList" class="gigs"></div>
+
+    <div id="gigEmpty" class="gig-empty reveal" hidden>
+      <p>The next dates are open.</p>
+      <a class="btn btn-hot" href="#book">Be the first booking</a>
+    </div>
+  </div>
+</section>
+
+<section id="setup">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow">Setup</p>
+      <h2>The gear.</h2>
+      <p class="lede">What I bring, and what I'll need from the venue.</p>
+    </div>
+
+    <div class="decks">
+      <div class="deck reveal">
+        <div class="platter"></div>
+        <div>
+          <p class="deck-t">Pioneer DDJ-FLX4</p>
+          <p class="deck-s">Two-channel controller running rekordbox and Serato — the same layout as club standard CDJs.</p>
+        </div>
+      </div>
+      <div class="deck reveal">
+        <div class="platter" style="animation-duration:4.4s"></div>
+        <div>
+          <p class="deck-t">Sound &amp; lighting on request</p>
+          <p class="deck-s">I can play on your system or arrange PA and lights to match the size of the room.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="why" style="background:var(--ink-2);border-top:1px solid var(--line-solid);border-bottom:1px solid var(--line-solid)">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow">Why book me</p>
+      <h2>No surprises on the night.</h2>
+      <p class="lede">Four things I hold myself to on every booking.</p>
+    </div>
+
+    <div class="cards">
+      <div class="card reveal">
+        <p class="card-n">01</p>
+        <h3>You get me</h3>
+        <p>The person you spoke to is the person behind the decks. No stand-in sent on the day.</p>
+      </div>
+      <div class="card reveal">
+        <p class="card-n">02</p>
+        <h3>One price, agreed upfront</h3>
+        <p>You'll know the full cost before you confirm. Nothing extra appears afterwards.</p>
+      </div>
+      <div class="card reveal">
+        <p class="card-n">03</p>
+        <h3>We plan the set together</h3>
+        <p>Send the must-play list and the do-not-play list. Both matter, and I'll stick to them.</p>
+      </div>
+      <div class="card reveal">
+        <p class="card-n">04</p>
+        <h3>Set up early, ready before guests</h3>
+        <p>I arrive with time to sound-check, so the room is running before the first guest walks in.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="book">
+  <div class="wrap">
+    <div class="book reveal">
+      <p class="eyebrow">Booking</p>
+      <h2>Tell me the date.</h2>
+      <p class="lede">
+        Send the date, the venue and roughly how many people. I'll come back with what
+        it costs and what I'd need on the night.
+      </p>
+
+      <div class="contact-rows">
+        <a class="crow" href="https://wa.me/917356131568?text=Hi%20DJ%20pscretn%2C%20I'd%20like%20to%20check%20a%20date" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20.5l1.8-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg>
+          <span><b>WhatsApp</b><small>Fastest reply</small></span>
+        </a>
+        <a class="crow" href="tel:+917356131568">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#8B5CFF" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+          <span><b>+91 73561 31568</b><small>Call directly</small></span>
+        </a>
+        <a class="crow" href="mailto:paulsabu.123@gmail.com?subject=DJ%20booking%20enquiry">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#FF2E9A" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+          <span><b>paulsabu.123@gmail.com</b><small>For full details</small></span>
+        </a>
+        <a class="crow" href="https://www.instagram.com/pscretn/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#2FE6FF" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#2FE6FF" stroke="none"/></svg>
+          <span><b>@pscretn</b><small>Gigs &amp; clips</small></span>
+        </a>
+      </div>
+
+      <a class="btn btn-hot" href="https://wa.me/917356131568?text=Hi%20DJ%20pscretn%2C%20I'd%20like%20to%20check%20a%20date" target="_blank" rel="noopener">Check a date on WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="socials">
+      <a href="https://www.instagram.com/pscretn/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3.2A6.6 6.6 0 1 0 18.6 12 6.6 6.6 0 0 0 12 5.4zm0 10.9A4.3 4.3 0 1 1 16.3 12 4.3 4.3 0 0 1 12 16.3zm6.9-11.1a1.5 1.5 0 1 1-1.5-1.5 1.5 1.5 0 0 1 1.5 1.5z"/></svg></a>
+      <a href="https://www.youtube.com/channel/UC6LTgFTohfKty7aJJJbshhw" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.7-1.7C19.3 5.2 12 5.2 12 5.2s-7.3 0-8.9.4A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.7 1.7c1.6.4 8.9.4 8.9.4s7.3 0 8.9-.4a2.5 2.5 0 0 0 1.7-1.7C23 15.2 23 12 23 12zM9.8 15.3V8.7l6 3.3z"/></svg></a>
+      <a href="https://wa.me/917356131568" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2zm5.8 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-2.9-1.3-4.8-4.3-5-4.5-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5s.8 2 .9 2.1c.1.1.1.3 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6s.7 1.2 1.5 1.9c1 .9 1.9 1.2 2.2 1.3.2.1.4.1.6-.1l.8-1c.2-.2.3-.2.6-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.4z"/></svg></a>
+    </div>
+    <p class="foot-note">
+      DJ pscretn — Paul Sabu · Angamaly, Kerala<br>
+      Bookings +91 73561 31568 · <a href="index.html">pscretn.com</a> · © 2026 pscretn
+    </p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- nav shadow ---------- */
+  var nav = document.getElementById('nav');
+  function onScroll() { nav.classList.toggle('stuck', window.scrollY > 12); }
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* ---------- ticker ---------- */
+  var WORDS = ['Malayalam', 'Tamil', 'Bollywood', 'Punjabi', 'EDM', 'House',
+               'Commercial', 'Hip-Hop', 'Retro', 'Remixes'];
+  var track = document.getElementById('ticker');
+  for (var pass = 0; pass < 2; pass++) {
+    WORDS.forEach(function (w, k) {
+      var s = document.createElement('span');
+      s.textContent = w;
+      if (k % 3 === 1) s.className = 'hot';
+      track.appendChild(s);
+    });
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     YOUR GIGS — this is the only part you need to edit.
+
+     Add one line per gig, newest date first. Anything dated today or
+     later is shown as upcoming and highlighted; anything older moves
+     into the played list automatically, so you never have to change
+     it again once it is in.
+
+       date  : 'YYYY-MM-DD'
+       name  : what the night was
+       venue : where, and the town
+       type  : Wedding / College / Club / Private / Corporate
+
+     Leave the list empty and the section invites the first booking
+     instead of showing nothing.
+     ═══════════════════════════════════════════════════════════════ */
+  var GIGS = [
+    // { date: '2026-09-20', name: 'Reception night',  venue: 'Angamaly',  type: 'Wedding' },
+    // { date: '2026-08-02', name: 'Onam fest',        venue: 'Ernakulam', type: 'College' },
+  ];
+
+  (function renderGigs() {
+    var list = document.getElementById('gigList');
+    var empty = document.getElementById('gigEmpty');
+
+    if (!GIGS.length) { empty.hidden = false; return; }
+
+    var MON = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+
+    GIGS.slice()
+      .sort(function (a, b) { return a.date < b.date ? 1 : -1; })
+      .forEach(function (g) {
+        var d = new Date(g.date + 'T00:00:00');
+        var upcoming = d >= today;
+
+        var row = document.createElement('article');
+        row.className = 'gig reveal' + (upcoming ? ' next' : '');
+        row.innerHTML =
+          '<div class="gig-date"><b>' + d.getDate() + '</b><small>' + MON[d.getMonth()] + '</small></div>' +
+          '<div class="gig-what"><h3></h3><p></p></div>' +
+          '<span class="gig-tag"></span>';
+
+        /* set as text, never as markup, so a stray character can't break the page */
+        row.querySelector('h3').textContent = g.name;
+        row.querySelector('.gig-what p').textContent = g.venue + ' · ' + d.getFullYear();
+        row.querySelector('.gig-tag').textContent = upcoming ? 'Upcoming' : g.type;
+
+        list.appendChild(row);
+      });
+  })();
+
+  /* ---------- gig reel ----------
+     clips start when they scroll into view and then run continuously.
+     muted is what makes autoplay allowed at all, and five clips with
+     sound at once would be unusable, so only one can be unmuted. */
+  var SPK = '<svg viewBox="0 0 24 24"><path d="M11 5 6.5 9H3v6h3.5L11 19zM16.5 12a3.5 3.5 0 0 0-2-3.2v6.4a3.5 3.5 0 0 0 2-3.2z"/></svg>';
+  var MUTE = '<svg viewBox="0 0 24 24"><path d="M11 5 6.5 9H3v6h3.5L11 19zM21 9.5 19.5 8 17 10.5 14.5 8 13 9.5l2.5 2.5L13 14.5 14.5 16 17 13.5 19.5 16 21 14.5 18.5 12z"/></svg>';
+
+  var clips = document.querySelectorAll('.clip video');
+
+  clips.forEach(function (v) {
+    var btn = v.parentNode.querySelector('.clip-sound');
+    btn.innerHTML = MUTE;
+
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var turningOn = v.muted;
+
+      /* only ever one clip with sound */
+      clips.forEach(function (o) {
+        o.muted = true;
+        var b = o.parentNode.querySelector('.clip-sound');
+        b.innerHTML = MUTE;
+        b.setAttribute('aria-label', 'Unmute');
+      });
+
+      if (turningOn) {
+        v.muted = false;
+        btn.innerHTML = SPK;
+        btn.setAttribute('aria-label', 'Mute');
+        if (v.paused) v.play().catch(function () {});
+      }
+    });
+  });
+
+  var clipObs = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      var v = e.target;
+      if (e.isIntersecting) {
+        if (!v.dataset.loaded) { v.load(); v.dataset.loaded = '1'; }
+        v.play().catch(function () {});
+      } else {
+        v.pause();                      /* offscreen clips stop burning battery */
+        if (!v.muted) {
+          v.muted = true;
+          var b = v.parentNode.querySelector('.clip-sound');
+          b.innerHTML = MUTE;
+          b.setAttribute('aria-label', 'Unmute');
+        }
+      }
+    });
+  }, { threshold: 0.35 });
+
+  clips.forEach(function (v) { clipObs.observe(v); });
+
+  /* ---------- sets: swap the still for the real player on click ---------- */
+  document.querySelectorAll('.set-frame').forEach(function (frame) {
+    frame.addEventListener('click', function () {
+      var id = frame.dataset.yt;
+      if (!id || frame.dataset.live) return;
+      frame.dataset.live = '1';
+
+      var f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
+      f.title = frame.getAttribute('aria-label') || 'Video';
+      f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      f.referrerPolicy = 'strict-origin-when-cross-origin';
+      f.allowFullscreen = true;
+
+      frame.innerHTML = '';
+      frame.appendChild(f);
+    });
+  });
+
+  /* ---------- reveal ---------- */
+  var obs = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('seen'); obs.unobserve(e.target); }
+    });
+  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
+
+  document.querySelectorAll('.reveal').forEach(function (el, i) {
+    el.style.transitionDelay = (i % 3) * 80 + 'ms';
+    obs.observe(el);
+  });
+
+  if (reduce) return;
+
+  /* ---------- hero visualiser ----------
+     not wired to real audio — there is nothing playing — so it runs on a
+     synthetic beat that behaves the way a level meter does */
+  var cv = document.getElementById('viz');
+  var ctx = cv.getContext('2d');
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var W, H, bars = [], BPM = 128, beat = 60000 / BPM;
+
+  function resize() {
+    var r = cv.getBoundingClientRect();
+    W = r.width; H = r.height;
+    cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    build();
+  }
+
+  function build() {
+    bars = [];
+    var bw = W < 640 ? 7 : 11;
+    var gap = W < 640 ? 4 : 6;
+    var n = Math.ceil(W / (bw + gap)) + 1;
+    for (var i = 0; i < n; i++) {
+      bars.push({ x: i * (bw + gap), w: bw, v: Math.random(), t: Math.random() * 6.28, sp: 0.6 + Math.random() * 1.9 });
+    }
+  }
+
+  var start = performance.now();
+
+  function frame(now) {
+    var el = now - start;
+    /* a decaying thump on every beat, so the bars breathe in time */
+    var phase = (el % beat) / beat;
+    var kick = Math.pow(1 - phase, 3.2);
+
+    ctx.clearRect(0, 0, W, H);
+
+    for (var i = 0; i < bars.length; i++) {
+      var b = bars[i];
+      b.t += 0.02 * b.sp;
+      var wave = (Math.sin(b.t) * 0.5 + 0.5) * 0.55 + Math.sin(b.t * 2.3) * 0.12;
+      var h = Math.max(2, (wave * 0.55 + kick * 0.45) * H * 0.42);
+
+      var g = ctx.createLinearGradient(0, H, 0, H - h);
+      g.addColorStop(0, 'rgba(139,92,255,0.00)');
+      g.addColorStop(0.45, 'rgba(139,92,255,0.30)');
+      g.addColorStop(1, 'rgba(255,46,154,0.55)');
+
+      ctx.fillStyle = g;
+      ctx.fillRect(b.x, H - h, b.w, h);
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  resize();
+  requestAnimationFrame(frame);
+
+  var rt;
+  window.addEventListener('resize', function () {
+    clearTimeout(rt);
+    rt = setTimeout(resize, 200);
+  });
+})();
+</script>
+</body>
+</html>
