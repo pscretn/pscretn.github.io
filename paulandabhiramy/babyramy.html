@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0A0910">
+<meta name="description" content="For Babyramy, from Paul.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Ctext y=%2226%22 font-size=%2226%22%3E%F0%9F%A4%8D%3C/text%3E%3C/svg%3E">
+<title>For Babyramy</title>
+<style>
+  @font-face {
+    font-family: HighSchoolUsaSans;
+    src: url("../fonts/HighSchoolUsaSans-52vx.ttf");
+    font-display: swap;
+  }
+
+  :root {
+    --ink: #0A0910;
+    --warm: #EFE7EA;
+    --muted: #8D8290;
+    --faint: #5E5563;
+    --rose: #C98BA0;
+    --blush: #E4C2CE;
+
+    /* the pair — thick dark outline, flat fills, like the sticker sheet */
+    --line: #4A3328;
+    --bubu: #FCFAF7;
+    --dudu: #B5885F;
+    --dudu-ear: #5A3F30;
+    --cheek-b: #F3A3B5;
+    --cheek-d: #F2CE86;
+    --tongue: #F5899B;
+    --card: #FFFDF7;
+
+    --serif: Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, "Times New Roman", serif;
+    --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+    --clear: 0;              /* how far the weather has lifted */
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--ink);
+    color: var(--warm);
+    font-family: var(--serif);
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    overflow: hidden;
+  }
+
+  /* ---------- weather ---------- */
+
+  .sky, .dawn { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+  .sky {
+    background:
+      radial-gradient(ellipse 120% 70% at 50% -10%, rgba(74,86,112,0.55), transparent 70%),
+      radial-gradient(ellipse 90% 50% at 15% 30%, rgba(46,36,54,0.80), transparent 70%);
+    opacity: calc(1 - var(--clear) * 0.55);
+  }
+
+  .dawn {
+    background:
+      radial-gradient(ellipse 130% 60% at 50% 112%, rgba(217,160,106,0.26), transparent 68%),
+      radial-gradient(ellipse 100% 45% at 50% 100%, rgba(201,139,160,0.20), transparent 70%);
+    opacity: var(--clear);
+  }
+
+  #rain { position: fixed; inset: 0; z-index: 1; width: 100%; height: 100%; pointer-events: none; }
+
+  /* ---------- stage ---------- */
+
+  .stage {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1.5rem 1.5rem calc(5rem + env(safe-area-inset-bottom));
+    max-width: 30rem;
+    margin: 0 auto;
+  }
+
+  /* ---------- bubu & dudu ---------- */
+  /* the whole thing plays once and then settles: she is alone under her own
+     little rain cloud, he walks in, sits down without touching her, offers a
+     heart, and waits. she comes round in her own time. nothing here loops
+     back to the start — they just stay. */
+
+  .scene {
+    position: relative;
+    height: clamp(155px, 24vh, 205px);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 0;
+    margin: 0 0 1.75rem;
+    opacity: 0;
+    animation: fade 1.2s ease 0.3s forwards;
+  }
+
+  .glow {
+    position: absolute;
+    left: 50%; bottom: -8%;
+    width: 78%; height: 70%;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse at center, rgba(201,139,160,0.20), transparent 68%);
+    opacity: 0;
+    animation: fade 2.4s ease 9s forwards;
+    pointer-events: none;
+  }
+
+  .char { width: clamp(118px, 36vw, 168px); flex: 0 0 auto; }
+  .char svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+  /* nested wrappers so entrance, lean and idle-bob can each own a transform */
+
+  .enter  { animation: walk-in 2.6s cubic-bezier(.3,.7,.4,1) 1.4s both; }
+  .mood   { animation: slump 2.2s ease 6.6s both; }
+  .lean-d { animation: lean-d 1.4s ease 8.4s both; }
+  .lean-b { animation: lean-b 1.4s ease 8.6s both; }
+  .bob-d  { animation: bob 3.4s ease-in-out 10s infinite; }
+  .bob-b  { animation: bob 3.8s ease-in-out 10.4s infinite; }
+
+  @keyframes walk-in {
+    0%   { transform: translateX(-190px); }
+    100% { transform: translateX(0); }
+  }
+
+  /* the walk itself — small hops, ending flat */
+  .enter > .step { animation: step 0.42s ease-in-out 1.4s 6; }
+  @keyframes step {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(-7px) rotate(-2.5deg); }
+  }
+
+  /* she starts tipped away from him and slowly straightens */
+  @keyframes slump {
+    0%   { transform: rotate(-7deg) translateY(3px); }
+    100% { transform: rotate(0deg) translateY(0); }
+  }
+
+  @keyframes lean-d { to { transform: translateX(10px) rotate(3deg); } }
+  @keyframes lean-b { to { transform: translateX(-8px) rotate(-3deg); } }
+
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-5px); }
+  }
+
+  /* she's a panda, so round ears — the sulk reads through her posture and
+     her mouth instead. this is the little hop when she notices him. */
+  .notice { animation: notice .75s cubic-bezier(.3,1.5,.5,1) 6.4s both; }
+  @keyframes notice {
+    0%, 100% { transform: translateY(0); }
+    40%      { transform: translateY(-10px); }
+  }
+
+  /* he holds the card up once he's stopped walking */
+  .sign { transform-box: fill-box; transform-origin: 18% 88%; animation: raise 1.2s cubic-bezier(.2,1.35,.4,1) 4.3s both; }
+  @keyframes raise {
+    0%   { opacity: 0; transform: translateY(16px) rotate(-20deg) scale(.72); }
+    100% { opacity: 1; transform: translateY(0) rotate(-5deg) scale(1); }
+  }
+
+  /* two mouths stacked, one fading into the other */
+  .mouth-sad   { animation: m-out 1.3s ease 6.9s both; }
+  .mouth-happy { animation: m-in  1.3s ease 6.9s both; }
+  @keyframes m-out { from { opacity: 1; } to { opacity: 0; } }
+  @keyframes m-in  { from { opacity: 0; } to { opacity: 1; } }
+
+  /* the heart he holds out, and the ones that come after */
+  .offer {
+    position: absolute;
+    left: 50%; bottom: 46%;
+    width: 15px;
+    transform: translateX(-50%);
+    opacity: 0;
+    animation: offer 4s ease 4.8s both;
+  }
+
+  @keyframes offer {
+    0%   { opacity: 0; transform: translateX(-50%) translateY(6px) scale(.4); }
+    18%  { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+    62%  { opacity: 1; transform: translateX(-50%) translateY(-26px) scale(.92); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-54px) scale(.66); }
+  }
+
+  .floats { position: absolute; inset: 0; pointer-events: none; }
+
+  .floats i {
+    position: absolute;
+    bottom: 34%;
+    width: 11px;
+    opacity: 0;
+    animation: rise 5.2s ease-in-out infinite;
+    animation-delay: var(--d);
+  }
+
+  @keyframes rise {
+    0%   { opacity: 0; transform: translateY(10px) scale(.5) rotate(-8deg); }
+    18%  { opacity: .85; }
+    70%  { opacity: .5; }
+    100% { opacity: 0; transform: translateY(-78px) scale(.85) rotate(10deg); }
+  }
+
+  /* her rain cloud, which stops when he sits down */
+  .cloud {
+    position: absolute;
+    left: 62%; top: 0;
+    width: clamp(44px, 13vw, 62px);
+    animation: cloud-out 2.6s ease 6.8s both;
+  }
+
+  .cloud .puff { animation: drift 4.5s ease-in-out infinite; }
+  @keyframes drift {
+    0%, 100% { transform: translateX(0); }
+    50%      { transform: translateX(3px); }
+  }
+
+  @keyframes cloud-out {
+    0%   { opacity: .85; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-14px); }
+  }
+
+  .cloud .drip { animation: drip 1.5s linear infinite; }
+  .cloud .drip:nth-child(2) { animation-delay: .5s; }
+  .cloud .drip:nth-child(3) { animation-delay: 1s; }
+
+  @keyframes drip {
+    0%   { opacity: 0; transform: translateY(0); }
+    30%  { opacity: .9; }
+    100% { opacity: 0; transform: translateY(15px); }
+  }
+
+  /* ---------- words ---------- */
+
+  h1 .w { display: inline-block; white-space: nowrap; }
+
+  h1 {
+    font-size: clamp(2.5rem, 14vw, 4.2rem);
+    line-height: 1.1;
+    letter-spacing: -0.035em;
+    font-weight: 400;
+    font-style: italic;
+    margin: 0;
+  }
+
+  h1 i {
+    display: inline-block;
+    font-style: italic;
+    opacity: 0;
+    filter: blur(14px);
+    transform: translateY(14px);
+    animation: surface 1.6s cubic-bezier(.22,.68,.28,1) forwards;
+    animation-delay: var(--d);
+  }
+
+  @keyframes surface { to { opacity: 1; filter: blur(0); transform: none; } }
+  @keyframes fade { to { opacity: 1; } }
+
+  .line {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--blush);
+    font-style: italic;
+    margin: 1.2rem 0 0;
+    opacity: 0;
+    animation: fade 1.8s ease 2.4s forwards;
+  }
+
+  .say {
+    font-size: 0.975rem;
+    line-height: 1.68;
+    color: var(--muted);
+    margin: 0.85rem 0 0;
+    opacity: 0;
+    animation: fade 1.8s ease var(--t) forwards;
+  }
+
+  .s2 { --t: 3.0s; }
+  .s3 { --t: 3.6s; }
+
+  .sig {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--blush);
+    margin: 1.6rem 0 0;
+    opacity: 0;
+    animation: fade 1.6s ease 4.3s forwards;
+  }
+
+  .sig span {
+    font-style: normal;
+    display: inline-block;
+    animation: shimmer 4.5s ease-in-out 5.5s infinite;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { text-shadow: 0 0 22px rgba(228,194,206,0.18); }
+    50%      { text-shadow: 0 0 34px rgba(201,139,160,0.55); }
+  }
+
+  .back {
+    position: fixed;
+    left: 50%;
+    bottom: calc(1.4rem + env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0.7rem 1.3rem;
+    border: 1px solid rgba(239,231,234,0.12);
+    border-radius: 999px;
+    color: var(--faint);
+    text-decoration: none;
+    font-family: var(--sans);
+    font-size: 0.5625rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0;
+    animation: fade 1.4s ease 5.2s forwards;
+    transition: color .3s ease, border-color .3s ease;
+  }
+
+  .back:hover, .back:active { color: var(--blush); border-color: var(--rose); }
+
+  /* ---------- fitting on short phones ---------- */
+
+  @media (max-height: 700px) {
+    .scene { height: clamp(112px, 19vh, 145px); margin-bottom: 1.1rem; }
+    .char { width: clamp(88px, 26vw, 112px); }
+    h1 { font-size: clamp(2.1rem, 12vw, 3.2rem); }
+    .line { font-size: 0.9375rem; margin-top: 0.9rem; }
+    .say { font-size: 0.875rem; line-height: 1.6; margin-top: 0.7rem; }
+    .sig { font-size: 1.05rem; margin-top: 1.1rem; }
+  }
+
+  @media (min-width: 40rem) {
+    .line { font-size: 1.25rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #rain { display: none; }
+    .line, .say, .sig, .back, .scene, h1 i, .glow {
+      opacity: 1 !important;
+      filter: none !important;
+      animation: none !important;
+      transform: none !important;
+    }
+    .back { transform: translateX(-50%) !important; }
+    /* skip straight to the two of them sitting together */
+    .enter, .mood, .step, .bob-d, .bob-b, .notice, .sign { animation: none !important; }
+    .sign { transform: rotate(-5deg); }
+    .lean-d { animation: none !important; transform: translateX(10px) rotate(3deg); }
+    .lean-b { animation: none !important; transform: translateX(-8px) rotate(-3deg); }
+    .notice, .mouth-happy { animation: none !important; }
+    .mouth-sad { animation: none !important; display: none; }
+    .cloud, .offer, .floats { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sky" aria-hidden="true"></div>
+<div class="dawn" aria-hidden="true"></div>
+<canvas id="rain" aria-hidden="true"></canvas>
+
+<main class="stage">
+
+  <div class="scene" aria-hidden="true">
+    <div class="glow"></div>
+
+    <!-- her little rain cloud -->
+    <svg class="cloud" viewBox="0 0 60 46">
+      <g class="puff">
+        <ellipse cx="22" cy="18" rx="14" ry="10" fill="#6E7A94" opacity=".85"/>
+        <ellipse cx="38" cy="20" rx="12" ry="9" fill="#5D6880" opacity=".85"/>
+        <ellipse cx="30" cy="14" rx="11" ry="8" fill="#7C88A2" opacity=".85"/>
+      </g>
+      <g fill="#C6D6EB">
+        <rect class="drip" x="19" y="29" width="1.6" height="6" rx=".8"/>
+        <rect class="drip" x="29" y="31" width="1.6" height="6" rx=".8"/>
+        <rect class="drip" x="39" y="29" width="1.6" height="6" rx=".8"/>
+      </g>
+    </svg>
+
+    <!-- the heart he holds out -->
+    <svg class="offer" viewBox="0 0 32 29">
+      <path d="M16 28C16 28 1 18.5 1 9.2 1 4.4 4.6 1 9 1c3 0 5.6 1.8 7 4.4C17.4 2.8 20 1 23 1c4.4 0 8 3.4 8 8.2C31 18.5 16 28 16 28z" fill="#E4143C"/>
+    </svg>
+
+    <!-- ===== DUDU — the bear, comes in from the left with the card ===== -->
+    <div class="char">
+      <div class="enter"><div class="step"><div class="lean-d"><div class="bob-d">
+        <svg viewBox="0 0 140 152">
+          <ellipse cx="58" cy="147" rx="38" ry="5" fill="#000" opacity=".25"/>
+
+          <g stroke="var(--line)" stroke-width="4.5" stroke-linejoin="round">
+            <circle cx="28" cy="32" r="14" fill="var(--dudu-ear)"/>
+            <circle cx="88" cy="32" r="14" fill="var(--dudu-ear)"/>
+            <ellipse cx="34" cy="127" rx="14" ry="9" fill="var(--dudu)"/>
+            <ellipse cx="82" cy="127" rx="14" ry="9" fill="var(--dudu)"/>
+            <ellipse cx="15" cy="103" rx="11" ry="13" fill="var(--dudu)"/>
+            <ellipse cx="58" cy="76" rx="44" ry="43" fill="var(--dudu)"/>
+          </g>
+
+          <ellipse cx="44" cy="74" rx="5" ry="6.5" fill="var(--line)"/>
+          <ellipse cx="74" cy="74" rx="5" ry="6.5" fill="var(--line)"/>
+          <circle cx="27" cy="90" r="9.5" fill="var(--cheek-d)"/>
+          <circle cx="90" cy="90" r="9.5" fill="var(--cheek-d)"/>
+          <path d="M53 82 q3 3.5 6 0 q3 3.5 6 0" stroke="var(--line)" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+          <path d="M54 85 q5 8 10 0 z" fill="var(--tongue)" stroke="var(--line)" stroke-width="2.2" stroke-linejoin="round"/>
+
+          <!-- the card, and the paw holding its edge -->
+          <g class="sign">
+            <rect x="64" y="94" width="68" height="42" rx="3" fill="var(--card)" stroke="var(--line)" stroke-width="4"/>
+            <!-- no word on it. the page says it once, further down. -->
+            <g transform="translate(86,104) scale(0.75)">
+              <path d="M16 28C16 28 1 18.5 1 9.2 1 4.4 4.6 1 9 1c3 0 5.6 1.8 7 4.4C17.4 2.8 20 1 23 1c4.4 0 8 3.4 8 8.2C31 18.5 16 28 16 28z" fill="#EE5D72"/>
+            </g>
+            <ellipse cx="67" cy="117" rx="10.5" ry="12.5" fill="var(--dudu)" stroke="var(--line)" stroke-width="4.5"/>
+          </g>
+        </svg>
+      </div></div></div></div>
+    </div>
+
+    <!-- ===== BUBU — the panda, already there ===== -->
+    <div class="char">
+      <div class="mood"><div class="lean-b"><div class="bob-b"><div class="notice">
+        <svg viewBox="0 0 140 152">
+          <ellipse cx="70" cy="147" rx="38" ry="5" fill="#000" opacity=".25"/>
+
+          <g stroke="var(--line)" stroke-width="4.5" stroke-linejoin="round">
+            <circle cx="40" cy="32" r="14" fill="var(--line)"/>
+            <circle cx="100" cy="32" r="14" fill="var(--line)"/>
+            <ellipse cx="48" cy="127" rx="14" ry="9" fill="var(--line)"/>
+            <ellipse cx="92" cy="127" rx="14" ry="9" fill="var(--line)"/>
+            <ellipse cx="70" cy="76" rx="44" ry="43" fill="var(--bubu)"/>
+          </g>
+
+          <!-- her paws, held together in front -->
+          <ellipse cx="70" cy="106" rx="10" ry="9" fill="var(--line)"/>
+          <ellipse cx="55" cy="108" rx="11" ry="13" fill="var(--bubu)" stroke="var(--line)" stroke-width="4.5"/>
+          <ellipse cx="85" cy="108" rx="11" ry="13" fill="var(--bubu)" stroke="var(--line)" stroke-width="4.5"/>
+
+          <ellipse cx="56" cy="74" rx="5" ry="6.5" fill="var(--line)"/>
+          <ellipse cx="84" cy="74" rx="5" ry="6.5" fill="var(--line)"/>
+          <circle cx="39" cy="90" r="9.5" fill="var(--cheek-b)"/>
+          <circle cx="101" cy="90" r="9.5" fill="var(--cheek-b)"/>
+
+          <path class="mouth-sad" d="M63 89 q7 -6 14 0" stroke="var(--line)" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+          <g class="mouth-happy">
+            <path d="M64 82 q3 3.5 6 0 q3 3.5 6 0" stroke="var(--line)" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+            <path d="M65 85 q5 8 10 0 z" fill="var(--tongue)" stroke="var(--line)" stroke-width="2.2" stroke-linejoin="round"/>
+          </g>
+        </svg>
+      </div></div></div></div>
+    </div>
+
+    <!-- the ones that come after they settle -->
+    <div class="floats">
+      <i style="--d:10.5s; left:32%"><svg viewBox="0 0 32 29"><path d="M16 28C16 28 1 18.5 1 9.2 1 4.4 4.6 1 9 1c3 0 5.6 1.8 7 4.4C17.4 2.8 20 1 23 1c4.4 0 8 3.4 8 8.2C31 18.5 16 28 16 28z" fill="#E87F9B"/></svg></i>
+      <i style="--d:12.4s; left:55%"><svg viewBox="0 0 32 29"><path d="M16 28C16 28 1 18.5 1 9.2 1 4.4 4.6 1 9 1c3 0 5.6 1.8 7 4.4C17.4 2.8 20 1 23 1c4.4 0 8 3.4 8 8.2C31 18.5 16 28 16 28z" fill="#E4C2CE"/></svg></i>
+      <i style="--d:14.1s; left:44%"><svg viewBox="0 0 32 29"><path d="M16 28C16 28 1 18.5 1 9.2 1 4.4 4.6 1 9 1c3 0 5.6 1.8 7 4.4C17.4 2.8 20 1 23 1c4.4 0 8 3.4 8 8.2C31 18.5 16 28 16 28z" fill="#C98BA0"/></svg></i>
+    </div>
+  </div>
+
+  <h1 id="h1" aria-label="For Babyramy"></h1>
+  <p class="line">I know it will take time, and that's okay.</p>
+  <p class="say s2">Through every difficult day, I'll be there with you&mdash;not to rush your healing, but to love you, understand you, and always respect your boundaries.</p>
+  <p class="say s3">No matter how slow the journey feels, you won't have to walk it alone.</p>
+  <p class="sig">&mdash; Paul <span>&#x1F90E;</span></p>
+
+</main>
+
+<a class="back" href="./">Back to our two years</a>
+
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- the two words ---------- */
+
+  /* every letter is its own box, and the browser will happily break between
+     two of them — so each word gets a nowrap wrapper and lines break only
+     at the spaces */
+  var TEXT = "For Babyramy";
+  var h1 = document.getElementById('h1');
+  var words = TEXT.split(' ');
+  var n = 0;
+  words.forEach(function (word, wi) {
+    var w = document.createElement('span');
+    w.className = 'w';
+    for (var i = 0; i < word.length; i++) {
+      var el = document.createElement('i');
+      el.textContent = word[i];
+      el.style.setProperty('--d', (0.55 + n * 0.11).toFixed(2) + 's');
+      w.appendChild(el);
+      n++;
+    }
+    h1.appendChild(w);
+    if (wi < words.length - 1) h1.appendChild(document.createTextNode(' '));
+  });
+
+  var root = document.documentElement;
+  if (reduce) { root.style.setProperty('--clear', '0.6'); return; }
+
+  /* ---------- rain ---------- */
+
+  var cv = document.getElementById('rain');
+  var ctx = cv.getContext('2d');
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var W = 0, H = 0, drops = [];
+  var small = window.innerWidth < 640;
+  var SLANT = 0.16;
+
+  function seed() {
+    drops = [];
+    var n = small ? 100 : 180;
+    for (var i = 0; i < n; i++) {
+      var depth = Math.random();                 /* 0 far, 1 near */
+      drops.push({
+        x: Math.random() * (W + 120) - 60,
+        y: Math.random() * H,
+        len: 7 + depth * 26,
+        sp: 5 + depth * 13,
+        w: depth > 0.8 ? 1.4 : 1,
+        a: 0.05 + depth * 0.24
+      });
+    }
+  }
+
+  function resize() {
+    /* the address bar collapsing fires resize constantly on phones, so only
+       reseed when the width really changed and the rain doesn't restart */
+    var w = window.innerWidth, changed = w !== W;
+    W = w; H = window.innerHeight;
+    cv.width = Math.round(W * dpr);
+    cv.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (changed || !drops.length) seed();
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+
+  /* the sky eases off over about a minute and settles into a drizzle — the
+     storm passing, not switched off, and never quite claiming to be over */
+  var EASE_MS = 62000, FLOOR = 0.34;
+  var t0 = null;
+
+  function frame(ts) {
+    if (t0 === null) t0 = ts;
+    var age = Math.min((ts - t0) / EASE_MS, 1);
+    var lift = age * age * (3 - 2 * age);        /* smoothstep */
+    var wet = 1 - (1 - FLOOR) * lift;
+
+    root.style.setProperty('--clear', (lift * 0.75).toFixed(4));
+
+    ctx.clearRect(0, 0, W, H);
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#C6D6EB';
+
+    var live = Math.round(drops.length * wet);
+    for (var i = 0; i < live; i++) {
+      var d = drops[i];
+      var pace = 0.5 + wet * 0.5;                /* it slows as it thins */
+      d.y += d.sp * pace;
+      d.x += d.sp * SLANT * pace;
+
+      if (d.y > H + d.len) {
+        d.y = -d.len - Math.random() * 60;
+        d.x = Math.random() * (W + 120) - 60;
+      }
+      if (d.x > W + 60) d.x -= W + 120;
+
+      ctx.globalAlpha = d.a * wet;
+      ctx.lineWidth = d.w;
+      ctx.beginPath();
+      ctx.moveTo(d.x, d.y);
+      ctx.lineTo(d.x - d.len * SLANT, d.y - d.len);
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+
+    requestAnimationFrame(frame);
+  }
+
+  requestAnimationFrame(frame);
+})();
+</script>
+
+</body>
+</html>
