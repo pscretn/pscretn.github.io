@@ -719,6 +719,24 @@
     .lasers { display: none; }
     .wave { display: none; }
   }
+
+/* ---- StemSplit Studio -------------------------------------------------- */
+.stem-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
+  gap:34px;align-items:center;margin-top:30px}
+.stem-copy p{margin:0 0 16px}
+.stem-list{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:10px}
+.stem-list li{display:flex;align-items:flex-start;gap:11px;font-size:15px;
+  color:var(--muted,#9aa3b2);line-height:1.5}
+.stem-list i{width:9px;height:9px;border-radius:50%;background:var(--k);
+  flex:0 0 auto;margin-top:7px;box-shadow:0 0 12px var(--k)}
+.stem-list b{color:#fff;font-weight:600}
+.stem-cta{display:flex;flex-wrap:wrap;gap:11px;margin-bottom:14px}
+.stem-note{font-size:13.5px;color:var(--muted,#9aa3b2);margin:0}
+.stem-shot{margin:0;border-radius:16px;overflow:hidden;
+  border:1px solid var(--line-solid,#232b3a);
+  box-shadow:0 26px 60px rgba(0,0,0,.5)}
+.stem-shot img{display:block;width:100%;height:auto}
+@media(max-width:900px){.stem-wrap{grid-template-columns:1fr;gap:26px}}
 </style>
 </head>
 <body>
@@ -734,6 +752,7 @@
     <a href="#deck">Decks</a>
     <a href="#gigs">Dates</a>
     <a href="#setup">Setup</a>
+    <a href="#stems">Free tool</a>
     <a href="index.html">Main site</a>
   </div>
   <a class="btn btn-hot" href="#book">Book a date</a>
@@ -987,6 +1006,52 @@
 </section>
 
 <div class="wave" aria-hidden="true" data-wave></div>
+
+<section id="stems">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow">Free download</p>
+      <h2>StemSplit Studio.</h2>
+      <p class="lede">Pull any track apart &mdash; vocals, drums, bass and everything
+        else &mdash; on your own machine.</p>
+    </div>
+
+    <div class="stem-wrap reveal">
+      <div class="stem-copy">
+        <p>I built this for my own edits, so it does the thing I actually needed:
+          drop in an MP3 and get four clean stems back. Acapellas for mashups,
+          drums for a re-drum, an instrumental for a live vocal &mdash; without
+          uploading anything to a website or paying per track.</p>
+        <p>It runs the Demucs v4 model on your own computer. No account, no
+          upload, no internet connection required after installing.</p>
+
+        <ul class="stem-list">
+          <li><i style="--k:#4a8cff"></i><span><b>Vocals</b> &mdash; acapellas for mashups and edits</span></li>
+          <li><i style="--k:#ff8f4a"></i><span><b>Drums</b> &mdash; loops and re-drums straight out of the track</span></li>
+          <li><i style="--k:#8b5cf6"></i><span><b>Bass</b> &mdash; swap a bassline or key-match a transition</span></li>
+          <li><i style="--k:#35d07f"></i><span><b>Everything else</b> &mdash; synths, guitars, keys, pads</span></li>
+        </ul>
+
+        <div class="stem-cta">
+          <a class="btn btn-hot" href="https://gitlab.com/api/v4/projects/86112641/packages/generic/stemsplit-studio/0.1.0/StemSplit-Studio-Setup.exe">Download for Windows</a>
+          <a class="btn" href="https://gitlab.com/api/v4/projects/86112641/packages/generic/stemsplit-studio/0.1.0/StemSplit-Studio-Setup-GPU.exe">Faster build for NVIDIA cards</a>
+        </div>
+
+        <p class="stem-note">Free. Windows 10 and 11, 64-bit. Works completely
+          offline &mdash; your music never leaves your computer. A four-minute song
+          takes about five minutes. If you have an NVIDIA graphics card, the second
+          download uses it and finishes in under a minute &mdash; same result, much
+          bigger file. <a href="https://gitlab.com/pscretn/stemsplit-studio/-/packages">All versions</a>.</p>
+      </div>
+
+      <figure class="stem-shot">
+        <img src="images/stemsplit_app.webp"
+             alt="StemSplit Studio: a track separated into vocals, drums, bass and other, each with its own player"
+             width="1086" height="1014" loading="lazy" decoding="async">
+      </figure>
+    </div>
+  </div>
+</section>
 
 <section id="why" style="background:var(--ink-2);border-top:1px solid var(--line-solid);border-bottom:1px solid var(--line-solid)">
   <div class="wrap">
