@@ -1111,7 +1111,9 @@
      them a file they cannot run. */
   (function () {
     var base = 'https://github.com/pscretn/wavelink-dmx-lightshow/releases/latest/download/';
-    var installer = 'WaveLink.DMX.LightShow.Setup.0.1.0.exe';
+    /* Deliberately unversioned: the link then survives every release without
+       the site needing a change. */
+    var installer = 'WaveLink-DMX-LightShow-Setup.exe';
 
     var btn = document.getElementById('dl-primary');
     var label = document.getElementById('dl-label');
