@@ -398,6 +398,7 @@
     box-shadow: 0 30px 70px -30px rgba(0,0,0,.9);
   }
   .shot img { display: block; width: 100%; height: auto; }
+  .shot-app { margin: 0; }
   .shot figcaption {
     padding: .8rem 1.1rem; font-size: .82rem; color: var(--muted);
     border-top: 1px solid var(--line);
@@ -703,19 +704,20 @@
 
       <div class="app-visual">
       <img class="app-icon" src="images/wavelink_icon.webp" alt="WaveLink DMX app icon" width="320" height="320">
-      <div class="phone" aria-hidden="true">
-        <div class="screen">
-          <span class="bar"></span>
-          <div class="faders">
-            <i style="animation-delay:0s"></i><i style="animation-delay:.2s"></i>
-            <i style="animation-delay:.4s"></i><i style="animation-delay:.6s"></i>
-            <i style="animation-delay:.8s"></i><i style="animation-delay:1s"></i>
-          </div>
-          <span class="bar" style="opacity:.5"></span>
-        </div>
-      </div>
+      <figure class="shot shot-app">
+        <img src="images/wavelink_app_fixtures.webp"
+             alt="WaveLink DMX on a tablet: colour wheel, attribute faders, pan and tilt joystick, and the patched fixture list"
+             width="1200" height="716" loading="lazy" decoding="async">
+      </figure>
       </div>
     </div>
+
+    <figure class="shot rv">
+      <img src="images/wavelink_app_faders.webp"
+           alt="WaveLink DMX fader bank: 512 channels across 64 pages, with scene and bank recall"
+           width="1200" height="716" loading="lazy" decoding="async">
+      <figcaption>512 channels across 64 pages, with scene store and recall, and a chase engine that runs on the controller itself.</figcaption>
+    </figure>
   </div>
 </section>
 
