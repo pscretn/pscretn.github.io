@@ -353,6 +353,75 @@
   .faders i { flex: 1; border-radius: 3px; background: linear-gradient(to top, var(--teal), var(--blue)); animation: fade 2.4s ease-in-out infinite; }
   @keyframes fade { 0%,100% { height: 22%; } 50% { height: 88%; } }
 
+  /* a timeline with cue lanes, for the desktop app */
+  .tl {
+    position: relative; width: min(320px, 78vw); overflow: hidden;
+    background: linear-gradient(160deg, #0E1E30, #0A1522);
+    border: 1px solid var(--line); border-radius: 14px;
+    padding: .7rem; display: grid; gap: .5rem;
+  }
+
+  .tl-wave { display: flex; align-items: flex-end; gap: 2px; height: 46px; }
+  .tl-wave i {
+    flex: 1; border-radius: 1px;
+    background: linear-gradient(180deg, var(--blue), rgba(71,166,234,.25));
+    animation: tl-pulse 2.4s ease-in-out infinite;
+  }
+  .tl-wave i:nth-child(3n) { animation-delay: .3s; }
+  .tl-wave i:nth-child(3n+1) { animation-delay: .6s; }
+
+  .tl-lanes { display: grid; gap: 3px; }
+  .tl-lanes span {
+    position: relative; height: 9px; border-radius: 3px;
+    background: rgba(30,51,72,.5);
+  }
+  .tl-lanes span::after {
+    content: ""; position: absolute; inset-block: 0;
+    left: var(--x); width: var(--w);
+    border-radius: 3px; background: var(--k); opacity: .8;
+  }
+
+  .tl-head {
+    position: absolute; top: .5rem; bottom: .5rem; left: 30%;
+    width: 2px; background: var(--amber); border-radius: 2px;
+    box-shadow: 0 0 10px var(--amber);
+    animation: tl-scan 7s linear infinite;
+  }
+
+  @keyframes tl-pulse { 50% { transform: scaleY(.55); } }
+  @keyframes tl-scan { from { left: 4%; } to { left: 96%; } }
+
+  .shot {
+    margin: 2rem 0 0; padding: 0;
+    border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
+    background: var(--ink-2);
+    box-shadow: 0 30px 70px -30px rgba(0,0,0,.9);
+  }
+  .shot img { display: block; width: 100%; height: auto; }
+  .shot figcaption {
+    padding: .8rem 1.1rem; font-size: .82rem; color: var(--muted);
+    border-top: 1px solid var(--line);
+  }
+
+  .stats {
+    display: grid; gap: 1rem; margin-top: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  }
+  .stats div { border-left: 2px solid var(--c); padding-left: .9rem; }
+  .stats b {
+    display: block; font-family: var(--mono); font-size: 1.15rem;
+    color: var(--white); letter-spacing: -.02em;
+  }
+  .stats span { font-size: .74rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+
+  .dl-note { margin: 1rem 0 0; font-size: .82rem; color: var(--muted); }
+  .dl-note a { color: var(--blue); text-decoration: none; border-bottom: 1px solid rgba(71,166,234,.4); }
+  .dl-note a:hover { border-bottom-color: var(--blue); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tl-wave i, .tl-head { animation: none; }
+  }
+
   .app-visual { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
 
   .app-icon {
@@ -500,6 +569,7 @@
   <div class="links">
     <a href="#build">What We Build</a>
     <a href="#app">WaveLink App</a>
+    <a href="#software">Software</a>
     <a href="#supply">Supply</a>
     <a href="#contact">Contact</a>
     <a href="https://www.instagram.com/trilitlabs/" target="_blank" rel="noopener">Instagram</a>
@@ -512,7 +582,8 @@
 <div class="drawer" id="drawer">
   <a href="#build">What We Build</a>
   <a href="#app">WaveLink App</a>
-  <a href="#supply">Supply</a>
+  <a href="#software">Software</a>
+    <a href="#supply">Supply</a>
   <a href="#contact">Contact</a>
   <a href="index.html">pscretn</a>
 </div>
@@ -644,6 +715,87 @@
         </div>
       </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<div class="signal" aria-hidden="true"><i></i><i></i><i></i></div>
+
+<section id="software" style="--c:var(--blue)">
+  <div class="wrap">
+    <div class="rv">
+      <p class="eyebrow">Desktop software</p>
+      <h2>WaveLink DMX LightShow</h2>
+      <p class="lede">Load a song. Get a light show. Then make it yours.</p>
+    </div>
+
+    <div class="app rv">
+      <div>
+        <h3>It listens to the track, then lights it.</h3>
+        <p>Point it at an MP3 and it finds the tempo, the beat grid and the structure &mdash; intro, build, drop, breakdown &mdash; then builds a full show against them. Every cue lands on a real musical event, and nothing about it is random: the same track always produces the same show.</p>
+
+        <ul class="feat">
+          <li><svg viewBox="0 0 24 24"><path d="m4 12 6 6L20 6"/></svg> Beat, downbeat and section detection</li>
+          <li><svg viewBox="0 0 24 24"><path d="m4 12 6 6L20 6"/></svg> Accents placed on real transients, not a metronome</li>
+          <li><svg viewBox="0 0 24 24"><path d="m4 12 6 6L20 6"/></svg> Bass, mid and treble mapped across your fixtures</li>
+          <li><svg viewBox="0 0 24 24"><path d="m4 12 6 6L20 6"/></svg> Pearl-style shape engine &mdash; 30+ effects, Speed, Size, Spread, Fan</li>
+          <li><svg viewBox="0 0 24 24"><path d="m4 12 6 6L20 6"/></svg> Timeline editing, drag cues and retime by bar</li>
+          <li><svg viewBox="0 0 24 24"><path d="m4 12 6 6L20 6"/></svg> Imports Avolites <code>.r20</code> and WaveLink JSON personalities</li>
+          <li><svg viewBox="0 0 24 24"><path d="m4 12 6 6L20 6"/></svg> Talks to the same WaveLink controller over Wi&#8209;Fi</li>
+        </ul>
+
+        <div class="cta">
+          <a class="btn btn-hot" id="dl-primary" href="https://github.com/pscretn/wavelink-dmx-lightshow/releases/latest" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 12 5 5 5-5"/><path d="M5 21h14"/></svg>
+            <span id="dl-label">Download</span>
+          </a>
+          <a class="btn" href="https://github.com/pscretn/wavelink-dmx-lightshow/releases/latest" target="_blank" rel="noopener">All downloads</a>
+        </div>
+
+        <p class="dl-note">
+          Free. Windows 10 and 11, 64-bit.
+          <span id="dl-other"></span>
+        </p>
+      </div>
+
+      <div class="app-visual">
+        <img class="app-icon" src="images/wavelink_lightshow_icon.webp" alt="WaveLink DMX LightShow icon" width="320" height="320">
+
+        <div class="tl" aria-hidden="true">
+          <div class="tl-wave">
+            <i style="height:22%"></i><i style="height:52%"></i><i style="height:34%"></i><i style="height:74%"></i>
+            <i style="height:44%"></i><i style="height:88%"></i><i style="height:58%"></i><i style="height:96%"></i>
+            <i style="height:40%"></i><i style="height:70%"></i><i style="height:30%"></i><i style="height:60%"></i>
+            <i style="height:80%"></i><i style="height:36%"></i><i style="height:64%"></i><i style="height:26%"></i>
+          </div>
+          <div class="tl-lanes">
+            <span style="--x:0%;--w:34%;--k:var(--amber)"></span>
+            <span style="--x:36%;--w:28%;--k:var(--mint)"></span>
+            <span style="--x:66%;--w:34%;--k:var(--blue)"></span>
+            <span style="--x:8%;--w:18%;--k:var(--mint)"></span>
+            <span style="--x:30%;--w:44%;--k:var(--blue)"></span>
+            <span style="--x:78%;--w:16%;--k:var(--amber)"></span>
+            <span style="--x:0%;--w:12%;--k:var(--blue)"></span>
+            <span style="--x:18%;--w:30%;--k:var(--amber)"></span>
+            <span style="--x:54%;--w:40%;--k:var(--mint)"></span>
+          </div>
+          <b class="tl-head"></b>
+        </div>
+      </div>
+    </div>
+
+    <figure class="shot rv">
+      <img src="images/wavelink_lightshow_app.webp"
+           alt="WaveLink DMX LightShow: a track analysed into sections with cues laid out across eight timeline lanes"
+           width="1400" height="717" loading="lazy" decoding="async">
+      <figcaption>A generated show. Sections detected from the audio, cues laid out across eight lanes, rig preview above.</figcaption>
+    </figure>
+
+    <div class="stats rv">
+      <div><b>512</b><span>DMX channels</span></div>
+      <div><b>40 Hz</b><span>output rate</span></div>
+      <div><b>30+</b><span>shape effects</span></div>
+      <div><b>MP3 &middot; WAV &middot; FLAC</b><span>and more</span></div>
     </div>
   </div>
 </section>
@@ -950,6 +1102,31 @@
     rt = setTimeout(function () { size(); seed(); }, 200);
   });
 })();
+</script>
+<script>
+  /* Only a Windows build is published, so hand Windows visitors the installer
+     directly and send everyone else to the releases page rather than offering
+     them a file they cannot run. */
+  (function () {
+    var base = 'https://github.com/pscretn/wavelink-dmx-lightshow/releases/latest/download/';
+    var installer = 'WaveLink.DMX.LightShow.Setup.0.1.0.exe';
+
+    var btn = document.getElementById('dl-primary');
+    var label = document.getElementById('dl-label');
+    var note = document.getElementById('dl-other');
+    if (!btn || !label) return;
+
+    var ua = navigator.userAgent || '';
+    var isWindows = /Windows NT/.test(ua);
+
+    if (isWindows) {
+      btn.href = base + installer;
+      label.textContent = 'Download for Windows';
+    } else {
+      label.textContent = 'Downloads';
+      if (note) note.textContent = 'Windows build only for now.';
+    }
+  })();
 </script>
 </body>
 </html>
