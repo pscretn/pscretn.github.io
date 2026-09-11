@@ -721,8 +721,10 @@
   }
 
 /* ---- StemSplit Studio -------------------------------------------------- */
-.stem-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
-  gap:34px;align-items:center;margin-top:30px}
+.stem-wrap{display:block;margin-top:30px}
+/* The copy keeps a comfortable measure; the demo runs full width beneath
+   it, because at half width the app's own text was too small to read. */
+.stem-copy{max-width:780px}
 .stem-copy p{margin:0 0 16px}
 .stem-list{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:10px}
 .stem-list li{display:flex;align-items:flex-start;gap:11px;font-size:15px;
@@ -732,13 +734,13 @@
 .stem-list b{color:#fff;font-weight:600}
 .stem-cta{display:flex;flex-wrap:wrap;gap:11px;margin-bottom:14px}
 .stem-note{font-size:13.5px;color:var(--muted,#9aa3b2);margin:0}
-.stem-shot{margin:0;border-radius:16px;overflow:hidden;
-  border:1px solid var(--line-solid,#232b3a);
+.stem-shot{margin:34px auto 0;max-width:1040px;border-radius:16px;
+  overflow:hidden;border:1px solid var(--line-solid,#232b3a);
   box-shadow:0 26px 60px rgba(0,0,0,.5)}
 .stem-shot img{display:block;width:100%;height:auto}
 .stem-shot video{display:block;width:100%;height:auto;background:#0b0d12}
 @media (prefers-reduced-motion:reduce){.stem-video{animation:none}}
-@media(max-width:900px){.stem-wrap{grid-template-columns:1fr;gap:26px}}
+@media(max-width:900px){.stem-shot{margin-top:26px}}
 </style>
 </head>
 <body>
