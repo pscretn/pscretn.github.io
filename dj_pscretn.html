@@ -1051,7 +1051,7 @@
              gets sound they did not ask for; controls are still there. -->
         <video class="stem-video" width="1280" height="988"
                poster="images/stemsplit_demo_poster.jpg"
-               autoplay muted loop playsinline controls preload="metadata"
+               autoplay muted loop playsinline controls preload="auto"
                aria-label="StemSplit Studio separating a track into four stems,
                            detecting its key and tempo, and playing the stems
                            together with mute and solo">
@@ -1477,6 +1477,44 @@
   });
 
   if (reduce) return;
+
+  /* ---------- StemSplit demo: keep it running ----------
+     autoplay+loop is not enough on its own. Browsers pause an offscreen
+     video to save power and do not reliably resume it, a backgrounded tab
+     stops it, and the very first play() can be refused before the file has
+     buffered. So it gets nudged back whenever it should be running. */
+  var demo = document.querySelector('.stem-video');
+  if (demo) {
+    var demoSeen = false;
+
+    function demoPlay() {
+      if (!demoSeen || document.hidden) return;
+      var p = demo.play();
+      if (p && p.catch) p.catch(function () {});
+    }
+
+    new IntersectionObserver(function (es) {
+      demoSeen = es[0].isIntersecting;
+      if (demoSeen) demoPlay(); else demo.pause();
+    }, { threshold: 0.2 }).observe(demo);
+
+    // If it stops for any reason other than the viewer pressing pause, or
+    // the tab coming back, start it again.
+    demo.addEventListener('pause', function () {
+      if (demo.dataset.userPaused !== '1') setTimeout(demoPlay, 120);
+    });
+    demo.addEventListener('ended', demoPlay);
+    demo.addEventListener('canplay', demoPlay);
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) demoPlay();
+    });
+
+    // Respect a deliberate pause from the controls; clicking play clears it.
+    demo.addEventListener('click', function () {
+      demo.dataset.userPaused = demo.paused ? '0' : '1';
+    });
+    demo.addEventListener('play', function () { demo.dataset.userPaused = '0'; });
+  }
 
   /* ---------- hero visualiser ----------
      not wired to real audio — there is nothing playing — so it runs on a
