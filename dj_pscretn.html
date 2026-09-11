@@ -736,6 +736,8 @@
   border:1px solid var(--line-solid,#232b3a);
   box-shadow:0 26px 60px rgba(0,0,0,.5)}
 .stem-shot img{display:block;width:100%;height:auto}
+.stem-shot video{display:block;width:100%;height:auto;background:#0b0d12}
+@media (prefers-reduced-motion:reduce){.stem-video{animation:none}}
 @media(max-width:900px){.stem-wrap{grid-template-columns:1fr;gap:26px}}
 </style>
 </head>
@@ -1045,9 +1047,20 @@
       </div>
 
       <figure class="stem-shot">
-        <img src="images/stemsplit_app.webp"
-             alt="StemSplit Studio: a track separated into vocals, drums, bass and other, each with its own player"
-             width="1086" height="1014" loading="lazy" decoding="async">
+        <!-- Muted and silent by design, so autoplay is allowed and nobody
+             gets sound they did not ask for; controls are still there. -->
+        <video class="stem-video" width="1280" height="988"
+               poster="images/stemsplit_demo_poster.jpg"
+               autoplay muted loop playsinline controls preload="metadata"
+               aria-label="StemSplit Studio separating a track into four stems,
+                           detecting its key and tempo, and playing the stems
+                           together with mute and solo">
+          <source src="videos/stemsplit-demo.webm" type="video/webm">
+          <source src="videos/stemsplit-demo.mp4" type="video/mp4">
+          <img src="images/stemsplit_app.webp"
+               alt="StemSplit Studio: a track separated into vocals, drums, bass and other"
+               width="1086" height="1014" loading="lazy" decoding="async">
+        </video>
       </figure>
     </div>
   </div>
