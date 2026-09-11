@@ -734,13 +734,13 @@
 .stem-list b{color:#fff;font-weight:600}
 .stem-cta{display:flex;flex-wrap:wrap;gap:11px;margin-bottom:14px}
 .stem-note{font-size:13.5px;color:var(--muted,#9aa3b2);margin:0}
-.stem-shot{margin:34px auto 0;max-width:1040px;border-radius:16px;
+.stem-shot{margin:0 auto 30px;max-width:1040px;border-radius:16px;
   overflow:hidden;border:1px solid var(--line-solid,#232b3a);
   box-shadow:0 26px 60px rgba(0,0,0,.5)}
 .stem-shot img{display:block;width:100%;height:auto}
 .stem-shot video{display:block;width:100%;height:auto;background:#0b0d12}
 @media (prefers-reduced-motion:reduce){.stem-video{animation:none}}
-@media(max-width:900px){.stem-shot{margin-top:26px}}
+@media(max-width:900px){.stem-shot{margin-bottom:24px}}
 </style>
 </head>
 <body>
@@ -1021,7 +1021,23 @@
     </div>
 
     <div class="stem-wrap reveal">
-      <div class="stem-copy">
+      <figure class="stem-shot">
+        <!-- Muted and silent by design, so autoplay is allowed and nobody
+             gets sound they did not ask for; controls are still there. -->
+        <video class="stem-video" width="1280" height="988"
+               poster="images/stemsplit_demo_poster.jpg"
+               autoplay muted loop playsinline controls preload="auto"
+               aria-label="StemSplit Studio separating a track into four stems,
+                           detecting its key and tempo, and playing the stems
+                           together with mute and solo">
+          <source src="videos/stemsplit-demo.webm" type="video/webm">
+          <source src="videos/stemsplit-demo.mp4" type="video/mp4">
+          <img src="images/stemsplit_app.webp"
+               alt="StemSplit Studio: a track separated into vocals, drums, bass and other"
+               width="1086" height="1014" loading="lazy" decoding="async">
+        </video>
+      </figure>
+    <div class="stem-copy">
         <p>I built this for my own edits, so it does the thing I actually needed:
           drop in an MP3 and get four clean stems back. Acapellas for mashups,
           drums for a re-drum, an instrumental for a live vocal &mdash; without
@@ -1048,23 +1064,7 @@
           bigger file. <a href="https://github.com/pscretn/stemsplit-studio/releases">All versions</a>. <b>First run:</b> Windows may say &ldquo;Windows protected your PC&rdquo; because the app is not code-signed. Click <b>More info</b>, then <b>Run anyway</b>.</p>
       </div>
 
-      <figure class="stem-shot">
-        <!-- Muted and silent by design, so autoplay is allowed and nobody
-             gets sound they did not ask for; controls are still there. -->
-        <video class="stem-video" width="1280" height="988"
-               poster="images/stemsplit_demo_poster.jpg"
-               autoplay muted loop playsinline controls preload="auto"
-               aria-label="StemSplit Studio separating a track into four stems,
-                           detecting its key and tempo, and playing the stems
-                           together with mute and solo">
-          <source src="videos/stemsplit-demo.webm" type="video/webm">
-          <source src="videos/stemsplit-demo.mp4" type="video/mp4">
-          <img src="images/stemsplit_app.webp"
-               alt="StemSplit Studio: a track separated into vocals, drums, bass and other"
-               width="1086" height="1014" loading="lazy" decoding="async">
-        </video>
-      </figure>
-    </div>
+      </div>
   </div>
 </section>
 
@@ -1498,7 +1498,7 @@
     new IntersectionObserver(function (es) {
       demoSeen = es[0].isIntersecting;
       if (demoSeen) demoPlay(); else demo.pause();
-    }, { threshold: 0.2 }).observe(demo);
+    }, { threshold: 0.01, rootMargin: '200px 0px' }).observe(demo);
 
     // If it stops for any reason other than the viewer pressing pause, or
     // the tab coming back, start it again.
