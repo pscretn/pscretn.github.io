@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="TrilitLabs — WireLink DMX (USB-C to isolated DMX, available for sale soon), wired and wireless DMX controllers, Art-Net controllers, isolated DMX splitters, the WaveLink DMX app, stage fixtures and 3D printed lamps. A pscretn brand.">
 <meta name="theme-color" content="#050608">
 <title>TrilitLabs</title>
@@ -56,13 +56,13 @@
   }
   main, footer { position: relative; z-index: 1; }
 
-  .wrap { width: min(1320px, 100%); margin: 0 auto; padding: 0 var(--gut); }
+  .wrap { width: min(1320px, 100%); margin: 0 auto; padding: 0 max(var(--gut), env(safe-area-inset-right)) 0 max(var(--gut), env(safe-area-inset-left)); }
 
   /* ---------- nav ---------- */
   .nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 20;
     display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-    padding: 1rem var(--gut);
+    padding: 1rem max(var(--gut), env(safe-area-inset-right)) 1rem max(var(--gut), env(safe-area-inset-left));
     transition: background .3s, border-color .3s;
     border-bottom: 1px solid transparent;
   }
@@ -111,7 +111,7 @@
   }
 
   /* ---------- hero ---------- */
-  .hero { min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; padding: 7rem 0 2rem; }
+  .hero { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; padding: 7rem 0 2rem; }
   .kicker { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.1rem; font-size: .72rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
   .kicker b { color: var(--white); font-weight: 700; }
   .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 12px var(--amber); animation: blink 2s ease-in-out infinite; }
@@ -239,6 +239,10 @@
      on top of each other, sized so both columns end at the same height */
   .wl-visual { display: grid; grid-template-columns: 1fr .89fr; gap: 1rem; align-items: start; }
   .wl-pair { display: grid; gap: 1rem; }
+  @media (max-width: 40rem) {
+    .wl-visual { grid-template-columns: 1fr; }
+    .wl-pair { grid-template-columns: 1fr 1fr; }
+  }
   .wl-pair .cover figcaption { font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; }
   .wl-reel video { display: block; width: 100%; height: auto; aspect-ratio: 9 / 16; object-fit: cover; background: #000; }
   .wl-sound {
@@ -255,7 +259,7 @@
   .wl-price small { font-size: .78rem; color: var(--muted); }
 
   .wl-3d {
-    position: relative; margin: clamp(2rem, 5vw, 3.5rem) 0 0; aspect-ratio: 16 / 7; min-height: 18rem;
+    position: relative; margin: clamp(2rem, 5vw, 3.5rem) 0 0; height: clamp(18rem, 44vw, 34rem);
     border: 1px solid var(--line); border-radius: clamp(14px, 2vw, 24px); overflow: hidden;
     background: radial-gradient(60% 70% at 50% 45%, #1A2230, #07090C 75%);
   }
@@ -263,7 +267,7 @@
   .wl-3d canvas:active { cursor: grabbing; }
   .wl-3d-tag { position: absolute; top: .9rem; left: .9rem; font-size: .62rem; font-weight: 800; letter-spacing: .16em; color: var(--bg); background: var(--mint); border-radius: 99px; padding: .3rem .7rem; }
   .wl-3d figcaption { position: absolute; left: 0; right: 0; bottom: .9rem; text-align: center; pointer-events: none; font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-  @media (max-width: 40rem) { .wl-3d { aspect-ratio: 1 / 1; min-height: 0; } }
+  @media (max-width: 40rem) { .wl-3d { height: auto; aspect-ratio: 1 / 1; } }
 
   .wl-path {
     display: grid; grid-template-columns: 1fr auto 1.2fr auto 1fr; align-items: center;
@@ -314,7 +318,7 @@
   .card p { margin: 0; color: #B9C2CB; font-size: .95rem; }
   .card ul { list-style: none; margin: 1.2rem 0 0; padding: 0; font-size: .85rem; color: var(--muted); }
   .card li { padding: .4rem 0; border-top: 1px solid var(--line); }
-  @media (max-width: 56rem) { .cards { grid-template-columns: 1fr; } }
+  @media (max-width: 40rem) { .cards { grid-template-columns: 1fr; } }
 
   /* ---------- supply ---------- */
   .supply { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
@@ -330,7 +334,7 @@
   .supply span { color: var(--muted); font-size: .88rem; }
 
   /* ---------- videos ---------- */
-  .vids { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .vids { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1rem; }
   .vid figure { margin: 0; }
   .thumb { position: relative; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--ink-2); }
   .thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s; filter: saturate(.85); }
@@ -341,7 +345,6 @@
   .play svg { width: 1.1rem; height: 1.1rem; margin-left: 3px; }
   .vid figcaption { padding: .8rem .2rem 0; font-weight: 600; }
   .vid figcaption small { display: block; font-weight: 400; color: var(--muted); font-size: .85rem; }
-  @media (max-width: 56rem) { .vids { grid-template-columns: 1fr; } }
 
   /* ---------- outro ---------- */
   .outro { padding: clamp(5rem, 12vw, 10rem) 0 clamp(3rem, 6vw, 5rem); border-top: 1px solid var(--line); background: rgba(5,6,8,.9); }
