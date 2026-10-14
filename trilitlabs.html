@@ -552,6 +552,24 @@
     color: var(--white); background: rgba(10,12,16,.6); backdrop-filter: blur(6px);
     border: 1px solid var(--line); border-radius: 99px; padding: .45rem .75rem; cursor: pointer;
   }
+  .wl-3d {
+    position: relative; margin: 2.5rem 0 0; aspect-ratio: 16 / 8; min-height: 18rem;
+    border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
+    background: radial-gradient(60% 70% at 50% 45%, #1A2B3E, var(--ink) 75%);
+  }
+  .wl-3d canvas { display: block; width: 100%; height: 100%; cursor: grab; touch-action: pan-y; }
+  .wl-3d canvas:active { cursor: grabbing; }
+  .wl-3d-tag {
+    position: absolute; top: .9rem; left: .9rem;
+    font-size: .62rem; font-weight: 800; letter-spacing: .16em; color: var(--ink);
+    background: var(--mint); border-radius: 99px; padding: .3rem .7rem;
+  }
+  .wl-3d figcaption {
+    position: absolute; left: 0; right: 0; bottom: .9rem; text-align: center; pointer-events: none;
+    font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+  }
+  @media (max-width: 40rem) { .wl-3d { aspect-ratio: 1 / 1; min-height: 0; } }
+
   .wl-price { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem .8rem; margin: 0 0 1.4rem; }
   .wl-price span { font-size: .68rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
   .wl-price b { font-family: var(--mono); font-size: clamp(1.8rem, 6vw, 2.4rem); font-weight: 700; color: var(--amber); letter-spacing: -.02em; }
@@ -799,6 +817,12 @@
         </div>
       </div>
     </div>
+
+    <figure class="wl-3d rv" id="wl-3d">
+      <canvas id="wl-3d-canvas" aria-label="Interactive 3D model of the WireLink DMX enclosure. Drag to turn it."></canvas>
+      <span class="wl-3d-tag">3D</span>
+      <figcaption>Drag to turn it · 86 × 34 × 35 mm</figcaption>
+    </figure>
 
     <div class="wl-path rv" role="img" aria-label="Phone or tablet connects over USB-C to WireLink DMX, which has an isolation barrier inside, then DMX512 to the lighting rig">
       <div class="wl-node"><b>Phone or tablet</b><small>WaveLink DMX app</small></div>
@@ -1356,6 +1380,161 @@
       if (note) note.textContent = 'Windows build only for now.';
     }
   })();
+</script>
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+</script>
+<script type="module">
+  /* WireLink DMX in 3D. The shell is the real enclosure exported from the
+     CadQuery model (base, lid and faceplate in their assembled positions);
+     the XLR socket, USB-C receptacle and LEDs are simple stand-ins. Nothing
+     loads until the viewer is about to scroll into view. */
+  const box = document.getElementById('wl-3d');
+  const canvas = document.getElementById('wl-3d-canvas');
+  if (box && canvas) {
+    const io = new IntersectionObserver((es) => {
+      if (es.some((e) => e.isIntersecting)) { io.disconnect(); start(); }
+    }, { rootMargin: '300px 0px' });
+    io.observe(box);
+  }
+
+  async function start() {
+    const THREE = await import('three');
+    const { STLLoader } = await import('three/addons/loaders/STLLoader.js');
+    const { OrbitControls } = await import('three/addons/controls/OrbitControls.js');
+    const { RoomEnvironment } = await import('three/addons/environments/RoomEnvironment.js');
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    const scene = new THREE.Scene();
+    scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
+
+    const camera = new THREE.PerspectiveCamera(30, 2, 1, 2000);
+    camera.position.set(150, 95, 170);
+
+    const key = new THREE.DirectionalLight(0xffffff, 1.6);
+    key.position.set(80, 160, 90);
+    key.castShadow = true;
+    key.shadow.mapSize.set(1024, 1024);
+    Object.assign(key.shadow.camera, { left: -90, right: 90, top: 90, bottom: -90 });
+    scene.add(key);
+    const rim = new THREE.DirectionalLight(0xF5B84C, 0.7);
+    rim.position.set(-140, 5, -120);
+    scene.add(rim);
+
+    /* CAD is z-up in mm; turn it y-up and centre it on the origin */
+    const rig = new THREE.Group();
+    rig.rotation.x = -Math.PI / 2;
+    rig.position.set(-41.4, -12.3, 15);
+    scene.add(rig);
+
+    const shell = new THREE.MeshPhysicalMaterial({ color: 0x2A2D31, roughness: 0.62, metalness: 0.05, clearcoat: 0.15, clearcoatRoughness: 0.7, vertexColors: true });
+    const orange = new THREE.MeshPhysicalMaterial({ color: 0xE5891B, roughness: 0.45, clearcoat: 0.4 });
+    const black = new THREE.MeshStandardMaterial({ color: 0x0E0F11, roughness: 0.7 });
+    const steel = new THREE.MeshStandardMaterial({ color: 0xB9BEC4, roughness: 0.3, metalness: 1 });
+
+    const loader = new STLLoader();
+    const load = (name) => loader.loadAsync('models/wirelink_' + name + '.stl');
+    const [base, lid, face] = await Promise.all([load('base'), load('lid'), load('face')]);
+
+    /* the lettering is engraved 0.5-0.6 mm into the roof; colour those
+       floors pale so it reads like laser etching */
+    function etch(geo) {
+      const pos = geo.attributes.position, nrm = geo.attributes.normal;
+      const col = new Float32Array(pos.count * 3);
+      for (let i = 0; i < pos.count; i += 3) {
+        let etched = true;
+        for (let k = 0; k < 3; k++) {
+          const z = pos.getZ(i + k);
+          if (z < 28.9 || z > 29.15 || nrm.getZ(i + k) < 0.9) etched = false;
+        }
+        const c = etched ? 2.6 : 1;
+        for (let k = 0; k < 3; k++) col.set([c, c, c], (i + k) * 3);
+      }
+      geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
+      return geo;
+    }
+    const plain = (geo) => { geo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(geo.attributes.position.count * 3).fill(1), 3)); return geo; };
+
+    const add = (mesh) => { mesh.castShadow = mesh.receiveShadow = true; rig.add(mesh); return mesh; };
+    add(new THREE.Mesh(plain(base), shell));
+    add(new THREE.Mesh(etch(lid), shell));
+    add(new THREE.Mesh(face, orange));
+
+    /* along-x cylinder helper (CAD axes) */
+    const rodX = (r, len, mat, x, y, z) => {
+      const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, len, 48), mat);
+      m.rotation.z = Math.PI / 2; m.position.set(x, y, z); return add(m);
+    };
+    /* Neutrik XLR: socket body, the three pin holes and the four screws */
+    rodX(11.1, 6, black, 81.9, 15, 13.4);
+    const hole = new THREE.MeshBasicMaterial({ color: 0x000000 });
+    [[0, 4.2], [-3.9, -2.4], [3.9, -2.4]].forEach(([dy, dz]) => rodX(1.1, 0.4, hole, 84.95, 15 + dy, 13.4 + dz));
+    rodX(1.5, 0.3, hole, 84.95, 15, 13.4 + 8.2);
+    [-9.9, 9.9].forEach((dy) => [-9.9, 9.9].forEach((dz) => rodX(1.9, 0.8, black, 84.5, 15 + dy, 13.4 + dz)));
+
+    /* USB-C receptacle in its opening */
+    const usb = new THREE.Mesh(new THREE.BoxGeometry(2.5, 8.9, 3.2), steel);
+    usb.position.set(0.4, 15, 3.23); add(usb);
+    const usbIn = new THREE.Mesh(new THREE.BoxGeometry(0.4, 7.6, 1.9), hole);
+    usbIn.position.set(-0.85, 15, 3.23); add(usbIn);
+
+    /* PWR and STAT LEDs, domes flush with the roof */
+    const led = (x, color) => {
+      const mat = new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: 2.2, roughness: 0.2 });
+      const m = new THREE.Mesh(new THREE.SphereGeometry(1.5, 24, 16, 0, Math.PI * 2, 0, Math.PI / 2), mat);
+      m.rotation.x = Math.PI / 2; m.position.set(x, 26, 29.0); rig.add(m);
+      return mat;
+    };
+    led(2.87, 0xFF3B30);
+    const stat = led(7.87, 0x34E36B);
+
+    const floor = new THREE.Mesh(new THREE.PlaneGeometry(600, 600), new THREE.ShadowMaterial({ opacity: 0.35 }));
+    floor.rotation.x = -Math.PI / 2; floor.position.y = -17.4; floor.receiveShadow = true;
+    scene.add(floor);
+
+    const controls = new OrbitControls(camera, canvas);
+    canvas.style.touchAction = 'pan-y';   /* vertical swipes still scroll the page */
+    controls.enableZoom = false;
+    controls.enablePan = false;
+    controls.enableDamping = true;
+    controls.minPolarAngle = 0.35;
+    controls.maxPolarAngle = 1.45;
+    controls.autoRotate = !reduce;
+    controls.autoRotateSpeed = 1.4;
+
+    function fit() {
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      if (!w || !h) return;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      /* pull back on tall, narrow screens so the box always fits */
+      const dist = camera.aspect < 1.2 ? 300 : 240;
+      camera.position.setLength(dist);
+      camera.updateProjectionMatrix();
+    }
+    new ResizeObserver(fit).observe(canvas);
+    fit();
+
+    let visible = true;
+    new IntersectionObserver((es) => { visible = es[0].isIntersecting; }).observe(box);
+    renderer.setAnimationLoop((t) => {
+      if (!visible) return;
+      stat.emissiveIntensity = reduce ? 2.2 : (Math.sin(t / 260) > 0 ? 2.6 : 0.3);
+      controls.update();
+      renderer.render(scene, camera);
+    });
+  }
 </script>
 </body>
 </html>
