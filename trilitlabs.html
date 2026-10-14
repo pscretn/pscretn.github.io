@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Trilit Labs — wireless DMX and Art-Net controllers, isolated DMX splitters, the WaveLink DMX app, stage fixtures and 3D printed lamps. A pscretn brand.">
+<meta name="description" content="TrilitLabs — WireLink DMX (USB-C to isolated DMX, coming soon), wireless DMX and Art-Net controllers, isolated DMX splitters, the WaveLink DMX app, stage fixtures and 3D printed lamps. A pscretn brand.">
 <meta name="theme-color" content="#08111C">
-<title>Trilit Labs</title>
+<title>TrilitLabs</title>
 <link rel="icon" href="images/trilitlabs_logo.webp" type="image/x-icon">
 
-<meta property="og:title" content="Trilit Labs">
-<meta property="og:description" content="Wireless DMX and Art-Net controllers, isolated splitters, and the WaveLink DMX app.">
+<meta property="og:title" content="TrilitLabs">
+<meta property="og:description" content="WireLink DMX is coming soon: phone in, isolated DMX out. Plus wireless DMX and Art-Net controllers, isolated splitters, and the WaveLink DMX app.">
 <meta property="og:type" content="website">
 
 <style>
@@ -172,6 +172,8 @@
   .drawer.open a:nth-child(3) { animation-delay: .12s; }
   .drawer.open a:nth-child(4) { animation-delay: .18s; }
   .drawer.open a:nth-child(5) { animation-delay: .24s; }
+  .drawer.open a:nth-child(6) { animation-delay: .30s; }
+  .drawer.open a:nth-child(7) { animation-delay: .36s; }
 
   @keyframes dropin { to { opacity: 1; transform: none; } }
 
@@ -490,6 +492,114 @@
   .rv { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.3,1); }
   .rv.seen { opacity: 1; transform: none; }
 
+  /* ---------- WireLink DMX (new) ---------- */
+  .announce {
+    display: inline-flex; align-items: center; gap: .6rem; margin: 0 0 1rem;
+    font-size: .8rem; font-weight: 600; color: var(--white);
+    padding: .3rem .95rem .3rem .3rem; border-radius: 99px;
+    border: 1px solid rgba(245,184,76,.45); background: rgba(245,184,76,.08);
+    transition: border-color .25s, background .25s;
+  }
+  .announce b {
+    font-size: .6rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--ink); background: var(--amber); border-radius: 99px; padding: .22rem .6rem;
+  }
+  .announce:hover { border-color: var(--amber); background: rgba(245,184,76,.16); }
+  .hero-inner > div > .chip { display: flex; width: fit-content; }
+
+  .new {
+    display: inline-block; vertical-align: middle; margin-left: .3rem;
+    font-family: var(--sans); font-size: .55rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--ink); background: var(--amber); border-radius: 99px; padding: .12rem .45rem;
+  }
+  .drawer .new { font-size: .7rem; vertical-align: .45em; }
+
+  a.inl { color: var(--white); border-bottom: 1px solid color-mix(in srgb, var(--c) 60%, transparent); }
+  a.inl:hover { border-bottom-color: var(--c); }
+
+  .wl-hero::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(38rem 26rem at 85% 10%, rgba(245,184,76,.14), transparent 60%),
+      radial-gradient(30rem 22rem at 10% 90%, rgba(45,212,191,.10), transparent 60%);
+  }
+  .wl-hero .wrap { position: relative; }
+
+  .soon {
+    display: inline-flex; align-items: center; gap: .55rem; margin-bottom: 1rem;
+    font-size: .68rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--amber);
+  }
+
+  .wl-visual { width: 100%; display: grid; gap: 1rem; }
+  .wl-shot { position: relative; margin: 0; }
+  .wl-shot .tag {
+    position: absolute; top: .9rem; left: .9rem; z-index: 1;
+    font-size: .62rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--ink); background: var(--amber); border-radius: 99px; padding: .3rem .7rem;
+    box-shadow: 0 6px 20px -6px rgba(245,184,76,.8);
+  }
+  .wl-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .wl-pair .shot { margin: 0; }
+
+  /* the reel is 9:16, so it sits beside the two square close-ups stacked
+     on top of each other, sized so both columns end at the same height */
+  .wl-visual { grid-template-columns: 1fr .89fr; align-items: start; }
+  .wl-visual .wl-pair { grid-template-columns: 1fr; }
+  .wl-reel video { display: block; width: 100%; height: auto; aspect-ratio: 9 / 16; object-fit: cover; background: var(--ink); }
+  .wl-sound {
+    position: absolute; right: .7rem; bottom: .7rem; z-index: 1;
+    font: 700 .62rem/1 var(--sans); letter-spacing: .14em; text-transform: uppercase;
+    color: var(--white); background: rgba(10,12,16,.6); backdrop-filter: blur(6px);
+    border: 1px solid var(--line); border-radius: 99px; padding: .45rem .75rem; cursor: pointer;
+  }
+  .wl-sound:hover, .wl-sound[aria-pressed="true"] { border-color: var(--amber); }
+  .wl-pair figcaption { padding: .6rem .9rem; font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; }
+
+  /* phone -> WireLink -> rig, with the isolation barrier drawn inside the box */
+  .wl-path {
+    display: grid; grid-template-columns: 1fr auto 1.2fr auto 1fr; align-items: center; gap: 0;
+    margin-top: 2.5rem; padding: 1.25rem; border: 1px solid var(--line); border-radius: 16px;
+    background: var(--ink-2);
+  }
+  .wl-node { text-align: center; padding: .9rem .6rem; border-radius: 12px; border: 1px solid var(--line); background: var(--raised); }
+  .wl-node b { display: block; font-size: .92rem; }
+  .wl-node small { display: block; color: var(--muted); font-size: .74rem; }
+  .wl-node.me { position: relative; border-color: rgba(245,184,76,.55); box-shadow: 0 0 34px -14px var(--amber); }
+  .wl-node.me .bar {
+    display: flex; align-items: center; justify-content: center; gap: .45rem; margin-top: .45rem;
+    font-size: .6rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--amber);
+  }
+  .wl-node.me .bar::before, .wl-node.me .bar::after {
+    content: ""; width: 1.6rem; height: 0; border-top: 2px dashed rgba(245,184,76,.7);
+  }
+  .wl-wire { position: relative; width: clamp(2.5rem, 7vw, 5.5rem); height: 2px; background: var(--line); overflow: hidden; margin: 0 .6rem; }
+  .wl-wire i {
+    position: absolute; top: 0; left: 0; height: 100%; width: 45%;
+    background: linear-gradient(90deg, transparent, var(--mint), transparent);
+    animation: wire 1.8s linear infinite;
+  }
+  .wl-wire.dmx i { background: linear-gradient(90deg, transparent, var(--amber), transparent); animation-delay: .9s; }
+  .wl-wire em {
+    position: absolute; left: 50%; bottom: 8px; transform: translateX(-50%);
+    font-style: normal; font-size: .58rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); white-space: nowrap;
+  }
+  .wl-wire { overflow: visible; }
+  .wl-wire i { clip-path: inset(0); }
+  @keyframes wire { from { transform: translateX(-100%); } to { transform: translateX(230%); } }
+
+  @media (max-width: 40rem) {
+    .wl-path { grid-template-columns: 1fr; justify-items: stretch; gap: 0; padding: 1rem; }
+    .wl-wire { width: 2px; height: 2.4rem; margin: 0 auto; }
+    .wl-wire i { width: 100%; height: 45%; background: linear-gradient(180deg, transparent, var(--mint), transparent); animation-name: wire-v; }
+    .wl-wire.dmx i { background: linear-gradient(180deg, transparent, var(--amber), transparent); }
+    .wl-wire em { left: 12px; bottom: auto; top: 50%; transform: translateY(-50%); }
+    @keyframes wire-v { from { transform: translateY(-100%); } to { transform: translateY(230%); } }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wl-wire i { animation: none; }
+  }
+
   @media (min-width: 40rem) {
     .cards { grid-template-columns: repeat(2, 1fr); gap: 1.15rem; }
     .supply { grid-template-columns: repeat(2, 1fr); }
@@ -563,11 +673,12 @@
 
 <nav class="nav" id="nav">
   <a class="brand" href="#top">
-    <img class="mark" src="images/trilitlabs_logo.webp" alt="Trilit Labs logo" width="38" height="38">
-    <span><b>Trilit Labs</b><small>A pscretn brand</small></span>
+    <img class="mark" src="images/trilitlabs_logo.webp" alt="TrilitLabs logo" width="38" height="38">
+    <span><b>TrilitLabs</b><small>A pscretn brand</small></span>
   </a>
 
   <div class="links">
+    <a href="#wirelink">WireLink DMX <span class="new">New</span></a>
     <a href="#build">What We Build</a>
     <a href="#app">WaveLink App</a>
     <a href="#software">Software</a>
@@ -581,10 +692,11 @@
 </nav>
 
 <div class="drawer" id="drawer">
+  <a href="#wirelink">WireLink DMX <span class="new">New</span></a>
   <a href="#build">What We Build</a>
   <a href="#app">WaveLink App</a>
   <a href="#software">Software</a>
-    <a href="#supply">Supply</a>
+  <a href="#supply">Supply</a>
   <a href="#contact">Contact</a>
   <a href="index.html">pscretn</a>
 </div>
@@ -596,12 +708,13 @@
   <div class="wrap">
    <div class="hero-inner">
     <div>
+    <a class="announce" href="#wirelink"><b>New</b> WireLink DMX, coming soon <span aria-hidden="true">&rarr;</span></a>
     <span class="chip"><i class="pulse"></i> Lighting control · Angamaly, Kerala</span>
 
     <h1>DMX control,<br><span class="grad">built here.</span></h1>
 
     <p class="sub">
-      Wireless DMX and Art-Net controllers, isolated splitters, and the WaveLink DMX
+      Wireless and USB-C DMX controllers, Art-Net, isolated splitters, and the WaveLink DMX
       app — designed and made in-house. Plus the fixtures and lamps to run on them.
     </p>
 
@@ -626,6 +739,79 @@
    </div>
   </div>
 </header>
+
+<section id="wirelink" class="wl-hero" style="--c:var(--amber);background:var(--ink-2);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="rv">
+      <p class="eyebrow">New · Coming soon</p>
+      <h2>WireLink DMX</h2>
+      <p class="lede">Phone in. DMX out. A USB-C to DMX512 interface for the WaveLink DMX app, with an isolated output that keeps your phone and tablet safe.</p>
+    </div>
+
+    <div class="app rv">
+      <div>
+        <span class="soon"><i class="pulse"></i> Available soon on this page</span>
+        <h3>Plug in. Run the show.</h3>
+        <p>One USB-C cable from your Android phone or tablet, one XLR cable to the rig. The WaveLink DMX app sees WireLink straight away, with nothing to pair and no Wi-Fi to set up.</p>
+
+        <ul class="feat">
+          <li><svg viewBox="0 0 24 24"><path d="m4 12 6 6L20 6"/></svg> USB-C, straight from your Android phone or tablet</li>
+          <li><svg viewBox="0 0 24 24"><path d="m4 12 6 6L20 6"/></svg> Galvanically isolated DMX output: no ground loops, no surges back to your device</li>
+          <li><svg viewBox="0 0 24 24"><path d="m4 12 6 6L20 6"/></svg> ESD and surge protection on the USB and DMX lines</li>
+          <li><svg viewBox="0 0 24 24"><path d="m4 12 6 6L20 6"/></svg> A full DMX512 universe, all 512 channels</li>
+          <li><svg viewBox="0 0 24 24"><path d="m4 12 6 6L20 6"/></svg> Neutrik 3-pin XLR output</li>
+          <li><svg viewBox="0 0 24 24"><path d="m4 12 6 6L20 6"/></svg> Powered by your phone: no adapter, no battery</li>
+          <li><svg viewBox="0 0 24 24"><path d="m4 12 6 6L20 6"/></svg> Works with the WaveLink DMX app on Google Play</li>
+        </ul>
+
+        <div class="cta">
+          <a class="btn btn-hot" href="mailto:trilitlabs@gmail.com?subject=WireLink%20DMX%20%E2%80%94%20notify%20me">Notify me at launch</a>
+          <a class="btn" href="#app">Get the WaveLink app</a>
+        </div>
+      </div>
+
+      <div class="wl-visual">
+        <figure class="shot wl-shot wl-reel">
+          <span class="tag">Coming soon</span>
+          <video id="wl-video" muted loop playsinline preload="none" width="720" height="1280"
+                 poster="videos/wirelink/wirelink_dmx_coming_soon.webp"
+                 aria-label="WireLink DMX teaser: the enclosure opens to show the board, then USB-C in, galvanic isolation, the XLR output and built-in protection">
+            <source src="videos/wirelink/wirelink_dmx_coming_soon.webm" type="video/webm">
+            <source src="videos/wirelink/wirelink_dmx_coming_soon.mp4" type="video/mp4">
+          </video>
+          <button class="wl-sound" id="wl-sound" type="button" aria-pressed="false">Sound on</button>
+        </figure>
+        <div class="wl-pair">
+          <figure class="shot">
+            <img src="images/wirelink_dmx_usb.webp" alt="The USB-C input end of WireLink DMX" width="640" height="640" loading="lazy" decoding="async">
+            <figcaption>USB-C in</figcaption>
+          </figure>
+          <figure class="shot">
+            <img src="images/wirelink_dmx_xlr.webp" alt="The DMX output end of WireLink DMX: a 3-pin XLR socket on an orange faceplate" width="640" height="640" loading="lazy" decoding="async">
+            <figcaption>DMX out</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+
+    <div class="wl-path rv" role="img" aria-label="Phone or tablet connects over USB-C to WireLink DMX, which has an isolation barrier inside, then DMX512 to the lighting rig">
+      <div class="wl-node"><b>Phone or tablet</b><small>WaveLink DMX app</small></div>
+      <span class="wl-wire"><i></i><em>USB-C</em></span>
+      <div class="wl-node me"><b>WireLink DMX</b><span class="bar">Isolated</span></div>
+      <span class="wl-wire dmx"><i></i><em>DMX512</em></span>
+      <div class="wl-node"><b>Your rig</b><small>Moving heads, PARs, lasers</small></div>
+    </div>
+
+    <div class="stats rv">
+      <div style="--c:var(--mint)"><b>USB-C</b><span>Phone in</span></div>
+      <div style="--c:var(--amber)"><b>DMX512</b><span>512 channels out</span></div>
+      <div style="--c:var(--blue)"><b>Isolated</b><span>DMX output</span></div>
+      <div style="--c:var(--amber)"><b>XLR-3</b><span>Neutrik socket</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="signal" aria-hidden="true"><i></i><i></i><i></i></div>
 
 <section id="build">
   <div class="wrap">
@@ -684,7 +870,7 @@
     <div class="app rv">
       <div>
         <h3>Run the rig from your phone.</h3>
-        <p>Pair with our wireless controller and take command of the whole rig — no console, no laptop, no cable run across the venue.</p>
+        <p>Pair with our wireless controller, or plug in <a class="inl" href="#wirelink">WireLink DMX</a> over USB-C, and take command of the whole rig — no console, no laptop.</p>
 
         <ul class="feat">
           <li><svg viewBox="0 0 24 24"><path d="m4 12 6 6L20 6"/></svg> Control moving heads, PARs and lasers</li>
@@ -897,7 +1083,7 @@
     </div>
 
     <div class="rows rv">
-      <a class="row-i" href="mailto:trilitlabs@gmail.com?subject=Trilit%20Labs%20enquiry">
+      <a class="row-i" href="mailto:trilitlabs@gmail.com?subject=TrilitLabs%20enquiry">
         <svg viewBox="0 0 24 24" fill="none" stroke="#2DD4BF" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
         <span><b>trilitlabs@gmail.com</b><small>Email us</small></span>
       </a>
@@ -913,8 +1099,8 @@
 <footer>
   <div class="wrap">
     <p class="foot-t">
-      Trilit Labs — a <a href="index.html">pscretn</a> brand · Angamaly, Kerala<br>
-      © 2026 Trilit Labs
+      TrilitLabs — a <a href="index.html">pscretn</a> brand · Angamaly, Kerala<br>
+      © 2026 TrilitLabs
     </p>
   </div>
 </footer>
@@ -954,6 +1140,30 @@
     el.style.transitionDelay = (i % 3) * 80 + 'ms';
     obs.observe(el);
   });
+
+  /* the WireLink reel plays muted while any of it is on screen; with reduced
+     motion it waits for the visitor to press play */
+  var reel = document.getElementById('wl-video');
+  var sound = document.getElementById('wl-sound');
+  if (reel) {
+    if (reduce) {
+      reel.controls = true;
+      sound.hidden = true;
+    } else {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          if (e.isIntersecting) reel.play().catch(function () {});
+          else reel.pause();
+        });
+      }, { threshold: 0 }).observe(reel);
+    }
+    sound.addEventListener('click', function () {
+      reel.muted = !reel.muted;
+      if (!reel.muted) { reel.currentTime = 0; reel.play().catch(function () {}); }
+      sound.setAttribute('aria-pressed', reel.muted ? 'false' : 'true');
+      sound.textContent = reel.muted ? 'Sound on' : 'Sound off';
+    });
+  }
 
   if (reduce) return;
 
