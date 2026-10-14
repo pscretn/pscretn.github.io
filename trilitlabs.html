@@ -552,6 +552,10 @@
     color: var(--white); background: rgba(10,12,16,.6); backdrop-filter: blur(6px);
     border: 1px solid var(--line); border-radius: 99px; padding: .45rem .75rem; cursor: pointer;
   }
+  .wl-price { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem .8rem; margin: 0 0 1.4rem; }
+  .wl-price span { font-size: .68rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+  .wl-price b { font-family: var(--mono); font-size: clamp(1.8rem, 6vw, 2.4rem); font-weight: 700; color: var(--amber); letter-spacing: -.02em; }
+  .wl-price small { font-size: .78rem; color: var(--muted); }
   .wl-sound:hover, .wl-sound[aria-pressed="true"] { border-color: var(--amber); }
   .wl-pair figcaption { padding: .6rem .9rem; font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; }
 
@@ -763,6 +767,8 @@
           <li><svg viewBox="0 0 24 24"><path d="m4 12 6 6L20 6"/></svg> Powered by your phone: no adapter, no battery</li>
           <li><svg viewBox="0 0 24 24"><path d="m4 12 6 6L20 6"/></svg> Works with the WaveLink DMX app on Google Play</li>
         </ul>
+
+        <p class="wl-price"><span>Launch price</span> <b>&#8377;X,XXX</b> <small>Revealed at launch</small></p>
 
         <div class="cta">
           <a class="btn btn-hot" href="mailto:trilitlabs@gmail.com?subject=WireLink%20DMX%20%E2%80%94%20notify%20me">Notify me at launch</a>
