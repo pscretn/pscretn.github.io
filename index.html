@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="pscretn — CCTV, custom PC builds, home automation, 3D printing and laser engraving. Angamaly, Kerala.">
-<meta name="theme-color" content="#08090D">
+<meta name="theme-color" content="#000000">
 <title>pscretn</title>
 <link rel="icon" href="images/pscretn_logo.webp" type="image/x-icon">
 
@@ -12,988 +12,855 @@
 <meta property="og:description" content="CCTV, custom PC builds, home automation, 3D printing and laser engraving. Angamaly, Kerala.">
 <meta property="og:type" content="website">
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-  @font-face {
-    font-family: HighSchoolUsaSans;
-    src: url("fonts/HighSchoolUsaSans-52vx.ttf");
-    font-weight: bold;
-    font-display: swap;
-  }
-
   :root {
-    --ink: #08090D;
-    --ink-2: #0E1017;
-    --raised: #14171F;
-    --line: #232733;
-    --white: #F2F4F8;
-    --muted: #8C93A3;
-
-    --orange: #FF7A21;
-    --amber: #FFB347;
-    --cyan: #22D3EE;
-    --violet: #A855F7;
-    --pink: #EC4899;
-    --lime: #84CC16;
-    --sky: #38BDF8;
-
-    /* every card sets its own --c; this is the fallback */
-    --c: var(--orange);
-
-    --display: HighSchoolUsaSans, "Arial Black", sans-serif;
-    --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-    --mono: ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace;
-
-    --wide: 74rem;
-    --r: 16px;
+    --bg: #000;
+    --card: #111113;
+    --card-2: #19191C;
+    --line: rgba(255,255,255,.1);
+    --white: #F5F5F7;
+    --grey: #8E8E95;
+    /* the three colours of the pscretn mark */
+    --red: #F03035;
+    --green: #00D080;
+    --blue: #1A82E2;
+    --hot: var(--red);
+    /* three solid segments, like the mark's three corners; never blended */
+    --rgb: linear-gradient(90deg, #F03035 0 33.34%, #00D080 33.34% 66.67%, #1A82E2 66.67% 100%);
+    --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --gut: clamp(1.1rem, 4vw, 2.5rem);
+    --r: clamp(18px, 2.2vw, 28px);
+    --ease: cubic-bezier(.2,.7,.2,1);
   }
-
   * { box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-
-  body {
-    margin: 0;
-    background: var(--ink);
-    color: var(--white);
-    font-family: var(--sans);
-    font-size: 1rem; line-height: 1.65;
-    overflow-x: hidden;
-    -webkit-tap-highlight-color: transparent;
-  }
-
+  html { -webkit-text-size-adjust: 100%; }
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  body { margin: 0; background: var(--bg); color: var(--white); font: 400 1.0625rem/1.5 var(--sans); letter-spacing: -.011em; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  img, video, iframe { max-width: 100%; display: block; }
   a { color: inherit; text-decoration: none; }
-  img { max-width: 100%; display: block; }
+  ::selection { background: var(--green); color: #000; }
+  .wrap { width: min(1240px, 100%); margin: 0 auto; padding: 0 max(var(--gut), env(safe-area-inset-right)) 0 max(var(--gut), env(safe-area-inset-left)); }
+  .eyebrow { display: inline-flex; align-items: center; gap: .6rem; margin: 0 0 1rem; font-size: .8rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--hot); }
+  .eyebrow::before { content: ""; width: 1.6rem; height: 2px; background: var(--rgb); }
+  .h1 { margin: 0; font-weight: 800; letter-spacing: -.055em; line-height: .92; font-size: clamp(2.8rem, 8vw, 7rem); }
+  .grad { color: var(--green); }
+  .lead { margin: 1.2rem 0 0; font-size: clamp(1.05rem, 1.8vw, 1.35rem); line-height: 1.45; color: #B8B8BF; font-weight: 500; max-width: 38rem; }
 
-  .wrap { width: 100%; max-width: var(--wide); margin: 0 auto; padding: 0 1.25rem; }
+  /* split text: each word holds its letters; lines are masked for the rise-in */
+  .sw { display: inline-block; white-space: nowrap; }
+  .mask { display: inline-block; overflow: hidden; vertical-align: top; padding: .12em 0 .1em; margin: -.12em 0 -.1em; }
+  .split.grad.done { background: none; -webkit-background-clip: border-box; background-clip: border-box; }
+  .ch { display: inline-block; will-change: transform; }
 
-  section { padding: 4.5rem 0; position: relative; }
+  /* ---------- loader ---------- */
+  .loader { position: fixed; inset: 0; z-index: 100; background: #000; display: grid; place-items: center; animation: loader-out 0s 6s forwards; }
+  .loader video { width: min(46rem, 92vw); aspect-ratio: 16 / 9; object-fit: cover; }
+  .loader .fallback { display: none; width: 72px; height: 72px; margin: 0 auto 1rem; }
+  .loader.novid video { display: none; }
+  .loader.novid .fallback { display: block; }
+  @keyframes loader-out { to { visibility: hidden; opacity: 0; } }
+  .loader-in { width: min(46rem, 92vw); text-align: center; }
+  .loader-top { display: flex; justify-content: space-between; align-items: flex-end; }
+  .loader img { width: 44px; height: 44px; }
+  .count { font-size: clamp(4rem, 14vw, 7rem); font-weight: 800; letter-spacing: -.06em; line-height: .85; font-variant-numeric: tabular-nums; }
+  .bar { width: min(14rem, 50vw); margin: .4rem auto 0; height: 2px; background: #222; overflow: hidden; }
+  .bar i { display: block; height: 100%; width: 100%; background: var(--rgb); transform: scaleX(0); transform-origin: left; }
+  .loader small { display: block; margin-top: .8rem; font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; color: var(--grey); }
 
-  .eyebrow {
-    display: inline-flex; align-items: center; gap: .55rem;
-    font-size: .6875rem; font-weight: 700;
-    letter-spacing: .22em; text-transform: uppercase;
-    color: var(--c); margin: 0 0 1rem;
-  }
-
-  .eyebrow::before {
-    content: ""; width: 24px; height: 2px; border-radius: 2px;
-    background: linear-gradient(90deg, var(--c), transparent);
-  }
-
-  h2 {
-    font-family: var(--display);
-    font-size: clamp(1.9rem, 6vw, 3.1rem);
-    line-height: 1.05; margin: 0 0 1rem;
-    font-weight: bold; letter-spacing: -0.01em;
-  }
-
-  .lede { color: var(--muted); font-size: 1.03rem; max-width: 52ch; margin: 0; }
-
-  .grad {
-    background: linear-gradient(100deg, var(--amber), var(--orange) 22%, var(--pink) 45%, var(--violet) 66%, var(--cyan));
-    background-size: 260% auto;
-    -webkit-background-clip: text; background-clip: text;
-    -webkit-text-fill-color: transparent; color: var(--orange);
-    animation: shift 8s ease-in-out infinite;
-  }
-
-  @keyframes shift {
-    0%, 100% { background-position: 0% center; }
-    50% { background-position: 100% center; }
-  }
-
-  /* ---------- buttons ---------- */
-  .btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
-    font-family: var(--sans); font-size: .875rem; font-weight: 600;
-    padding: .8rem 1.4rem; border-radius: 99px;
-    border: 1px solid var(--line); color: var(--white);
-    background: transparent; cursor: pointer;
-    transition: border-color .25s, background .25s, transform .2s;
-    white-space: nowrap;
-  }
-
-  .btn:hover { border-color: var(--orange); background: rgba(255,122,33,.1); }
-  .btn:active { transform: translateY(1px); }
-
-  .btn-hot {
-    border: 0; color: #150A02; font-weight: 700;
-    background: linear-gradient(100deg, var(--amber), var(--orange));
-    box-shadow: 0 8px 30px -8px rgba(255,122,33,.65);
-  }
-
-  .btn-hot:hover { background: linear-gradient(100deg, var(--orange), var(--amber)); }
+  /* ---------- cursor ---------- */
+  .cur, .cur-ring { position: fixed; top: 0; left: 0; z-index: 90; pointer-events: none; border-radius: 50%; display: none; }
+  .cur { width: 6px; height: 6px; margin: -3px 0 0 -3px; background: var(--hot); }
+  .cur-ring { width: 38px; height: 38px; margin: -19px 0 0 -19px; border: 1px solid rgba(255,255,255,.5); display: none; place-items: center; transition: width .35s var(--ease), height .35s var(--ease), margin .35s var(--ease), background .35s, border-color .35s; }
+  .cur-ring span { font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #000; opacity: 0; transition: opacity .2s; }
+  .cur-ring.big { width: 88px; height: 88px; margin: -44px 0 0 -44px; background: var(--green); border-color: var(--green); }
+  .cur-ring.big span { opacity: 1; }
+  @media (hover: hover) and (pointer: fine) { .cur { display: block; } .cur-ring { display: grid; } }
+  .cur, .cur-ring { opacity: 0; }
+  .cur.live, .cur-ring.live { opacity: 1; }
 
   /* ---------- nav ---------- */
-  .nav {
-    position: fixed; inset: 0 0 auto 0; z-index: 60;
-    display: flex; align-items: center; gap: 1rem;
-    padding: .8rem 1.25rem;
-    background: rgba(8,9,13,.7);
-    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
-    border-bottom: 1px solid transparent;
-    transition: border-color .3s, background .3s;
-  }
-
-  .nav.stuck { border-bottom-color: var(--line); background: rgba(8,9,13,.9); }
-
-  .brand { display: inline-flex; align-items: center; gap: .55rem; margin-right: auto; }
-  .brand img { width: 30px; height: 30px; object-fit: contain; }
-  .brand b { font-family: var(--display); font-size: 1.15rem; letter-spacing: .02em; }
-  .brand span { display: block; font-size: .5rem; letter-spacing: .3em; color: var(--muted); text-transform: uppercase; }
-
-  .links { display: none; align-items: center; gap: 1.6rem; }
-
-  .links a {
-    position: relative; font-size: .875rem; font-weight: 500; color: var(--muted);
-    transition: color .25s;
-  }
-
-  .links a:hover { color: var(--white); }
-
-  .links a::after {
-    content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px;
-    background: linear-gradient(90deg, var(--orange), var(--cyan));
-    transform: scaleX(0); transform-origin: left; transition: transform .3s;
-  }
-
-  .links a:hover::after { transform: scaleX(1); }
-
-  .links a.tag {
-    border: 1px solid rgba(255,122,33,.45); border-radius: 99px;
-    padding: .35rem .85rem; color: var(--orange);
-  }
-
-  .links a.tag::after { display: none; }
-  .links a.tag:hover { background: rgba(255,122,33,.12); }
-
-  .burger {
-    display: inline-flex; flex-direction: column; justify-content: center; gap: 5px;
-    width: 42px; height: 38px; padding: 0 9px; cursor: pointer;
-    background: none; border: 1px solid var(--line); border-radius: 10px;
-  }
-
-  .burger i { display: block; height: 2px; background: var(--white); border-radius: 2px; transition: transform .3s, opacity .25s; }
-  .burger.on i:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .burger.on i:nth-child(2) { opacity: 0; }
-  .burger.on i:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-  .drawer {
-    position: fixed; inset: 0; z-index: 55;
-    background: rgba(8,9,13,.97);
-    -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
-    display: flex; flex-direction: column; justify-content: center; gap: .5rem;
-    padding: 2rem;
-    opacity: 0; visibility: hidden; transition: opacity .35s, visibility .35s;
-  }
-
-  .drawer.open { opacity: 1; visibility: visible; }
-
-  .drawer a {
-    font-family: var(--display); font-size: 2rem; padding: .5rem 0;
-    border-bottom: 1px solid var(--line);
-    opacity: 0; transform: translateY(14px);
-  }
-
-  .drawer.open a { animation: dropin .5s cubic-bezier(.2,.7,.3,1) forwards; }
-  .drawer.open a:nth-child(2) { animation-delay: .06s; }
-  .drawer.open a:nth-child(3) { animation-delay: .12s; }
-  .drawer.open a:nth-child(4) { animation-delay: .18s; }
-  .drawer.open a:nth-child(5) { animation-delay: .24s; }
-
-  @keyframes dropin { to { opacity: 1; transform: none; } }
+  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding-top: env(safe-area-inset-top); transition: transform .5s var(--ease); }
+  .nav.hide { transform: translateY(-110%); }
+  .nav::before { content: ""; position: absolute; inset: 0; z-index: -1; background: rgba(0,0,0,.6); backdrop-filter: blur(16px) saturate(160%); -webkit-backdrop-filter: blur(16px) saturate(160%); border-bottom: 1px solid var(--line); opacity: 0; transition: opacity .4s; }
+  .nav.solid::before { opacity: 1; }
+  .nav .wrap { height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .nav-pill { display: flex; align-items: center; gap: .25rem; padding: .3rem; border-radius: 99px; background: rgba(20,20,22,.6); border: 1px solid var(--line); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+  .nav-pill a { padding: .45rem .95rem; border-radius: 99px; font-size: .85rem; color: #D0D0D6; transition: background .25s, color .25s; }
+  .nav-pill a:hover { background: rgba(255,255,255,.1); color: #fff; }
+  .brand { display: flex; align-items: center; gap: .55rem; font-weight: 700; font-size: 1.1rem; letter-spacing: -.03em; }
+  .brand img { width: 26px; height: 26px; }
+  .call { display: inline-flex; align-items: center; gap: .55rem; padding: .3rem 1rem .3rem .3rem; border-radius: 99px; background: #fff; color: #000; font-size: .88rem; font-weight: 600; transition: background .3s; }
+  .call:hover { background: var(--green); }
+  .call i { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; background: #000; color: #fff; font-style: normal; }
+  .burger { display: none; width: 2.8rem; height: 2.8rem; border-radius: 50%; border: 1px solid var(--line); background: rgba(20,20,22,.6); backdrop-filter: blur(16px); color: #fff; cursor: pointer; position: relative; z-index: 60; }
+  .burger i { position: absolute; left: 50%; width: 16px; height: 1.5px; background: currentColor; transform: translateX(-50%); transition: transform .4s var(--ease), top .4s var(--ease); }
+  .burger i:nth-child(1) { top: 43%; } .burger i:nth-child(2) { top: 57%; }
+  .burger.on i:nth-child(1) { top: 50%; transform: translateX(-50%) rotate(45deg); }
+  .burger.on i:nth-child(2) { top: 50%; transform: translateX(-50%) rotate(-45deg); }
+  .drawer { position: fixed; inset: 0; z-index: 45; background: #0B0B0D; color: #fff; padding: calc(90px + env(safe-area-inset-top)) var(--gut) 2rem; display: flex; flex-direction: column; clip-path: circle(0% at calc(100% - 2.8rem) 2.4rem); transition: clip-path .8s var(--ease); overflow-y: auto; }
+  .drawer.open { clip-path: circle(150% at calc(100% - 2.8rem) 2.4rem); }
+  .drawer a { font-size: clamp(2.2rem, 10vw, 3.4rem); font-weight: 800; letter-spacing: -.05em; line-height: 1.1; transform: translateY(40px); opacity: 0; transition: transform .6s var(--ease), opacity .6s; }
+  .drawer.open a { transform: none; opacity: 1; }
+  .drawer.open a:nth-child(1) { transition-delay: .15s; } .drawer.open a:nth-child(2) { transition-delay: .2s; } .drawer.open a:nth-child(3) { transition-delay: .25s; } .drawer.open a:nth-child(4) { transition-delay: .3s; } .drawer.open a:nth-child(5) { transition-delay: .35s; } .drawer.open a:nth-child(6) { transition-delay: .4s; }
+  .drawer small { margin-top: auto; font-size: .9rem; font-weight: 500; color: var(--grey); }
+  .drawer::before { content: ""; position: absolute; left: var(--gut); right: var(--gut); top: calc(76px + env(safe-area-inset-top)); height: 3px; background: var(--rgb); }
+  .drawer a:nth-child(3n+1):hover, .drawer a:nth-child(3n+1):active { color: var(--red); }
+  .drawer a:nth-child(3n+2):hover, .drawer a:nth-child(3n+2):active { color: var(--green); }
+  .drawer a:nth-child(3n):hover, .drawer a:nth-child(3n):active { color: var(--blue); }
+  @media (max-width: 56rem) { .nav-pill, .nav .call { display: none; } .burger { display: block; } }
 
   /* ---------- hero ---------- */
-  .hero {
-    position: relative; min-height: 100svh;
-    display: flex; align-items: center;
-    padding: 7rem 0 3rem; overflow: hidden;
+  .hero { position: relative; height: 100vh; height: 100svh; min-height: 36rem; overflow: hidden; }
+  .clips { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 80px 12px 12px; }
+  .clip { position: relative; border-radius: var(--r); overflow: hidden; background: #111; will-change: transform, clip-path; }
+  .clip video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .clip span::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: .45rem; border-radius: 50%; background: var(--c); vertical-align: middle; }
+  .clip:nth-child(1) { --c: var(--red); } .clip:nth-child(2) { --c: var(--green); } .clip:nth-child(3) { --c: var(--blue); }
+  .clip span { position: absolute; left: 1rem; bottom: 1rem; z-index: 2; font-size: .75rem; font-weight: 600; padding: .35rem .7rem; border-radius: 99px; background: rgba(0,0,0,.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  .hero-shade { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(65% 55% at 50% 52%, rgba(0,0,0,.78), rgba(0,0,0,.25) 75%); }
+  .hero-c { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 80px var(--gut) 2rem; }
+  .hero h1 { margin: 0; font-weight: 800; letter-spacing: -.06em; line-height: .88; font-size: clamp(3.6rem, 12.5vw, 11rem); }
+  .hero .lead { margin-left: auto; margin-right: auto; color: #E2E2E8; text-align: center; }
+  .hero-cta { display: flex; flex-wrap: wrap; justify-content: center; gap: .8rem; margin-top: 2rem; }
+  .scroll-cue { position: absolute; z-index: 2; left: 50%; bottom: 1.6rem; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: .5rem; font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+  .scroll-cue i { width: 1px; height: 38px; background: rgba(255,255,255,.25); position: relative; overflow: hidden; }
+  .scroll-cue i::after { content: ""; position: absolute; left: 0; top: -40%; width: 100%; height: 40%; background: #fff; animation: cue 1.8s var(--ease) infinite; }
+  @keyframes cue { to { top: 100%; } }
+  @media (max-width: 40rem) {
+    .clips { grid-template-columns: 1fr; padding-top: 72px; }
+    /* phones: the three clips take turns in one frame */
+    .clip { grid-area: 1 / 1; transition: opacity 1s ease; }
+    .clip:not(.on) { opacity: 0; }
+    .hero-cta { flex-direction: column; align-items: stretch; width: min(20rem, 100%); }
+    .scroll-cue { display: none; }
+    .mq { padding: 2.2rem 0; }
+  }
+  @media (max-height: 640px) and (max-width: 40rem) { .hero .lead { font-size: 1rem; } .hero h1 { font-size: 3.2rem; } }
+
+  .btn { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: .5rem; padding: .95rem 1.5rem; border-radius: 99px; font-size: 1rem; font-weight: 600; overflow: hidden; isolation: isolate; transition: color .4s var(--ease); }
+  .btn::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: var(--green); transform: translateY(101%); transition: transform .45s var(--ease); }
+  .btn:hover::before { transform: none; }
+  .btn-w { background: #fff; color: #000; }
+  .btn-o { border: 1px solid rgba(255,255,255,.35); color: #fff; }
+  .btn-o:hover { color: #000; border-color: var(--green); }
+  .btn-w:hover { color: #000; }
+
+  /* ---------- marquee ---------- */
+  .mq { padding: clamp(3rem, 7vw, 6rem) 0; overflow: hidden; border-block: 1px solid var(--line); }
+  .mq-row { display: flex; width: max-content; will-change: transform; }
+  .mq-row span { flex: none; padding-right: 3rem; font-size: clamp(3.2rem, 10vw, 9rem); font-weight: 800; letter-spacing: -.05em; line-height: 1; white-space: nowrap; }
+  .mq-row.o span { color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,.35); }
+  .mq-row span b { -webkit-text-stroke: 0; color: var(--red); }
+  .mq-row span b:nth-of-type(3n+2) { color: var(--green); }
+  .mq-row span b:nth-of-type(3n) { color: var(--blue); }
+
+  /* ---------- statement ---------- */
+  .say { padding: clamp(6rem, 14vw, 12rem) 0; }
+  .say p { margin: 0; max-width: 64rem; font-weight: 700; letter-spacing: -.04em; line-height: 1.08; font-size: clamp(2rem, 5.2vw, 4.4rem); }
+
+
+  /* ---------- services: horizontal scroll ---------- */
+  .svc-head { padding-bottom: clamp(2rem, 4vw, 3rem); }
+  .svc-head .row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 1.5rem; }
+  .prog { width: min(16rem, 40vw); height: 2px; background: #222; overflow: hidden; }
+  .prog i { display: block; height: 100%; background: var(--rgb); transform: scaleX(0); transform-origin: left; }
+  .hs { overflow: hidden; }
+  .hs-track { display: flex; gap: clamp(1rem, 2vw, 1.5rem); padding: 0 max(var(--gut), calc((100vw - 1240px) / 2 + var(--gut))); width: max-content; }
+  .panel { position: relative; flex: none; width: min(78vw, 64rem); height: min(74vh, 40rem); border-radius: var(--r); overflow: hidden; background: var(--card); display: grid; grid-template-columns: 1fr 1.05fr; border: 1px solid var(--line); }
+  .panel-t { position: relative; z-index: 2; padding: clamp(1.6rem, 3vw, 2.8rem); display: flex; flex-direction: column; }
+  .panel .no { font-size: clamp(4rem, 9vw, 8rem); font-weight: 800; letter-spacing: -.06em; line-height: .8; color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,.22); }
+  .panel .k { margin-top: auto; font-size: .8rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--c, var(--red)); }
+  .panel h3 { margin: .5rem 0 0; font-size: clamp(1.8rem, 3.4vw, 3rem); font-weight: 800; letter-spacing: -.045em; line-height: 1; }
+  .panel p { margin: .9rem 0 0; color: #B0B0B8; max-width: 26rem; }
+  .panel .badge { display: inline-block; margin-left: .5rem; font-size: .66rem; letter-spacing: .08em; padding: .25rem .55rem; border-radius: 99px; background: rgba(26,130,226,.18); color: var(--blue); vertical-align: middle; }
+  .panel-m { position: relative; overflow: hidden; margin: 12px 12px 12px 0; border-radius: calc(var(--r) - 8px); background: #0A0A0B; }
+  .panel-m img, .panel-m video { position: absolute; top: -8%; left: -8%; width: 116%; height: 116%; object-fit: cover; will-change: transform; }
+  .panel-m.white { background: #fff; }
+  .panel-m.white img { object-fit: contain; top: 0; left: 0; width: 100%; height: 100%; padding: 8%; }
+  @media (max-width: 56rem) {
+    .hs-track { flex-direction: column; width: auto; padding: 0 var(--gut); }
+    .panel { width: 100%; height: auto; grid-template-columns: 1fr; }
+    .panel-t { min-height: 17rem; }
+    .panel-m { margin: 0 12px 12px; aspect-ratio: 4 / 3; }
+    .prog { display: none; }
   }
 
-  #grid { position: absolute; inset: 0; z-index: 0; opacity: .55; }
-
-  .hero-glow {
-    position: absolute; z-index: 0; pointer-events: none; inset: 0;
-    background:
-      radial-gradient(42rem 30rem at 12% -5%, rgba(255,122,33,.24), transparent 60%),
-      radial-gradient(38rem 28rem at 82% 12%, rgba(168,85,247,.20), transparent 62%),
-      radial-gradient(40rem 30rem at 55% 95%, rgba(34,211,238,.17), transparent 62%),
-      radial-gradient(30rem 24rem at 95% 70%, rgba(236,72,153,.14), transparent 62%);
-  }
-
-  .hero .wrap { position: relative; z-index: 2; }
-
-  .hero-grid { display: grid; gap: 2.5rem; align-items: center; }
-
-  .chip {
-    display: inline-flex; align-items: center; gap: .5rem;
-    font-size: .6875rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
-    color: var(--muted); border: 1px solid var(--line);
-    border-radius: 99px; padding: .4rem .9rem; margin-bottom: 1.4rem;
-  }
-
-  .pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 10px var(--cyan); animation: blink 2s ease-in-out infinite; }
-
-  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
-
-  h1 {
-    font-family: var(--display);
-    font-size: clamp(2.6rem, 11vw, 5.4rem);
-    line-height: .95; margin: 0 0 1.15rem; font-weight: bold;
-    letter-spacing: -0.02em;
-  }
-
-  .hero p.sub { color: var(--muted); font-size: 1.06rem; margin: 0 0 2rem; max-width: 44ch; }
-
-  .cta { display: flex; flex-wrap: wrap; gap: .7rem; }
-
-  .hero-video { position: relative; }
-
-  .hero-video video {
-    width: 100%; border-radius: 22px;
-    border: 1px solid var(--line);
-    box-shadow: 0 40px 90px -40px rgba(255,122,33,.6);
-  }
-
-  .stats {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
-    margin-top: 3rem; padding-top: 1.75rem; border-top: 1px solid var(--line);
-  }
-
-  .stat b { display: block; font-family: var(--mono); font-size: 1.7rem; font-weight: 700; letter-spacing: -.02em; color: var(--c); }
-  .stat span { font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
-
-  /* ---------- ticker ---------- */
-  .ticker { border-block: 1px solid var(--line); background: var(--ink-2); overflow: hidden; padding: .9rem 0; }
-  .ticker-track { display: flex; gap: 2.5rem; width: max-content; animation: roll 30s linear infinite; }
-
-  .ticker-track span {
-    font-family: var(--display); font-size: 1.35rem; white-space: nowrap;
-    color: transparent; -webkit-text-stroke: 1px var(--line);
-    display: inline-flex; align-items: center; gap: 2.5rem;
-  }
-
-  .ticker-track span::after { content: "◆"; font-size: .45em; -webkit-text-stroke: 0; color: var(--orange); }
-  .ticker-track span.on { color: var(--white); -webkit-text-stroke: 0; }
-
-  @keyframes roll { to { transform: translateX(-50%); } }
-
-  /* ---------- cards ---------- */
-  .cards { display: grid; gap: 1rem; margin-top: 2.5rem; }
-
-  .card {
-    position: relative; overflow: hidden;
-    background: var(--raised); border: 1px solid var(--line);
-    border-radius: var(--r);
-    transition: transform .4s cubic-bezier(.2,.7,.3,1), border-color .35s;
-  }
-
-  .card:hover { transform: translateY(-6px); border-color: var(--c); }
-
-  /* a colour bar that wipes across the top edge on hover */
-  .card::after {
-    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; z-index: 3;
-    background: linear-gradient(90deg, var(--c), transparent);
-    transform: scaleX(0); transform-origin: left;
-    transition: transform .45s cubic-bezier(.2,.7,.3,1);
-  }
-
-  .card:hover::after { transform: scaleX(1); }
-
-  .card:hover .card-body h3 { color: var(--c); }
-  .card-body h3 { transition: color .3s; }
-
-  .shot { position: relative; aspect-ratio: 16/10; overflow: hidden; background: var(--ink-2); }
-
-  .shot img, .shot video {
-    width: 100%; height: 100%; object-fit: cover;
-    transition: transform .7s cubic-bezier(.2,.7,.3,1), opacity .4s;
-  }
-
-  .shot video { position: absolute; inset: 0; opacity: 0; }
-
-  .card:hover .shot img { transform: scale(1.08); }
-  .card.playing .shot video { opacity: 1; }
-
-  .shot::after {
-    content: ""; position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(20,23,31,.95), transparent 55%);
-  }
-
-  .card-body { padding: 1.25rem 1.35rem 1.5rem; position: relative; z-index: 1; }
-  .card-body h3 { font-size: 1.05rem; margin: 0 0 .4rem; font-weight: 700; }
-  .card-body p { margin: 0; color: var(--muted); font-size: .875rem; }
-
-  .soon {
-    position: absolute; top: .8rem; right: .8rem; z-index: 2;
-    font-size: .6rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-    background: rgba(8,9,13,.8); border: 1px solid var(--line);
-    color: var(--amber); padding: .3rem .6rem; border-radius: 99px;
-  }
+  /* ---------- numbers ---------- */
+  .nums { padding: clamp(6rem, 12vw, 10rem) 0; }
+  .nums-g { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: clamp(2.5rem, 5vw, 4rem); }
+  .num { padding-top: 1.3rem; border-top: 1px solid var(--line); }
+  .num b { display: block; font-size: clamp(3.2rem, 8vw, 6.5rem); font-weight: 800; letter-spacing: -.06em; line-height: .9; font-variant-numeric: tabular-nums; }
+  .num span { display: block; margin-top: .6rem; color: var(--grey); }
+  .num:nth-child(1) { border-top: 2px solid var(--red); }
+  .num:nth-child(2) { border-top: 2px solid var(--green); }
+  .num:nth-child(3) { border-top: 2px solid var(--blue); }
+  .num:nth-child(4) { border-top: 2px solid var(--red); }
+  @media (max-width: 44rem) { .nums-g { grid-template-columns: 1fr 1fr; row-gap: 2.2rem; } }
 
   /* ---------- store ---------- */
-  .store { display: grid; gap: 1rem; margin-top: 2.5rem; }
+  .store { padding: clamp(5rem, 10vw, 8rem) 0; background: #F2F0EC; color: #111; border-radius: clamp(24px, 4vw, 48px) clamp(24px, 4vw, 48px) 0 0; }
+  .store .lead { color: #5B5B63; }
+  .store .eyebrow { color: #D61F2C; }
+  .sgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(.75rem, 1.6vw, 1.25rem); margin-top: clamp(2.5rem, 5vw, 4rem); perspective: 1000px; }
+  .prod { position: relative; border-radius: var(--r); background: #fff; overflow: hidden; transform-style: preserve-3d; transition: box-shadow .4s; will-change: transform; }
+  .prod:hover { box-shadow: 0 30px 60px -30px rgba(0,0,0,.35); }
+  .prod .ph { aspect-ratio: 1; overflow: hidden; background: #E9E6E0; }
+  .prod .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
+  .prod:hover .ph img { transform: scale(1.06); }
+  .prod .ph.glow { display: grid; place-items: center; background: radial-gradient(50% 50% at 50% 55%, #FFF1CF, #F7B955 45%, #3A2A12 100%); }
+  .prod .ph.glow span { font-size: .85rem; font-weight: 600; color: rgba(40,25,5,.7); animation: breathe 3s ease-in-out infinite; }
+  @keyframes breathe { 50% { opacity: .55; } }
+  .prod-b { padding: 1.1rem 1.25rem 1.3rem; }
+  .prod h3 { margin: 0; font-size: 1.12rem; font-weight: 700; letter-spacing: -.02em; }
+  .prod .dim { margin: .2rem 0 0; color: #77777F; font-size: .85rem; }
+  .prod .price { position: absolute; top: .8rem; right: .8rem; padding: .35rem .7rem; border-radius: 99px; background: var(--c, #111); color: #fff; font-weight: 700; font-size: .9rem; transform: translateZ(30px); }
+  .sgrid .prod:nth-child(1) { --c: var(--red); }
+  .sgrid .prod:nth-child(2) { --c: #00A866; }
+  .sgrid .prod:nth-child(3) { --c: var(--blue); }
+  .sgrid .prod:nth-child(4) { --c: var(--red); }
+  .store .btn-w { background: #111; color: #fff; margin-top: clamp(2rem, 4vw, 3rem); }
+  .store .btn-w:hover { color: #000; }
+  @media (max-width: 56rem) { .sgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
-  .prod {
-    background: var(--raised); border: 1px solid var(--line);
-    border-radius: var(--r); overflow: hidden;
-    transition: transform .4s cubic-bezier(.2,.7,.3,1), border-color .35s;
-  }
-
-  .prod:hover { transform: translateY(-6px); border-color: var(--c); }
-  .prod:hover .prod-b h3 { color: var(--c); }
-  .prod-b h3 { transition: color .3s; }
-  .prod .sq { aspect-ratio: 1; overflow: hidden; background: var(--ink-2); }
-  .prod img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s cubic-bezier(.2,.7,.3,1); }
-  .prod:hover img { transform: scale(1.07); }
-
-  .prod-b { padding: 1rem 1.1rem 1.2rem; }
-  .prod-b h3 { font-size: .95rem; margin: 0 0 .3rem; font-weight: 700; }
-  .prod-b .dim { font-size: .72rem; color: var(--muted); margin: 0 0 .6rem; font-family: var(--mono); }
-
-  .price {
-    font-family: var(--mono); font-size: 1.15rem; font-weight: 700;
-    background: linear-gradient(100deg, #fff, var(--c) 70%);
-    -webkit-background-clip: text; background-clip: text;
-    -webkit-text-fill-color: transparent; color: var(--c);
-  }
-
-  /* ---------- sub-brand band ---------- */
-  .brands { display: grid; gap: 1.15rem; margin-top: 2.5rem; }
-
-  .bcard {
-    position: relative; overflow: hidden;
-    display: flex; flex-direction: column; gap: 1rem;
-    padding: 1.75rem; border-radius: 18px;
-    background: var(--raised); border: 1px solid var(--line);
-    transition: transform .4s cubic-bezier(.2,.7,.3,1), border-color .35s;
-  }
-
-  .bcard:hover { transform: translateY(-6px); border-color: var(--c); }
-
-  .bcard::before {
-    content: ""; position: absolute; inset: 0; pointer-events: none;
-    background: radial-gradient(22rem 14rem at 88% 0%, color-mix(in srgb, var(--c) 18%, transparent), transparent 62%);
-  }
-
-  .bcard > * { position: relative; z-index: 1; }
-
-  .bcard-top { display: flex; align-items: center; gap: .9rem; }
-  .bcard-top img { width: 52px; height: 52px; object-fit: contain; flex: 0 0 auto; }
-  .bcard h3 { margin: 0; font-family: var(--display); font-size: 1.4rem; }
-  .bcard .kicker { display: block; font-size: .6rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--c); }
-  .bcard p { margin: 0; color: var(--muted); font-size: .92rem; }
-
-  .chips { display: flex; flex-wrap: wrap; gap: .4rem; }
-
-  .chips span {
-    font-size: .68rem; font-weight: 600; letter-spacing: .04em;
-    padding: .3rem .65rem; border-radius: 99px;
-    border: 1px solid var(--line); color: var(--muted);
+  /* ---------- brands: stacked cards ---------- */
+  .brands { padding: clamp(5rem, 10vw, 8rem) 0 clamp(3rem, 6vw, 5rem); background: #F2F0EC; color: #111; }
+  .brands .lead { color: #5B5B63; }
+  .brands .eyebrow { color: #0F9F62; }
+  .stack { margin-top: clamp(2.5rem, 5vw, 4rem); }
+  .bcard { position: sticky; top: 10vh; height: 78vh; min-height: 30rem; margin-bottom: 4vh; border-radius: var(--r); overflow: hidden; color: #fff; display: flex; flex-direction: column; justify-content: flex-end; padding: clamp(1.6rem, 4vw, 3.5rem); isolation: isolate; transform-origin: 50% 0; will-change: transform; box-shadow: 0 -20px 60px -30px rgba(0,0,0,.4); }
+  .bcard .bg { position: absolute; inset: 0; z-index: -1; }
+  .bcard .bg img, .bcard .bg video { width: 100%; height: 100%; object-fit: cover; }
+  .bcard .bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.5) 35%, rgba(0,0,0,.92) 75%); }
+  .bcard .logo { position: absolute; top: clamp(1.6rem, 4vw, 3rem); left: clamp(1.6rem, 4vw, 3.5rem); width: 60px; height: 60px; object-fit: contain; }
+  .bcard .k { font-size: .8rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+  .bcard h3 { margin: .3rem 0 0; font-size: clamp(3rem, 9vw, 7.5rem); font-weight: 800; letter-spacing: -.06em; line-height: .9; }
+  .bcard p { margin: 1rem 0 0; max-width: 36rem; color: #DADADF; }
+  .bcard .go { margin-top: 1.4rem; align-self: flex-start; }
+  .bcard.tl { background: #0B1A22; }
+  .bcard.tl .k { color: #1CC6C6; }
+  .bcard.tl .go::before { background: #1CC6C6; }
+  .bcard.dj { background: #1A0B22; }
+  .bcard.dj .k { color: #C084FC; }
+  .bcard.dj .go::before { background: #C084FC; }
+  /* phones: cards size to their text instead of the screen, so long copy never spills */
+  @media (max-width: 40rem) {
+    .bcard { height: auto; min-height: 30rem; top: 76px; padding-top: 7rem; }
+    .bcard p { font-size: .95rem; }
+    .store .btn-w, .bcard .go { width: 100%; }
   }
 
   /* ---------- about ---------- */
-  .about-grid { display: grid; gap: 2.5rem; }
-
-  .about-card {
-    background: linear-gradient(160deg, rgba(255,122,33,.1), transparent 55%);
-    border: 1px solid var(--line); border-radius: 20px; padding: 1.75rem;
-  }
-
-  .about-card p { color: var(--muted); margin: 0 0 1rem; font-size: .95rem; }
-  .about-card p:last-child { margin: 0; }
+  .about { padding: clamp(6rem, 12vw, 10rem) 0; background: #F2F0EC; color: #111; }
+  .about .big { margin: 0; font-weight: 700; letter-spacing: -.04em; line-height: 1.08; font-size: clamp(1.9rem, 4.6vw, 3.8rem); max-width: 62rem; }
+  .about .big em { font-style: normal; color: #1471C8; }
+  .about-g { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: clamp(3rem, 6vw, 5rem); }
+  .about-g p { margin: 0; padding-top: 1.2rem; border-top: 1px solid rgba(0,0,0,.12); color: #4A4A52; }
+  @media (max-width: 52rem) { .about-g { grid-template-columns: 1fr; } }
 
   /* ---------- contact ---------- */
-  .contact-grid { display: grid; gap: 2rem; }
-
-  .rows { display: grid; gap: .7rem; margin-top: 1.75rem; }
-
-  .row-i {
-    display: flex; align-items: center; gap: .9rem;
-    padding: .9rem 1rem; border: 1px solid var(--line);
-    border-radius: 12px; background: var(--raised);
-    transition: border-color .25s, transform .25s;
-  }
-
-  .row-i:hover { border-color: var(--orange); transform: translateX(3px); }
-  .row-i svg { width: 18px; height: 18px; flex: 0 0 auto; }
-  .row-i b { font-weight: 600; font-size: .9rem; }
-  .row-i small { display: block; color: var(--muted); font-size: .72rem; }
-
-  .map { border-radius: 18px; overflow: hidden; border: 1px solid var(--line); min-height: 300px; }
-  .map iframe { width: 100%; height: 100%; min-height: 300px; border: 0; display: block; filter: saturate(.85) contrast(1.05); }
+  .contact { padding: clamp(6rem, 12vw, 10rem) 0 clamp(3rem, 6vw, 5rem); overflow: hidden; }
+  .talk { display: block; text-align: center; font-weight: 800; letter-spacing: -.07em; line-height: .85; font-size: clamp(4.4rem, 19vw, 17rem); will-change: transform; }
+  .talk .dot .ch { color: var(--green); }
+  .contact .lead { text-align: center; margin: 1.6rem auto 0; }
+  .cgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(.75rem, 1.6vw, 1.25rem); margin-top: clamp(3rem, 6vw, 4.5rem); }
+  .ccard { position: relative; overflow: hidden; border-radius: var(--r); background: var(--card); border: 1px solid var(--line); padding: 1.6rem 1.6rem 1.8rem; isolation: isolate; transition: color .45s var(--ease); }
+  .ccard::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--c, var(--red)); transform: translateY(101%); transition: transform .5s var(--ease); }
+  .ccard:hover { color: #fff; }
+  .ccard:hover::before { transform: none; }
+  .ccard small { display: block; font-size: .8rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; opacity: .7; }
+  .ccard b { display: block; margin-top: .5rem; font-size: clamp(1.2rem, 2vw, 1.5rem); font-weight: 700; letter-spacing: -.02em; }
+  .ccard span { display: block; margin-top: .4rem; opacity: .75; }
+  .map { margin-top: clamp(.75rem, 1.6vw, 1.25rem); border-radius: var(--r); overflow: hidden; height: clamp(18rem, 36vw, 24rem); background: var(--card); border: 1px solid var(--line); }
+  .map iframe { width: 100%; height: 100%; border: 0; filter: grayscale(1) invert(.9) contrast(.85); }
+  @media (max-width: 52rem) { .cgrid { grid-template-columns: 1fr; } }
 
   /* ---------- footer ---------- */
-  footer { border-top: 1px solid var(--line); padding: 3rem 0 2.5rem; text-align: center; background: var(--ink-2); }
-
-  .socials { display: flex; justify-content: center; flex-wrap: wrap; gap: .55rem; margin-bottom: 1.5rem; }
-
-  .socials a {
-    width: 42px; height: 42px; border-radius: 50%;
-    display: inline-flex; align-items: center; justify-content: center;
-    border: 1px solid var(--line); color: var(--muted);
-    transition: color .25s, border-color .25s, transform .25s, background .25s;
-  }
-
-  .socials a:hover { color: var(--white); border-color: var(--orange); background: rgba(255,122,33,.12); transform: translateY(-3px); }
-  .socials svg { width: 17px; height: 17px; fill: currentColor; }
-
-  .foot-t { color: var(--muted); font-size: .8rem; margin: 0; }
-
-  /* ---------- reveal ---------- */
-  .rv { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.3,1); }
-  .rv.seen { opacity: 1; transform: none; }
-
-  /* ---------- breakpoints ---------- */
-  @media (min-width: 40rem) {
-    .cards, .store { grid-template-columns: repeat(2, 1fr); gap: 1.15rem; }
-    .contact-grid { grid-template-columns: 1fr 1fr; }
-  }
-
-  @media (min-width: 60rem) {
-    .wrap { padding: 0 2rem; }
-    section { padding: 6.5rem 0; }
-    .links { display: flex; }
-    .burger { display: none; }
-    .nav { padding: 1rem 2rem; }
-    .hero-grid { grid-template-columns: 1.05fr .95fr; gap: 3.5rem; }
-    .cards { grid-template-columns: repeat(3, 1fr); }
-    .store { grid-template-columns: repeat(4, 1fr); }
-    .about-grid { grid-template-columns: 1fr 1fr; align-items: center; }
-    .brands { grid-template-columns: 1fr 1fr; }
-    .stat b { font-size: 2rem; }
-  }
-
-  /* ---------- phones ---------- */
-  @media (max-width: 30rem) {
-    section { padding: 3.5rem 0; }
-    .wrap { padding: 0 1.1rem; }
-
-    .nav { padding: .7rem 1.1rem; gap: .6rem; }
-    .brand img { width: 26px; height: 26px; }
-    .brand b { font-size: 1rem; }
-    .brand span { font-size: .45rem; letter-spacing: .22em; }
-
-    .hero { padding: 6rem 0 3rem; }
-    .hero-grid { gap: 1.75rem; }
-    h1 { margin-bottom: .9rem; }
-    .hero p.sub { font-size: 1rem; margin-bottom: 1.6rem; }
-    .cta { flex-direction: column; align-items: stretch; }
-    .cta .btn { width: 100%; }
-    .hero-video video { border-radius: 16px; }
-
-    .stats { gap: .6rem; margin-top: 2.25rem; padding-top: 1.35rem; }
-    .stat b { font-size: 1.3rem; }
-    .stat span { font-size: .58rem; letter-spacing: .06em; }
-
-    h2 { font-size: 1.85rem; }
-    .card-body { padding: 1.1rem 1.15rem 1.3rem; }
-    .prod-b { padding: .9rem 1rem 1.1rem; }
-    .about-card { padding: 1.35rem; border-radius: 16px; }
-    .bcard { padding: 1.35rem; border-radius: 14px; }
-    .bcard-top img { width: 44px; height: 44px; }
-    .rows { gap: .6rem; }
-    .row-i { padding: .8rem .9rem; }
-    .map, .map iframe { min-height: 240px; }
-    .socials a { width: 38px; height: 38px; }
-    footer { padding: 2.25rem 0 2rem; }
-  }
-
-  /* the email would push the page sideways on the narrowest phones */
-  @media (max-width: 22.5rem) {
-    .row-i b { font-size: .82rem; word-break: break-word; }
-    .stats { grid-template-columns: 1fr 1fr; }
-    .stats .stat:last-child { grid-column: span 2; }
-  }
+  footer { padding: 2rem 0 max(1.5rem, env(safe-area-inset-bottom)); border-top: 1px solid var(--line); color: var(--grey); font-size: .85rem; overflow: hidden; }
+  .f-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
+  .f-links { display: flex; flex-wrap: wrap; gap: .4rem 1.3rem; }
+  .f-links a:hover { color: #fff; }
+  .giant { margin-top: 2rem; text-align: center; font-weight: 800; letter-spacing: -.07em; line-height: .78; font-size: clamp(5rem, 27vw, 26rem); color: #121214; user-select: none; }
+  .giant .ch { transition: color .3s, transform .5s var(--ease); }
+  .giant .ch:nth-child(3n+1):hover { color: var(--red); }
+  .giant .ch:hover { color: var(--green); transform: translateY(-6%); }
+  .giant .sw .mask:nth-child(3n) .ch:hover { color: var(--blue); }
+  .giant .sw .mask:nth-child(3n+1) .ch:hover { color: var(--red); }
 
   @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    #grid { display: none; }
-    .rv { opacity: 1 !important; transform: none !important; transition: none !important; }
-    .ticker-track, .grad, .pulse, .drawer.open a { animation: none !important; }
-    .drawer a { opacity: 1; transform: none; }
-    .card:hover, .prod:hover { transform: none; }
+    .loader { display: none; }
+    .scroll-cue i::after, .prod .ph.glow span { animation: none; }
+    .bcard { position: relative; top: auto; }
   }
+
+  /* ================= glass =================
+     Three slow glows in the mark's colours sit behind the page, each a solid
+     colour softened by blur (no blended gradients), and the surfaces above
+     them are frosted glass. */
+  .aurora { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .aurora i { position: absolute; width: 44vmax; height: 44vmax; border-radius: 50%; filter: blur(90px); opacity: .32; will-change: transform; }
+  .aurora i:nth-child(1) { background: #F03035; top: -14vmax; left: -12vmax; animation: drift-a 26s ease-in-out infinite alternate; }
+  .aurora i:nth-child(2) { background: #00D080; top: 28vh; right: -16vmax; animation: drift-b 31s ease-in-out infinite alternate; }
+  .aurora i:nth-child(3) { background: #1A82E2; bottom: -18vmax; left: 18vw; animation: drift-c 36s ease-in-out infinite alternate; }
+  @keyframes drift-a { to { transform: translate(34vw, 46vh) scale(1.15); } }
+  @keyframes drift-b { to { transform: translate(-38vw, -20vh) scale(.9); } }
+  @keyframes drift-c { to { transform: translate(22vw, -52vh) scale(1.2); } }
+  main, footer { position: relative; z-index: 1; }
+
+  .panel, .num, .prod, .ccard, .map, .about-g p, .bcard .info, .btn-o, .nav-pill, .burger {
+    background: rgba(255,255,255,.055);
+    border: 1px solid rgba(255,255,255,.13);
+    -webkit-backdrop-filter: blur(22px) saturate(170%);
+    backdrop-filter: blur(22px) saturate(170%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.14), 0 24px 60px -30px rgba(0,0,0,.75);
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .panel, .num, .prod, .ccard, .map, .about-g p, .bcard .info, .btn-o, .nav-pill, .burger { background: rgba(24,24,28,.9); }
+  }
+
+  /* the light sections turn to glass on the glows */
+  .store, .brands, .about { background: transparent; color: var(--white); border-radius: 0; }
+  .store .lead, .brands .lead { color: #B8B8BF; }
+  .store .eyebrow { color: var(--red); }
+  .brands .eyebrow { color: var(--green); }
+  .about .big em { color: #4FA3F0; }
+  .about-g p { padding: 1.4rem 1.4rem 1.5rem; border-radius: var(--r); color: #C9C9D0; }
+  .about-g p:nth-child(1) { border-top: 2px solid var(--red); }
+  .about-g p:nth-child(2) { border-top: 2px solid var(--green); }
+  .about-g p:nth-child(3) { border-top: 2px solid var(--blue); }
+
+  .prod .ph { background: rgba(255,255,255,.04); }
+  .prod .dim { color: var(--grey); }
+  .prod:hover { box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 30px 70px -30px rgba(0,0,0,.9); }
+  .prod .price { background: rgba(10,10,12,.45); border: 1px solid rgba(255,255,255,.18); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+  .prod .price::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: .4rem; border-radius: 50%; background: var(--c); vertical-align: .05em; }
+  .store .btn-w { background: #fff; color: #000; }
+
+  .num { padding: 1.4rem 1.4rem 1.5rem; border-radius: var(--r); }
+  .num:nth-child(1) { border-top: 2px solid var(--red); }
+  .num:nth-child(2) { border-top: 2px solid var(--green); }
+  .num:nth-child(3) { border-top: 2px solid var(--blue); }
+  .num:nth-child(4) { border-top: 2px solid var(--red); }
+
+  .panel-m { border: 1px solid rgba(255,255,255,.08); }
+
+  .bcard .bg::after { background: linear-gradient(rgba(0,0,0,.1), rgba(0,0,0,.45)); }
+  .bcard .info { align-self: flex-start; max-width: 44rem; padding: clamp(1.3rem, 3vw, 2.2rem); border-radius: calc(var(--r) - 6px); background: rgba(12,12,16,.38); }
+  .bcard .go { background: rgba(255,255,255,.08); }
+
+  .ccard:hover { border-color: transparent; }
+
+  .drawer { background: rgba(8,8,10,.55); -webkit-backdrop-filter: blur(30px) saturate(160%); backdrop-filter: blur(30px) saturate(160%); }
+
+  @media (max-width: 40rem) {
+    .aurora i { filter: blur(60px); opacity: .28; }
+    .panel, .num, .prod, .ccard, .map, .about-g p, .bcard .info, .btn-o {
+      -webkit-backdrop-filter: blur(14px) saturate(160%); backdrop-filter: blur(14px) saturate(160%);
+    }
+    .bcard .info { padding: 1.2rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { .aurora i { animation: none; } }
 </style>
 </head>
+
 <body>
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader-in">
+    <video id="intro" muted playsinline preload="auto"><source src="videos/pscretn-animation.webm" type="video/webm"></video>
+    <img class="fallback" src="images/pscretn_logo_white.webp" alt="" width="72" height="72">
+    <div class="bar"><i id="bar"></i></div>
+    <small>pscretn · Angamaly, Kerala</small>
+  </div>
+</div>
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="ring"><span id="ring-t">View</span></div>
 
 <nav class="nav" id="nav">
-  <a class="brand" href="#top">
-    <img src="images/pscretn_logo_white.webp" alt="pscretn logo">
-    <span style="display:block"><b>pscretn</b><span>Angamaly, Kerala</span></span>
-  </a>
-
-  <div class="links">
-    <a href="#services">Services</a>
-    <a href="#store">Store</a>
-    <a href="#brands">Brands</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
-    <a class="tag" href="trilitlabs.html" target="_blank" rel="noopener">TrilitLabs</a>
-    <a class="tag" href="dj_pscretn.html" target="_blank" rel="noopener">DJ</a>
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="images/pscretn_logo_white.webp" alt="" width="26" height="26">pscretn</a>
+    <div class="nav-pill">
+      <a href="#services">Services</a>
+      <a href="#store">Store</a>
+      <a href="#brands">Brands</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a class="call mag" href="tel:+917907873500"><i>&#9742;</i>Call us</a>
+    <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false"><i></i><i></i></button>
   </div>
-
-  <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false">
-    <i></i><i></i><i></i>
-  </button>
 </nav>
-
 <div class="drawer" id="drawer">
   <a href="#services">Services</a>
   <a href="#store">Store</a>
+  <a href="#brands">Brands</a>
   <a href="#about">About</a>
   <a href="#contact">Contact</a>
-  <a href="trilitlabs.html">TrilitLabs</a>
-  <a href="dj_pscretn.html">DJ pscretn</a>
+  <a href="tel:+917907873500">Call us</a>
+  <small>+91 79078 73500 · pscretn@gmail.com</small>
 </div>
 
-<header class="hero" id="top">
-  <canvas id="grid" aria-hidden="true"></canvas>
-  <div class="hero-glow"></div>
-
-  <div class="wrap">
-    <div class="hero-grid">
-      <div>
-        <span class="chip"><i class="pulse"></i> Angamaly, Kerala · Since 2021</span>
-
-        <h1>Build it<br><span class="grad">properly.</span></h1>
-
-        <p class="sub">
-          CCTV, custom PC builds, home automation, 3D printing and laser engraving —
-          designed, installed and supported by the people who made them.
-        </p>
-
-        <div class="cta">
-          <a class="btn btn-hot" href="#contact">Get in touch</a>
-          <a class="btn" href="#services">See what we do</a>
-        </div>
-
-        <div class="stats">
-          <div class="stat" style="--c:var(--amber)"><b data-count="2021">—</b><span>Founded</span></div>
-          <div class="stat" style="--c:var(--violet)"><b data-count="5">—</b><span>Services</span></div>
-          <div class="stat" style="--c:var(--cyan)"><b data-count="4">—</b><span>Products</span></div>
-        </div>
-      </div>
-
-      <div class="hero-video">
-        <video autoplay muted loop playsinline poster="images/pscretn_logo.webp">
-          <source src="videos/pscretn-animation.webm" type="video/webm">
-        </video>
+<main id="top">
+  <!-- hero -->
+  <header class="hero" id="hero">
+    <div class="clips" id="clips" aria-hidden="true">
+      <div class="clip on"><video muted loop playsinline preload="metadata" poster="videos/laser_engraving_poster.webp"><source src="videos/laser_engraving.webm" type="video/webm"></video><span>Laser engraving</span></div>
+      <div class="clip"><video muted loop playsinline preload="metadata" poster="videos/pc_build_poster.webp"><source src="videos/pc_build.webm" type="video/webm"></video><span>PC builds</span></div>
+      <div class="clip"><video muted loop playsinline preload="metadata" poster="videos/3d_printing_poster.webp"><source src="videos/3d_printing.webm" type="video/webm"></video><span>3D printing</span></div>
+    </div>
+    <div class="hero-shade"></div>
+    <div class="hero-c" id="hero-c">
+      <p class="eyebrow" id="hero-k">pscretn · Since 2021</p>
+      <h1 id="hero-h"><span class="split">Build it</span><br><span class="split grad">properly.</span></h1>
+      <p class="lead" id="hero-p">CCTV, custom PC builds, home automation, 3D printing and laser engraving — designed, installed and supported by the people who made them.</p>
+      <div class="hero-cta" id="hero-cta">
+        <a class="btn btn-w mag" href="#contact">Get in touch</a>
+        <a class="btn btn-o mag" href="#services">See what we do</a>
       </div>
     </div>
+    <div class="scroll-cue"><i></i>Scroll</div>
+  </header>
+
+  <!-- marquee -->
+  <div class="mq" aria-hidden="true">
+    <div class="mq-row" data-dir="-1"><span>CCTV <b>✦</b> PC builds <b>✦</b> Smart homes <b>✦</b> 3D printing <b>✦</b> Laser <b>✦</b></span><span>CCTV <b>✦</b> PC builds <b>✦</b> Smart homes <b>✦</b> 3D printing <b>✦</b> Laser <b>✦</b></span></div>
+    <div class="mq-row o" data-dir="1"><span>Build it properly <b>✦</b> Angamaly, Kerala <b>✦</b> Since 2021 <b>✦</b></span><span>Build it properly <b>✦</b> Angamaly, Kerala <b>✦</b> Since 2021 <b>✦</b></span></div>
   </div>
-</header>
 
-<div class="ticker" aria-hidden="true"><div class="ticker-track" id="ticker"></div></div>
+  <!-- statement -->
+  <section class="say">
+    <div class="wrap">
+      <p class="eyebrow">The idea</p>
+      <p id="say">CCTV. Custom PCs. Smart homes. 3D printing. Laser engraving. <span class="grad">Five things, done properly</span> — designed, installed and supported by the people who made them.</p>
+    </div>
+  </section>
 
-<section id="services">
-  <div class="wrap">
-    <div class="rv">
+  <!-- services -->
+  <section id="services">
+    <div class="wrap svc-head">
       <p class="eyebrow">What we do</p>
-      <h2>Services</h2>
-      <p class="lede">Five things, done properly. Hover a card to see it in motion.</p>
-    </div>
-
-    <div class="cards">
-      <article class="card rv" style="--c:var(--cyan)" data-vid="videos/3d_printing.webm">
-        <div class="shot">
-          <img src="images/3d_printing.webp" alt="3D printing" loading="lazy">
-        </div>
-        <div class="card-body">
-          <h3>3D Printing</h3>
-          <p>High-precision PLA/ABS 3D printing for prototyping, miniatures and functional parts.</p>
-        </div>
-      </article>
-
-      <article class="card rv" style="--c:var(--violet)" data-vid="videos/pc_build.webm">
-        <div class="shot">
-          <img src="images/pc_build.webp" alt="Custom gaming PC build" loading="lazy">
-        </div>
-        <div class="card-body">
-          <h3>Custom &amp; Gaming PC Builds</h3>
-          <p>Tailored high-performance builds, optimised for gaming, editing and productivity.</p>
-        </div>
-      </article>
-
-      <article class="card rv" style="--c:var(--lime)">
-        <div class="shot">
-          <img src="images/cctv_installation.webp" alt="CCTV installation" loading="lazy">
-        </div>
-        <div class="card-body">
-          <h3>CCTV Installation &amp; Services</h3>
-          <p>Professional setup with remote access, for home or commercial security.</p>
-        </div>
-      </article>
-
-      <article class="card rv" style="--c:var(--pink)">
-        <div class="shot">
-          <img src="images/home_automation.webp" alt="Home automation" loading="lazy">
-        </div>
-        <div class="card-body">
-          <h3>Home Automation &amp; IoT</h3>
-          <p>Smart lights, appliances and security with app or voice control.</p>
-        </div>
-      </article>
-
-      <article class="card rv" style="--c:var(--orange)" data-vid="videos/laser_engraving.webm">
-        <span class="soon">Coming soon</span>
-        <div class="shot">
-          <img src="images/laser_engraving.webp" alt="Laser engraving" loading="lazy">
-        </div>
-        <div class="card-body">
-          <h3>Laser Engraving</h3>
-          <p>Precision engraving on wood, acrylic or metal for gifts, signage and branding.</p>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section id="store" style="--c:var(--cyan);background:var(--ink-2);border-block:1px solid var(--line)">
-  <div class="wrap">
-    <div class="rv">
-      <p class="eyebrow">Made in-house</p>
-      <h2>3D Print Store</h2>
-      <p class="lede">Printed to order at our workshop in Angamaly.</p>
-    </div>
-
-    <div class="store">
-      <article class="prod rv" style="--c:var(--amber)">
-        <div class="sq"><img src="images/Lithophane_lamps.webp" alt="Lithophane lamp" loading="lazy"></div>
-        <div class="prod-b">
-          <h3>Lithophane Lamp</h3>
-          <p class="dim">7.2 × 7.2 × 10.8 cm</p>
-          <span class="price">₹899</span>
-        </div>
-      </article>
-
-      <article class="prod rv" style="--c:var(--pink)">
-        <div class="sq"><img src="images/3D_printed_keychain.webp" alt="Custom 3D printed keychain" loading="lazy"></div>
-        <div class="prod-b">
-          <h3>Customised Keychains</h3>
-          <p class="dim">up to 9 × 2.2 × 0.4 cm</p>
-          <span class="price">₹99</span>
-        </div>
-      </article>
-
-      <article class="prod rv" style="--c:var(--lime)">
-        <div class="sq"><img src="images/spiral_flower_pot.webp" alt="Spiral plant pot" loading="lazy"></div>
-        <div class="prod-b">
-          <h3>Spiral Plant Pot</h3>
-          <p class="dim">9.6 × 9.6 × 8 cm</p>
-          <span class="price">₹199</span>
-        </div>
-      </article>
-
-      <article class="prod rv" style="--c:var(--sky)">
-        <div class="sq"><img src="images/lithophane_plane.webp" alt="Lithophane plane" loading="lazy"></div>
-        <div class="prod-b">
-          <h3>Lithophane Plane</h3>
-          <p class="dim">10 × 10 × 0.4 cm</p>
-          <span class="price">₹199</span>
-        </div>
-      </article>
-    </div>
-
-    <p style="margin-top:2rem">
-      <a class="btn btn-hot" href="#contact">Order or ask for a custom print</a>
-    </p>
-  </div>
-</section>
-
-<section id="brands" style="--c:var(--cyan)">
-  <div class="wrap">
-    <div class="rv">
-      <p class="eyebrow">Our brands</p>
-      <h2>Two names,<br><span class="grad">one workshop.</span></h2>
-      <p class="lede">Specialist work runs under its own name.</p>
-    </div>
-
-    <div class="brands">
-      <a class="bcard rv" href="trilitlabs.html" style="--c:#2DD4BF">
-        <div class="bcard-top">
-          <img src="images/trilitlabs_logo.webp" alt="TrilitLabs logo">
-          <div>
-            <span class="kicker">Stage lighting</span>
-            <h3>TrilitLabs</h3>
-          </div>
-        </div>
-        <p>WireLink DMX (USB-C to isolated DMX, available for sale soon), wired and wireless DMX controllers, Art-Net, isolated splitters, and the WaveLink DMX app on Google Play — plus stage fixtures and 3D printed lamps.</p>
-        <div class="chips"><span>WireLink DMX · new</span><span>DMX512</span><span>Art-Net</span><span>WaveLink app</span><span>Sharpy &amp; PAR</span></div>
-        <span class="btn" style="align-self:flex-start">Visit TrilitLabs →</span>
-      </a>
-
-      <a class="bcard rv" href="dj_pscretn.html" style="--c:#A855F7">
-        <div class="bcard-top">
-          <img src="images/pscretn_logo_white.webp" alt="">
-          <div>
-            <span class="kicker">Events</span>
-            <h3>DJ pscretn</h3>
-          </div>
-        </div>
-        <p>Weddings, receptions and college nights across Kerala, played on a Pioneer DDJ-FLX4.</p>
-        <div class="chips"><span>Weddings</span><span>College fests</span><span>Private parties</span></div>
-        <span class="btn" style="align-self:flex-start">Visit DJ pscretn →</span>
-      </a>
-    </div>
-  </div>
-</section>
-
-<section id="about" style="--c:var(--violet)">
-  <div class="wrap about-grid">
-    <div class="rv">
-      <p class="eyebrow">About</p>
-      <h2>Technology,<br><span class="grad">defined.</span></h2>
-    </div>
-
-    <div class="about-card rv">
-      <p>
-        pscretn is a forward-thinking technology organization dedicated to empowering
-        innovation and technical excellence.
-      </p>
-      <p>
-        Founded in 2021, pscretn began with a simple yet powerful mission — to grow into
-        a hub for creativity, learning, and hands-on development.
-      </p>
-      <p>
-        We specialize in providing cutting-edge solutions and custom services across a
-        wide range of technological fields.
-      </p>
-    </div>
-  </div>
-</section>
-
-<section id="contact" style="--c:var(--pink);background:var(--ink-2);border-block:1px solid var(--line)">
-  <div class="wrap">
-    <div class="rv">
-      <p class="eyebrow">Contact</p>
-      <h2>Let's talk.</h2>
-      <p class="lede">
-        Questions about a product, need support, or want something custom built —
-        get in touch and we'll come back to you.
-      </p>
-    </div>
-
-    <div class="contact-grid" style="margin-top:2.5rem">
-      <div class="rv">
-        <div class="rows" style="margin-top:0">
-          <a class="row-i" href="https://maps.google.com/?q=East+Nagar,+Kavaraparmbu,+Angamaly,+Kerala+683572" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#FF7A21" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span><b>East Nagar, Kavaraparmbu</b><small>Angamaly, Kerala 683572</small></span>
-          </a>
-
-          <a class="row-i" href="tel:+917907873500">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
-            <span><b>+91 79078 73500</b><small>Call us</small></span>
-          </a>
-
-          <a class="row-i" href="mailto:pscretn@gmail.com">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#FFB347" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
-            <span><b>pscretn@gmail.com</b><small>Email us</small></span>
-          </a>
-        </div>
+      <div class="row">
+        <h2 class="h1"><span class="split">Services</span></h2>
+        <div class="prog" aria-hidden="true"><i id="prog"></i></div>
       </div>
+    </div>
+    <div class="hs" id="hs">
+      <div class="hs-track" id="track">
+        <article class="panel" data-cursor="Book" style="--c:var(--red)">
+          <div class="panel-t"><span class="no">01</span><span class="k">Security</span><h3>CCTV Installation &amp; Services</h3><p>Professional setup with remote access, for home or commercial security.</p></div>
+          <div class="panel-m"><img src="images/cctv_installation.webp" alt="A technician fitting a CCTV camera" loading="lazy"></div>
+        </article>
+        <article class="panel" data-cursor="Build" style="--c:var(--blue)">
+          <div class="panel-t"><span class="no">02</span><span class="k">Compute</span><h3>Custom &amp; Gaming PC Builds</h3><p>Tailored high-performance builds, optimised for gaming, editing and productivity.</p></div>
+          <div class="panel-m"><video class="inview" muted loop playsinline preload="none" poster="videos/pc_build_poster.webp"><source src="videos/pc_build.webm" type="video/webm"></video></div>
+        </article>
+        <article class="panel" data-cursor="Smart" style="--c:var(--green)">
+          <div class="panel-t"><span class="no">03</span><span class="k">Smart home</span><h3>Home Automation &amp; IoT</h3><p>Smart lights, appliances and security with app or voice control.</p></div>
+          <div class="panel-m white"><img src="images/home_automation.webp" alt="Smart speakers and a smart switch" loading="lazy"></div>
+        </article>
+        <article class="panel" data-cursor="Print" style="--c:var(--red)">
+          <div class="panel-t"><span class="no">04</span><span class="k">Fabrication</span><h3>3D Printing</h3><p>High-precision PLA/ABS 3D printing for prototyping, miniatures and functional parts.</p></div>
+          <div class="panel-m"><video class="inview" muted loop playsinline preload="none" poster="videos/3d_printing_poster.webp"><source src="videos/3d_printing.webm" type="video/webm"></video></div>
+        </article>
+        <article class="panel" data-cursor="Soon" style="--c:var(--blue)">
+          <div class="panel-t"><span class="no">05</span><span class="k">Marking <span class="badge">Coming soon</span></span><h3>Laser Engraving</h3><p>Precision engraving on wood, acrylic or metal for gifts, signage and branding.</p></div>
+          <div class="panel-m"><video class="inview" muted loop playsinline preload="none" poster="videos/laser_engraving_poster.webp"><source src="videos/laser_engraving.webm" type="video/webm"></video></div>
+        </article>
+      </div>
+    </div>
+  </section>
 
-      <div class="map rv">
+  <!-- numbers -->
+  <section class="nums">
+    <div class="wrap">
+      <p class="eyebrow">In numbers</p>
+      <h2 class="h1"><span class="split">Small workshop.</span><br><span class="split grad">Wide range.</span></h2>
+      <div class="nums-g">
+        <div class="num"><b data-to="2021" data-from="1990">2021</b><span>Founded</span></div>
+        <div class="num"><b data-to="5">5</b><span>Services</span></div>
+        <div class="num"><b data-to="4">4</b><span>Store products</span></div>
+        <div class="num"><b data-to="2">2</b><span>Brands</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- store -->
+  <section class="store" id="store">
+    <div class="wrap">
+      <p class="eyebrow">3D Print Store</p>
+      <h2 class="h1"><span class="split">Made in-house.</span></h2>
+      <p class="lead">Printed to order at our workshop in Angamaly.</p>
+      <div class="sgrid">
+        <article class="prod" data-cursor="₹899"><span class="price">₹899</span><div class="ph glow"><span>Lithophane Lamp</span></div><div class="prod-b"><h3>Lithophane Lamp</h3><p class="dim">7.2 × 7.2 × 10.8 cm</p></div></article>
+        <article class="prod" data-cursor="₹99"><span class="price">₹99</span><div class="ph"><img src="images/3D_printed_keychain.webp" alt="Custom 3D printed keychains" loading="lazy"></div><div class="prod-b"><h3>Customised Keychains</h3><p class="dim">up to 9 × 2.2 × 0.4 cm</p></div></article>
+        <article class="prod" data-cursor="₹199"><span class="price">₹199</span><div class="ph"><img src="images/spiral_flower_pot.webp" alt="Spiral plant pot" loading="lazy"></div><div class="prod-b"><h3>Spiral Plant Pot</h3><p class="dim">9.6 × 9.6 × 8 cm</p></div></article>
+        <article class="prod" data-cursor="₹199"><span class="price">₹199</span><div class="ph"><img src="images/lithophane_plane.webp" alt="Lithophane plane" loading="lazy"></div><div class="prod-b"><h3>Lithophane Plane</h3><p class="dim">10 × 10 × 0.4 cm</p></div></article>
+      </div>
+      <a class="btn btn-w mag" href="#contact">Order or ask for a custom print</a>
+    </div>
+  </section>
+
+  <!-- brands -->
+  <section class="brands" id="brands">
+    <div class="wrap">
+      <p class="eyebrow">Our brands</p>
+      <h2 class="h1"><span class="split">Two names.</span><br><span class="split">One workshop.</span></h2>
+      <p class="lead">Specialist work runs under its own name.</p>
+      <div class="stack" id="stack">
+        <a class="bcard tl" href="trilitlabs.html" data-cursor="Visit">
+          <div class="bg"><img src="images/wirelink_dmx.webp" alt="" loading="lazy"></div>
+          <img class="logo" src="images/trilitlabs_logo.webp" alt="TrilitLabs logo" width="60" height="60">
+          <div class="info"><span class="k">Stage lighting</span>
+          <h3>TrilitLabs</h3>
+          <p>WireLink DMX (USB-C to isolated DMX, available for sale soon), wired and wireless DMX controllers, Art-Net, isolated splitters, and the WaveLink DMX app on Google Play — plus stage fixtures and 3D printed lamps.</p>
+          <span class="btn btn-o go">Visit TrilitLabs</span></div>
+        </a>
+        <a class="bcard dj" href="dj_pscretn.html" data-cursor="Visit">
+          <div class="bg"><video class="inview" muted loop playsinline preload="none" poster="videos/dj/gig06.jpg"><source src="videos/dj/gig06.mp4" type="video/mp4"></video></div>
+          <img class="logo" src="images/pscretn_logo_white.webp" alt="" width="60" height="60">
+          <div class="info"><span class="k">Events</span>
+          <h3>DJ pscretn</h3>
+          <p>Weddings, receptions and college nights across Kerala, played on a Pioneer DDJ-FLX4.</p>
+          <span class="btn btn-o go">Visit DJ pscretn</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- about -->
+  <section class="about" id="about">
+    <div class="wrap">
+      <p class="eyebrow">About</p>
+      <p class="big" id="about-big">Founded in 2021, pscretn began with a simple yet powerful mission — to grow into a hub for <em>creativity, learning, and hands-on development.</em></p>
+      <div class="about-g">
+        <p>pscretn is a forward-thinking technology organization dedicated to empowering innovation and technical excellence.</p>
+        <p>We specialize in providing cutting-edge solutions and custom services across a wide range of technological fields.</p>
+        <p>East Nagar, Kavaraparmbu, Angamaly, Kerala 683572.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- contact -->
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <a class="talk" id="talk" href="mailto:pscretn@gmail.com" data-cursor="Write">Let's talk<span class="dot">.</span></a>
+      <p class="lead">Questions about a product, need support, or want something custom built — get in touch and we'll come back to you.</p>
+      <div class="cgrid">
+        <a class="ccard" href="tel:+917907873500" style="--c:var(--red)"><small>Call us</small><b>+91 79078 73500</b><span>Call now →</span></a>
+        <a class="ccard" href="mailto:pscretn@gmail.com" style="--c:#00A866"><small>Email us</small><b>pscretn@gmail.com</b><span>Write to us →</span></a>
+        <a class="ccard" style="--c:var(--blue)" href="https://maps.google.com/?q=East+Nagar,+Kavaraparmbu,+Angamaly,+Kerala+683572" target="_blank" rel="noopener"><small>Visit us</small><b>East Nagar, Kavaraparmbu</b><span>Angamaly, Kerala 683572 →</span></a>
+      </div>
+      <div class="map">
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125770.32415828641!2d76.3119106!3d10.1888022!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b0807b59c0a2697%3A0xe33980b506fbf8c!2sEast%20Nagar%2C%20Kavaraparmbu%2C%20Angamaly%2C%20Kerala%20683572!5e0!3m2!1sen!2sin!4v1718554000000!5m2!1sen!2sin"
-          title="pscretn location" loading="lazy" allowfullscreen
-          referrerpolicy="no-referrer-when-downgrade"></iframe>
+          title="pscretn location" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</main>
 
 <footer>
   <div class="wrap">
-    <div class="socials">
-      <a href="https://www.instagram.com/pscretn/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3.2A6.6 6.6 0 1 0 18.6 12 6.6 6.6 0 0 0 12 5.4zm0 10.9A4.3 4.3 0 1 1 16.3 12 4.3 4.3 0 0 1 12 16.3zm6.9-11.1a1.5 1.5 0 1 1-1.5-1.5 1.5 1.5 0 0 1 1.5 1.5z"/></svg></a>
-      <a href="https://github.com/pscretn" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.4-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7 0-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .3.3.7 1 .7 2v2.9c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg></a>
-      <a href="https://in.linkedin.com/in/paul-sabu-22520b1b8" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1a4.2 4.2 0 0 1 3.8-2c4 0 4.8 2.6 4.8 6.1V21h-4v-5.5c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9V21H9z"/></svg></a>
-      <a href="https://www.youtube.com/channel/UC6LTgFTohfKty7aJJJbshhw" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.7-1.7C19.3 5.2 12 5.2 12 5.2s-7.3 0-8.9.4A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.7 1.7c1.6.4 8.9.4 8.9.4s7.3 0 8.9-.4a2.5 2.5 0 0 0 1.7-1.7C23 15.2 23 12 23 12zM9.8 15.3V8.7l6 3.3z"/></svg></a>
-      <a href="https://www.facebook.com/profile.php?id=100011476530466" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7h-2.5V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"/></svg></a>
-      <a href="https://twitter.com/pscretn" target="_blank" rel="noopener" aria-label="Twitter"><svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7 8 8.2 12h-6.4l-5-7.3L6 22H2.9l7.5-8.6L2.5 2H9l4.5 6.7zM17.8 20.1h1.7L7.3 3.8H5.5z"/></svg></a>
-      <a href="https://pscretn.medium.com/" target="_blank" rel="noopener" aria-label="Medium"><svg viewBox="0 0 24 24"><path d="M13.5 12a6.75 6.75 0 1 1-13.5 0 6.75 6.75 0 0 1 13.5 0zM20.9 12c0 3.5-1.5 6.3-3.4 6.3S14.1 15.5 14.1 12s1.5-6.3 3.4-6.3S20.9 8.5 20.9 12zM24 12c0 3.1-.5 5.6-1.2 5.6s-1.2-2.5-1.2-5.6.5-5.6 1.2-5.6S24 8.9 24 12z"/></svg></a>
+    <div class="f-row">
+      <div class="f-links">
+        <a href="trilitlabs.html">TrilitLabs</a>
+        <a href="dj_pscretn.html">DJ pscretn</a>
+        <a href="https://www.instagram.com/pscretn/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.youtube.com/channel/UC6LTgFTohfKty7aJJJbshhw" target="_blank" rel="noopener">YouTube</a>
+        <a href="https://github.com/pscretn" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://in.linkedin.com/in/paul-sabu-22520b1b8" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.facebook.com/profile.php?id=100011476530466" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://twitter.com/pscretn" target="_blank" rel="noopener">Twitter</a>
+        <a href="https://pscretn.medium.com/" target="_blank" rel="noopener">Medium</a>
+      </div>
+      <span>© 2026 pscretn · Angamaly, Kerala</span>
     </div>
-    <p class="foot-t">
-      pscretn · East Nagar, Kavaraparmbu, Angamaly, Kerala 683572<br>
-      © 2026 pscretn
-    </p>
+    <div class="giant split-plain" aria-hidden="true">pscretn</div>
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
 <script>
 (function () {
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
-  /* ---------- nav ---------- */
-  var nav = document.getElementById('nav');
-  function onScroll() { nav.classList.toggle('stuck', window.scrollY > 10); }
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
+  /* ---------- split text into words > letters ---------- */
+  function split(el) {
+    var out = [];
+    (function walk(node) {
+      Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+        if (n.nodeType === 3) {
+          var frag = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach(function (w) {
+            if (!w) return;
+            if (/^\s+$/.test(w)) { frag.appendChild(document.createTextNode(' ')); return; }
+            var word = document.createElement('span'); word.className = 'sw';
+            Array.prototype.forEach.call(w, function (c) {
+              var m = document.createElement('span'); m.className = 'mask';
+              var ch = document.createElement('span'); ch.className = 'ch'; ch.textContent = c;
+              m.appendChild(ch); word.appendChild(m); out.push(ch);
+            });
+            frag.appendChild(word);
+          });
+          node.replaceChild(frag, n);
+        } else if (n.nodeType === 1 && n.tagName !== 'BR') walk(n);
+      });
+    })(el);
+    /* background-clip:text can't reach letters that sit in their own masks,
+       so a gradient word gets its colour letter by letter instead */
+    if (el.classList && el.classList.contains('grad')) {
+      /* three solid runs, like the three corners of the mark: red, green, blue */
+      var rgb = ['#F03035', '#00D080', '#1A82E2'];
+      out.forEach(function (c, i) { c.style.color = rgb[Math.min(2, Math.floor(i * 3 / out.length))]; });
+      el.classList.add('done');
+    }
+    return out;
+  }
 
-  /* ---------- mobile drawer ---------- */
-  var burger = document.getElementById('burger');
-  var drawer = document.getElementById('drawer');
-
+  /* ---------- menu (works without GSAP) ---------- */
+  var burger = $('#burger'), drawer = $('#drawer');
   function setMenu(open) {
-    burger.classList.toggle('on', open);
-    drawer.classList.toggle('open', open);
+    burger.classList.toggle('on', open); drawer.classList.toggle('open', open);
     burger.setAttribute('aria-expanded', open ? 'true' : 'false');
     document.body.style.overflow = open ? 'hidden' : '';
+    if (window.lenis) open ? window.lenis.stop() : window.lenis.start();
   }
-
   burger.addEventListener('click', function () { setMenu(!drawer.classList.contains('open')); });
-  drawer.addEventListener('click', function (e) { if (e.target.tagName === 'A') setMenu(false); });
+  drawer.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
 
-  /* ---------- ticker ---------- */
-  var WORDS = ['CCTV', '3D Printing', 'PC Builds', 'Home Automation',
-               'Laser Engraving', 'IoT', 'Prototyping', 'Support'];
-  var TINT = ['--orange', '--cyan', '--violet', '--pink', '--lime', '--amber', '--sky'];
-  var t = document.getElementById('ticker');
+  /* clips play only while on screen */
+  var vio = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) e.target.play().catch(function () {}); else e.target.pause(); });
+  }, { threshold: 0.2 });
+  $$('video.inview, .clip video').forEach(function (v) { vio.observe(v); });
 
-  for (var p = 0; p < 2; p++) {
-    WORDS.forEach(function (w, i) {
-      var s = document.createElement('span');
-      s.textContent = w;
-      /* every other word is filled, in its own colour */
-      if (i % 2 === 1) {
-        s.className = 'on';
-        s.style.color = 'var(' + TINT[i % TINT.length] + ')';
-      } else {
-        s.style.webkitTextStroke = '1px var(' + TINT[i % TINT.length] + ')';
-        s.style.opacity = '.55';
-      }
-      t.appendChild(s);
-    });
+  var loader = $('#loader');
+  if (reduce || !window.gsap || !window.ScrollTrigger) { loader.style.display = 'none'; return; }
+
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.set(loader, { clipPath: 'inset(0% 0% 0% 0%)' });
+
+  /* ---------- smooth scroll, driven by GSAP's clock ---------- */
+  var lenis = null;
+  try {
+    lenis = new Lenis({ lerp: .09, anchors: { offset: 0 } });
+    window.lenis = lenis;
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
+    gsap.ticker.lagSmoothing(0);
+  } catch (e) {}
+
+  /* nav hides going down, returns going up */
+  var nav = $('#nav'), lastY = 0;
+  ScrollTrigger.create({ onUpdate: function (self) {
+    var y = self.scroll();
+    nav.classList.toggle('hide', y > 200 && y > lastY && !drawer.classList.contains('open'));
+    nav.classList.toggle('solid', y > 40);
+    lastY = y;
+  } });
+
+  /* ---------- split everything that animates by letter ---------- */
+  var heroChars = [];
+  $$('#hero-h .split').forEach(function (el) { heroChars = heroChars.concat(split(el)); });
+  $$('.h1 .split').forEach(function (el) { el._chars = split(el); });
+  var sayChars = split($('#say'));
+  var aboutChars = split($('#about-big'));
+  var talkChars = split($('#talk'));
+  var giantChars = split($('.giant'));
+
+  /* ---------- loader, then the hero intro ---------- */
+  var wide = window.matchMedia('(min-width: 40.01rem)').matches;
+  gsap.set(heroChars, { yPercent: 110 });
+  gsap.set(['#hero-k', '#hero-p', '#hero-cta', '.scroll-cue'], { autoAlpha: 0, y: 24 });
+  gsap.set('.clip', { clipPath: 'inset(100% 0% 0% 0% round 28px)' });
+  if (lenis) lenis.stop();
+
+  /* scrolling unlocks as soon as the loader has wiped away; the hero keeps animating underneath */
+  function release() { loader.style.display = 'none'; if (lenis) lenis.start(); ScrollTrigger.refresh(); }
+  /* the intro is the pscretn mark animating in: hexagon, the red, green and
+     blue corners, then the wordmark. It hands over once the wordmark is up
+     (~3.4s), or after 1.4s if this browser can't play the clip. */
+  var intro = $('#intro'), HAND = 3.4, handed = false;
+  var load = gsap.timeline({ paused: true });
+  load.to('.loader-in', { autoAlpha: 0, scale: .92, duration: .45, ease: 'power2.in' })
+      .to(loader, { clipPath: 'inset(0 0 100% 0)', duration: .9, ease: 'expo.inOut' }, '-=.05')
+      .add(release)
+      .to('.clip', { clipPath: 'inset(0% 0% 0% 0% round 28px)', duration: 1.3, ease: 'expo.out', stagger: .12 }, '-=.5')
+      .to(heroChars, { yPercent: 0, duration: 1.1, ease: 'expo.out', stagger: .035 }, '-=1.1')
+      .to(['#hero-k', '#hero-p', '#hero-cta', '.scroll-cue'], { autoAlpha: 1, y: 0, duration: .9, ease: 'power3.out', stagger: .08 }, '-=.8');
+  function handOver() { if (handed) return; handed = true; gsap.set('#bar', { scaleX: 1 }); load.play(); }
+  function noVideo() { loader.classList.add('novid'); gsap.to('#bar', { scaleX: 1, duration: 1.2, ease: 'power2.inOut', onComplete: handOver }); }
+  intro.addEventListener('timeupdate', function () {
+    gsap.set('#bar', { scaleX: Math.min(intro.currentTime / HAND, 1) });
+    if (intro.currentTime >= HAND) handOver();
+  });
+  intro.addEventListener('ended', handOver);
+  intro.addEventListener('error', noVideo, true);
+  var p = intro.play();
+  if (p && p.catch) p.catch(noVideo);
+  setTimeout(function () { if (!intro.currentTime) noVideo(); }, 1500);
+  setTimeout(handOver, 5200);
+
+  var phoneClips = $$('.clip'), pc = 0;
+  setInterval(function () {
+    if (window.innerWidth > 640) return;
+    phoneClips[pc].classList.remove('on'); pc = (pc + 1) % phoneClips.length; phoneClips[pc].classList.add('on');
+  }, 4200);
+
+  /* hero on scroll: clips fan out, title blurs away */
+  var heroTl = gsap.timeline({ scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true } });
+  heroTl.to('#hero-c', { yPercent: -30, autoAlpha: 0, filter: wide ? 'blur(10px)' : 'none', ease: 'none' }, 0);
+  if (wide) {
+    heroTl.to('.clip:nth-child(1)', { xPercent: -18, rotate: -4, scale: .9, ease: 'none' }, 0)
+          .to('.clip:nth-child(2)', { yPercent: 12, scale: .86, ease: 'none' }, 0)
+          .to('.clip:nth-child(3)', { xPercent: 18, rotate: 4, scale: .9, ease: 'none' }, 0);
+  } else {
+    heroTl.to('.clip', { scale: .85, borderRadius: 48, ease: 'none' }, 0);
   }
 
-  /* ---------- reveal ---------- */
-  var obs = new IntersectionObserver(function (es) {
-    es.forEach(function (e) {
-      if (!e.isIntersecting) return;
-      e.target.classList.add('seen');
-      obs.unobserve(e.target);
-    });
-  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
-
-  document.querySelectorAll('.rv').forEach(function (el, i) {
-    el.style.transitionDelay = (i % 4) * 80 + 'ms';
-    obs.observe(el);
-  });
-
-  /* ---------- counters ---------- */
-  var cObs = new IntersectionObserver(function (es) {
-    es.forEach(function (e) {
-      if (!e.isIntersecting) return;
-      var el = e.target, to = +el.dataset.count, t0 = null;
-      cObs.unobserve(el);
-
-      if (reduce) { el.textContent = to; return; }
-
-      /* years shouldn't count up from zero — start near the value */
-      var from = to > 1900 ? to - 25 : 0;
-
-      requestAnimationFrame(function run(ts) {
-        if (t0 === null) t0 = ts;
-        var k = Math.min((ts - t0) / 1400, 1);
-        var e2 = 1 - Math.pow(1 - k, 4);
-        el.textContent = Math.round(from + (to - from) * e2);
-        if (k < 1) requestAnimationFrame(run);
+  /* mouse parallax on the clips */
+  if (fine) {
+    var clips = $$('.clip');
+    window.addEventListener('mousemove', function (e) {
+      if (window.scrollY > innerHeight) return;
+      var dx = e.clientX / innerWidth - .5, dy = e.clientY / innerHeight - .5;
+      clips.forEach(function (c, i) {
+        var d = (i - 1) * 6 + 10;
+        gsap.to(c.querySelector('video'), { x: dx * d, y: dy * d, scale: 1.06, duration: 1.2, ease: 'power3.out' });
       });
     });
-  }, { threshold: 0.4 });
+  }
 
-  document.querySelectorAll('[data-count]').forEach(function (el) { cObs.observe(el); });
+  /* ---------- section headings rise letter by letter ---------- */
+  $$('.h1 .split').forEach(function (el) {
+    gsap.from(el._chars, { yPercent: 110, duration: 1, ease: 'expo.out', stagger: .025,
+      scrollTrigger: { trigger: el, start: 'top 88%' } });
+  });
+  $$('.eyebrow:not(#hero-k), .lead:not(#hero-p)').forEach(function (el) {
+    gsap.from(el, { autoAlpha: 0, y: 30, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 90%' } });
+  });
 
-  /* ---------- service cards play their clip on hover ---------- */
-  document.querySelectorAll('.card[data-vid]').forEach(function (card) {
-    var shot = card.querySelector('.shot');
-    var v = null;
-
-    function build() {
-      if (v) return v;
-      v = document.createElement('video');
-      v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'none';
-      v.src = card.dataset.vid;
-      shot.appendChild(v);
-      return v;
-    }
-
-    card.addEventListener('pointerenter', function () {
-      if (reduce) return;
-      var vid = build();
-      vid.currentTime = 0;
-      vid.play().then(function () { card.classList.add('playing'); }).catch(function () {});
-    });
-
-    card.addEventListener('pointerleave', function () {
-      if (!v) return;
-      card.classList.remove('playing');
-      v.pause();
+  /* ---------- marquee that answers the scroll ---------- */
+  var rows = $$('.mq-row').map(function (r) { return { el: r, dir: Number(r.getAttribute('data-dir')), x: 0, w: r.scrollWidth / 2 }; });
+  var boost = 0, skew = 0;
+  ScrollTrigger.create({ onUpdate: function (self) {
+    var v = self.getVelocity();
+    boost = gsap.utils.clamp(-12, 12, v / 220);
+    skew = gsap.utils.clamp(-10, 10, v / 280);
+  } });
+  gsap.ticker.add(function () {
+    boost *= .93; skew *= .9;
+    rows.forEach(function (r) {
+      r.x += (1.1 + Math.abs(boost)) * r.dir * (boost < 0 ? -1 : 1);
+      if (r.x <= -r.w) r.x += r.w;
+      if (r.x > 0) r.x -= r.w;
+      gsap.set(r.el, { x: r.x, skewX: -skew });
     });
   });
 
-  if (reduce) return;
+  /* ---------- statement lights up by letter ---------- */
+  gsap.fromTo(sayChars, { opacity: .12 }, { opacity: 1, ease: 'none', stagger: .02,
+    scrollTrigger: { trigger: '#say', start: 'top 80%', end: 'bottom 45%', scrub: true } });
 
-  /* ---------- hero grid ----------
-     a slow perspective grid, drawn rather than tiled so the lines stay
-     crisp on any screen and fade out before they reach the copy */
-  var cv = document.getElementById('grid');
-  var ctx = cv.getContext('2d');
-  var dpr = Math.min(window.devicePixelRatio || 1, 2);
-  var W, H, off = 0;
+  /* ---------- services: pinned sideways scroll on wide screens ---------- */
+  var mm = gsap.matchMedia();
+  mm.add('(min-width: 56.01rem)', function () {
+    var track = $('#track');
+    var dist = function () { return track.scrollWidth - innerWidth; };
+    var tween = gsap.to(track, { x: function () { return -dist(); }, ease: 'none',
+      scrollTrigger: { trigger: '#hs', start: 'center center', end: function () { return '+=' + dist(); }, pin: '#hs', scrub: 1, invalidateOnRefresh: true,
+        onUpdate: function (self) { gsap.set('#prog', { scaleX: self.progress }); } } });
+    $$('.panel').forEach(function (p) {
+      var m = p.querySelector('.panel-m:not(.white) img, .panel-m video');
+      if (m) gsap.fromTo(m, { xPercent: -6 }, { xPercent: 6, ease: 'none',
+        scrollTrigger: { trigger: p, containerAnimation: tween, start: 'left right', end: 'right left', scrub: true } });
+      gsap.from(p.querySelector('.no'), { yPercent: 60, autoAlpha: 0, ease: 'power3.out',
+        scrollTrigger: { trigger: p, containerAnimation: tween, start: 'left 85%', end: 'left 45%', scrub: true } });
+    });
+  });
+  mm.add('(max-width: 56rem)', function () {
+    $$('.panel').forEach(function (p) {
+      gsap.from(p, { y: 80, autoAlpha: 0, scale: .96, duration: 1.1, ease: 'expo.out', scrollTrigger: { trigger: p, start: 'top 90%' } });
+      var m = p.querySelector('.panel-m');
+      gsap.from(m, { clipPath: 'inset(100% 0 0 0 round 20px)', duration: 1.3, ease: 'expo.out', scrollTrigger: { trigger: m, start: 'top 92%' } });
+    });
+  });
 
-  function size() {
-    var r = cv.getBoundingClientRect();
-    W = r.width; H = r.height;
-    cv.width = W * dpr; cv.height = H * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  /* ---------- numbers count up ---------- */
+  $$('.num b').forEach(function (b) {
+    var to = Number(b.getAttribute('data-to')), from = Number(b.getAttribute('data-from') || 0), o = { v: from };
+    b.textContent = from;
+    gsap.to(o, { v: to, duration: 2, ease: 'expo.out', scrollTrigger: { trigger: b, start: 'top 88%' },
+      onUpdate: function () { b.textContent = Math.round(o.v); } });
+  });
+  gsap.from('.num', { y: 50, autoAlpha: 0, duration: 1, ease: 'power3.out', stagger: .1, scrollTrigger: { trigger: '.nums-g', start: 'top 88%' } });
+
+  /* ---------- store: rise in, tilt under the pointer ---------- */
+  gsap.from('.prod', { y: 90, autoAlpha: 0, rotateX: -12, duration: 1.2, ease: 'expo.out', stagger: .1, scrollTrigger: { trigger: '.sgrid', start: 'top 85%' } });
+  if (fine) $$('.prod').forEach(function (p) {
+    p.addEventListener('mousemove', function (e) {
+      var r = p.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      gsap.to(p, { rotateY: x * 14, rotateX: -y * 14, y: -6, duration: .6, ease: 'power3.out' });
+    });
+    p.addEventListener('mouseleave', function () { gsap.to(p, { rotateY: 0, rotateX: 0, y: 0, duration: .9, ease: 'elastic.out(1, .5)' }); });
+  });
+
+  /* ---------- brands: each card sinks back as the next slides over ---------- */
+  var cards = $$('.bcard');
+  cards.forEach(function (c, i) {
+    var bg = c.querySelector('.bg img, .bg video');
+    gsap.fromTo(bg, { scale: 1.25 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: c, start: 'top bottom', end: 'top 10%', scrub: true } });
+    if (i < cards.length - 1) gsap.to(c, { scale: .9, filter: 'brightness(.45)', ease: 'none',
+      scrollTrigger: { trigger: cards[i + 1], start: 'top bottom', end: 'top 10%', scrub: true } });
+  });
+
+  /* ---------- about: letters fill in ---------- */
+  gsap.fromTo(aboutChars, { opacity: .15 }, { opacity: 1, ease: 'none', stagger: .02,
+    scrollTrigger: { trigger: '#about-big', start: 'top 80%', end: 'bottom 50%', scrub: true } });
+  gsap.from('.about-g p', { y: 40, autoAlpha: 0, duration: 1, ease: 'power3.out', stagger: .1, scrollTrigger: { trigger: '.about-g', start: 'top 88%' } });
+
+  /* ---------- contact: the line grows in ---------- */
+  gsap.fromTo('#talk', { scale: .55, autoAlpha: .2 }, { scale: 1, autoAlpha: 1, ease: 'none',
+    scrollTrigger: { trigger: '.contact', start: 'top bottom', end: 'top 25%', scrub: true } });
+  gsap.from(talkChars, { yPercent: 110, duration: 1.1, ease: 'expo.out', stagger: .04, scrollTrigger: { trigger: '#talk', start: 'top 85%' } });
+  gsap.from('.ccard', { y: 60, autoAlpha: 0, duration: 1, ease: 'power3.out', stagger: .1, scrollTrigger: { trigger: '.cgrid', start: 'top 90%' } });
+  gsap.from('.map', { clipPath: 'inset(0 0 100% 0 round 28px)', duration: 1.4, ease: 'expo.inOut', scrollTrigger: { trigger: '.map', start: 'top 90%' } });
+  gsap.from(giantChars, { yPercent: 100, duration: 1.2, ease: 'expo.out', stagger: .05, scrollTrigger: { trigger: '.giant', start: 'top 95%' } });
+
+  /* ---------- custom cursor + magnetic buttons ---------- */
+  if (fine) {
+    var cur = $('#cur'), ring = $('#ring'), ringT = $('#ring-t');
+    var cx = gsap.quickTo(cur, 'x', { duration: .1 }), cy = gsap.quickTo(cur, 'y', { duration: .1 });
+    var rx = gsap.quickTo(ring, 'x', { duration: .5, ease: 'power3' }), ry = gsap.quickTo(ring, 'y', { duration: .5, ease: 'power3' });
+    window.addEventListener('mousemove', function (e) { cx(e.clientX); cy(e.clientY); rx(e.clientX); ry(e.clientY); cur.classList.add('live'); ring.classList.add('live'); });
+    document.addEventListener('mouseleave', function () { cur.classList.remove('live'); ring.classList.remove('live'); });
+    $$('[data-cursor]').forEach(function (el) {
+      el.addEventListener('mouseenter', function () { ringT.textContent = el.getAttribute('data-cursor'); ring.classList.add('big'); });
+      el.addEventListener('mouseleave', function () { ring.classList.remove('big'); });
+    });
+    $$('.mag').forEach(function (m) {
+      m.addEventListener('mousemove', function (e) {
+        var r = m.getBoundingClientRect();
+        gsap.to(m, { x: (e.clientX - r.left - r.width / 2) * .35, y: (e.clientY - r.top - r.height / 2) * .35, duration: .5, ease: 'power3.out' });
+      });
+      m.addEventListener('mouseleave', function () { gsap.to(m, { x: 0, y: 0, duration: .8, ease: 'elastic.out(1, .4)' }); });
+    });
   }
 
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-    var horizon = H * 0.42, gap = 46;
-
-    ctx.lineWidth = 1;
-
-    /* lines running to the vanishing point, tinted across the palette
-       so the floor reads as a lit stage rather than one flat colour */
-    var RAYS = [[255,122,33], [236,72,153], [168,85,247], [56,189,248], [132,204,22]];
-
-    for (var x = -14; x <= 14; x++) {
-      var rgb = RAYS[(Math.abs(x) + RAYS.length) % RAYS.length];
-      ctx.strokeStyle = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',0.17)';
-      ctx.beginPath();
-      ctx.moveTo(W / 2 + x * gap * 2.6, H);
-      ctx.lineTo(W / 2 + x * 5, horizon);
-      ctx.stroke();
-    }
-
-    /* rungs, spaced so they appear to rush toward the viewer */
-    off = (off + 0.55) % gap;
-    for (var i = 0; i < 22; i++) {
-      var d = i * gap + off;
-      var y = horizon + (d * d) / (H * 0.9);
-      if (y > H) break;
-      var a = 0.16 * (1 - (y - horizon) / (H - horizon));
-      ctx.strokeStyle = 'rgba(34,211,238,' + Math.max(0, a).toFixed(3) + ')';
-      ctx.beginPath();
-      ctx.moveTo(0, y);
-      ctx.lineTo(W, y);
-      ctx.stroke();
-    }
-
-    requestAnimationFrame(draw);
-  }
-
-  size();
-  draw();
-
-  var rt;
-  window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(size, 200); });
+  window.addEventListener('load', function () {
+    rows.forEach(function (r) { r.w = r.el.scrollWidth / 2; });
+    ScrollTrigger.refresh();
+  });
 })();
 </script>
 </body>
