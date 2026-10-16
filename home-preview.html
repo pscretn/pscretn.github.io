@@ -26,7 +26,8 @@
     --green: #00D080;
     --blue: #1A82E2;
     --hot: var(--red);
-    --rgb: linear-gradient(90deg, #F03035, #00D080 50%, #1A82E2);
+    /* three solid segments, like the mark's three corners; never blended */
+    --rgb: linear-gradient(90deg, #F03035 0 33.34%, #00D080 33.34% 66.67%, #1A82E2 66.67% 100%);
     --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --gut: clamp(1.1rem, 4vw, 2.5rem);
     --r: clamp(18px, 2.2vw, 28px);
@@ -44,7 +45,7 @@
   .eyebrow { display: inline-flex; align-items: center; gap: .6rem; margin: 0 0 1rem; font-size: .8rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--hot); }
   .eyebrow::before { content: ""; width: 1.6rem; height: 2px; background: var(--rgb); }
   .h1 { margin: 0; font-weight: 800; letter-spacing: -.055em; line-height: .92; font-size: clamp(2.8rem, 8vw, 7rem); }
-  .grad { background: linear-gradient(95deg, var(--red), var(--green) 50%, var(--blue)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .grad { color: var(--green); }
   .lead { margin: 1.2rem 0 0; font-size: clamp(1.05rem, 1.8vw, 1.35rem); line-height: 1.45; color: #B8B8BF; font-weight: 500; max-width: 38rem; }
 
   /* split text: each word holds its letters; lines are masked for the rise-in */
@@ -73,8 +74,7 @@
   .cur { width: 6px; height: 6px; margin: -3px 0 0 -3px; background: var(--hot); }
   .cur-ring { width: 38px; height: 38px; margin: -19px 0 0 -19px; border: 1px solid rgba(255,255,255,.5); display: none; place-items: center; transition: width .35s var(--ease), height .35s var(--ease), margin .35s var(--ease), background .35s, border-color .35s; }
   .cur-ring span { font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #000; opacity: 0; transition: opacity .2s; }
-  .cur-ring.big { width: 88px; height: 88px; margin: -44px 0 0 -44px; background: var(--rgb); border-color: transparent; }
-  .cur-ring.big span { color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,.4); }
+  .cur-ring.big { width: 88px; height: 88px; margin: -44px 0 0 -44px; background: var(--green); border-color: var(--green); }
   .cur-ring.big span { opacity: 1; }
   @media (hover: hover) and (pointer: fine) { .cur { display: block; } .cur-ring { display: grid; } }
   .cur, .cur-ring { opacity: 0; }
@@ -91,19 +91,24 @@
   .nav-pill a:hover { background: rgba(255,255,255,.1); color: #fff; }
   .brand { display: flex; align-items: center; gap: .55rem; font-weight: 700; font-size: 1.1rem; letter-spacing: -.03em; }
   .brand img { width: 26px; height: 26px; }
-  .call { display: inline-flex; align-items: center; gap: .55rem; padding: .3rem 1rem .3rem .3rem; border-radius: 99px; background: var(--rgb); color: #fff; font-size: .88rem; font-weight: 600; }
-  .call i { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; background: rgba(0,0,0,.85); color: #fff; font-style: normal; }
+  .call { display: inline-flex; align-items: center; gap: .55rem; padding: .3rem 1rem .3rem .3rem; border-radius: 99px; background: #fff; color: #000; font-size: .88rem; font-weight: 600; transition: background .3s; }
+  .call:hover { background: var(--green); }
+  .call i { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; background: #000; color: #fff; font-style: normal; }
   .burger { display: none; width: 2.8rem; height: 2.8rem; border-radius: 50%; border: 1px solid var(--line); background: rgba(20,20,22,.6); backdrop-filter: blur(16px); color: #fff; cursor: pointer; position: relative; z-index: 60; }
   .burger i { position: absolute; left: 50%; width: 16px; height: 1.5px; background: currentColor; transform: translateX(-50%); transition: transform .4s var(--ease), top .4s var(--ease); }
   .burger i:nth-child(1) { top: 43%; } .burger i:nth-child(2) { top: 57%; }
   .burger.on i:nth-child(1) { top: 50%; transform: translateX(-50%) rotate(45deg); }
   .burger.on i:nth-child(2) { top: 50%; transform: translateX(-50%) rotate(-45deg); }
-  .drawer { position: fixed; inset: 0; z-index: 45; background: linear-gradient(160deg, #F03035, #00B870 55%, #1A82E2); color: #fff; padding: calc(90px + env(safe-area-inset-top)) var(--gut) 2rem; display: flex; flex-direction: column; clip-path: circle(0% at calc(100% - 2.8rem) 2.4rem); transition: clip-path .8s var(--ease); overflow-y: auto; }
+  .drawer { position: fixed; inset: 0; z-index: 45; background: #0B0B0D; color: #fff; padding: calc(90px + env(safe-area-inset-top)) var(--gut) 2rem; display: flex; flex-direction: column; clip-path: circle(0% at calc(100% - 2.8rem) 2.4rem); transition: clip-path .8s var(--ease); overflow-y: auto; }
   .drawer.open { clip-path: circle(150% at calc(100% - 2.8rem) 2.4rem); }
   .drawer a { font-size: clamp(2.2rem, 10vw, 3.4rem); font-weight: 800; letter-spacing: -.05em; line-height: 1.1; transform: translateY(40px); opacity: 0; transition: transform .6s var(--ease), opacity .6s; }
   .drawer.open a { transform: none; opacity: 1; }
   .drawer.open a:nth-child(1) { transition-delay: .15s; } .drawer.open a:nth-child(2) { transition-delay: .2s; } .drawer.open a:nth-child(3) { transition-delay: .25s; } .drawer.open a:nth-child(4) { transition-delay: .3s; } .drawer.open a:nth-child(5) { transition-delay: .35s; } .drawer.open a:nth-child(6) { transition-delay: .4s; }
-  .drawer small { margin-top: auto; font-size: .9rem; font-weight: 500; }
+  .drawer small { margin-top: auto; font-size: .9rem; font-weight: 500; color: var(--grey); }
+  .drawer::before { content: ""; position: absolute; left: var(--gut); right: var(--gut); top: calc(76px + env(safe-area-inset-top)); height: 3px; background: var(--rgb); }
+  .drawer a:nth-child(3n+1):hover, .drawer a:nth-child(3n+1):active { color: var(--red); }
+  .drawer a:nth-child(3n+2):hover, .drawer a:nth-child(3n+2):active { color: var(--green); }
+  .drawer a:nth-child(3n):hover, .drawer a:nth-child(3n):active { color: var(--blue); }
   @media (max-width: 56rem) { .nav-pill, .nav .call { display: none; } .burger { display: block; } }
 
   /* ---------- hero ---------- */
@@ -135,12 +140,12 @@
   @media (max-height: 640px) and (max-width: 40rem) { .hero .lead { font-size: 1rem; } .hero h1 { font-size: 3.2rem; } }
 
   .btn { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: .5rem; padding: .95rem 1.5rem; border-radius: 99px; font-size: 1rem; font-weight: 600; overflow: hidden; isolation: isolate; transition: color .4s var(--ease); }
-  .btn::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: var(--rgb); transform: translateY(101%); transition: transform .45s var(--ease); }
+  .btn::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: var(--green); transform: translateY(101%); transition: transform .45s var(--ease); }
   .btn:hover::before { transform: none; }
   .btn-w { background: #fff; color: #000; }
   .btn-o { border: 1px solid rgba(255,255,255,.35); color: #fff; }
-  .btn-o:hover { color: #fff; border-color: transparent; }
-  .btn-w:hover { color: #fff; }
+  .btn-o:hover { color: #000; border-color: var(--green); }
+  .btn-w:hover { color: #000; }
 
   /* ---------- marquee ---------- */
   .mq { padding: clamp(3rem, 7vw, 6rem) 0; overflow: hidden; border-block: 1px solid var(--line); }
@@ -288,10 +293,79 @@
     .scroll-cue i::after, .prod .ph.glow span { animation: none; }
     .bcard { position: relative; top: auto; }
   }
+
+  /* ================= glass =================
+     Three slow glows in the mark's colours sit behind the page, each a solid
+     colour softened by blur (no blended gradients), and the surfaces above
+     them are frosted glass. */
+  .aurora { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .aurora i { position: absolute; width: 44vmax; height: 44vmax; border-radius: 50%; filter: blur(90px); opacity: .32; will-change: transform; }
+  .aurora i:nth-child(1) { background: #F03035; top: -14vmax; left: -12vmax; animation: drift-a 26s ease-in-out infinite alternate; }
+  .aurora i:nth-child(2) { background: #00D080; top: 28vh; right: -16vmax; animation: drift-b 31s ease-in-out infinite alternate; }
+  .aurora i:nth-child(3) { background: #1A82E2; bottom: -18vmax; left: 18vw; animation: drift-c 36s ease-in-out infinite alternate; }
+  @keyframes drift-a { to { transform: translate(34vw, 46vh) scale(1.15); } }
+  @keyframes drift-b { to { transform: translate(-38vw, -20vh) scale(.9); } }
+  @keyframes drift-c { to { transform: translate(22vw, -52vh) scale(1.2); } }
+  main, footer { position: relative; z-index: 1; }
+
+  .panel, .num, .prod, .ccard, .map, .about-g p, .bcard .info, .btn-o, .nav-pill, .burger {
+    background: rgba(255,255,255,.055);
+    border: 1px solid rgba(255,255,255,.13);
+    -webkit-backdrop-filter: blur(22px) saturate(170%);
+    backdrop-filter: blur(22px) saturate(170%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.14), 0 24px 60px -30px rgba(0,0,0,.75);
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .panel, .num, .prod, .ccard, .map, .about-g p, .bcard .info, .btn-o, .nav-pill, .burger { background: rgba(24,24,28,.9); }
+  }
+
+  /* the light sections turn to glass on the glows */
+  .store, .brands, .about { background: transparent; color: var(--white); border-radius: 0; }
+  .store .lead, .brands .lead { color: #B8B8BF; }
+  .store .eyebrow { color: var(--red); }
+  .brands .eyebrow { color: var(--green); }
+  .about .big em { color: #4FA3F0; }
+  .about-g p { padding: 1.4rem 1.4rem 1.5rem; border-radius: var(--r); color: #C9C9D0; }
+  .about-g p:nth-child(1) { border-top: 2px solid var(--red); }
+  .about-g p:nth-child(2) { border-top: 2px solid var(--green); }
+  .about-g p:nth-child(3) { border-top: 2px solid var(--blue); }
+
+  .prod .ph { background: rgba(255,255,255,.04); }
+  .prod .dim { color: var(--grey); }
+  .prod:hover { box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 30px 70px -30px rgba(0,0,0,.9); }
+  .prod .price { background: rgba(10,10,12,.45); border: 1px solid rgba(255,255,255,.18); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+  .prod .price::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: .4rem; border-radius: 50%; background: var(--c); vertical-align: .05em; }
+  .store .btn-w { background: #fff; color: #000; }
+
+  .num { padding: 1.4rem 1.4rem 1.5rem; border-radius: var(--r); }
+  .num:nth-child(1) { border-top: 2px solid var(--red); }
+  .num:nth-child(2) { border-top: 2px solid var(--green); }
+  .num:nth-child(3) { border-top: 2px solid var(--blue); }
+  .num:nth-child(4) { border-top: 2px solid var(--red); }
+
+  .panel-m { border: 1px solid rgba(255,255,255,.08); }
+
+  .bcard .bg::after { background: linear-gradient(rgba(0,0,0,.1), rgba(0,0,0,.45)); }
+  .bcard .info { align-self: flex-start; max-width: 44rem; padding: clamp(1.3rem, 3vw, 2.2rem); border-radius: calc(var(--r) - 6px); background: rgba(12,12,16,.38); }
+  .bcard .go { background: rgba(255,255,255,.08); }
+
+  .ccard:hover { border-color: transparent; }
+
+  .drawer { background: rgba(8,8,10,.55); -webkit-backdrop-filter: blur(30px) saturate(160%); backdrop-filter: blur(30px) saturate(160%); }
+
+  @media (max-width: 40rem) {
+    .aurora i { filter: blur(60px); opacity: .28; }
+    .panel, .num, .prod, .ccard, .map, .about-g p, .bcard .info, .btn-o {
+      -webkit-backdrop-filter: blur(14px) saturate(160%); backdrop-filter: blur(14px) saturate(160%);
+    }
+    .bcard .info { padding: 1.2rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { .aurora i { animation: none; } }
 </style>
 </head>
 
 <body>
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
 <div class="loader" id="loader" aria-hidden="true">
   <div class="loader-in">
     <video id="intro" muted playsinline preload="auto"><source src="videos/pscretn-animation.webm" type="video/webm"></video>
@@ -437,18 +511,18 @@
         <a class="bcard tl" href="trilitlabs.html" data-cursor="Visit">
           <div class="bg"><img src="images/wirelink_dmx.webp" alt="" loading="lazy"></div>
           <img class="logo" src="images/trilitlabs_logo.webp" alt="TrilitLabs logo" width="60" height="60">
-          <span class="k">Stage lighting</span>
+          <div class="info"><span class="k">Stage lighting</span>
           <h3>TrilitLabs</h3>
           <p>WireLink DMX (USB-C to isolated DMX, available for sale soon), wired and wireless DMX controllers, Art-Net, isolated splitters, and the WaveLink DMX app on Google Play — plus stage fixtures and 3D printed lamps.</p>
-          <span class="btn btn-o go">Visit TrilitLabs</span>
+          <span class="btn btn-o go">Visit TrilitLabs</span></div>
         </a>
         <a class="bcard dj" href="dj_pscretn.html" data-cursor="Visit">
           <div class="bg"><video class="inview" muted loop playsinline preload="none" poster="videos/dj/gig06.jpg"><source src="videos/dj/gig06.mp4" type="video/mp4"></video></div>
           <img class="logo" src="images/pscretn_logo_white.webp" alt="" width="60" height="60">
-          <span class="k">Events</span>
+          <div class="info"><span class="k">Events</span>
           <h3>DJ pscretn</h3>
           <p>Weddings, receptions and college nights across Kerala, played on a Pioneer DDJ-FLX4.</p>
-          <span class="btn btn-o go">Visit DJ pscretn</span>
+          <span class="btn btn-o go">Visit DJ pscretn</span></div>
         </a>
       </div>
     </div>
