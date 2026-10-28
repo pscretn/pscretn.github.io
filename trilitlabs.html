@@ -226,6 +226,23 @@
   .feat li::before { content: "—"; position: absolute; left: 0; color: var(--c, var(--amber)); }
   .feat code { font-family: var(--mono); font-size: .85em; color: var(--white); }
 
+  /* ---------- WaveLink DMX Classic, for older controllers ---------- */
+  .classic {
+    margin-top: 2rem; padding: 1.3rem 1.4rem; scroll-margin-top: 6rem;
+    border: 1px solid var(--line-2); border-left: 3px solid var(--c, var(--mint));
+    border-radius: 16px; background: rgba(255,255,255,.03);
+  }
+  .classic h3 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+  .classic h3 small { display: block; margin-top: .2rem; font-size: .7rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--c, var(--mint)); }
+  .classic p { margin: .7rem 0 0; color: #D5DBE1; font-size: .95rem; }
+  .classic .cta { margin-top: 1rem; }
+  .classic .meta { margin-top: .8rem; font-size: .78rem; color: var(--muted); overflow-wrap: anywhere; }
+  .classic .meta code { font-family: var(--mono); font-size: .95em; }
+  .classic details { margin-top: .9rem; border-top: 1px solid var(--line); padding-top: .7rem; }
+  .classic summary { cursor: pointer; font-weight: 600; font-size: .9rem; }
+  .classic ol { margin: .6rem 0 0; padding-left: 1.3rem; color: #D5DBE1; font-size: .9rem; }
+  .classic ol li { padding: .2rem 0; }
+
   .stats { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: clamp(2rem, 5vw, 3.5rem); border-top: 1px solid var(--line); }
   .stats div { padding: 1.2rem 1rem 0 0; }
   .stats b { display: block; font-size: clamp(1.4rem, 3.2vw, 2.4rem); font-weight: 700; letter-spacing: -.03em; line-height: 1.1; }
@@ -565,6 +582,27 @@
             Get it on Google Play
           </a>
           <a class="btn" href="WaveLinkDMX/privacy.html">Privacy policy</a>
+        </div>
+
+        <div class="classic" id="classic">
+          <h3>WaveLink DMX Classic<small>For older WaveLink controllers</small></h3>
+          <p>We're loyal. Older WaveLink controllers &mdash; the ones that only run on their own Wi&#8209;Fi (<code>192.168.4.1</code>) and can't be updated from the app &mdash; won't work with the latest app on Google Play. Classic is the app made for them: faders, scenes, chases, fixtures, effects and the Light Show.</p>
+          <div class="cta">
+            <a class="btn btn-hot" href="WaveLinkDMX/WaveLink_DMX_Classic_1.1.1.apk" download>
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 3a1 1 0 0 1 1 1v9.6l3.3-3.3a1 1 0 1 1 1.4 1.4l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 1 1 1.4-1.4l3.3 3.3V4a1 1 0 0 1 1-1zM5 19h14a1 1 0 1 1 0 2H5a1 1 0 1 1 0-2z"/></svg>
+              Download Classic APK
+            </a>
+          </div>
+          <p class="meta">Version 1.1.1 &middot; 27.6&nbsp;MB &middot; Android 5.0 or later<br>SHA&#8209;256 <code>8AA19D7E879B97DA194D7771AD57B86E747DF768BB43245BCAB43EEC98AD52E0</code></p>
+          <details>
+            <summary>How to install</summary>
+            <ol>
+              <li>Note down your patched fixtures, then uninstall WaveLink DMX if it is on your phone &mdash; this clears the scenes and fixtures saved on it.</li>
+              <li>Download the APK above and open it. Allow your browser to install apps if Android asks.</li>
+              <li>Join the controller's Wi&#8209;Fi (<code>wavelink_dmx&hellip;</code>) and open WaveLink DMX.</li>
+            </ol>
+          </details>
+          <p class="meta">Want all the latest features on your setup too? Because we love you, we've got you covered &mdash; <a class="inl" href="#contact">get in touch</a>.</p>
         </div>
       </div>
     </div>
