@@ -38,7 +38,7 @@
     <div class="container">
         <h1>Privacy Policy</h1>
         <p><strong>WaveLink DMX</strong></p>
-        <p>Effective Date: January 1, 2026</p>
+        <p>Effective Date: October 28, 2026</p>
 
         <h2>1. Introduction</h2>
         <p>
@@ -54,37 +54,81 @@
 
         <h2>3. Network Usage</h2>
         <p>
-            The app communicates locally with an ESP32 device over Wi-Fi
-            to send DMX control data. No data is transmitted to external servers.
+            The app sends DMX control data to your lighting equipment on your
+            local network or over USB: the WaveLink DMX controller, Art-Net
+            nodes, or a USB DMX interface. This traffic stays on your local
+            network or cable.
+        </p>
+        <p>
+            When you check for or install a controller firmware update, the app
+            downloads the firmware from our public release page on GitHub. No
+            personal data is sent; as with any download, GitHub receives the
+            device's network address. No other data is sent to external servers.
         </p>
 
-        <h2>4. Local Storage</h2>
+        <h2>4. Audio (Live Audio)</h2>
+        <p>
+            The optional Live Audio feature runs the light show in time with the
+            music playing on your device. To hear that music, Android requires the
+            app to use audio playback capture, which needs the
+            <strong>record audio (microphone) permission</strong> and your
+            confirmation in Android's own "Start recording or casting" prompt each
+            time Live Audio starts.
+        </p>
+        <ul>
+            <li>Only the audio playing on the device is used. The microphone is not
+                used to listen to your surroundings, and the screen is never
+                captured.</li>
+            <li>The audio is analysed on the device, as it plays, to find its
+                tempo, beat and loudness. It is <strong>never recorded, stored, or
+                sent</strong> anywhere.</li>
+            <li>Capture runs only while Live Audio is on, and a notification is
+                shown for as long as it runs. It stops when you turn Live Audio off
+                or stop sharing from Android.</li>
+        </ul>
+
+        <h2>5. Permissions</h2>
+        <ul>
+            <li><strong>Record audio</strong>: for Live Audio, as described above.</li>
+            <li><strong>Notifications</strong>: to show that Live Audio or background
+                lighting output is running.</li>
+            <li><strong>Network and Wi-Fi</strong>: to talk to your lighting
+                equipment and download controller firmware.</li>
+            <li><strong>Foreground services</strong>: to keep lighting output and
+                Live Audio running while the screen is off.</li>
+            <li><strong>USB</strong>: to drive a WaveLink controller or USB DMX
+                interface that you plug in.</li>
+        </ul>
+
+        <h2>6. Local Storage</h2>
         <p>
             The app stores the following data locally on the user's device:
         </p>
         <ul>
             <li>Saved scenes</li>
             <li>Bank configurations</li>
-            <li>Fixture personalities</li>
+            <li>Fixture personalities and patched fixtures</li>
             <li>Channel shortcuts</li>
+            <li>Effects, light show and output settings</li>
+            <li>Controller firmware you have downloaded</li>
         </ul>
         <p>
             This data remains on the device and is not shared with third parties.
         </p>
 
-        <h2>5. Third-Party Services</h2>
+        <h2>7. Third-Party Services</h2>
         <p>
             WaveLink DMX does not use analytics services, advertising SDKs,
             or third-party tracking technologies.
         </p>
 
-        <h2>6. Children's Privacy</h2>
+        <h2>8. Children's Privacy</h2>
         <p>
             WaveLink DMX is not designed for children under the age of 13.
             The app does not knowingly collect data from children.
         </p>
 
-        <h2>7. Contact Information</h2>
+        <h2>9. Contact Information</h2>
         <p>
             If you have any questions about this Privacy Policy, you may contact:
         </p>
