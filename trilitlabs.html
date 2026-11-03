@@ -806,6 +806,7 @@
   <div class="tabs" id="inTabs">
     <button data-p="pPhoto" class="on">Photo of DMX chart</button>
     <button data-p="pText">Paste channel list</button>
+    <button data-p="pManual">Build manually</button>
     <button data-p="pOpen">Open file</button>
   </div>
 
@@ -876,9 +877,15 @@
     </details>
   </div>
 
+  <div class="pane" id="pManual">
+    <p class="help" style="margin-top:0">No chart to photograph or paste? Start with blank channels and fill each one in below, in step 3: its name, its function (which decides the console wheel) and its value ranges. Works for both the .R20 and the .D4.</p>
+    <div class="row"><label class="f" for="manN" style="margin:0">DMX channels in this mode</label><input id="manN" type="number" min="1" max="512" value="8" style="width:6.5rem"><button class="btn primary" id="manGo" type="button">Create blank channels</button></div>
+    <div class="status" id="manStatus"></div>
+  </div>
+
   <div class="pane" id="pOpen">
-    <p class="help" style="margin-top:0">Open an existing <code>.R20</code> to edit it, or a <code>.json</code> project saved from this page.</p>
-    <input type="file" id="openIn" accept=".r20,.R20,.json,.txt">
+    <p class="help" style="margin-top:0">Open a Titan <code>.d4</code> (every mode comes in as a tab), one or more <code>.R20</code> files (each file becomes a mode, so separate R20 modes join into one .D4), or a <code>.json</code> project saved from this page.</p>
+    <input type="file" id="openIn" accept=".d4,.D4,.r20,.R20,.json,.txt" multiple>
     <div class="status" id="openStatus"></div>
   </div>
 </section>
@@ -2228,15 +2235,96 @@ CH8 Auto programs
   $('#parseBtn').click();
 };
 
+/* ---- build manually: blank channels to fill in step 3 */
+$('#manGo').onclick = ()=>{
+  const n = clampInt($('#manN').value, 1, 512, 8);
+  const chs = Array.from({length:n}, (_,i)=>{ const c = newChannel('', 'other'); c.openR = i===0; return c; });
+  loadProject({mode: state.fx.mode || (n+'CH')}, chs, `Created ${n} blank channels: fill them in below`);
+  $('#manStatus').className = 'status ok'; $('#manStatus').textContent = `${n} blank channels are ready in step 3. Name each one and pick its function.`;
+  setTimeout(()=>{ const i = document.querySelector('#chlist .ch input[data-k=name]'); i && i.focus({preventScroll:true}); }, 400);
+};
+
 /* ---- open file */
+/* ---- read a Titan .d4: fixture details plus every visible mode as channels */
+function parseD4(src){
+  const doc = new DOMParser().parseFromString(src.replace(/^﻿/,''), 'application/xml');
+  if(doc.querySelector('parsererror')) throw new Error('This .d4 is not valid XML');
+  const root = doc.documentElement; if(root.nodeName!=='Fixture') throw new Error('No <Fixture> in this file');
+  const byId = {};                                       // Titan attribute ID → our function
+  for(const [fn,M] of Object.entries(D4MAP)) if(M.id && !byId[M.id]) byId[M.id] = fn;
+  Object.assign(byId, {Colour_Macro:'cmacro', Colour1:'colour', Colour:'colour', Gobo1:'gobo', Gobo2:'gobo2', Dim_Spd:'dimcurve', Master_Dimmer:'dimmer', Sound:'macro'});
+  const attrs = {};
+  root.querySelectorAll(':scope > Control > Attribute').forEach(a=>{
+    const size = a.getAttribute('Size')==='2' ? 2 : 1, max = size===2 ? 65535 : 255;
+    const fns = [...a.querySelectorAll(':scope > Function')].map(f=>{
+      let [lo,hi] = (f.getAttribute('Dmx')||'0~0').split('~').map(Number); const inv = lo>hi; if(inv) [lo,hi] = [hi,lo];
+      const s8 = v => size===2 ? Math.min(255, Math.floor(v/256)) : Math.min(255, v);
+      return {name:f.getAttribute('Name')||'', lo:s8(lo), hi:s8(hi), full: lo===0 && hi>=max, inv, pct:/%/.test(f.getAttribute('Display')||'')};
+    });
+    attrs[a.getAttribute('ID')] = {name:a.getAttribute('Name')||a.getAttribute('ID'), id:a.getAttribute('ID'), fns};
+  });
+  const fx = {mfr:root.getAttribute('Company')||'', name:root.getAttribute('Name')||'', short:root.getAttribute('ShortName')||'', ref:''};
+  const modes = [], notes = [];
+  root.querySelectorAll(':scope > Mode').forEach(m=>{
+    if(m.getAttribute('Hidden')==='True') return;            // cells and other hidden helper modes
+    const n = parseInt(m.getAttribute('Channels'),10)||0;
+    const chs = Array.from({length:n}, (_,i)=>newChannel('Ch '+(i+1),'other'));
+    const focus = m.querySelector('Physical > Focus');
+    if(focus && !modes.length){ const ty = focus.getAttribute('Type'); fx.kind = ty==='Head' ? 2 : ty==='Mirror' ? 1 : 0;
+      if(fx.kind){ fx.pan = +focus.getAttribute('PanMax')||540; fx.tilt = +focus.getAttribute('TiltMax')||270; } }
+    m.querySelectorAll(':scope > Include > Attribute').forEach(inc=>{
+      const offs = (inc.getAttribute('ChannelOffset')||'').split(',').map(s=>parseInt(s,10)).filter(v=>v>=1 && v<=n);
+      if(!offs.length) return;                                // virtual controls have no channel of their own
+      const A = attrs[inc.getAttribute('ID')] || {name:inc.getAttribute('ID'), fns:[]};
+      const c = chs[offs[0]-1];
+      c.name = shortName(A.name);
+      c.fn = byId[A.id] || guessFn(A.name);
+      const real = A.fns.filter(f=>!f.full);
+      c.ranges = A.fns.length>1 || real.length ? A.fns.map(f=>({lo:f.lo, hi:f.hi, label:shortLabel(f.name), pct:f.pct && f.hi>f.lo})) : [];
+      if(A.fns.length===1 && A.fns[0].inv) c.adv.inv = 'I';
+      if(offs[1]){ const fc = chs[offs[1]-1]; fc.name = shortName(A.name+' Fine'); fc.fn = 'fine'; fc.fineOf = offs[0]-1; }
+    });
+    const imp = m.querySelector(':scope > Import');
+    const blank = chs.filter(c=>/^Ch \d+$/.test(c.name) && c.fn==='other').length;
+    if(blank) notes.push(`${m.getAttribute('Name')||(n+' DMX')}: ${blank} of ${n} channels are pixel cells or unused, which the builder can't read yet, so they came in blank`);
+    modes.push({name:m.getAttribute('Name')||(n+' DMX'), ref:(imp && imp.getAttribute('PearlRef'))||'', chs});
+  });
+  if(!modes.length) throw new Error('No DMX modes found in this .d4');
+  return {fx, modes, notes};
+}
+
+/* ---- open: .d4 (all modes), several .R20 (one mode each), or a saved project */
 $('#openIn').addEventListener('change', async e=>{
-  const f = e.target.files[0]; if(!f) return; const txt = await f.text(); const st=$('#openStatus');
+  const files = [...e.target.files]; if(!files.length) return; const st=$('#openStatus');
+  const before = {fx:{...state.fx}, modes:(syncMode(), state.modes.map(m=>({...m}))), active:state.active};
+  const undoOpen = ()=>{ restoreModes(before); };
   try{
-    if(/\.json$/i.test(f.name) || txt.trim().startsWith('{')){ const p = JSON.parse(txt);
-      if(Array.isArray(p.modes)){ restoreModes(p); toast(`Opened ${f.name}: ${state.modes.length} mode${state.modes.length===1?'':'s'}`); $('#s3').scrollIntoView({behavior:'smooth', block:'start'}); }
-      else { if(!Array.isArray(p.chs)) throw new Error('Not a project file'); loadProject(p.fx, fixChs(p.chs), `Opened ${f.name}`); } }
-    else { const {fx,chs} = parseR20(txt); if(!chs.length) throw new Error('No DMX section found'); loadProject(fx, chs, `Opened ${f.name}: ${chs.length} channels`); }
-    st.className='status ok'; st.textContent=`Opened ${f.name}`;
+    if(files.length===1 && (/\.json$/i.test(files[0].name))){
+      const txt = await files[0].text(), f = files[0], p = JSON.parse(txt);
+      if(Array.isArray(p.modes)){ restoreModes(p); toastUndo(`Opened ${f.name}: ${state.modes.length} mode${state.modes.length===1?'':'s'}`, undoOpen); $('#s3').scrollIntoView({behavior:'smooth', block:'start'}); }
+      else { if(!Array.isArray(p.chs)) throw new Error('Not a project file'); loadProject(p.fx, fixChs(p.chs), `Opened ${f.name}`); }
+      st.className='status ok'; st.textContent=`Opened ${f.name}`;
+    } else {
+      let fx = null; const modes = [], skipped = [], notes = [];
+      for(const f of files){
+        const txt = await f.text();
+        try{
+          if(/\.d4$/i.test(f.name) || /^﻿?\s*<\?xml|<Fixture[\s>]/.test(txt.slice(0,400))){
+            const d = parseD4(txt); fx = fx || d.fx; modes.push(...d.modes); notes.push(...d.notes);
+          } else {
+            const r = parseR20(txt); if(!r.chs.length) throw new Error('no DMX section');
+            fx = fx || r.fx; modes.push({name:r.fx.mode || (r.chs.length+'CH'), ref:r.fx.ref||'', chs:r.chs});
+          }
+        }catch(err){ skipped.push(`${f.name} (${err.message})`); }
+      }
+      if(!modes.length) throw new Error(skipped.join('; ') || 'nothing readable');
+      restoreModes({fx:{...state.fx, mode:'', ref:'', ...fx}, modes, active:0});
+      const msg = `Opened ${modes.length} mode${modes.length===1?'':'s'}${fx && fx.name ? ' of '+ascii(fx.mfr+' '+fx.name).trim() : ''}`;
+      toastUndo(msg, undoOpen); $('#s3').scrollIntoView({behavior:'smooth', block:'start'});
+      st.className = skipped.length ? 'status err' : 'status ok';
+      st.textContent = msg + (skipped.length ? `. Couldn't read: ${skipped.join('; ')}` : '.') + (notes.length ? ' Note: '+notes.join('; ')+'.' : '');
+      if(notes.length && !skipped.length) st.className = 'status';
+    }
   }catch(err){ st.className='status err'; st.textContent='Could not read this file: '+err.message; }
   e.target.value='';
 });
