@@ -90,8 +90,11 @@
   .nav.solid::before { opacity: 1; }
   .nav .wrap { height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
   .nav-pill { display: flex; align-items: center; gap: .25rem; padding: .3rem; border-radius: 99px; background: rgba(20,20,22,.6); border: 1px solid var(--line); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
-  .nav-pill a { padding: .45rem .95rem; border-radius: 99px; font-size: .85rem; color: #D0D0D6; transition: background .25s, color .25s; }
+  .nav-pill a { white-space: nowrap; padding: .45rem .95rem; border-radius: 99px; font-size: .85rem; color: #D0D0D6; transition: background .25s, color .25s; }
   .nav-pill a:hover { background: rgba(255,255,255,.1); color: #fff; }
+  .nav-pill .pill-sep { width: 1px; height: 1.1rem; margin: 0 .2rem; background: rgba(255,255,255,.18); }
+  .nav-pill a.brand-l { display: inline-flex; align-items: center; gap: .45rem; }
+  .nav-pill a.brand-l img { width: 16px; height: 16px; object-fit: contain; }
   .brand { display: flex; align-items: center; gap: .55rem; font-weight: 700; font-size: 1.1rem; letter-spacing: -.03em; }
   .brand img { width: 26px; height: 26px; }
   .call { display: inline-flex; align-items: center; gap: .55rem; padding: .3rem 1rem .3rem .3rem; border-radius: 99px; background: #fff; color: #000; font-size: .88rem; font-weight: 600; transition: background .3s; }
@@ -112,7 +115,9 @@
   .drawer a:nth-child(3n+1):hover, .drawer a:nth-child(3n+1):active { color: var(--red); }
   .drawer a:nth-child(3n+2):hover, .drawer a:nth-child(3n+2):active { color: var(--green); }
   .drawer a:nth-child(3n):hover, .drawer a:nth-child(3n):active { color: var(--blue); }
-  @media (max-width: 56rem) { .nav-pill, .nav .call { display: none; } .burger { display: block; } }
+  .nav .call { white-space: nowrap; }
+  /* switch to the menu button before the pill gets cramped */
+  @media (max-width: 68rem) { .nav-pill, .nav .call { display: none; } .burger { display: block; } }
 
   /* ---------- hero ---------- */
   .hero { position: relative; height: 100vh; height: 100svh; min-height: 36rem; overflow: hidden; }
@@ -391,6 +396,9 @@
       <a href="#brands">Brands</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
+      <span class="pill-sep" aria-hidden="true"></span>
+      <a class="brand-l" href="trilitlabs.html"><img src="images/trilitlabs_logo.webp" alt="" width="16" height="16">TrilitLabs</a>
+      <a class="brand-l" href="dj_pscretn.html"><img src="images/pscretn_logo_white.webp" alt="" width="16" height="16">DJ pscretn</a>
     </div>
     <a class="call mag" href="tel:+917907873500"><i>&#9742;</i>Call us</a>
     <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false"><i></i><i></i></button>
@@ -402,6 +410,8 @@
   <a href="#brands">Brands</a>
   <a href="#about">About</a>
   <a href="#contact">Contact</a>
+  <a href="trilitlabs.html">TrilitLabs</a>
+  <a href="dj_pscretn.html">DJ pscretn</a>
   <a href="tel:+917907873500">Call us</a>
   <small>+91 79078 73500 · pscretn@gmail.com</small>
 </div>
