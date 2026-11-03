@@ -482,6 +482,11 @@
 .r20{position:relative;margin-top:clamp(1.5rem,4vw,2.5rem)}
 .r20 section.card{background:rgba(10,13,18,.82);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
 .r20-foot{margin:14px 0 0;color:var(--muted);font-size:12px}
+.r20 .modebar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0 0 10px}
+.r20 .modebar .mt{background:var(--panel2);border:1px solid var(--line);color:var(--muted);padding:7px 12px;border-radius:999px;cursor:pointer;font:inherit;font-size:14px}
+.r20 .modebar .mt.on{color:#1a1200;background:var(--accent);border-color:var(--accent);font-weight:600}
+.r20 .modebar .mt small{opacity:.75;margin-left:4px}
+.r20 .modebar .sep{flex:1}
 .r20 .gate{margin:4px 0 12px;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--panel2)}
 .r20 .gate input{flex:1;min-width:0}
 .r20 .gate .help{margin:8px 0 0}
@@ -789,10 +794,10 @@
     <div class="p-head rv">
       <span class="num">III.b</span>
       <h2>Personality Generator</h2>
-      <ul class="tags"><li>Avolites R20</li><li>WaveLink controllers</li><li>D4 coming soon</li><li>Free</li></ul>
+      <ul class="tags"><li>Titan .D4</li><li>Pearl .R20</li><li>WaveLink controllers</li><li>Free</li></ul>
     </div>
     <p class="lede rv" style="max-width:46rem">No personality for a fixture? Photograph its DMX chart or paste the channel list, check each channel, and download a personality file for your console.</p>
-    <p class="rv" style="max-width:46rem;color:var(--muted);margin:0">Today it makes <code>.R20</code> files for Avolites Pearl / Classic consoles: Pearl 2000, 2004, 2008, 2010, Tiger and Azure. <code>.D4</code> files for Titan consoles are coming next. The same file also runs our <b>WaveLink controllers</b>: import it in the <a href="#app" style="text-decoration:underline">WaveLink DMX app</a> with its <i>Import personality</i> button, or load it into <a href="#software" style="text-decoration:underline">LightShow</a>.</p>
+    <p class="rv" style="max-width:46rem;color:var(--muted);margin:0">It makes <code>.D4</code> files for Avolites Titan consoles, with every DMX mode in one file, and <code>.R20</code> files for Pearl / Classic consoles: Pearl 2000, 2004, 2008, 2010, Tiger and Azure. The same file also runs our <b>WaveLink controllers</b>: import it in the <a href="#app" style="text-decoration:underline">WaveLink DMX app</a> with its <i>Import personality</i> button, or load it into <a href="#software" style="text-decoration:underline">LightShow</a>.</p>
 
     <div class="r20">
 <!-- STEP 1 -->
@@ -884,7 +889,10 @@
   <div class="grid g3">
     <div><label class="f" for="fxMfr">Manufacturer</label><input id="fxMfr" placeholder="e.g. Prolights"></div>
     <div><label class="f" for="fxName">Fixture</label><input id="fxName" placeholder="e.g. Sunrise 18"></div>
-    <div><label class="f" for="fxMode">Mode</label><input id="fxMode" placeholder="e.g. 8CH"></div>
+    <div><label class="f" for="fxMode">Mode name (the mode you're editing)</label><input id="fxMode" placeholder="e.g. 8CH"></div>
+  </div>
+  <div class="grid g4" style="margin-top:10px">
+    <div><label class="f" for="fxShort">Short name for Titan (10 max)</label><input id="fxShort" placeholder="auto" maxlength="10"></div>
   </div>
   <div class="grid g4" style="margin-top:10px">
     <div><label class="f" for="fxRef">Pearl reference / file name</label><input id="fxRef" placeholder="auto" maxlength="11"></div>
@@ -900,8 +908,9 @@
 
 <!-- STEP 3 -->
 <section class="card" id="s3">
-  <h2><span class="step">3</span> Channels <span class="pill" id="chCount">0</span></h2>
-  <p class="help" style="margin-top:0">Check each channel's function: it decides which Pearl wheel it lands on. Fine/LSB channels pair with their coarse channel for 16-bit control. Value ranges show as text on the console wheel.</p>
+  <h2><span class="step">3</span> Modes &amp; channels <span class="pill" id="chCount">0</span></h2>
+  <div class="modebar" id="modeBar" role="tablist" aria-label="DMX modes"></div>
+  <p class="help" style="margin-top:0">One fixture can have several DMX modes: add each one as a tab, and the .D4 file carries them all. Check each channel's function: it decides which console wheel it lands on. Fine/LSB channels pair with their coarse channel for 16-bit control. Value ranges show as text on the console wheel.</p>
   <div class="chlist" id="chlist"></div>
   <div class="row" style="margin-top:10px">
     <button class="btn" id="addCh">+ Add channel</button>
@@ -924,19 +933,23 @@
   </div>
   <p class="help" id="gWho" hidden></p>
   <div class="row" id="dlRow">
-    <button class="btn primary" id="dlR20">Download .R20</button>
-    <button class="btn" id="dlZip">Download USB folder (.zip)</button>
+    <button class="btn primary" id="dlD4">Download .D4 (Titan, all modes)</button>
+    <button class="btn primary" id="dlR20">Download .R20 (this mode)</button>
+    <button class="btn" id="dlZip">USB folder, every mode's .R20 (.zip)</button>
     <button class="btn" id="copyBtn">Copy text</button>
     <button class="btn ghost" id="saveJson">Save project (.json)</button>
   </div>
   <p class="help" id="dlNote"></p>
   <details class="set" open id="prevBox">
     <summary>Preview <span class="muted" id="fname"></span></summary>
+    <div class="tabs" id="prevTabs" style="margin:8px 0 6px"><button type="button" data-k="r20" class="on">.R20 · this mode</button><button type="button" data-k="d4">.D4 · all modes</button></div>
     <pre class="out" id="out"></pre>
   </details>
   <details class="set">
     <summary>Loading it on the console</summary>
     <div class="help">
+      <p><b>Titan consoles (.D4):</b> one file holds every mode. Put it in the console's user personality folder (or open it in Avolites' Personality Builder and save it to the fixture library), then patch it like any fixture. Patch one and check every attribute before a show.</p>
+      <p><b>Pearl / Classic (.R20):</b></p>
       <p>Pearl 2008 / 2010 / Tiger read personalities from a USB stick in this layout (the zip already has it):</p>
       <p><code>AVOLITES\FIXTURES\R20\&lt;MANUFACTURER&gt;\&lt;FILE&gt;.R20</code></p>
       <p>The console also expects the shape file <code>SG.DAT</code> in the <code>R20</code> folder. Copy it from any Avolites personality download or use Avolites' <i>Copy 2008</i> tool. Older floppy-disk Pearls take the .R20 in the root of the disk with SG.DAT.</p>
@@ -1892,7 +1905,184 @@ function shortLabel(s){ s = ascii(s).replace(/\s+/g,' ').replace(/^[-:.,\s]+/,''
 /* ============================================================
    App state & rendering
    ============================================================ */
-const state = { fx:{mfr:'',name:'',mode:'',ref:'',kind:0,pan:540,tilt:270,palettes:true}, chs:[] };
+const state = { fx:{mfr:'',name:'',mode:'',ref:'',short:'',kind:0,pan:540,tilt:270,palettes:true}, chs:[], modes:[], active:0 };
+state.modes = [{name:'', ref:'', chs:state.chs}];
+let lastD4 = null, prevKind = 'r20';
+
+/* ---- DMX modes: state.chs / fx.mode / fx.ref always mirror the open mode */
+function syncMode(){ const m = state.modes[state.active]; m.chs = state.chs; m.name = state.fx.mode; m.ref = state.fx.ref; }
+function useMode(i){
+  syncMode(); state.active = i; const m = state.modes[i];
+  state.chs = m.chs; state.fx.mode = m.name || ''; state.fx.ref = m.ref || '';
+  fillFx(); renderChannels();
+}
+function renderModes(){
+  syncMode();
+  const many = state.modes.length > 1;
+  $('#modeBar').innerHTML = state.modes.map((m,i)=>`<button type="button" class="mt${i===state.active?' on':''}" data-mode="${i}" role="tab" aria-selected="${i===state.active}">${esc(m.name||('Mode '+(i+1)))}<small>${m.chs.length} ch</small></button>`).join('')
+    + `<span class="sep"></span><button type="button" class="btn small" data-mact="new">+ New mode</button><button type="button" class="btn small ghost" data-mact="copy">Copy this mode</button>${many?'<button type="button" class="btn small ghost" data-mact="del">Delete this mode</button>':''}`;
+}
+$('#modeBar').addEventListener('click', e=>{
+  const tab = e.target.closest('[data-mode]'); if(tab){ useMode(+tab.dataset.mode); return; }
+  const b = e.target.closest('[data-mact]'); if(!b) return;
+  syncMode();
+  if(b.dataset.mact==='new'){ state.modes.push({name:'', ref:'', chs:[]}); useMode(state.modes.length-1); toast('New mode: add its channels'); }
+  if(b.dataset.mact==='copy'){ const m = state.modes[state.active]; state.modes.push({name:(m.name||'Mode')+' copy', ref:'', chs:JSON.parse(JSON.stringify(m.chs))}); useMode(state.modes.length-1); toast('Copied: rename it and change what differs'); }
+  if(b.dataset.mact==='del' && state.modes.length>1){
+    const i = state.active, gone = state.modes[i];
+    state.modes.splice(i,1); state.active = Math.max(0,i-1); const m = state.modes[state.active];
+    state.chs = m.chs; state.fx.mode = m.name||''; state.fx.ref = m.ref||''; fillFx(); renderChannels();
+    toastUndo(`Deleted ${gone.name||'mode'}`, ()=>{ syncMode(); state.modes.splice(i,0,gone); useMode(i); });
+  }
+});
+$('#prevTabs').addEventListener('click', e=>{ const b = e.target.closest('[data-k]'); if(!b) return; prevKind = b.dataset.k; document.querySelectorAll('#prevTabs button').forEach(x=>x.classList.toggle('on', x===b)); update(); });
+
+/* ============================================================
+   D4 (Avolites Titan) writer. One file per fixture: every attribute is
+   defined once under <Control>, and each <Mode> lists the ones it uses
+   with their DMX offsets ("5" or "5,6" for 16-bit) and console wheel.
+   ============================================================ */
+const D4MAP = {
+  dimmer:{id:'Dimmer',g:'I',w:1,loc:100,pow:0}, shutter:{id:'Shutter',g:'I',w:4}, iris:{id:'Iris',g:'B'}, dimcurve:{id:'Dim_Curve',g:'S'},
+  pan:{id:'Pan',g:'P',w:2,loc:50,pow:50}, tilt:{id:'Tilt',g:'P',w:3,loc:50,pow:50}, speed:{id:'PT_Speed',g:'S',w:25,loc:100,pow:100},
+  red:{id:'Red',g:'C',w:10,loc:100,pow:100,col:'255,0,0'}, green:{id:'Green',g:'C',w:11,loc:100,pow:100,col:'0,255,0'}, blue:{id:'Blue',g:'C',w:12,loc:100,pow:100,col:'0,0,255'},
+  white:{id:'White',g:'C',w:9,col:'255,255,255'}, amber:{id:'Amber',g:'C',col:'255,191,0'}, uv:{id:'UV',g:'C',col:'127,0,255'}, lime:{id:'Lime',g:'C',col:'191,255,0'},
+  cyan:{id:'Cyan',g:'C',w:10,col:'0,255,255'}, magenta:{id:'Magenta',g:'C',w:11,col:'255,0,255'}, yellow:{id:'Yellow',g:'C',w:12,col:'255,255,0'},
+  cto:{id:'CTO',g:'C',w:7,col:'255,240,200'}, colour:{id:'Colour_1',g:'C',w:8}, colour2:{id:'Colour_2',g:'C'}, cmacro:{id:'Colour_Macro',g:'C',w:8},
+  gobo:{id:'Gobo_1',g:'G'}, gobo2:{id:'Gobo_2',g:'G'}, goborot:{id:'Gobo_1_Rotate',g:'G'}, gobo2rot:{id:'Gobo_2_Rotate',g:'G'},
+  prism:{id:'Prism',g:'B'}, prismrot:{id:'Prism_Rotate',g:'B'}, frost:{id:'Frost',g:'B'}, zoom:{id:'Zoom',g:'B',w:19,loc:50,pow:50}, focus:{id:'Focus',g:'B',loc:50,pow:50},
+  macro:{id:'Auto',g:'E',w:22}, control:{id:'Control',g:'S',w:28}, other:{g:'S'}, fine:{g:'S'}
+};
+const xa = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const d4txt = s => ascii(s).replace(/'/g,'').replace(/%/g,'').trim();
+function pairsOf(chs){   // 16-bit pairing for D4: every linked fine channel pairs, dimmer included
+  const n = chs.length, lsb = Array(n).fill(-1), msb = Array(n).fill(-1);
+  chs.forEach((c,i)=>{ if(c.fn!=='fine') return; const p = c.fineOf;
+    if(p>=0 && p<n && p!==i && chs[p].fn!=='fine' && lsb[p]<0){ lsb[p]=i; msb[i]=p; } });
+  return {lsb, msb};
+}
+function generateD4(fx, modes){
+  const W = [], attrs = [], byKey = new Map(), usedIds = new Set();
+  const live = modes.filter(m=>m.chs.length);
+  if(!live.length) return {text:'', warnings:[], file:''};
+  const plan = live.map(m=>{
+    const {lsb, msb} = pairsOf(m.chs);
+    const inc = [];
+    m.chs.forEach((c,i)=>{
+      if(msb[i]>=0) return;
+      const fn = c.fn==='fine' ? 'other' : c.fn, M = D4MAP[fn] || D4MAP.other;
+      const name = (ascii(c.name) || (FUNCS[fn]||FUNCS.other).label).slice(0,24);
+      const ranges = (c.ranges||[]).map(r=>({lo:clampInt(r.lo,0,255,0), hi:clampInt(r.hi,0,255,255), label:d4txt(r.label), pct:!!r.pct})).filter(r=>r.label||r.pct).sort((a,b)=>a.lo-b.lo);
+      const key = fn+'|'+name.toLowerCase()+'|'+JSON.stringify(ranges);
+      let a = byKey.get(key);
+      if(!a){
+        let id = M.id && !usedIds.has(M.id) ? M.id : (name.replace(/[^A-Za-z0-9]+/g,'_').replace(/^_|_$/g,'') || 'Attribute');
+        if(usedIds.has(id)){ let k = 2; while(usedIds.has(id+'_'+k)) k++; id = id+'_'+k; }
+        usedIds.add(id);
+        a = {id, name, fn, M, ranges, size:1, inv:c.adv && c.adv.inv==='I'};
+        byKey.set(key, a); attrs.push(a);
+      }
+      if(lsb[i]>=0) a.size = 2;
+      inc.push({a, off: lsb[i]>=0 ? `${i+1},${lsb[i]+1}` : `${i+1}`});
+    });
+    return {m, inc};
+  });
+
+  const pct = (lo,hi,size) => size===2 ? `${lo*256}~${hi*256+255}` : `${lo}~${hi}`;
+  const fnXml = a => {
+    const col = a.M.col ? ` Colour="${a.M.col}"` : '';
+    if(!a.ranges.length){
+      const fmt = a.size===2 ? `'%.2f%%',0.00~100.00` : `'%.1f%%',0.0~100.0`;
+      const dmx = a.inv ? (a.size===2 ? '65535~0' : '255~0') : (a.size===2 ? '0~65535' : '0~255');
+      return [`      <Function ID="1" Name="${xa(a.name)}" Display="${xa(fmt)}" Dmx="${dmx}"${col} />`];
+    }
+    return a.ranges.map((r,k)=>{
+      const label = r.label || ('Range '+(k+1));
+      const disp = r.pct && r.hi>r.lo ? `'${label} %.f%%',0~100` : `'${label}'`;
+      return `      <Function ID="${k+1}" Name="${xa(label)}" Display="${xa(disp)}" Dmx="${pct(r.lo,r.hi,a.size)}"${col} />`;
+    });
+  };
+  const locXml = a => {
+    if(!a.ranges.length){ const l = a.M.loc ?? 0, pw = a.M.pow ?? l; return `      <Locate Locate="1:${l}" PowerOn="1:${pw}" />`; }
+    let k = 1;
+    if(a.fn==='shutter'){ const o = a.ranges.findIndex(r=>/\bopen\b|no strobe|^on$|shutter on/i.test(r.label)); if(o>=0) k = o+1; }
+    else { const o = a.ranges.findIndex(r=>/\bopen\b|no ?func|^off$|none|stop/i.test(r.label)); if(o>=0) k = o+1; }
+    const v = a.ranges[k-1].pct ? `${k}:0` : `${k}`;
+    return `      <Locate Locate="${v}" PowerOn="${v}" />`;
+  };
+
+  const L = [];
+  const now = new Date(), dd = n => String(n).padStart(2,'0');
+  const name = d4txt(fx.name) || 'Fixture', company = d4txt(fx.mfr) || 'Generic';
+  const short = (d4txt(fx.short) || name).slice(0,10).trim();
+  L.push(`<?xml version="1.0" encoding="utf-8"?>`);
+  L.push(`<Fixture Name="${xa(name)}" ShortName="${xa(short)}" Company="${xa(company)}">`);
+  L.push(`  <History Date="${dd(now.getDate())}-${dd(now.getMonth()+1)}-${String(now.getFullYear()).slice(2)}" Author="TrilitLabs Personality Generator" Comment="Created" />`);
+  L.push(`  <Manual Filename="" Summary="" />`);
+  L.push(`  <Control>`);
+  attrs.forEach(a=>{
+    L.push(`    <Attribute ID="${xa(a.id)}" Name="${xa(a.name)}" Description="" Group="${a.M.g}"${a.size===2?' Size="2"':''}>`);
+    L.push(locXml(a)); fnXml(a).forEach(x=>L.push(x));
+    L.push(`    </Attribute>`);
+  });
+  L.push(`  </Control>`);
+
+  const kind = +fx.kind||0, focus = kind===2 ? 'Head' : kind===1 ? 'Mirror' : 'Fixed';
+  const panMax = kind ? clampInt(fx.pan,0,9999,540) : 0, tiltMax = kind ? clampInt(fx.tilt,0,9999,270) : 0;
+  const seen = new Set();
+  plan.forEach(({m, inc}, mi)=>{
+    let mname = d4txt(m.name) || `${m.chs.length} DMX`;
+    if(seen.has(mname.toLowerCase())){ W.push({lvl:'w', msg:`Two modes are both called "${mname}". Titan needs different names, so the second gets a number.`}); let k = 2; while(seen.has((mname+' '+k).toLowerCase())) k++; mname = mname+' '+k; }
+    seen.add(mname.toLowerCase());
+    const ref = deviceRef({...fx, mode:m.name, ref:m.ref}, m.chs.length);
+    const reserved = new Set(inc.map(x=>x.a.M.w).filter(Boolean)), wheels = new Set();
+    let next = 13;
+    L.push(`  <Mode Name="${xa(mname)}" Channels="${m.chs.length}">`);
+    L.push(`    <Import PearlRef="${xa(ref)}" DiamondRef="" WysiwygRef="" />`);
+    L.push(`    <Physical>`, `      <Bulb Type="" Lumens="" ColourTemp="" />`, `      <Lens Name="" Degrees="" />`, `      <Weight Kg="" />`, `      <Size Height="" Width="" Depth="" />`,
+           `      <Focus Type="${focus}" PanMax="${panMax}" TiltMax="${tiltMax}" PanMaxSpeed="0" TiltMaxSpeed="0" />`, `    </Physical>`);
+    L.push(`    <Include>`);
+    inc.forEach(({a, off})=>{
+      let w = a.M.w && !wheels.has(a.M.w) ? a.M.w : 0;
+      if(!w){ while(wheels.has(next) || reserved.has(next)) next++; w = next++; }
+      wheels.add(w);
+      L.push(`      <Attribute ID="${xa(a.id)}" ChannelOffset="${off}" Wheel="${w}" />`);
+    });
+    L.push(`    </Include>`, `  </Mode>`);
+  });
+
+  if(fx.palettes){
+    const has = id => attrs.find(a=>a.id===id);
+    const groups = [];
+    const R=has('Red'), G=has('Green'), B=has('Blue'), C=has('Cyan'), M=has('Magenta'), Y=has('Yellow');
+    const COLS = [['Open',100,100,100],['Red',100,0,0],['Amber',100,50,0],['Yellow',100,100,0],['Green',0,100,0],['Cyan',0,100,100],['Blue',0,0,100],['Lavender',71,43,94],['Purple',50,0,100],['Magenta',100,0,100]];
+    if(R&&G&&B) groups.push(['Colour', COLS.map(([n,r,g,b],k)=>[n, k+1, `Red:1:${r},Green:1:${g},Blue:1:${b}`])]);
+    else if(C&&M&&Y) groups.push(['Colour', COLS.map(([n,r,g,b],k)=>[n, k+1, `Cyan:1:${100-r},Magenta:1:${100-g},Yellow:1:${100-b}`])]);
+    else { const cw = has('Colour_1') || has('Colour_Macro'); if(cw && cw.ranges.length) groups.push(['Colour', cw.ranges.slice(0,20).map((r,k)=>[r.label||('Colour '+(k+1)), k+1, `${cw.id}:${k+1}${r.pct?':50':''}`]).filter(x=>!/no ?func|reserved|blackout/i.test(x[0]))]); }
+    const P=has('Pan'), Tt=has('Tilt');
+    if(P&&Tt) groups.push(['Position', [['Centre',50,50],['Left',35,50],['Right',65,50],['Up',50,35],['Down',50,65]].map(([n,pp,tt],k)=>[n, 21+k, `Pan:1:${pp},Tilt:1:${tt}`])]);
+    const S=has('Shutter');
+    if(S && S.ranges.length){ const rows = []; let num = 31;
+      S.ranges.forEach((r,k)=>{ if(num>40 || !r.label) return; if(r.pct && r.hi>r.lo){ rows.push(['Slow '+r.label, num++, `Shutter:${k+1}:20`]); rows.push(['Fast '+r.label, num++, `Shutter:${k+1}:80`]); } else rows.push([r.label, num++, `Shutter:${k+1}`]); });
+      if(rows.length) groups.push(['Shutter', rows]); }
+    const Z=has('Zoom');
+    if(Z && !Z.ranges.length) groups.push(['Beam', [['Zoom Small',41,'Zoom:1:0'],['Zoom Medium',42,'Zoom:1:50'],['Zoom Large',43,'Zoom:1:100']]]);
+    const Gb=has('Gobo_1');
+    if(Gb && Gb.ranges.length) groups.push(['Gobo', Gb.ranges.slice(0,20).map((r,k)=>[r.label||('Gobo '+(k+1)), 51+k, `Gobo_1:${k+1}${r.pct?':50':''}`]).filter(x=>!/no ?func|reserved/i.test(x[0]))]);
+    if(groups.length){
+      L.push(`  <Palettes>`);
+      groups.forEach(([g, rows])=>{ if(!rows.length) return;
+        L.push(`    <Group Name="${g}">`);
+        rows.forEach(([n, num, set], k)=>L.push(`      <Palette ID="${k+1}" Name="${xa(n.slice(0,20))}" Number="${num}" Page="1" SetControl="${xa(set)}" />`));
+        L.push(`    </Group>`); });
+      L.push(`  </Palettes>`);
+    }
+  }
+  L.push(`</Fixture>`, '');
+  if(live.length < modes.length) W.push({lvl:'w', msg:`${modes.length-live.length} empty mode(s) left out of the .D4.`});
+  const file = (company+'_'+name).replace(/[\\/:*?"<>|]+/g,'').replace(/\s+/g,' ').trim()+'.d4';
+  return {text: L.join('\r\n'), warnings: W, file, modes: live.length};
+}
 let last = null;
 const fnOptions = (() => { const groups = {}; for(const [k,v] of Object.entries(FUNCS)){ (groups[v.g]=groups[v.g]||[]).push(`<option value="${k}">${v.label}</option>`); } return Object.entries(groups).map(([g,o])=>`<optgroup label="${g}">${o.join('')}</optgroup>`).join(''); })();
 const slotOptions = (() => { let o='<option value="auto">Auto</option>'; for(let b=1;b<=20;b++){ for(const f of [1,61]){ if(b===1&&f===61) continue; o+=`<option value="${b}/${f}">${slotLabel(b+'/'+f)}</option>`; } } return o; })();
@@ -1934,19 +2124,23 @@ function renderChannels(){
 
 function update(){
   const fx = state.fx;
+  renderModes();
   last = generate(fx, state.chs);
-  $('#out').textContent = last.text || '(no channels yet)';
-  $('#fname').textContent = last.file ? '· '+last.file : '';
+  lastD4 = generateD4(fx, state.modes);
+  const showD4 = prevKind==='d4';
+  $('#out').textContent = (showD4 ? lastD4.text : last.text) || '(no channels yet)';
+  $('#fname').textContent = showD4 ? (lastD4.file ? `· ${lastD4.file} · ${lastD4.modes} mode${lastD4.modes===1?'':'s'}` : '') : (last.file ? '· '+last.file : '');
   $('#fxRef').placeholder = last.ref ? 'auto: '+deviceRef({...fx,ref:''}, state.chs.length) : 'auto';
-  const w = $('#warns'); w.innerHTML = last.warnings.map(x=>`<li class="${x.lvl}">${esc(x.msg)}</li>`).join('') || (state.chs.length?'<li style="color:var(--ok)">Looks good.</li>':'');
+  const w = $('#warns'); w.innerHTML = last.warnings.concat(lastD4.warnings).map(x=>`<li class="${x.lvl}">${esc(x.msg)}</li>`).join('') || (state.chs.length?'<li style="color:var(--ok)">Looks good.</li>':'');
   document.querySelectorAll('#chlist .ch').forEach(el=>{
     const i = +el.dataset.i, s = el.querySelector('[data-slot]'); if(!s) return;
     if(last.msbOf && last.msbOf[i]>=0) s.innerHTML = `16-bit fine of ch <b>${last.msbOf[i]+1}</b>`;
     else if(last.standaloneFine && last.standaloneFine[i]) s.innerHTML = `Own wheel: <b>${slotLabel(last.slots[i])}</b> (dimmer fine on Classic)`;
     else s.innerHTML = `Wheel: <b>${slotLabel(last.slots[i])}</b>${last.lsbOf && last.lsbOf[i]>=0 ? ` · 16-bit with ch ${last.lsbOf[i]+1}`:''}`;
   });
-  ['#dlR20','#dlZip','#copyBtn','#saveJson'].forEach(id=>$(id).disabled = !state.chs.length);
-  lsSet('r20gen.draft', {fx:state.fx, chs:state.chs});
+  ['#dlR20','#copyBtn'].forEach(id=>$(id).disabled = !state.chs.length);
+  ['#dlD4','#dlZip','#saveJson'].forEach(id=>$(id).disabled = !state.modes.some(m=>m.chs.length));
+  lsSet('r20gen.draft', {fx:state.fx, modes:state.modes, active:state.active});
 }
 
 // channel list events (delegated)
@@ -1983,7 +2177,7 @@ $('#clearCh').onclick = ()=>{ if(!state.chs.length) return; const keep = state.c
 function toastUndo(msg, fn){ const t=$('#toast'); t.innerHTML = esc(msg)+' · <a href="#" id="undoA">Undo</a>'; t.style.pointerEvents='auto'; t.classList.add('on'); clearTimeout(toastT); $('#undoA').onclick = ev=>{ ev.preventDefault(); fn(); t.classList.remove('on'); t.style.pointerEvents='none'; }; toastT=setTimeout(()=>{ t.classList.remove('on'); t.style.pointerEvents='none'; },5000); }
 
 // fixture fields
-const FXMAP = {fxMfr:'mfr',fxName:'name',fxMode:'mode',fxRef:'ref',fxKind:'kind',fxPan:'pan',fxTilt:'tilt'};
+const FXMAP = {fxMfr:'mfr',fxName:'name',fxMode:'mode',fxRef:'ref',fxShort:'short',fxKind:'kind',fxPan:'pan',fxTilt:'tilt'};
 for(const [id,k] of Object.entries(FXMAP)){ $('#'+id).addEventListener('input', e=>{ state.fx[k]=e.target.value; update(); }); }
 $('#fxPal').addEventListener('change', e=>{ state.fx.palettes = e.target.checked; update(); });
 function fillFx(){ for(const [id,k] of Object.entries(FXMAP)) $('#'+id).value = state.fx[k] ?? ''; $('#fxPal').checked = state.fx.palettes!==false; }
@@ -2038,7 +2232,9 @@ CH8 Auto programs
 $('#openIn').addEventListener('change', async e=>{
   const f = e.target.files[0]; if(!f) return; const txt = await f.text(); const st=$('#openStatus');
   try{
-    if(/\.json$/i.test(f.name) || txt.trim().startsWith('{')){ const p = JSON.parse(txt); if(!Array.isArray(p.chs)) throw new Error('Not a project file'); p.chs = p.chs.map(c=>Object.assign(newChannel(), c, {adv:Object.assign(newChannel().adv, c.adv||{})})); loadProject(p.fx, p.chs, `Opened ${f.name}`); }
+    if(/\.json$/i.test(f.name) || txt.trim().startsWith('{')){ const p = JSON.parse(txt);
+      if(Array.isArray(p.modes)){ restoreModes(p); toast(`Opened ${f.name}: ${state.modes.length} mode${state.modes.length===1?'':'s'}`); $('#s3').scrollIntoView({behavior:'smooth', block:'start'}); }
+      else { if(!Array.isArray(p.chs)) throw new Error('Not a project file'); loadProject(p.fx, fixChs(p.chs), `Opened ${f.name}`); } }
     else { const {fx,chs} = parseR20(txt); if(!chs.length) throw new Error('No DMX section found'); loadProject(fx, chs, `Opened ${f.name}: ${chs.length} channels`); }
     st.className='status ok'; st.textContent=`Opened ${f.name}`;
   }catch(err){ st.className='status err'; st.textContent='Could not read this file: '+err.message; }
@@ -2214,22 +2410,38 @@ function logDownload(kind){
   gateCall({action:'log', name:gateMe.name, email:gateMe.email, kind, file:last.file, fixture:fixtureNow()}).catch(()=>{});
 }
 $('#dlR20').addEventListener('click', ()=>logDownload('R20'));
+$('#dlD4').addEventListener('click', ()=>logDownload('D4'));
 $('#dlZip').addEventListener('click', ()=>logDownload('USB zip'));
 $('#copyBtn').addEventListener('click', ()=>logDownload('Copied text'));
 
 $('#dlR20').onclick = ()=>{ if(last && last.text) saveFile(last.file, last.text); };
-$('#dlZip').onclick = ()=>{ if(!last || !last.text) return; const enc = new TextEncoder();
-  const z = makeZip([{name:`AVOLITES/FIXTURES/R20/${last.mfrDir}/${last.file}`, data: enc.encode(last.text)}, {name:'README.txt', data: enc.encode(`Copy the AVOLITES folder to the root of a USB stick.\r\nAlso put SG.DAT (the Avolites shape file) in AVOLITES/FIXTURES/R20/.\r\nGet it from any Avolites R20 personality download or the Copy 2008 tool.\r\n\r\nFixture: ${ascii(state.fx.mfr)} ${ascii(state.fx.name)} ${ascii(state.fx.mode)}\r\nFile: ${last.file}\r\n`)}]);
-  saveFile(`${last.ref}_R20.zip`, z); };
+$('#dlD4').onclick = ()=>{ if(lastD4 && lastD4.text) saveFile(lastD4.file, '\ufeff'+lastD4.text); };
+$('#dlZip').onclick = ()=>{ syncMode(); const enc = new TextEncoder(), files = [], names = new Set(); let mfrDir = 'GENERIC';
+  state.modes.filter(m=>m.chs.length).forEach(m=>{ const g = generate({...state.fx, mode:m.name, ref:m.ref}, m.chs); if(!g.text) return;
+    let file = g.file; if(names.has(file)) file = g.ref.slice(0,6)+String(names.size+1).padStart(2,'0')+'.R20'; names.add(file); mfrDir = g.mfrDir;
+    files.push({name:`AVOLITES/FIXTURES/R20/${g.mfrDir}/${file}`, data: enc.encode(g.text)}); });
+  if(!files.length) return;
+  files.push({name:'README.txt', data: enc.encode(`Copy the AVOLITES folder to the root of a USB stick.\r\nAlso put SG.DAT (the Avolites shape file) in AVOLITES/FIXTURES/R20/.\r\nGet it from any Avolites R20 personality download or the Copy 2008 tool.\r\n\r\nFixture: ${ascii(state.fx.mfr)} ${ascii(state.fx.name)}\r\nModes: ${files.length}\r\n`)});
+  saveFile(`${mfrDir}_${(ascii(state.fx.name)||'fixture').replace(/[^A-Za-z0-9]+/g,'')}_R20.zip`, makeZip(files)); };
 $('#copyBtn').onclick = async ()=>{ try{ await navigator.clipboard.writeText(last.text); toast('Copied. Paste into a text file named '+last.file); }catch(e){ const r=document.createRange(); r.selectNodeContents($('#out')); const s=getSelection(); s.removeAllRanges(); s.addRange(r); toast('Press Ctrl+C / Copy to copy the selected text'); } };
-$('#saveJson').onclick = ()=>{ const p = {app:'r20gen', v:1, fx:state.fx, chs:state.chs.map(({openR,openA,...c})=>c)}; saveFile((last?.ref||'fixture')+'.json', JSON.stringify(p,null,2)); };
+$('#saveJson').onclick = ()=>{ syncMode(); const p = {app:'r20gen', v:2, fx:state.fx, active:state.active, modes:state.modes.map(m=>({name:m.name, ref:m.ref, chs:m.chs.map(({openR,openA,...c})=>c)}))}; saveFile(((ascii(state.fx.name)||'fixture').replace(/[^A-Za-z0-9]+/g,'_'))+'.json', JSON.stringify(p,null,2)); };
 
 /* ============================================================
    Start
    ============================================================ */
+function fixChs(chs){ return (chs||[]).map(c=>Object.assign(newChannel(), c, {adv:Object.assign(newChannel().adv, c.adv||{})})); }
+function restoreModes(d){
+  state.fx = Object.assign(state.fx, d.fx||{});
+  state.modes = d.modes.map(m=>({name:m.name||'', ref:m.ref||'', chs:fixChs(m.chs)}));
+  if(!state.modes.length) state.modes = [{name:'', ref:'', chs:[]}];
+  state.active = Math.min(Math.max(0, d.active|0), state.modes.length-1);
+  const m = state.modes[state.active]; state.chs = m.chs; state.fx.mode = m.name; state.fx.ref = m.ref;
+  fillFx(); renderChannels();
+}
 (function start(){
   const d = lsGet('r20gen.draft');
-  if(d && Array.isArray(d.chs)){ state.fx = Object.assign(state.fx, d.fx||{}); state.chs = d.chs.map(c=>Object.assign(newChannel(), c, {adv:Object.assign(newChannel().adv, c.adv||{})})); }
+  if(d && Array.isArray(d.modes)) restoreModes(d);
+  else if(d && Array.isArray(d.chs)){ state.fx = Object.assign(state.fx, d.fx||{}); state.chs = fixChs(d.chs); state.modes = [{name:state.fx.mode||'', ref:state.fx.ref||'', chs:state.chs}]; }
   fillFx(); renderChannels(); gateUI();
 })();
 })();
