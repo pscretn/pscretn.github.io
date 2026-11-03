@@ -820,7 +820,8 @@
   cards.forEach(function (c, i) {
     var bg = c.querySelector('.bg img, .bg video');
     gsap.fromTo(bg, { scale: 1.25 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: c, start: 'top bottom', end: 'top 10%', scrub: true } });
-    if (i < cards.length - 1) gsap.to(c, { scale: .9, filter: 'brightness(.45)', ease: 'none',
+    /* scale only: a brightness filter here blacked the card out and broke the glass panel inside it */
+    if (i < cards.length - 1) gsap.to(c, { scale: .92, ease: 'none',
       scrollTrigger: { trigger: cards[i + 1], start: 'top bottom', end: 'top 10%', scrub: true } });
   });
 
