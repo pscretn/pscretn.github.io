@@ -75,7 +75,7 @@
     display: flex; gap: .25rem; padding: .3rem;
     border: 1px solid var(--line); border-radius: 99px; background: rgba(255,255,255,.03);
   }
-  .menu a { padding: .45rem .95rem; border-radius: 99px; font-size: .9rem; color: #C9D0D8; transition: background .2s, color .2s; }
+  .menu a { white-space: nowrap; padding: .45rem .95rem; border-radius: 99px; font-size: .9rem; color: #C9D0D8; transition: background .2s, color .2s; }
   .menu a:hover, .menu a.on { background: rgba(255,255,255,.09); color: var(--white); }
 
   .next {
@@ -105,7 +105,7 @@
   .drawer a { font-size: clamp(1.8rem, 8vw, 3rem); font-weight: 700; letter-spacing: -.03em; padding: .35rem 0; border-bottom: 1px solid var(--line); }
   .drawer a small { display: inline-block; min-width: 2.6rem; font-family: var(--mono); font-size: .75rem; font-weight: 500; color: var(--amber); vertical-align: middle; }
 
-  @media (max-width: 62rem) {
+  @media (max-width: 70rem) {
     .menu, .nav .next { display: none; }
     .burger { display: block; }
   }
@@ -505,6 +505,7 @@
   <div class="menu">
     <a href="#wirelink">WireLink</a>
     <a href="#app">Apps</a>
+    <a href="#generator">Personality Generator</a>
     <a href="#build">Hardware</a>
     <a href="#supply">Supply</a>
     <a href="#proof">Watch</a>
@@ -517,7 +518,7 @@
   <a href="#wirelink"><small>I</small>WireLink DMX</a>
   <a href="#app"><small>II</small>WaveLink App</a>
   <a href="#software"><small>III</small>LightShow</a>
-  <a href="#r20"><small>III.b</small>R20 Generator</a>
+  <a href="#generator"><small>III.b</small>Personality Generator</a>
   <a href="#build"><small>IV</small>Hardware</a>
   <a href="#supply"><small>V</small>Supply</a>
   <a href="#proof"><small>VI</small>Watch</a>
@@ -550,7 +551,7 @@
             <li><a href="#wirelink"><small>I</small>WireLink DMX</a></li>
             <li><a href="#app"><small>II</small>WaveLink DMX app</a></li>
             <li><a href="#software"><small>III</small>LightShow software</a></li>
-            <li><a href="#r20"><small>III.b</small>R20 personality generator</a></li>
+            <li><a href="#generator"><small>III.b</small>Personality generator</a></li>
             <li><a href="#build"><small>IV</small>Wired &amp; wireless controllers</a></li>
             <li><a href="#supply"><small>V</small>Fixtures &amp; lamps</a></li>
             <li><a href="#proof"><small>VI</small>In action</a></li>
@@ -783,16 +784,16 @@
   </div>
 </section>
 
-<!-- III.b · R20 personality generator -->
-<section class="pillar" id="r20" style="--c:var(--amber)">
+<!-- III.b · Personality generator -->
+<section class="pillar" id="generator" style="--c:var(--amber)">
   <div class="wrap">
     <div class="p-head rv">
       <span class="num">III.b</span>
-      <h2>R20 Generator</h2>
-      <ul class="tags"><li>Avolites Pearl</li><li>Free</li><li>In your browser</li></ul>
+      <h2>Personality Generator</h2>
+      <ul class="tags"><li>Avolites R20</li><li>D4 coming soon</li><li>Free</li><li>In your browser</li></ul>
     </div>
-    <p class="lede rv" style="max-width:46rem">No personality for a fixture? Photograph its DMX chart or paste the channel list, check each channel, and download the <code>.R20</code>.</p>
-    <p class="rv" style="max-width:46rem;color:var(--muted);margin:0">For Avolites Pearl / Classic consoles: Pearl 2000, 2004, 2008, 2010, Tiger and Azure. The same file loads into <a href="#software" style="text-decoration:underline">LightShow</a>.</p>
+    <p class="lede rv" style="max-width:46rem">No personality for a fixture? Photograph its DMX chart or paste the channel list, check each channel, and download a personality file for your console.</p>
+    <p class="rv" style="max-width:46rem;color:var(--muted);margin:0">Today it makes <code>.R20</code> files for Avolites Pearl / Classic consoles: Pearl 2000, 2004, 2008, 2010, Tiger and Azure. <code>.D4</code> files for Titan consoles are coming next. The R20 file also loads into <a href="#software" style="text-decoration:underline">LightShow</a>.</p>
 
     <div class="r20">
 <!-- STEP 1 -->
@@ -1133,7 +1134,7 @@
 
   /* light up the menu item for the section in view; LightShow counts as Apps */
   var links = Array.prototype.slice.call(document.querySelectorAll('.menu a[href^="#"]'));
-  var owner = { wirelink: 'wirelink', app: 'app', software: 'app', build: 'build', supply: 'supply', proof: 'proof' };
+  var owner = { wirelink: 'wirelink', app: 'app', software: 'app', generator: 'generator', build: 'build', supply: 'supply', proof: 'proof' };
   var spy = new IntersectionObserver(function (es) {
     es.forEach(function (e) {
       if (!e.isIntersecting) return;
