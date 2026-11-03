@@ -392,6 +392,104 @@
     .cover img { transform: none; transition: none; }
     .dot, .wl-wire i, .mega { animation: none; }
   }
+
+  /* ---------- R20 personality generator (scoped) ---------- */
+.r20{
+  --bg:#050608; --panel:#0A0D12; --panel2:#10151C; --line:rgba(255,255,255,.1);
+  --text:#F2F4F6; --muted:#8D97A3; --accent:#F5AA1F; --accent2:#FFC35A;
+  --mint:#1CC6C6; --blue:#1C93DD;
+  --ok:#4cc38a; --warn:#f0b429; --err:#ef5b5b; --r:10px;
+}
+.r20 *{box-sizing:border-box}
+.r20 [hidden]{display:none!important}
+.r20{color:var(--text);font:15px/1.5 "Inter Tight",ui-sans-serif,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.r20 a{color:var(--accent2)}
+.r20 #s2 .step{background:var(--mint)}
+.r20 #s3 .step{background:var(--blue)}
+.r20 section.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0}
+.r20 section.card>h2{margin:0 0 10px;font-size:16px;display:flex;align-items:center;gap:8px}
+.r20 .step{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#1a1200;font-size:13px;font-weight:700}
+.r20 .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.r20 .tabs button{background:var(--panel2);border:1px solid var(--line);color:var(--muted);padding:7px 12px;border-radius:999px;cursor:pointer;font:inherit;font-size:14px}
+.r20 .tabs button.on{color:#1a1200;background:var(--accent);border-color:var(--accent);font-weight:600}
+.r20 .pane{display:none}
+.r20 .pane.on{display:block}
+.r20 label.f{display:block;font-size:12px;color:var(--muted);margin:0 0 3px}
+.r20 input,.r20 select,.r20 textarea{width:100%;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px 9px;font:inherit;font-size:14px}
+.r20 input:focus,.r20 select:focus,.r20 textarea:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:transparent}
+.r20 textarea{min-height:140px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
+.r20 .grid{display:grid;gap:10px}
+.r20 .g2{grid-template-columns:1fr 1fr}
+.r20 .g3{grid-template-columns:repeat(3,1fr)}
+.r20 .g4{grid-template-columns:repeat(4,1fr)}
+@media (max-width:640px){.r20 .g2,.r20 .g3{grid-template-columns:1fr}
+.r20 .g4{grid-template-columns:1fr 1fr}}
+.r20 .btn{display:inline-flex;align-items:center;gap:6px;background:var(--panel2);border:1px solid var(--line);color:var(--text);padding:9px 14px;border-radius:9px;cursor:pointer;font:inherit;font-size:14px;font-weight:500}
+.r20 .btn:hover{border-color:var(--accent)}
+.r20 .btn.primary{background:var(--accent);color:#1a1200;border-color:var(--accent);font-weight:700}
+.r20 .btn.primary:hover{background:var(--accent2)}
+.r20 .btn.small{padding:5px 9px;font-size:13px}
+.r20 .btn.ghost{background:transparent}
+.r20 .btn:disabled{opacity:.5;cursor:default}
+.r20 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.r20 .muted{color:var(--muted)}
+.r20 .small{font-size:13px}
+.r20 .drop{border:1.5px dashed var(--line);border-radius:12px;padding:18px;text-align:center;color:var(--muted);cursor:pointer;background:var(--panel2)}
+.r20 .drop.over{border-color:var(--accent);color:var(--text)}
+.r20 .thumbs{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.r20 .thumbs img{height:84px;border-radius:8px;border:1px solid var(--line)}
+.r20 details.set{margin-top:10px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.r20 details.set summary{cursor:pointer;color:var(--muted);font-size:14px}
+.r20 .status{margin-top:10px;font-size:14px;min-height:20px}
+.r20 .status.err{color:var(--err)}
+.r20 .status.ok{color:var(--ok)}
+.r20 .chlist{display:flex;flex-direction:column;gap:8px}
+.r20 .ch{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px}
+.r20 .ch.isfine{border-left:3px solid #6b7cff}
+.r20 .chtop{display:grid;grid-template-columns:38px 1fr 1.2fr auto;gap:8px;align-items:center}
+@media (max-width:640px){.r20 .chtop{grid-template-columns:30px 1fr auto;grid-template-areas:'n nm ic' '. fn fn'}
+.r20 .chtop .num{grid-area:n}
+.r20 .chtop [data-k=name]{grid-area:nm}
+.r20 .chtop .iconbtns{grid-area:ic}
+.r20 .chtop .fnsel{grid-area:fn}}
+.r20 .num{font-weight:700;color:var(--accent);text-align:center;font-size:15px}
+.r20 .slot{font-size:12px;color:var(--muted);margin-top:6px;display:flex;gap:10px;flex-wrap:wrap}
+.r20 .slot b{color:var(--text);font-weight:600}
+.r20 .iconbtns{display:flex;gap:4px}
+.r20 .ib{background:transparent;border:1px solid var(--line);color:var(--muted);width:30px;height:30px;border-radius:7px;cursor:pointer;font-size:14px;line-height:1}
+.r20 .ib:hover{color:var(--text);border-color:var(--accent)}
+.r20 .sub{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.r20 .ranges{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.r20 .rg{display:grid;grid-template-columns:62px 62px 1fr auto 30px;gap:5px;align-items:center}
+.r20 .rg input{padding:6px 7px}
+.r20 .pct{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:3px;white-space:nowrap}
+.r20 .pct input{width:auto}
+.r20 .toggle{background:none;border:none;color:var(--accent2);cursor:pointer;font:inherit;font-size:13px;padding:2px 0}
+.r20 .adv{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:6px}
+@media (max-width:640px){.r20 .adv{grid-template-columns:1fr 1fr}}
+.r20 pre.out{background:#0a0c10;border:1px solid var(--line);border-radius:10px;padding:10px;max-height:420px;overflow:auto;font:12px/1.4 ui-monospace,Menlo,Consolas,monospace;white-space:pre;color:#cfd5df}
+.r20 ul.warn{margin:8px 0;padding-left:18px;font-size:14px}
+.r20 ul.warn li{margin:2px 0}
+.r20 ul.warn li.w{color:var(--warn)}
+.r20 ul.warn li.e{color:var(--err)}
+.r20 .pill{display:inline-block;font-size:12px;padding:2px 8px;border-radius:999px;background:var(--panel2);border:1px solid var(--line);color:var(--muted)}
+.r20 .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#262b36;border:1px solid var(--line);color:var(--text);padding:10px 16px;border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.4);font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;max-width:92vw;z-index:9}
+.r20 .toast.on{opacity:1}
+.r20 .help{font-size:13px;color:var(--muted)}
+.r20 .help code{background:var(--panel2);padding:1px 5px;border-radius:5px;color:var(--text)}
+.r20 .spin{display:inline-block;width:14px;height:14px;border:2px solid var(--muted);border-top-color:var(--accent);border-radius:50%;animation:r20sp .8s linear infinite;vertical-align:-2px}
+@keyframes r20sp{to{transform:rotate(360deg)}}
+.r20{position:relative;margin-top:clamp(1.5rem,4vw,2.5rem)}
+.r20 section.card{background:rgba(10,13,18,.82);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.r20-foot{margin:14px 0 0;color:var(--muted);font-size:12px}
+.r20 .gate{margin:4px 0 12px;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--panel2)}
+.r20 .gate input{flex:1;min-width:0}
+.r20 .gate .help{margin:8px 0 0}
+.r20 #gCode{max-width:10rem;letter-spacing:.3em;font-family:ui-monospace,Menlo,Consolas,monospace}
+.r20 .howto{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;margin-top:10px;align-items:start}
+.r20 .howto .help{margin:0 0 9px}
+.r20 .howto pre.out{margin:0;max-height:none}
+@media (max-width:640px){.r20 .howto{grid-template-columns:1fr}}
 </style>
 </head>
 
@@ -419,6 +517,7 @@
   <a href="#wirelink"><small>I</small>WireLink DMX</a>
   <a href="#app"><small>II</small>WaveLink App</a>
   <a href="#software"><small>III</small>LightShow</a>
+  <a href="#r20"><small>III.b</small>R20 Generator</a>
   <a href="#build"><small>IV</small>Hardware</a>
   <a href="#supply"><small>V</small>Supply</a>
   <a href="#proof"><small>VI</small>Watch</a>
@@ -451,6 +550,7 @@
             <li><a href="#wirelink"><small>I</small>WireLink DMX</a></li>
             <li><a href="#app"><small>II</small>WaveLink DMX app</a></li>
             <li><a href="#software"><small>III</small>LightShow software</a></li>
+            <li><a href="#r20"><small>III.b</small>R20 personality generator</a></li>
             <li><a href="#build"><small>IV</small>Wired &amp; wireless controllers</a></li>
             <li><a href="#supply"><small>V</small>Fixtures &amp; lamps</a></li>
             <li><a href="#proof"><small>VI</small>In action</a></li>
@@ -679,6 +779,173 @@
       <div><b>40 Hz</b><span>output rate</span></div>
       <div><b>50+</b><span>shape effects</span></div>
       <div><b>MP3 &middot; WAV &middot; FLAC</b><span>and more</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- III.b · R20 personality generator -->
+<section class="pillar" id="r20" style="--c:var(--amber)">
+  <div class="wrap">
+    <div class="p-head rv">
+      <span class="num">III.b</span>
+      <h2>R20 Generator</h2>
+      <ul class="tags"><li>Avolites Pearl</li><li>Free</li><li>In your browser</li></ul>
+    </div>
+    <p class="lede rv" style="max-width:46rem">No personality for a fixture? Photograph its DMX chart or paste the channel list, check each channel, and download the <code>.R20</code>.</p>
+    <p class="rv" style="max-width:46rem;color:var(--muted);margin:0">For Avolites Pearl / Classic consoles: Pearl 2000, 2004, 2008, 2010, Tiger and Azure. The same file loads into <a href="#software" style="text-decoration:underline">LightShow</a>.</p>
+
+    <div class="r20">
+<!-- STEP 1 -->
+<section class="card" id="s1">
+  <h2><span class="step">1</span> Get the channels</h2>
+  <div class="tabs" id="inTabs">
+    <button data-p="pPhoto" class="on">Photo of DMX chart</button>
+    <button data-p="pText">Paste channel list</button>
+    <button data-p="pOpen">Open file</button>
+  </div>
+
+  <div class="pane on" id="pPhoto">
+    <div class="drop" id="drop">
+      <div style="font-size:26px">📷</div>
+      <div><b>Tap to choose or take a photo</b> of the DMX chart page</div>
+      <div class="small">You can add several photos if the chart spans pages</div>
+      <input type="file" id="photoIn" accept="image/*" multiple hidden>
+    </div>
+    <div class="thumbs" id="thumbs"></div>
+    <div style="margin-top:10px"><label class="f" for="modeHint">Which DMX mode? (optional)</label><input id="modeHint" placeholder="e.g. 15CH, Extended, Mode 2"></div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn primary" id="readBtn" disabled>Read chart</button>
+      <button class="btn ghost" id="stopBtn" hidden>Stop</button>
+    </div>
+    <div class="status" id="photoStatus"></div>
+  </div>
+
+  <div class="pane" id="pText">
+    <textarea id="chartText" placeholder="One channel per line, value ranges underneath. Example:
+1  Dimmer  0-255
+2  Strobe
+   0-7 Open
+   8-255 Strobe slow-fast
+3  Red
+4  Green
+5  Blue
+6  White
+7  Colour macro
+8  Speed"></textarea>
+    <div class="row" style="margin-top:10px">
+      <button class="btn primary" id="parseBtn">Use this list</button>
+      <button class="btn ghost" id="exampleBtn">Load an example</button>
+    </div>
+    <div class="status" id="textStatus"></div>
+    <details class="set" id="howTo" open>
+      <summary>How to type the channel list</summary>
+      <div class="howto">
+        <div>
+          <p class="help"><b>Channels.</b> One per line, starting with its number in the fixture: <code>1 Dimmer</code>, <code>CH2 Strobe</code> or <code>Channel 3: Red</code>. Number them 1, 2, 3&hellip; in the order the chart lists them for the DMX mode you use.</p>
+          <p class="help"><b>Value ranges.</b> On the lines under a channel, from&ndash;to then what it does: <code>0-7 Open</code>, <code>8-255 Strobe slow-fast</code>. Leading zeros are fine (<code>000-007</code>), and <code>to</code> or <code>~</code> work instead of the dash. A plain 0&ndash;255 channel needs no ranges.</p>
+          <p class="help"><b>Percentages.</b> A range whose text says <code>slow-fast</code>, <code>dim-bright</code> or <code>0-100%</code> shows on the console as a percentage across that range.</p>
+          <p class="help"><b>16-bit channels.</b> Call the second one &ldquo;Fine&rdquo;: <code>6 Pan Fine</code> pairs itself with Pan.</p>
+          <p class="help"><b>Names choose the wheel.</b> Dimmer, Strobe, Red, Green, Blue, White, Amber, UV, Pan, Tilt, Colour, Gobo, Prism, Zoom, Focus, Speed, Auto, Reset. You can change any channel's function in step 3.</p>
+          <p class="help"><b>Length.</b> The console shows 12 characters of a name and 11 of a range; longer text is shortened for you.</p>
+          <p class="help"><b>DMX address.</b> Don't type it here. The file lists the fixture's own channels 1, 2, 3&hellip;; the start address is set on the fixture and chosen when you patch it on the Pearl.</p>
+        </div>
+        <pre class="out">1 Dimmer
+2 Strobe
+  0-7 Open
+  8-255 Strobe slow-fast
+3 Red
+4 Green
+5 Blue
+6 Pan
+7 Pan Fine
+8 Tilt
+9 Colour
+  0-15 White
+  16-31 Red
+  32-47 Blue
+  128-255 Rotate slow-fast
+10 Reset
+  0-199 No function
+  200-255 Reset</pre>
+      </div>
+    </details>
+  </div>
+
+  <div class="pane" id="pOpen">
+    <p class="help" style="margin-top:0">Open an existing <code>.R20</code> to edit it, or a <code>.json</code> project saved from this page.</p>
+    <input type="file" id="openIn" accept=".r20,.R20,.json,.txt">
+    <div class="status" id="openStatus"></div>
+  </div>
+</section>
+
+<!-- STEP 2 -->
+<section class="card" id="s2">
+  <h2><span class="step">2</span> Fixture details</h2>
+  <div class="grid g3">
+    <div><label class="f" for="fxMfr">Manufacturer</label><input id="fxMfr" placeholder="e.g. Prolights"></div>
+    <div><label class="f" for="fxName">Fixture</label><input id="fxName" placeholder="e.g. Sunrise 18"></div>
+    <div><label class="f" for="fxMode">Mode</label><input id="fxMode" placeholder="e.g. 8CH"></div>
+  </div>
+  <div class="grid g4" style="margin-top:10px">
+    <div><label class="f" for="fxRef">Pearl reference / file name</label><input id="fxRef" placeholder="auto" maxlength="11"></div>
+    <div><label class="f" for="fxKind">Fixture type</label>
+      <select id="fxKind"><option value="0">Static (par, bar, strobe…)</option><option value="2">Moving head</option><option value="1">Moving mirror (scanner)</option></select></div>
+    <div><label class="f" for="fxPan">Pan range (°)</label><input id="fxPan" type="number" value="540"></div>
+    <div><label class="f" for="fxTilt">Tilt range (°)</label><input id="fxTilt" type="number" value="270"></div>
+  </div>
+  <div class="row" style="margin-top:10px">
+    <label class="pct" style="font-size:14px;color:var(--text)"><input type="checkbox" id="fxPal" checked> Add palettes (colours, positions, strobe, gobos)</label>
+  </div>
+</section>
+
+<!-- STEP 3 -->
+<section class="card" id="s3">
+  <h2><span class="step">3</span> Channels <span class="pill" id="chCount">0</span></h2>
+  <p class="help" style="margin-top:0">Check each channel's function: it decides which Pearl wheel it lands on. Fine/LSB channels pair with their coarse channel for 16-bit control. Value ranges show as text on the console wheel.</p>
+  <div class="chlist" id="chlist"></div>
+  <div class="row" style="margin-top:10px">
+    <button class="btn" id="addCh">+ Add channel</button>
+    <button class="btn ghost" id="clearCh">Clear all</button>
+  </div>
+</section>
+
+<!-- STEP 4 -->
+<section class="card" id="s4">
+  <h2><span class="step">4</span> Download</h2>
+  <ul class="warn" id="warns"></ul>
+  <div class="gate" id="gate" hidden>
+    <label class="f" for="gEmail">Your email, to unlock downloads</label>
+    <div class="row"><input id="gEmail" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" maxlength="254"><button class="btn primary" id="gSend" type="button">Send code</button></div>
+    <div class="row" id="gCodeRow" hidden style="margin-top:8px"><input id="gCode" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6-digit code"><button class="btn primary" id="gVerify" type="button">Unlock</button><button class="btn ghost small" id="gResend" type="button">Send again</button></div>
+    <p class="help" id="gMsg">We'll email you a 6-digit code to confirm the address. TrilitLabs keeps your email with the fixtures you download.</p>
+  </div>
+  <p class="help" id="gWho" hidden></p>
+  <div class="row" id="dlRow">
+    <button class="btn primary" id="dlR20">Download .R20</button>
+    <button class="btn" id="dlZip">Download USB folder (.zip)</button>
+    <button class="btn" id="copyBtn">Copy text</button>
+    <button class="btn ghost" id="saveJson">Save project (.json)</button>
+  </div>
+  <p class="help" id="dlNote"></p>
+  <details class="set" open id="prevBox">
+    <summary>Preview <span class="muted" id="fname"></span></summary>
+    <pre class="out" id="out"></pre>
+  </details>
+  <details class="set">
+    <summary>Loading it on the console</summary>
+    <div class="help">
+      <p>Pearl 2008 / 2010 / Tiger read personalities from a USB stick in this layout (the zip already has it):</p>
+      <p><code>AVOLITES\FIXTURES\R20\&lt;MANUFACTURER&gt;\&lt;FILE&gt;.R20</code></p>
+      <p>The console also expects the shape file <code>SG.DAT</code> in the <code>R20</code> folder. Copy it from any Avolites personality download or use Avolites' <i>Copy 2008</i> tool. Older floppy-disk Pearls take the .R20 in the root of the disk with SG.DAT.</p>
+      <p>Then patch: <i>Patch → Fixtures → (disk) → choose manufacturer → fixture</i>. Patch one fixture and check each wheel before a show.</p>
+      <p>Macros (lamp on / reset) aren't generated; add them in a text editor if you need them.</p>
+    </div>
+  </details>
+</section>
+
+      <p class="r20-foot">Not affiliated with Avolites. Always test a personality on the desk before a show.</p>
+<div class="toast" id="toast"></div>
+<input type="file" id="jsonIn" accept=".json" hidden>
     </div>
   </div>
 </section>
@@ -917,14 +1184,18 @@
   /* ---------- silk ----------
      A full-screen fragment shader: a height field of warped sine folds,
      lit like fabric, black with the highlights tinted amber and teal.
-     It renders at reduced resolution, drifts with the scroll, dims once
-     the hero has gone, stops while the tab is hidden, and draws one still
+     It renders at reduced resolution, drifts with the scroll at full
+     brightness all the way down, stops while the tab is hidden, and draws one still
      frame for reduced motion. Without WebGL the CSS gradient behind it
      stays. */
   (function () {
     var canvas = document.getElementById('silk');
     var gl = canvas.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'low-power' });
     if (!gl) { canvas.remove(); return; }
+    /* phones can drop this context (the 3D viewer below needs one too); fall
+       back to the CSS gradient rather than leave a black page */
+    var lost = false;
+    canvas.addEventListener('webglcontextlost', function () { lost = true; canvas.style.display = 'none'; });
 
     var vs = 'attribute vec2 p; void main(){ gl_Position = vec4(p, 0.0, 1.0); }';
     var fs = [
@@ -997,14 +1268,14 @@
       gl.uniform2f(uR, canvas.width, canvas.height);
       gl.uniform1f(uT, ms / 1000);
       gl.uniform1f(uS, sm * 1.6);
-      gl.uniform1f(uD, Math.max(0.35, 1 - sm * 0.6));
+      gl.uniform1f(uD, 1);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     }
 
     var rt;
     addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { size(); if (reduce) draw(0); }, 150); });
     if (reduce) { draw(0); return; }
-    function loop(ms) { if (!document.hidden) draw(ms); requestAnimationFrame(loop); }
+    function loop(ms) { if (lost) return; if (!document.hidden) draw(ms); requestAnimationFrame(loop); }
     requestAnimationFrame(loop);
   })();
 </script>
@@ -1190,6 +1461,797 @@
       renderer.render(scene, camera);
     });
   }
+</script>
+<script>
+/* R20 Personality Generator: everything stays inside this function */
+(function () {
+"use strict";
+/* ============================================================
+   Function catalogue: Pearl attribute type, channel type, wheel
+   ============================================================ */
+const FUNCS = {
+  dimmer:  {g:'Intensity', label:'Dimmer', attr:'H', type:'H', slot:'1/1', on:255},
+  shutter: {g:'Intensity', label:'Shutter / Strobe', attr:'O', type:'L', slot:'2/61', on:255},
+  iris:    {g:'Intensity', label:'Iris', attr:'G', type:'L', slot:'2/1', on:255},
+  dimcurve:{g:'Intensity', label:'Dimmer curve / speed', attr:'0', type:'L'},
+  pan:     {g:'Position', label:'Pan', attr:'E', type:'L', slot:'3/61', on:127},
+  tilt:    {g:'Position', label:'Tilt', attr:'F', type:'L', slot:'3/1', on:127},
+  speed:   {g:'Position', label:'Speed (pan/tilt, motor)', attr:'0', type:'L', slot:'8/1'},
+  red:     {g:'Colour', label:'Red', attr:'T', type:'L', slot:'10/1', on:255, hi:255},
+  green:   {g:'Colour', label:'Green', attr:'U', type:'L', slot:'10/61', on:255, hi:255},
+  blue:    {g:'Colour', label:'Blue', attr:'V', type:'L', slot:'9/61', on:255, lo:230},
+  white:   {g:'Colour', label:'White', attr:'0', type:'L', slot:'9/1'},
+  amber:   {g:'Colour', label:'Amber', attr:'0', type:'L'},
+  uv:      {g:'Colour', label:'UV', attr:'0', type:'L'},
+  lime:    {g:'Colour', label:'Lime / other LED', attr:'0', type:'L'},
+  cyan:    {g:'Colour', label:'Cyan (CMY)', attr:'B', type:'L', slot:'10/1'},
+  magenta: {g:'Colour', label:'Magenta (CMY)', attr:'C', type:'L', slot:'10/61'},
+  yellow:  {g:'Colour', label:'Yellow (CMY)', attr:'D', type:'L', slot:'9/61'},
+  cto:     {g:'Colour', label:'CTO / colour temp', attr:'0', type:'L'},
+  colour:  {g:'Colour', label:'Colour wheel', attr:'A', type:'I', slot:'4/1'},
+  colour2: {g:'Colour', label:'Colour wheel 2', attr:'N', type:'I', slot:'4/61'},
+  cmacro:  {g:'Colour', label:'Colour macro', attr:'A', type:'I', slot:'4/1'},
+  gobo:    {g:'Beam', label:'Gobo wheel', attr:'I', type:'I', slot:'6/1'},
+  gobo2:   {g:'Beam', label:'Gobo wheel 2', attr:'J', type:'I', slot:'6/61'},
+  goborot: {g:'Beam', label:'Gobo rotation', attr:'K', type:'L', slot:'8/61'},
+  gobo2rot:{g:'Beam', label:'Gobo 2 rotation', attr:'M', type:'L'},
+  prism:   {g:'Beam', label:'Prism', attr:'P', type:'I', slot:'7/61'},
+  prismrot:{g:'Beam', label:'Prism / effect rotation', attr:'R', type:'L'},
+  frost:   {g:'Beam', label:'Frost', attr:'S', type:'L', slot:'7/1'},
+  zoom:    {g:'Beam', label:'Zoom', attr:'Q', type:'L', slot:'5/1', on:127},
+  focus:   {g:'Beam', label:'Focus', attr:'L', type:'L', slot:'5/61', on:127},
+  macro:   {g:'Other', label:'Auto / sound / program', attr:'0', type:'I'},
+  control: {g:'Other', label:'Control / reset / lamp', attr:'0', type:'I'},
+  other:   {g:'Other', label:'Other', attr:'0', type:'L'},
+  fine:    {g:'Other', label:'Fine (16-bit LSB)', attr:'0', type:'L'}
+};
+const BANKNAMES = {1:'Dimmer',2:'Shutter/Iris',3:'Pan/Tilt',4:'Colour',5:'Zoom/Focus',6:'Gobo',7:'Frost/Prism',8:'Speed',9:'Colour mix 2',10:'Colour mix'};
+/* Photo reading for visitors without their own key goes through our Cloudflare Worker
+   (tools/r20-proxy/worker.js), which holds the Gemini key as a secret: no key is ever
+   in this page, and visitors never need one. Put the Worker's URL here; while it's
+   empty, photo reading is off and visitors type the list in.
+   When the free quota runs out, the page switches visitors to typing the list in. */
+const R20_AI_PROXY = '';
+/* Downloads are unlocked by a confirmed email. The check runs in a Google Apps Script
+   bound to a Google Sheet (tools/r20-gate/Code.gs): it emails the code and records each
+   download in the sheet. Put its Web app URL here; empty means downloads are open. */
+const R20_GATE_URL = '';
+const PCT_FORMULA = '"%3d.%02d%%"(c-a)*100/(b-a),100*((c-a)*100%(b-a))/(b-a)';
+
+/* ============================================================
+   helpers
+   ============================================================ */
+const $ = s => document.querySelector(s);
+const ascii = s => String(s ?? '').normalize('NFKD').replace(/[̀-ͯ]/g,'').replace(/[“”]/g,'').replace(/[‘’]/g,"'").replace(/[–—]/g,'-').replace(/[^\x20-\x7E]/g,'').replace(/"/g,"'").trim();
+const clampInt = (v,lo,hi,def) => { const n = parseInt(v,10); return Number.isFinite(n) ? Math.min(hi,Math.max(lo,n)) : def; };
+const hex = v => (v|0).toString(16).toUpperCase();
+const lsGet = k => { try { return JSON.parse(localStorage.getItem(k)); } catch(e) { return null; } };
+const lsSet = (k,v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} };
+function slotLabel(s){ if(!s) return '—'; const [b,f]=s.split('/').map(Number); const page=b>10?2:1; const base=b>10?b-10:b; return `Bank ${b} ${BANKNAMES[base]||''}${page===2?' (page 2)':''} · wheel ${f===61?'B':'A'}`; }
+function newChannel(name, fn){ return {name:name||'', fn:fn||'other', fineOf:-1, ranges:[], adv:{type:'auto',slot:'auto',inv:'N',on:'',hi:'',lo:'',level:100}, openR:false, openA:false}; }
+let toastT; function toast(msg){ const t=$('#toast'); t.style.pointerEvents='none'; t.textContent=msg; t.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('on'),2600); }
+
+/* ============================================================
+   function guessing from a channel name
+   ============================================================ */
+function guessFn(name){
+  const s = ' '+String(name).toLowerCase().replace(/[_\-\/]/g,' ')+' ';
+  if(/\b(fine|lsb|16 ?bit)\b/.test(s) || /\blow\b/.test(s) && !/slow/.test(s)) return 'fine';
+  if(/\b(cto|ctc|cct|kelvin|colou?r ?temp|temperature|warm|cool white)\b/.test(s)) return 'cto';
+  if(/curve|dim(mer)? ?(mode|speed|spd)/.test(s)) return 'dimcurve';
+  if(/strob|shutter/.test(s)) return 'shutter';
+  if(/(pan|tilt|p ?t|motor|movement|vector|move).*(speed|spd)|(speed|spd).*(pan|tilt|p ?t)/.test(s)) return 'speed';
+  if(/gobo/.test(s)){ const two=/gobo ?(wheel ?)?2|2 ?gobo|second/.test(s); if(/rot|spin|index|shake/.test(s)) return two?'gobo2rot':'goborot'; return two?'gobo2':'gobo'; }
+  if(/prism/.test(s)) return /rot|spin/.test(s)?'prismrot':'prism';
+  if(/\bpan\b/.test(s)) return 'pan';
+  if(/\btilt\b/.test(s)) return 'tilt';
+  if(/colou?r ?(macro|preset|mix|effect|chase|jump|fade|program)|macro ?colou?r|\bcolou?r? ?func/.test(s)) return 'cmacro';
+  if(/colou?r ?(wheel ?)?2\b/.test(s)) return 'colour2';
+  if(/colou?r|\bcw\b/.test(s)) return 'colour';
+  if(/dimm|intens|master|bright/.test(s)) return 'dimmer';
+  const one = s.trim();
+  if(/\bred\b/.test(s)||one==='r') return 'red';
+  if(/green/.test(s)||one==='g') return 'green';
+  if(/blue/.test(s)||one==='b') return 'blue';
+  if(/white/.test(s)||one==='w') return 'white';
+  if(/amber/.test(s)||one==='a') return 'amber';
+  if(/\buv\b|ultra|violet|purple/.test(s)) return 'uv';
+  if(/lime|\bmint\b/.test(s)) return 'lime';
+  if(/cyan/.test(s)||one==='c') return 'cyan';
+  if(/magenta/.test(s)||one==='m') return 'magenta';
+  if(/yellow/.test(s)||one==='y') return 'yellow';
+  if(/frost|diffus/.test(s)) return 'frost';
+  if(/focus/.test(s)) return 'focus';
+  if(/zoom|beam angle/.test(s)) return 'zoom';
+  if(/\biris\b/.test(s)) return 'iris';
+  if(/reset|lamp|control|special|\bfunction/.test(s)) return 'control';
+  if(/auto|sound|music|program|macro|effect|chase|mode|show|scene/.test(s)) return 'macro';
+  if(/speed|spd/.test(s)) return 'speed';
+  return 'other';
+}
+// work out which coarse channel a fine channel belongs to
+function guessFineOf(chs, i){
+  const base = String(chs[i].name).toLowerCase().replace(/\b(fine|lsb|16 ?bit|low)\b/g,'').trim();
+  const fnBase = base ? guessFn(base) : 'other';
+  for(let j=i-1;j>=0;j--){ if(chs[j].fn!=='fine' && fnBase!=='other' && chs[j].fn===fnBase) return j; }
+  for(let j=0;j<chs.length;j++){ if(j!==i && chs[j].fn!=='fine' && fnBase!=='other' && chs[j].fn===fnBase) return j; }
+  if(i>0 && chs[i-1].fn!=='fine') return i-1;
+  return -1;
+}
+function autoProportional(r){ return (r.hi-r.lo)>=8 && /slow|fast|speed|spd|%|→|->|dim|bright|increas|decreas|0 ?- ?100|var|rate|intens/i.test(r.label||''); }
+
+/* ============================================================
+   R20 generator
+   ============================================================ */
+function deviceRef(fx, n){
+  const custom = ascii(fx.ref).toUpperCase().replace(/[^A-Z0-9_]/g,'');
+  if(custom) return custom.slice(0,11);
+  const m = ascii(fx.mfr).toUpperCase().replace(/[^A-Z0-9]/g,'');
+  const f = ascii(fx.name).toUpperCase().replace(/[^A-Z0-9]/g,'');
+  return ((m.slice(0,2)||'XX') + (f.slice(0,4)||'FIXT') + String(n).padStart(2,'0')).slice(0,8);
+}
+function rangeLabel(label, pct){
+  let t = ascii(label).replace(/%/g,'').replace(/\s+/g,' ').trim();
+  if(pct){ t = t.slice(0,6).trim(); return `"${t} %3d%%"(c-a)*100/(b-a)`; }
+  return `"${t.slice(0,11)}"`;
+}
+function generate(fx, chs){
+  const W = [];                       // warnings [{lvl,msg}]
+  const n = chs.length;
+  const CR = '\r\n';
+  if(!n){ return {text:'', warnings:[{lvl:'e',msg:'Add at least one channel.'}], slots:[], ref:'', file:''}; }
+  const ref = deviceRef(fx, n);
+  if(ref.length>8) W.push({lvl:'w',msg:`Reference "${ref}" is longer than 8 characters. Older Pearls need 8.3 file names.`});
+  const mfr = ascii(fx.mfr)||'Generic', fname = ascii(fx.name)||'Fixture', mode = ascii(fx.mode)||(n+'CH');
+
+  // ---- 16-bit pairing
+  const lsbOf = Array(n).fill(-1), msbOf = Array(n).fill(-1), standaloneFine = Array(n).fill(false);
+  chs.forEach((c,i)=>{
+    if(c.fn!=='fine') return;
+    const p = c.fineOf;
+    if(!(p>=0 && p<n) || p===i || chs[p].fn==='fine'){ W.push({lvl:'w',msg:`Ch ${i+1} "${c.name}": fine channel isn't linked to a coarse channel, so it's treated as a normal channel.`}); standaloneFine[i]=true; return; }
+    if(lsbOf[p]>=0){ W.push({lvl:'w',msg:`Ch ${p+1} already has a fine channel. Ch ${i+1} is treated as a normal channel.`}); standaloneFine[i]=true; return; }
+    if(chs[p].fn==='dimmer'){ standaloneFine[i]=true; return; }   // Classic: dimmer fine as own 8-bit HTP, uncategorised
+    lsbOf[p]=i; msbOf[i]=p;
+  });
+
+  // ---- attribute letters (must be unique, else uncategorised)
+  const usedAttr = new Set(), attr = Array(n).fill('0');
+  chs.forEach((c,i)=>{
+    if(msbOf[i]>=0) return;
+    let a = standaloneFine[i] ? '0' : (FUNCS[c.fn]||FUNCS.other).attr;
+    if(a!=='0' && usedAttr.has(a)){ a='0'; }
+    if(a!=='0') usedAttr.add(a);
+    attr[i]=a;
+  });
+  chs.forEach((c,i)=>{ if(msbOf[i]>=0) attr[i]=attr[msbOf[i]]; });
+
+  // ---- wheel slot allocation
+  const all = []; for(let b=1;b<=20;b++){ for(const f of [1,61]){ if(b===1&&f===61) continue; all.push(b+'/'+f); } }
+  const taken = new Set(), slot = Array(n).fill(null);
+  const valid = s => all.includes(s);
+  const slotCh = []; chs.forEach((c,i)=>{ if(msbOf[i]<0) slotCh.push(i); });
+  if(slotCh.length>39) W.push({lvl:'e',msg:`${slotCh.length} attributes, but a Pearl fixture can only have 39 wheel slots. Pair fine channels or remove some.`});
+  for(const i of slotCh){ const s = chs[i].adv.slot; if(s && s!=='auto'){ if(valid(s) && !taken.has(s)){ slot[i]=s; taken.add(s); } else W.push({lvl:'w',msg:`Ch ${i+1}: wheel ${slotLabel(s)} is already used or invalid, so it was placed automatically.`}); } }
+  for(const i of slotCh){ if(slot[i]) continue; const f = standaloneFine[i]?null:(FUNCS[chs[i].fn]||FUNCS.other).slot; if(f && !taken.has(f)){ slot[i]=f; taken.add(f); } }
+  const fallback = all.filter(s=>+s.split('/')[0]>10).concat(all.filter(s=>{const b=+s.split('/')[0]; return b>1&&b<=10;}), ['1/1']);
+  for(const i of slotCh){ if(slot[i]) continue; const s = fallback.find(x=>!taken.has(x)); if(s){ slot[i]=s; taken.add(s); } }
+
+  // ---- channel types & levels
+  const lines = [];
+  const pad = (v,w)=>String(v).padStart(w);
+  const shut = i => {
+    const r = chs[i].ranges.find(r=>/\bopen\b|no strobe|^on$|shutter on|lamp on/i.test(r.label||''));
+    return r ? r.lo : 255;
+  };
+  chs.forEach((c,i)=>{
+    if(msbOf[i]>=0) return;
+    const F = standaloneFine[i] ? {type:'H',attr:'0'} : (FUNCS[c.fn]||FUNCS.other);
+    let type = c.adv.type && c.adv.type!=='auto' ? c.adv.type : (standaloneFine[i] && chs[c.fineOf] && chs[c.fineOf].fn==='dimmer' ? 'H' : (F.type||'L'));
+    if(lsbOf[i]>=0 && (c.adv.type==='auto'||!c.adv.type)) type = (type==='I'?'S':'s');
+    if(standaloneFine[i] && !(chs[c.fineOf] && chs[c.fineOf].fn==='dimmer') && (c.adv.type==='auto'||!c.adv.type)) type='L';
+    const dimFine = standaloneFine[i] && chs[c.fineOf] && chs[c.fineOf].fn==='dimmer';
+    const defOn = c.fn==='shutter' ? shut(i) : dimFine ? 255 : (standaloneFine[i]?0:(F.on||0));
+    const on = clampInt(c.adv.on,0,255,defOn), hi = clampInt(c.adv.hi,0,255,F.hi||0), lo = clampInt(c.adv.lo,0,255,F.lo||0);
+    const lvl = clampInt(c.adv.level,0,100,100), inv = c.adv.inv==='I'?'I':'N';
+    const nm = ascii(c.name)||((FUNCS[c.fn]||FUNCS.other).label);
+    if(nm.length>12) W.push({lvl:'w',msg:`Ch ${i+1} name "${nm}" is cut to 12 characters: "${nm.slice(0,12)}".`});
+    const [b,f] = slot[i] ? slot[i].split('/') : ['0','0'];
+    const mk = (bb,ff,tp,off,a,name,o,h,l) => String(bb).padEnd(2)+pad(ff,5)+pad(tp,4)+pad(off,5)+pad(lvl,6)+pad('1'+inv,5)+pad(a,4)+pad(1,4)+'   '+`"${name.slice(0,12)}"`.padEnd(18)+pad(o,3)+pad(h,6)+pad(l,6);
+    lines.push({off:i+1, text: mk(b,f,type,i+1,attr[i],nm,on,hi,lo)});
+    if(lsbOf[i]>=0){ const j=lsbOf[i]; const ln = ascii(chs[j].name)||(nm.slice(0,8)+' Low'); const ij = chs[j].adv.inv==='I'?'I':'N';
+      lines.push({off:i+1.5, text: String(0).padEnd(2)+pad(0,5)+pad('L',4)+pad(j+1,5)+pad(lvl,6)+pad('1'+ij,5)+pad(attr[i],4)+pad(1,4)+'   '+`"${ln.slice(0,12)}"`.padEnd(18)+pad(on,3)+pad(hi,6)+pad(lo,6)}); }
+  });
+
+  // ---- ranges
+  const rangeBlocks = [];
+  chs.forEach((c,i)=>{
+    if(msbOf[i]>=0) return;
+    const nm = (ascii(c.name)||(FUNCS[c.fn]||FUNCS.other).label).slice(0,12);
+    const rs = (c.ranges||[]).map(r=>({lo:clampInt(r.lo,0,255,0),hi:clampInt(r.hi,0,255,255),label:r.label,pct:!!r.pct})).filter(r=>ascii(r.label)||r.pct);
+    rs.forEach(r=>{ if(r.hi<r.lo){ const t=r.lo; r.lo=r.hi; r.hi=t; } });
+    rs.sort((a,b)=>a.lo-b.lo);
+    for(let k=1;k<rs.length;k++){ if(rs[k].lo<=rs[k-1].hi){ W.push({lvl:'w',msg:`Ch ${i+1} "${nm}": ranges ${rs[k-1].lo}-${rs[k-1].hi} and ${rs[k].lo}-${rs[k].hi} overlap.`}); break; } }
+    const out = [`RANGE ${i+1}  ;${nm}`];
+    if(!rs.length) out.push(String(0).padEnd(4)+String(255).padEnd(5)+PCT_FORMULA);
+    else rs.forEach(r=>{
+      const pctOk = r.pct && r.hi>r.lo;
+      if(ascii(r.label).replace(/%/g,'').length>(pctOk?6:11)) W.push({lvl:'w',msg:`Ch ${i+1} range "${ascii(r.label)}" is shortened to fit the 11-character display.`});
+      out.push(String(r.lo).padEnd(4)+String(r.hi).padEnd(5)+(pctOk||ascii(r.label) ? rangeLabel(r.label||(pctOk?'':''), pctOk) : PCT_FORMULA));
+    });
+    out.push('REND');
+    rangeBlocks.push(out.join(CR));
+  });
+
+  // ---- palettes
+  const pal = [];
+  if(fx.palettes){
+    const find = fn => chs.findIndex((c,i)=>c.fn===fn && msbOf[i]<0 && !standaloneFine[i]);
+    const tbl = (title, chans, rows) => { if(!rows.length) return; const head = `PFTABLE ${`"${title}"`.padEnd(13)}-1`+chans.map(c=>pad(c+1,4)).join('');
+      const body = rows.map(r=>`"${ascii(r[0]).slice(0,11)}"`.padEnd(21)+pad(r[1],2)+r.slice(2).map(v=>pad(v<0?'-1':hex(v),4)).join(''));
+      pal.push([head,...body,'PFEND'].join(CR)); };
+    const R=find('red'),G=find('green'),B=find('blue'),C=find('cyan'),M=find('magenta'),Y=find('yellow'),P=find('pan'),T=find('tilt'),S=find('shutter'),Z=find('zoom'),CW=find('colour'),CM=find('cmacro'),GB=find('gobo'),GB2=find('gobo2');
+    const COLS = [['Open',1,255,255,255],['Red',2,255,0,0],['Amber',3,255,127,0],['Yellow',4,255,255,0],['Green',5,0,255,0],['Cyan',6,0,255,255],['Blue',7,0,0,255],['Lavender',8,181,110,240],['Purple',9,127,0,255],['Magenta',10,255,0,255]];
+    const fromRanges = (i, start, max) => (chs[i].ranges||[]).filter(r=>!r.pct && ascii(r.label) && !/no ?func|reserved|none|^off$|blackout/i.test(r.label)).slice(0,max).map((r,k)=>[r.label, start+k, Math.round((clampInt(r.lo,0,255,0)+clampInt(r.hi,0,255,0))/2)]);
+    if(R>=0&&G>=0&&B>=0) tbl('Colour',[R,G,B],COLS);
+    else if(C>=0&&M>=0&&Y>=0) tbl('Colour',[C,M,Y],COLS.map(r=>[r[0],r[1],255-r[2],255-r[3],255-r[4]]));
+    else if(CW>=0) tbl('Colour',[CW],fromRanges(CW,1,20));
+    else if(CM>=0) tbl('Colour',[CM],fromRanges(CM,1,20));
+    if(P>=0&&T>=0) tbl('Pan/Tilt',[P,T],[['Middle',21,127,127],['Left',22,79,127],['Right',23,176,127],['Top',24,127,79],['Bottom',25,127,176],['TLeft',26,79,79],['TRight',27,176,176],['BLeft',28,79,176],['BRight',29,176,79]]);
+    if(S>=0){ const rows=[]; let b=31; for(const r of (chs[S].ranges||[])){ if(b>40) break; const lo=clampInt(r.lo,0,255,0), hi=clampInt(r.hi,0,255,0); const lb=ascii(r.label).replace(/%/g,'').trim(); if(!lb) continue;
+        if(r.pct && hi>lo){ rows.push(['Slow '+lb, b++, Math.round(lo+(hi-lo)*0.2)]); if(b<=40) rows.push(['Fast '+lb, b++, Math.round(lo+(hi-lo)*0.8)]); } else rows.push([lb, b++, Math.round((lo+hi)/2)]); }
+      tbl('Intensity',[S],rows); }
+    if(Z>=0) tbl('Beam',[Z],[['Zoom Small',41,0],['Zoom Medium',42,127],['Zoom Large',43,255]]);
+    if(GB>=0) tbl('Gobos',[GB],fromRanges(GB,51,20));
+    if(GB2>=0) tbl('Gobos 2',[GB2],fromRanges(GB2,71,20));
+  }
+
+  // ---- mirror
+  const kind = +fx.kind||0;
+  const mirror = kind ? `MIRROR  ${kind}${pad(clampInt(fx.pan,0,9999,540),6)}${pad(clampInt(fx.tilt,0,9999,270),5)}` : 'MIRROR  0    0    0';
+  if(kind && (chs.findIndex(c=>c.fn==='pan')<0 || chs.findIndex(c=>c.fn==='tilt')<0)) W.push({lvl:'w',msg:'Fixture type is moving, but no Pan/Tilt channel is set.'});
+  if(chs.findIndex(c=>c.fn==='dimmer')<0) W.push({lvl:'w',msg:'No Dimmer channel: the Pearl dimmer wheel and fader won\'t control this fixture (fine for some LED pars, but check).'});
+
+  const tl = s => ascii(s).slice(0,20);
+  const hr = ';----------------------------------------------------------------------------';
+  const T = [];
+  T.push(`; '${mfr} ${fname} ${mode}', ${n} DMX Channels, filename: ${ref}.R20`);
+  T.push('; Generated by R20 Personality Generator (TrilitLabs) - test on the desk before use');
+  T.push(';', hr, '; The device name, upto 11 characters, no spaces are allowed');
+  T.push(`DEVICE  ${ref.padEnd(36)}mode=${mode}  ${n} DMX Channels`);
+  T.push(`NAME "${mfr}" "${(fname+' '+mode).trim()}"`);
+  T.push(';', hr, '; The Type of instrument, 1 & M must required for backward compatibility', '; The middle number denotes the number of DMX channels used');
+  T.push(`TYPE  1  ${n}  M`);
+  T.push(';', hr, '; Mirror/Head resolution', ';  1 means moving mirror, 2 means moving head, then max pan and tilt in degrees');
+  T.push(mirror);
+  T.push(';', hr, '; Fixture address display', '; d DMX address, n Fixture name, h The handle number');
+  T.push('DEVICEADDRESS','"Handle  %2d"h','"Fixture %11s"n','"DMX     %03d"d','""','""',`"${tl('Set to '+mode)}"`,'""','""','DAEND');
+  T.push(';', hr, '; Specify DMX limits', '; minimum allowed dmx number');
+  T.push('MINDMX=1', '; maximum allowed dmx number', `MAXDMX=${512-n}`, '; DMX number must be divisible by this', 'DIVBY=1');
+  T.push(';', hr, '; DMX channel description', ';', '; Column by column description of each DMX channel',
+   '; 1. The channels bank number (1..20)',
+   '; 2. The upper faders in the bank (1) or the lower faders in the bank (61)',
+   '; 3. Channel type (L=LTP, H=HTP, I=Instant LTP, S=16-bit instant LTP,',
+   ';    s=16-bit Fadeable LTP',
+   '; 4. DMX offset (1..number of DMX channels)',
+   '; 5. The output level is proportionally reduced by this level (0..100%)',
+   '; 6. The curve number (applicable only to HTP channels), usually set to 1',
+   '; 7. Inverted (I) or Normal (N)',
+   '; 8. Attribute type (A=Colour Wheel 1, B=Cyan, C=Magenta, D=Yellow,',
+   ';         E=Pan, F=Tilt, G=Iris, H=Dimmer, I=Gobo1, J=Gobo2, K=Gobo1 Rotate,',
+   ';         L=Focus, M=Gobo2 Rotate, N=Colour Wheel 2, O=Shutter, P=Prism, Q=Zoom,',
+   ';         R=Effect Rotate, S=Frost, T=Red, U=Green, V=Blue, 0=uncategorised)',
+   '; 9. Checksum channel (Always 1)',
+   ';10. Attribute name, must be enclosed in quotes and upto 12 characters allowed',
+   ';11. The ON value of this channel (0..255)',
+   ';12. The Highlight level of this channel',
+   ';13. The Lowlight level of this channel', ';');
+  T.push('DMX'); lines.sort((a,b)=>a.off-b.off).forEach(l=>T.push(l.text)); T.push('END');
+  T.push(';', hr, '; Text displayed when patching (max 20 characters per line)');
+  T.push('TEXT', tl(mfr), tl(fname), tl(mode), '', 'INPUT fixture DMX No.', 'Press a Fixture', 'Select or Swop button', 'to make the patch.', 'END');
+  T.push(';', hr, 'ATTR', 'Function Obsolete', 'END');
+  T.push(';', hr, '; Preset Palette Tables'); pal.forEach(p=>T.push(p));
+  T.push(';', hr, '; Macros');
+  T.push(';', hr, '; Range Tables', ';', '; Column by column description...', '; 1. Low DMX value (inclusive)', '; 2. High DMX value (inclusive)', '; 3. Displayed text (max 11 chars)', '; Variables used a=low val, b=high val, c=DMX val');
+  rangeBlocks.forEach(r=>T.push(r));
+  T.push(';', hr, '; End of file', '');
+  return {text:T.join(CR), warnings:W, slots:slot, ref, file:ref+'.R20', mfrDir:(ascii(fx.mfr).toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,8)||'GENERIC'), lsbOf, msbOf, standaloneFine};
+}
+
+/* ============================================================
+   Parse an existing .R20
+   ============================================================ */
+function parseR20(src){
+  const L = src.replace(/\r/g,'').split('\n');
+  const fx = {mfr:'',name:'',mode:'',ref:'',kind:0,pan:540,tilt:270,palettes:true};
+  const chs = [], ranges = {};
+  let sec = '', curRange = null; const lineRec = [];
+  for(const raw of L){
+    const line = raw.replace(/\s+$/,''); const t = line.trim();
+    if(!t || t.startsWith(';')) continue;
+    if(sec===''){
+      let m;
+      if((m=t.match(/^DEVICE\s+(\S+)(?:.*mode=(.+?)\s{2,})?/))){ fx.ref=m[1]; if(m[2]) fx.mode=m[2].trim(); continue; }
+      if((m=t.match(/^NAME\s+"([^"]*)"\s+"([^"]*)"/))){ fx.mfr=m[1]; fx.name=m[2]; if(fx.mode && fx.name.endsWith(fx.mode)) fx.name=fx.name.slice(0,-fx.mode.length).trim(); continue; }
+      if((m=t.match(/^MIRROR\s+(\d)\s+(\d+)\s+(\d+)/))){ fx.kind=+m[1]; if(+m[2]) fx.pan=+m[2]; if(+m[3]) fx.tilt=+m[3]; continue; }
+      if(t==='DMX'){ sec='dmx'; continue; }
+      if((m=t.match(/^RANGE\s+(\d+)/))){ sec='range'; curRange={off:+m[1],rows:[]}; continue; }
+      if(t==='DEVICEADDRESS'){ sec='skipDA'; continue; }
+      if(t==='TEXT'||t==='ATTR'){ sec='skipEnd'; continue; }
+      if(t.startsWith('PFTABLE')){ sec='skipPF'; continue; }
+      if(t.startsWith('MACRO')){ sec='skipM'; continue; }
+      continue;
+    }
+    if(sec==='skipDA'){ if(t==='DAEND') sec=''; continue; }
+    if(sec==='skipEnd'){ if(t==='END') sec=''; continue; }
+    if(sec==='skipPF'){ if(t==='PFEND') sec=''; continue; }
+    if(sec==='skipM'){ if(t==='MEND') sec=''; continue; }
+    if(sec==='dmx'){
+      if(t==='END'){ sec=''; continue; }
+      const m = t.match(/^(\d+)\s+(\d+)\s+([LHISs])\s+(\d+)\s+(\d+)\s+(\d+)([NIC])\s+(\w)\s+(\d+)\s+"([^"]*)"\s+(\d+)\s+(\d+)\s+(\d+)/);
+      if(m) lineRec.push({bank:+m[1],fad:+m[2],type:m[3],off:+m[4],lvl:+m[5],inv:m[7]==='N'?'N':'I',attr:m[8],name:m[10],on:+m[11],hi:+m[12],lo:+m[13]});
+      continue;
+    }
+    if(sec==='range'){
+      if(t==='REND'){ if(curRange) ranges[curRange.off]=curRange.rows; sec=''; curRange=null; continue; }
+      const m = t.match(/^(\d+)\s+(\d+)\s+"([^"]*)"(.*)$/);
+      if(m) curRange.rows.push({lo:+m[1],hi:+m[2],fmt:m[3],tail:m[4]});
+      continue;
+    }
+  }
+  const ATTR2FN = {A:'colour',B:'cyan',C:'magenta',D:'yellow',E:'pan',F:'tilt',G:'iris',H:'dimmer',I:'gobo',J:'gobo2',K:'goborot',L:'focus',M:'gobo2rot',N:'colour2',O:'shutter',P:'prism',Q:'zoom',R:'prismrot',S:'frost',T:'red',U:'green',V:'blue'};
+  const maxOff = lineRec.reduce((a,r)=>Math.max(a,r.off),0);
+  for(let i=0;i<maxOff;i++) chs.push(newChannel('Ch '+(i+1),'other'));
+  let prev = null;
+  for(const r of lineRec){
+    const c = chs[r.off-1];
+    c.name = r.name;
+    if(r.bank===0 && prev){ c.fn='fine'; c.fineOf=prev.off-1; }
+    else {
+      let fn = ATTR2FN[r.attr] || guessFn(r.name);
+      if(r.attr==='A' && /macro|preset|mix/i.test(r.name)) fn='cmacro';
+      if(r.attr==='0'){ const g=guessFn(r.name); fn = (g==='fine') ? 'fine' : g; if(fn==='fine') c.fineOf=guessFineOf(chs, r.off-1); }
+      c.fn = fn;
+      const F = FUNCS[fn]||FUNCS.other;
+      const s = r.bank+'/'+r.fad;
+      if(s!==F.slot) c.adv.slot = s;
+      const baseType = F.type;
+      if(!(r.type===baseType || (r.type==='s'&&baseType!=='I') || (r.type==='S'&&baseType==='I'))) c.adv.type=r.type;
+      if(r.on!==(F.on||0)) c.adv.on=String(r.on);
+      if(r.hi!==(F.hi||0)) c.adv.hi=String(r.hi);
+      if(r.lo!==(F.lo||0)) c.adv.lo=String(r.lo);
+      if(r.lvl!==100) c.adv.level=r.lvl;
+      prev = r;
+    }
+    c.adv.inv = r.inv;
+  }
+  // ranges
+  for(const [off,rows] of Object.entries(ranges)){
+    const c = chs[+off-1]; if(!c) continue;
+    if(rows.length===1 && rows[0].lo===0 && rows[0].hi===255 && /%3d\.%/.test(rows[0].fmt)) continue; // plain 0-100%
+    c.ranges = rows.map(r=>{ const pct = /%\d*d/.test(r.fmt); return {lo:r.lo,hi:r.hi,label:r.fmt.replace(/%\d*d/g,'').replace(/%%/g,'').replace(/\s+/g,' ').trim(),pct}; });
+  }
+  if(!fx.mode) fx.mode = maxOff+'CH';
+  return {fx, chs};
+}
+
+/* ============================================================
+   Parse a typed / OCR'd channel list
+   ============================================================ */
+function parseChartText(src){
+  const chs = [];
+  let cur = null;
+  const lines = src.replace(/\r/g,'').replace(/[|\t\[\]{}]/g,'  ').split('\n');
+  const RANGE = /^\s*(\d{1,3})\s*(?:-|–|—|~|to|\.\.\.?|…|ー)\s*(\d{1,3})\b\s*[:.)\-]?\s*(.*)$/i;
+  const SINGLE = /^\s*(\d{1,3})\s*[:.)\-]?\s+(.+)$/;
+  const CHAN = /^\s*(?:ch(?:annel)?|cn|chn)?\s*\.?\s*(\d{1,3})\s*[:.)\-]?\s+(.+)$/i;
+  const hasChPrefix = s => /^\s*(ch(annel)?|cn|chn)\s*\.?\s*\d/i.test(s);
+  for(let raw of lines){
+    let s = raw.replace(/\s+/g,' ').trim();
+    if(!s) continue;
+    if(/^(channel|ch\.?|dmx)\s*(function|value|description)/i.test(s)) continue;   // table header
+    let m;
+    // a range line under the current channel
+    if(cur && !hasChPrefix(s) && (m = s.match(RANGE)) && +m[1]<=255 && +m[2]<=255){
+      cur.ranges.push(mkRange(+m[1], +m[2], m[3])); continue;
+    }
+    if((m = s.match(CHAN))){
+      const num = +m[1];
+      const expect = chs.length+1;
+      if(hasChPrefix(s) || num===expect || (!cur && num===1)){
+        let rest = m[2].trim();
+        // trailing range on the same line: "Dimmer 0-255 0-100%"
+        const tr = rest.match(/^(.*?)\s+(\d{1,3})\s*(?:-|–|~|to)\s*(\d{1,3})\b\s*(.*)$/i);
+        cur = newChannel('', 'other');
+        if(tr && tr[1]){
+          cur.name = tr[1].trim();
+          const lo=+tr[2], hi=+tr[3], lbl=tr[4].trim();
+          if(!(lo===0 && hi===255 && (!lbl || /0 ?- ?100|%|dim|bright|intens|^$/i.test(lbl)))) cur.ranges.push(mkRange(lo,hi,lbl||cur.name));
+        } else cur.name = rest;
+        cur.name = cur.name.replace(/[:\-–]+$/,'').trim();
+        while(chs.length < num-1) chs.push(newChannel('Ch '+(chs.length+1),'other'));
+        chs.push(cur); continue;
+      }
+      if(cur && (m = s.match(SINGLE)) && +m[1]<=255){ cur.ranges.push(mkRange(+m[1], +m[1], m[2])); continue; }
+    }
+    // description continuation: append to last range label if short
+    if(cur && cur.ranges.length && !cur.ranges[cur.ranges.length-1].label) cur.ranges[cur.ranges.length-1].label = s;
+  }
+  chs.forEach((c,i)=>{ c.fn = guessFn(c.name); if(c.ranges.length===1 && c.ranges[0].lo===0 && c.ranges[0].hi===255) c.ranges=[]; });
+  chs.forEach((c,i)=>{ if(c.fn==='fine') c.fineOf = guessFineOf(chs,i); c.name = shortName(c.name); });
+  return chs;
+}
+function mkRange(lo,hi,label){ const r = {lo,hi,label:shortLabel(label),pct:false}; r.pct = autoProportional({lo,hi,label}); return r; }
+function shortName(s){ s = ascii(s).replace(/\s+/g,' '); return s.length<=12 ? s : s.replace(/colou?r/ig,'Col').replace(/rotation/ig,'Rot').replace(/speed/ig,'Spd').replace(/function/ig,'Func').replace(/\s+/g,' ').slice(0,12).trim(); }
+function shortLabel(s){ s = ascii(s).replace(/\s+/g,' ').replace(/^[-:.,\s]+/,''); if(s.length<=11) return s;
+  return s.replace(/no function/ig,'No func').replace(/colou?r/ig,'Col').replace(/rotation/ig,'Rot').replace(/clockwise/ig,'CW').replace(/counter ?CW|anti ?CW/ig,'CCW').replace(/ from /ig,' ').replace(/ to /ig,'>').replace(/slow ?(-|>|→)? ?fast/ig,'').replace(/speed/ig,'Spd').replace(/strobe/ig,'Strobe').replace(/\s+/g,' ').trim().slice(0,11); }
+
+/* ============================================================
+   App state & rendering
+   ============================================================ */
+const state = { fx:{mfr:'',name:'',mode:'',ref:'',kind:0,pan:540,tilt:270,palettes:true}, chs:[] };
+let last = null;
+const fnOptions = (() => { const groups = {}; for(const [k,v] of Object.entries(FUNCS)){ (groups[v.g]=groups[v.g]||[]).push(`<option value="${k}">${v.label}</option>`); } return Object.entries(groups).map(([g,o])=>`<optgroup label="${g}">${o.join('')}</optgroup>`).join(''); })();
+const slotOptions = (() => { let o='<option value="auto">Auto</option>'; for(let b=1;b<=20;b++){ for(const f of [1,61]){ if(b===1&&f===61) continue; o+=`<option value="${b}/${f}">${slotLabel(b+'/'+f)}</option>`; } } return o; })();
+const esc = s => String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+
+function renderChannels(){
+  const box = $('#chlist'); box.innerHTML='';
+  state.chs.forEach((c,i)=>{
+    const d = document.createElement('div'); d.className='ch'+(c.fn==='fine'?' isfine':''); d.dataset.i=i;
+    const fineSel = c.fn==='fine' ? `<div class="sub"><label class="f">Fine (LSB) for channel</label><select data-k="fineOf"><option value="-1">— none —</option>${state.chs.map((o,j)=>j!==i&&o.fn!=='fine'?`<option value="${j}" ${c.fineOf===j?'selected':''}>${j+1} · ${esc(o.name||FUNCS[o.fn].label)}</option>`:'').join('')}</select></div>` : '';
+    const rangesHtml = c.fn==='fine' ? '' : `<div class="sub">
+        <button class="toggle" data-act="toggleR">${c.openR?'▾':'▸'} Value ranges (${c.ranges.length||'0–100%'})</button>
+        ${c.openR?`<div class="ranges">${c.ranges.map((r,k)=>`<div class="rg" data-r="${k}"><input type="number" min="0" max="255" value="${r.lo}" data-rk="lo" aria-label="from"><input type="number" min="0" max="255" value="${r.hi}" data-rk="hi" aria-label="to"><input value="${esc(r.label)}" maxlength="24" data-rk="label" placeholder="Text on wheel"><label class="pct" title="Show the value as a percentage across this range"><input type="checkbox" data-rk="pct" ${r.pct?'checked':''}>%</label><button class="ib" data-act="delR" title="Remove">✕</button></div>`).join('')}
+          <div class="row"><button class="btn small" data-act="addR">+ Range</button>${c.ranges.length?'<button class="btn small ghost" data-act="clrR">Plain 0–100%</button>':''}</div></div>`:''}
+      </div>`;
+    const a = c.adv;
+    const advHtml = `<div class="sub"><button class="toggle" data-act="toggleA">${c.openA?'▾':'▸'} Advanced</button>
+      ${c.openA?`<div class="adv">
+        <div><label class="f">Wheel</label><select data-a="slot">${slotOptions.replace(`value="${a.slot}"`,`value="${a.slot}" selected`)}</select></div>
+        <div><label class="f">Channel type</label><select data-a="type">${[['auto','Auto'],['L','LTP'],['H','HTP'],['I','Instant LTP'],['s','16-bit LTP'],['S','16-bit instant']].map(([v,t])=>`<option value="${v}" ${a.type===v?'selected':''}>${t}</option>`).join('')}</select></div>
+        <div><label class="f">Invert</label><select data-a="inv"><option value="N">Normal</option><option value="I" ${a.inv==='I'?'selected':''}>Inverted</option></select></div>
+        <div><label class="f">Level %</label><input type="number" min="0" max="100" data-a="level" value="${esc(a.level)}"></div>
+        <div><label class="f">ON value</label><input type="number" min="0" max="255" data-a="on" value="${esc(a.on)}" placeholder="auto"></div>
+        <div><label class="f">Highlight</label><input type="number" min="0" max="255" data-a="hi" value="${esc(a.hi)}" placeholder="auto"></div>
+        <div><label class="f">Lowlight</label><input type="number" min="0" max="255" data-a="lo" value="${esc(a.lo)}" placeholder="auto"></div>
+      </div>`:''}</div>`;
+    d.innerHTML = `<div class="chtop">
+        <div class="num">${i+1}</div>
+        <input data-k="name" value="${esc(c.name)}" maxlength="24" placeholder="Name (12 chars)" aria-label="Channel ${i+1} name">
+        <select class="fnsel" data-k="fn" aria-label="Function">${fnOptions.replace(`value="${c.fn}"`,`value="${c.fn}" selected`)}</select>
+        <div class="iconbtns"><button class="ib" data-act="up" title="Move up">↑</button><button class="ib" data-act="down" title="Move down">↓</button><button class="ib" data-act="del" title="Delete">✕</button></div>
+      </div>
+      <div class="slot" data-slot></div>${fineSel}${rangesHtml}${advHtml}`;
+    box.appendChild(d);
+  });
+  $('#chCount').textContent = state.chs.length;
+  update();
+}
+
+function update(){
+  const fx = state.fx;
+  last = generate(fx, state.chs);
+  $('#out').textContent = last.text || '(no channels yet)';
+  $('#fname').textContent = last.file ? '· '+last.file : '';
+  $('#fxRef').placeholder = last.ref ? 'auto: '+deviceRef({...fx,ref:''}, state.chs.length) : 'auto';
+  const w = $('#warns'); w.innerHTML = last.warnings.map(x=>`<li class="${x.lvl}">${esc(x.msg)}</li>`).join('') || (state.chs.length?'<li style="color:var(--ok)">Looks good.</li>':'');
+  document.querySelectorAll('#chlist .ch').forEach(el=>{
+    const i = +el.dataset.i, s = el.querySelector('[data-slot]'); if(!s) return;
+    if(last.msbOf && last.msbOf[i]>=0) s.innerHTML = `16-bit fine of ch <b>${last.msbOf[i]+1}</b>`;
+    else if(last.standaloneFine && last.standaloneFine[i]) s.innerHTML = `Own wheel: <b>${slotLabel(last.slots[i])}</b> (dimmer fine on Classic)`;
+    else s.innerHTML = `Wheel: <b>${slotLabel(last.slots[i])}</b>${last.lsbOf && last.lsbOf[i]>=0 ? ` · 16-bit with ch ${last.lsbOf[i]+1}`:''}`;
+  });
+  ['#dlR20','#dlZip','#copyBtn','#saveJson'].forEach(id=>$(id).disabled = !state.chs.length);
+  lsSet('r20gen.draft', {fx:state.fx, chs:state.chs});
+}
+
+// channel list events (delegated)
+$('#chlist').addEventListener('input', e=>{
+  const el = e.target, card = el.closest('.ch'); if(!card) return; const c = state.chs[+card.dataset.i];
+  if(el.dataset.k==='name'){ c.name = el.value; update(); return; }
+  if(el.dataset.a){ c.adv[el.dataset.a] = el.value; update(); return; }
+  if(el.dataset.rk){ const r = c.ranges[+el.closest('.rg').dataset.r]; const k = el.dataset.rk;
+    if(k==='pct') r.pct = el.checked; else if(k==='label') r.label = el.value; else r[k] = el.value===''?'':+el.value; update(); }
+});
+$('#chlist').addEventListener('change', e=>{
+  const el = e.target, card = el.closest('.ch'); if(!card) return; const i=+card.dataset.i, c = state.chs[i];
+  if(el.dataset.k==='fn'){ c.fn = el.value; if(c.fn==='fine' && c.fineOf<0) c.fineOf = guessFineOf(state.chs,i); renderChannels(); }
+  else if(el.dataset.k==='fineOf'){ c.fineOf = +el.value; update(); }
+  else if(el.dataset.a==='slot'||el.dataset.a==='type'||el.dataset.a==='inv'){ c.adv[el.dataset.a]=el.value; update(); }
+});
+$('#chlist').addEventListener('click', e=>{
+  const b = e.target.closest('[data-act]'); if(!b) return; const card=b.closest('.ch'); const i=+card.dataset.i; const c=state.chs[i]; const chs=state.chs;
+  const fixLinks = (map)=>{ chs.forEach(x=>{ if(x.fineOf>=0) x.fineOf = map(x.fineOf); }); };
+  switch(b.dataset.act){
+    case 'up': if(i>0){ [chs[i-1],chs[i]]=[chs[i],chs[i-1]]; fixLinks(j=>j===i?i-1:j===i-1?i:j); } break;
+    case 'down': if(i<chs.length-1){ [chs[i+1],chs[i]]=[chs[i],chs[i+1]]; fixLinks(j=>j===i?i+1:j===i+1?i:j); } break;
+    case 'del': chs.splice(i,1); fixLinks(j=>j===i?-1:j>i?j-1:j); break;
+    case 'toggleR': c.openR=!c.openR; break;
+    case 'toggleA': c.openA=!c.openA; break;
+    case 'addR': { const lastR = c.ranges[c.ranges.length-1]; const lo = lastR ? Math.min(255,(+lastR.hi||0)+1) : 0; c.ranges.push({lo, hi:255, label:'', pct:false}); break; }
+    case 'delR': c.ranges.splice(+b.closest('.rg').dataset.r,1); break;
+    case 'clrR': c.ranges=[]; break;
+  }
+  renderChannels();
+});
+$('#addCh').onclick = ()=>{ state.chs.push(newChannel('', 'other')); renderChannels(); const inp = document.querySelectorAll('#chlist .ch input[data-k=name]'); inp[inp.length-1]?.focus(); };
+$('#clearCh').onclick = ()=>{ if(!state.chs.length) return; const keep = state.chs; state.chs=[]; renderChannels(); toastUndo('Cleared all channels', ()=>{ state.chs=keep; renderChannels(); }); };
+function toastUndo(msg, fn){ const t=$('#toast'); t.innerHTML = esc(msg)+' · <a href="#" id="undoA">Undo</a>'; t.style.pointerEvents='auto'; t.classList.add('on'); clearTimeout(toastT); $('#undoA').onclick = ev=>{ ev.preventDefault(); fn(); t.classList.remove('on'); t.style.pointerEvents='none'; }; toastT=setTimeout(()=>{ t.classList.remove('on'); t.style.pointerEvents='none'; },5000); }
+
+// fixture fields
+const FXMAP = {fxMfr:'mfr',fxName:'name',fxMode:'mode',fxRef:'ref',fxKind:'kind',fxPan:'pan',fxTilt:'tilt'};
+for(const [id,k] of Object.entries(FXMAP)){ $('#'+id).addEventListener('input', e=>{ state.fx[k]=e.target.value; update(); }); }
+$('#fxPal').addEventListener('change', e=>{ state.fx.palettes = e.target.checked; update(); });
+function fillFx(){ for(const [id,k] of Object.entries(FXMAP)) $('#'+id).value = state.fx[k] ?? ''; $('#fxPal').checked = state.fx.palettes!==false; }
+function loadProject(fx, chs, msg){
+  const prev = {fx:{...state.fx}, chs:state.chs};
+  state.fx = {...state.fx, ...Object.fromEntries(Object.entries(fx||{}).filter(([k,v])=>v!==undefined && v!==''))};
+  if(fx && 'ref' in fx) state.fx.ref = fx.ref || '';
+  state.chs = chs; fillFx(); renderChannels();
+  if(prev.chs.length) toastUndo(msg, ()=>{ state.fx=prev.fx; state.chs=prev.chs; fillFx(); renderChannels(); }); else toast(msg);
+  $('#s3').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+/* ============================================================
+   Input tabs
+   ============================================================ */
+document.querySelectorAll('#inTabs button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#inTabs button').forEach(x=>x.classList.toggle('on',x===b));
+  document.querySelectorAll('#s1 .pane').forEach(p=>p.classList.toggle('on',p.id===b.dataset.p));
+});
+$('#parseBtn').onclick = ()=>{
+  const chs = parseChartText($('#chartText').value);
+  if(!chs.length){ $('#textStatus').className='status err'; $('#textStatus').textContent='No channels found. Put each channel on its own line, starting with its number.'; return; }
+  $('#textStatus').className='status ok'; $('#textStatus').textContent=`Found ${chs.length} channels.`;
+  loadProject({mode: state.fx.mode || (chs.length+'CH')}, chs, `Loaded ${chs.length} channels`);
+};
+$('#exampleBtn').onclick = ()=>{
+  $('#chartText').value = `CH1 Dimmer 0-255 0-100%
+CH2 Strobe
+000-007 Open
+008-255 Strobe slow-fast
+CH3 Red
+CH4 Green
+CH5 Blue
+CH6 White
+CH7 Colour macro
+000-009 No function
+010-029 Red
+030-049 Green
+050-069 Blue
+070-089 Yellow
+090-109 Cyan
+110-129 Purple
+130-255 Jump slow-fast
+CH8 Auto programs
+000-009 No function
+010-255 Auto 1-8`;
+  if(!state.fx.mfr) { state.fx.mfr='Generic'; state.fx.name='LED Par RGBW'; state.fx.mode='8CH'; fillFx(); }
+  $('#parseBtn').click();
+};
+
+/* ---- open file */
+$('#openIn').addEventListener('change', async e=>{
+  const f = e.target.files[0]; if(!f) return; const txt = await f.text(); const st=$('#openStatus');
+  try{
+    if(/\.json$/i.test(f.name) || txt.trim().startsWith('{')){ const p = JSON.parse(txt); if(!Array.isArray(p.chs)) throw new Error('Not a project file'); p.chs = p.chs.map(c=>Object.assign(newChannel(), c, {adv:Object.assign(newChannel().adv, c.adv||{})})); loadProject(p.fx, p.chs, `Opened ${f.name}`); }
+    else { const {fx,chs} = parseR20(txt); if(!chs.length) throw new Error('No DMX section found'); loadProject(fx, chs, `Opened ${f.name}: ${chs.length} channels`); }
+    st.className='status ok'; st.textContent=`Opened ${f.name}`;
+  }catch(err){ st.className='status err'; st.textContent='Could not read this file: '+err.message; }
+  e.target.value='';
+});
+
+/* ============================================================
+   Photo reading: through the TrilitLabs Worker (no key in this page).
+   If it isn't set up or its free quota is used up, switch to typing.
+   ============================================================ */
+let photos = [];          // {file, url}
+let downloadsCap = null;
+const drop = $('#drop'), photoIn = $('#photoIn');
+drop.onclick = ()=>photoIn.click();
+drop.addEventListener('dragover', e=>{ e.preventDefault(); drop.classList.add('over'); });
+drop.addEventListener('dragleave', ()=>drop.classList.remove('over'));
+drop.addEventListener('drop', e=>{ e.preventDefault(); drop.classList.remove('over'); addPhotos(e.dataTransfer.files); });
+photoIn.addEventListener('change', e=>{ addPhotos(e.target.files); e.target.value=''; });
+function addPhotos(list){
+  for(const f of list){ if(!/^image\//.test(f.type)) continue; photos.push({file:f, url:URL.createObjectURL(f)}); }
+  const t=$('#thumbs'); t.innerHTML = photos.map((p,i)=>`<div style="position:relative"><img src="${p.url}" alt="chart photo ${i+1}"><button class="ib" style="position:absolute;top:4px;right:4px;background:#000a" data-pi="${i}" title="Remove">✕</button></div>`).join('');
+  t.querySelectorAll('[data-pi]').forEach(b=>b.onclick=()=>{ photos.splice(+b.dataset.pi,1); addPhotos([]); });
+  $('#readBtn').disabled = !photos.length;
+}
+async function shrink(file, maxSide=1800, forOcr=false){
+  const img = await new Promise((res,rej)=>{ const im=new Image(); im.onload=()=>res(im); im.onerror=rej; im.src=URL.createObjectURL(file); });
+  const big = Math.max(img.naturalWidth,img.naturalHeight);
+  const sc = forOcr && big<1000 ? Math.min(2, 1600/big) : Math.min(1, maxSide/big);   // OCR: enlarge only tiny screenshots
+  const cv = document.createElement('canvas'); cv.width=Math.round(img.naturalWidth*sc); cv.height=Math.round(img.naturalHeight*sc);
+  const g = cv.getContext('2d'); g.imageSmoothingQuality='high'; g.drawImage(img,0,0,cv.width,cv.height);
+  if(forOcr){ // greyscale + stretch contrast helps OCR on phone photos
+    const d = g.getImageData(0,0,cv.width,cv.height), a = d.data; let mn=255, mx=0;
+    for(let i=0;i<a.length;i+=4){ const y = 0.299*a[i]+0.587*a[i+1]+0.114*a[i+2]; a[i]=y; if(y<mn) mn=y; if(y>mx) mx=y; }
+    const k = 255/Math.max(1,mx-mn); for(let i=0;i<a.length;i+=4){ const y=(a[i]-mn)*k; a[i]=a[i+1]=a[i+2]=y; }
+    g.putImageData(d,0,0);
+    return await new Promise(res=>cv.toBlob(res,'image/png'));
+  }
+  return await new Promise(res=>cv.toBlob(res,'image/jpeg',0.9));
+}
+const blobB64 = b => new Promise(res=>{ const r=new FileReader(); r.onload=()=>res(String(r.result).split(',')[1]); r.readAsDataURL(b); });
+
+function aiPrompt(){
+  const hint = ascii($('#modeHint').value);
+  const keys = Object.entries(FUNCS).map(([k,v])=>`${k} (${v.label})`).join(', ');
+  return `You are reading the DMX channel chart of a stage lighting fixture from the attached photo(s) of its user manual.
+Mode to extract: ${hint ? `"${hint}"` : 'if the chart lists several DMX modes, take the one with the most channels'}.
+Reply with ONLY one JSON object, no other text, in this shape:
+{"manufacturer":"","fixture":"","mode":"8CH","channels":[{"ch":1,"name":"Dimmer","function":"dimmer","fine_of":null,"ranges":[{"from":0,"to":7,"label":"Open","proportional":false}]}]}
+Rules:
+- One entry per DMX channel of that mode, in order, "ch" starting at 1.
+- "name": short attribute name, at most 12 characters (e.g. "Pan Fine", "Strobe", "Col Macro").
+- "function": exactly one of: ${keys}.
+- For 16-bit fine / LSB channels use "function":"fine" and set "fine_of" to the ch number of the coarse channel.
+- "ranges": the DMX value ranges printed for that channel, "from"/"to" inclusive 0-255, "label" at most 11 characters (abbreviate, e.g. "Strobe", "Gobo 3", "Rot CW"), "proportional": true when the effect varies continuously across the range (slow to fast, 0-100%, dim to bright).
+- A channel that is just 0-255 = 0-100% gets "ranges": [].
+- Use "" for manufacturer or fixture if they are not visible. Do not invent channels that are not in the chart.`;
+}
+function aiToChannels(j){
+  if(!j || !Array.isArray(j.channels)) throw new Error('The answer had no channel list.');
+  const rows = [...j.channels].sort((a,b)=>(+a.ch||0)-(+b.ch||0));
+  const chs = rows.map(r=>{
+    const c = newChannel(shortName(r.name||''), FUNCS[r.function] ? r.function : guessFn(r.name||''));
+    c.ranges = (Array.isArray(r.ranges)?r.ranges:[]).map(x=>({lo:clampInt(x.from,0,255,0),hi:clampInt(x.to,0,255,255),label:shortLabel(x.label||''),pct:!!x.proportional}));
+    if(c.ranges.length===1 && c.ranges[0].lo===0 && c.ranges[0].hi===255) c.ranges=[];
+    c._fineCh = r.fine_of;
+    return c;
+  });
+  chs.forEach((c,i)=>{ if(c.fn==='fine'){ const k = rows.findIndex(r=>+r.ch===+c._fineCh); c.fineOf = k>=0&&k!==i ? k : guessFineOf(chs,i); } delete c._fineCh; });
+  return {fx:{mfr:ascii(j.manufacturer), name:ascii(j.fixture), mode:ascii(j.mode)}, chs};
+}
+async function readPhotos(blobs, signal){
+  const fail = (msg, code) => { const x = new Error(msg); x.code = code; return x; };
+  if(!R20_AI_PROXY) throw fail('Photo reading isn\'t available yet.', 'proxy_down');
+  const parts = [{text: aiPrompt()}]; for(const b of blobs) parts.push({inline_data:{mime_type:'image/jpeg', data: await blobB64(b)}});
+  const body = JSON.stringify({contents:[{role:'user', parts}]});
+  let r;
+  try{ r = await fetch(R20_AI_PROXY, {method:'POST', signal, headers:{'content-type':'application/json'}, body}); }
+  catch(e){ if(e.name==='AbortError') throw e; throw fail('Photo reading is unavailable right now.', 'proxy_down'); }
+  const j = await r.json().catch(()=>({}));
+  if(r.ok && j.text) return extractJson(j.text);
+  throw fail(j.error || ('Photo reading failed (HTTP '+r.status+').'), r.status===429 ? 'quota' : 'proxy_down');
+}
+function extractJson(t){ const fence = t.match(/```(?:json)?\s*([\s\S]*?)```/); if(fence) t = fence[1]; const a=t.indexOf('{'), b=t.lastIndexOf('}'); if(a<0||b<a) throw new Error('No JSON in the answer.'); return JSON.parse(t.slice(a,b+1)); }
+function toManual(why){
+  document.querySelector('#inTabs [data-p=pText]').click();
+  const ts = $('#textStatus'); ts.className='status err';
+  ts.textContent = why + ' Type the channel list from the chart here, one channel per line, then press "Use this list". The guide below shows how.';
+  $('#howTo').open = true;
+  $('#chartText').focus({preventScroll:true}); $('#s1').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+let readCtl = null;
+$('#stopBtn').onclick = ()=>{ readCtl?.abort(); };
+$('#readBtn').onclick = async ()=>{
+  const st = $('#photoStatus'); const say = (m,c='')=>{ st.className='status '+c; st.innerHTML=m; };
+  readCtl = new AbortController(); $('#readBtn').disabled=true; $('#stopBtn').hidden = false;
+  try{
+    say('<span class="spin"></span> Preparing photos…');
+    const blobs = []; for(const p of photos) blobs.push(await shrink(p.file, 1800, false));
+    say('<span class="spin"></span> Reading the chart… (usually 10–40 s)');
+    const {fx, chs} = aiToChannels(await readPhotos(blobs, readCtl.signal));
+    if(!chs.length) throw new Error('No channels were found in the photo.');
+    loadProject(fx, chs, `Read ${chs.length} channels`);
+    say(`Read ${chs.length} channels${fx.mode?` (${esc(fx.mode)})`:''}. Check them against the chart before downloading.`,'ok');
+  }catch(e){
+    if(e?.name==='AbortError'){ say('Stopped.','err'); return; }
+    if(e?.code==='quota'){ say('Photo reading has used up its free limit for now. It will work again later.','err'); toManual('Photo reading is resting (free limit reached).'); return; }
+    if(e?.code==='proxy_down'){ say(esc(e.message),'err'); toManual(e.message); return; }
+    say(esc(e?.message || 'Reading failed.') + ' Try a sharper, straight-on photo of just the chart, or type the list in.', 'err');
+  }finally{ $('#readBtn').disabled = !photos.length; $('#stopBtn').hidden=true; }
+};
+
+/* ============================================================
+   Output: download, zip, copy, project
+   ============================================================ */
+const CRC = (()=>{ const t=new Uint32Array(256); for(let n=0;n<256;n++){ let c=n; for(let k=0;k<8;k++) c = c&1 ? 0xEDB88320^(c>>>1) : c>>>1; t[n]=c>>>0; } return t; })();
+function crc32(u8){ let c=0xFFFFFFFF; for(let i=0;i<u8.length;i++) c = CRC[(c^u8[i])&0xFF]^(c>>>8); return (c^0xFFFFFFFF)>>>0; }
+function makeZip(files){ // [{name, data:Uint8Array}] stored, no compression
+  const enc = new TextEncoder(); const parts=[], central=[]; let off=0;
+  const d = new Date(); const time = (d.getHours()<<11)|(d.getMinutes()<<5)|(d.getSeconds()>>1); const date = ((d.getFullYear()-1980)<<9)|((d.getMonth()+1)<<5)|d.getDate();
+  for(const f of files){
+    const nm = enc.encode(f.name), data=f.data, crc=crc32(data);
+    const h = new DataView(new ArrayBuffer(30)); h.setUint32(0,0x04034b50,true); h.setUint16(4,20,true); h.setUint16(6,0,true); h.setUint16(8,0,true); h.setUint16(10,time,true); h.setUint16(12,date,true); h.setUint32(14,crc,true); h.setUint32(18,data.length,true); h.setUint32(22,data.length,true); h.setUint16(26,nm.length,true); h.setUint16(28,0,true);
+    parts.push(new Uint8Array(h.buffer), nm, data);
+    const c = new DataView(new ArrayBuffer(46)); c.setUint32(0,0x02014b50,true); c.setUint16(4,20,true); c.setUint16(6,20,true); c.setUint16(8,0,true); c.setUint16(10,0,true); c.setUint16(12,time,true); c.setUint16(14,date,true); c.setUint32(16,crc,true); c.setUint32(20,data.length,true); c.setUint32(24,data.length,true); c.setUint16(28,nm.length,true); c.setUint32(42,off,true);
+    central.push(new Uint8Array(c.buffer), nm);
+    off += 30+nm.length+data.length;
+  }
+  const csize = central.reduce((a,b)=>a+b.length,0);
+  const e = new DataView(new ArrayBuffer(22)); e.setUint32(0,0x06054b50,true); e.setUint16(8,files.length,true); e.setUint16(10,files.length,true); e.setUint32(12,csize,true); e.setUint32(16,off,true);
+  return new Blob([...parts, ...central, new Uint8Array(e.buffer)], {type:'application/zip'});
+}
+async function saveFile(filename, data){
+  if(downloadsCap){
+    try{ await downloadsCap.save({filename, data}); toast('Saved '+filename); return true; }
+    catch(e){ if(e && e.code==='declined') return false; if(e && e.code==='rejected_extension') { toast('This viewer can\'t save that file type. Use the .zip or Copy text.'); return false; } }
+  }
+  try{
+    const blob = data instanceof Blob ? data : new Blob([data], {type:'application/octet-stream'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename; document.body.appendChild(a); a.click();
+    setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 1500); return true;
+  }catch(e){ toast('Download blocked here. Use Copy text instead.'); return false; }
+}
+/* ---- email gate */
+let gateMe = lsGet('r20gen.gate');               // {email, token} once confirmed
+const unlocked = () => !R20_GATE_URL || !!(gateMe && gateMe.token);
+async function gateCall(body){
+  /* plain-text POST: no CORS preflight, which Apps Script can't answer */
+  const r = await fetch(R20_GATE_URL, {method:'POST', body: JSON.stringify(body)});
+  return await r.json();
+}
+function gateUI(){
+  const open = unlocked();
+  $('#gate').hidden = open; $('#dlRow').hidden = !open; $('#prevBox').hidden = !open;
+  $('#gWho').hidden = !(R20_GATE_URL && open);
+  if(R20_GATE_URL && open) $('#gWho').innerHTML = `Downloads unlocked for <b>${esc(gateMe.email)}</b> · <a href="#" id="gOut">use another email</a>`;
+  const o = $('#gOut'); if(o) o.onclick = ev=>{ ev.preventDefault(); gateMe=null; lsSet('r20gen.gate', null); $('#gCodeRow').hidden=true; gateUI(); };
+}
+function gateSay(m, c){ const g=$('#gMsg'); g.textContent=m; g.style.color = c==='err'?'var(--err)':c==='ok'?'var(--ok)':''; }
+const emailOk = s => s.length<=254 && /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)*\.[a-z]{2,}$/i.test(s);
+async function gateSend(){
+  const email = $('#gEmail').value.trim().toLowerCase();
+  if(!emailOk(email)){ gateSay('Enter a valid email address, like name@gmail.com.', 'err'); $('#gEmail').focus(); return; }
+  $('#gSend').disabled = $('#gResend').disabled = true; gateSay('Sending the code…');
+  try{
+    const j = await gateCall({action:'send', email});
+    if(!j.ok) throw new Error(j.error||'Could not send the code.');
+    $('#gCodeRow').hidden = false; $('#gCode').value=''; $('#gCode').focus();
+    gateSay(`Code sent to ${email}. Check your inbox (and spam).`, 'ok');
+  }catch(e){ gateSay(e instanceof TypeError ? 'Couldn\'t reach the server. Check your internet and try again.' : e.message, 'err'); }
+  finally{ $('#gSend').disabled = $('#gResend').disabled = false; }
+}
+$('#gSend').onclick = gateSend; $('#gResend').onclick = gateSend;
+$('#gEmail').addEventListener('keydown', e=>{ if(e.key==='Enter') gateSend(); });
+async function gateVerify(){
+  const email = $('#gEmail').value.trim().toLowerCase(), code = $('#gCode').value.replace(/\D/g,'');
+  if(code.length!==6){ gateSay('Type the 6-digit code from the email.', 'err'); return; }
+  $('#gVerify').disabled = true; gateSay('Checking…');
+  try{
+    const j = await gateCall({action:'verify', email, code});
+    if(!j.ok || !j.token) throw new Error(j.error||'That code didn\'t work.');
+    gateMe = {email, token:j.token}; lsSet('r20gen.gate', gateMe); gateUI(); toast('Downloads unlocked');
+  }catch(e){ gateSay(e instanceof TypeError ? 'Couldn\'t reach the server. Check your internet and try again.' : e.message, 'err'); }
+  finally{ $('#gVerify').disabled = false; }
+}
+$('#gVerify').onclick = gateVerify;
+$('#gCode').addEventListener('keydown', e=>{ if(e.key==='Enter') gateVerify(); });
+function logDownload(kind){
+  if(!R20_GATE_URL || !gateMe || !last) return;
+  gateCall({action:'log', email:gateMe.email, token:gateMe.token, kind, file:last.file,
+            fixture:[state.fx.mfr, state.fx.name, state.fx.mode].map(ascii).filter(Boolean).join(' ')}).catch(()=>{});
+}
+$('#dlR20').addEventListener('click', ()=>logDownload('R20'));
+$('#dlZip').addEventListener('click', ()=>logDownload('USB zip'));
+$('#copyBtn').addEventListener('click', ()=>logDownload('Copied text'));
+
+$('#dlR20').onclick = ()=>{ if(last && last.text) saveFile(downloadsCap ? last.file+'.txt' : last.file, last.text); };
+$('#dlZip').onclick = ()=>{ if(!last || !last.text) return; const enc = new TextEncoder();
+  const z = makeZip([{name:`AVOLITES/FIXTURES/R20/${last.mfrDir}/${last.file}`, data: enc.encode(last.text)}, {name:'README.txt', data: enc.encode(`Copy the AVOLITES folder to the root of a USB stick.\r\nAlso put SG.DAT (the Avolites shape file) in AVOLITES/FIXTURES/R20/.\r\nGet it from any Avolites R20 personality download or the Copy 2008 tool.\r\n\r\nFixture: ${ascii(state.fx.mfr)} ${ascii(state.fx.name)} ${ascii(state.fx.mode)}\r\nFile: ${last.file}\r\n`)}]);
+  saveFile(`${last.ref}_R20.zip`, z); };
+$('#copyBtn').onclick = async ()=>{ try{ await navigator.clipboard.writeText(last.text); toast('Copied. Paste into a text file named '+last.file); }catch(e){ const r=document.createRange(); r.selectNodeContents($('#out')); const s=getSelection(); s.removeAllRanges(); s.addRange(r); toast('Press Ctrl+C / Copy to copy the selected text'); } };
+$('#saveJson').onclick = ()=>{ const p = {app:'r20gen', v:1, fx:state.fx, chs:state.chs.map(({openR,openA,...c})=>c)}; saveFile((last?.ref||'fixture')+'.json', JSON.stringify(p,null,2)); };
+
+/* ============================================================
+   Start
+   ============================================================ */
+(function start(){
+  const d = lsGet('r20gen.draft');
+  if(d && Array.isArray(d.chs)){ state.fx = Object.assign(state.fx, d.fx||{}); state.chs = d.chs.map(c=>Object.assign(newChannel(), c, {adv:Object.assign(newChannel().adv, c.adv||{})})); }
+  fillFx(); renderChannels(); gateUI();
+  // Inside claude.ai the page saves files through the viewer.
+  if(window.claude && typeof window.claude.use==='function'){
+    window.claude.use('downloads').then(d=>{ if(d){ downloadsCap = d; $('#dlR20').textContent='Download .R20 (as .txt)'; $('#dlNote').textContent='In this viewer the .R20 saves as a .txt file: rename it to remove ".txt", or use the .zip which keeps the right name.'; } }).catch(()=>{});
+  }
+})();
+})();
 </script>
 </body>
 </html>
