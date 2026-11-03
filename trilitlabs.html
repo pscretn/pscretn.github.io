@@ -2047,7 +2047,6 @@ $('#openIn').addEventListener('change', async e=>{
    If it isn't set up or its free quota is used up, switch to typing.
    ============================================================ */
 let photos = [];          // {file, url}
-let downloadsCap = null;
 const drop = $('#drop'), photoIn = $('#photoIn');
 drop.onclick = ()=>photoIn.click();
 drop.addEventListener('dragover', e=>{ e.preventDefault(); drop.classList.add('over'); });
@@ -2174,10 +2173,6 @@ function makeZip(files){ // [{name, data:Uint8Array}] stored, no compression
   return new Blob([...parts, ...central, new Uint8Array(e.buffer)], {type:'application/zip'});
 }
 async function saveFile(filename, data){
-  if(downloadsCap){
-    try{ await downloadsCap.save({filename, data}); toast('Saved '+filename); return true; }
-    catch(e){ if(e && e.code==='declined') return false; if(e && e.code==='rejected_extension') { toast('This viewer can\'t save that file type. Use the .zip or Copy text.'); return false; } }
-  }
   try{
     const blob = data instanceof Blob ? data : new Blob([data], {type:'application/octet-stream'});
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename; document.body.appendChild(a); a.click();
@@ -2237,7 +2232,7 @@ $('#dlR20').addEventListener('click', ()=>logDownload('R20'));
 $('#dlZip').addEventListener('click', ()=>logDownload('USB zip'));
 $('#copyBtn').addEventListener('click', ()=>logDownload('Copied text'));
 
-$('#dlR20').onclick = ()=>{ if(last && last.text) saveFile(downloadsCap ? last.file+'.txt' : last.file, last.text); };
+$('#dlR20').onclick = ()=>{ if(last && last.text) saveFile(last.file, last.text); };
 $('#dlZip').onclick = ()=>{ if(!last || !last.text) return; const enc = new TextEncoder();
   const z = makeZip([{name:`AVOLITES/FIXTURES/R20/${last.mfrDir}/${last.file}`, data: enc.encode(last.text)}, {name:'README.txt', data: enc.encode(`Copy the AVOLITES folder to the root of a USB stick.\r\nAlso put SG.DAT (the Avolites shape file) in AVOLITES/FIXTURES/R20/.\r\nGet it from any Avolites R20 personality download or the Copy 2008 tool.\r\n\r\nFixture: ${ascii(state.fx.mfr)} ${ascii(state.fx.name)} ${ascii(state.fx.mode)}\r\nFile: ${last.file}\r\n`)}]);
   saveFile(`${last.ref}_R20.zip`, z); };
@@ -2251,10 +2246,6 @@ $('#saveJson').onclick = ()=>{ const p = {app:'r20gen', v:1, fx:state.fx, chs:st
   const d = lsGet('r20gen.draft');
   if(d && Array.isArray(d.chs)){ state.fx = Object.assign(state.fx, d.fx||{}); state.chs = d.chs.map(c=>Object.assign(newChannel(), c, {adv:Object.assign(newChannel().adv, c.adv||{})})); }
   fillFx(); renderChannels(); gateUI();
-  // Inside claude.ai the page saves files through the viewer.
-  if(window.claude && typeof window.claude.use==='function'){
-    window.claude.use('downloads').then(d=>{ if(d){ downloadsCap = d; $('#dlR20').textContent='Download .R20 (as .txt)'; $('#dlNote').textContent='In this viewer the .R20 saves as a .txt file: rename it to remove ".txt", or use the .zip which keeps the right name.'; } }).catch(()=>{});
-  }
 })();
 })();
 </script>
