@@ -485,7 +485,6 @@
 .r20 .gate{margin:4px 0 12px;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--panel2)}
 .r20 .gate input{flex:1;min-width:0}
 .r20 .gate .help{margin:8px 0 0}
-.r20 #gCode{max-width:10rem;letter-spacing:.3em;font-family:ui-monospace,Menlo,Consolas,monospace}
 .r20 .howto{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;margin-top:10px;align-items:start}
 .r20 .howto .help{margin:0 0 9px}
 .r20 .howto pre.out{margin:0;max-height:none}
@@ -915,10 +914,13 @@
   <h2><span class="step">4</span> Download</h2>
   <ul class="warn" id="warns"></ul>
   <div class="gate" id="gate" hidden>
-    <label class="f" for="gEmail">Your email, to unlock downloads</label>
-    <div class="row"><input id="gEmail" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" maxlength="254"><button class="btn primary" id="gSend" type="button">Send code</button></div>
-    <div class="row" id="gCodeRow" hidden style="margin-top:8px"><input id="gCode" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6-digit code"><button class="btn primary" id="gVerify" type="button">Unlock</button><button class="btn ghost small" id="gResend" type="button">Send again</button></div>
-    <p class="help" id="gMsg">We'll email you a 6-digit code to confirm the address. TrilitLabs keeps your email with the fixtures you download.</p>
+    <p class="help" style="margin:0 0 8px">Tell us who you are to download. You'll only be asked once on this device.</p>
+    <div class="grid g2">
+      <div><label class="f" for="gName">Your name</label><input id="gName" autocomplete="name" placeholder="e.g. Paul" maxlength="80"></div>
+      <div><label class="f" for="gEmail">Your email</label><input id="gEmail" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" maxlength="254"></div>
+    </div>
+    <div class="row" style="margin-top:10px"><button class="btn primary" id="gGo" type="button">Unlock downloads</button></div>
+    <p class="help" id="gMsg">TrilitLabs keeps your name and email with the fixtures you download.</p>
   </div>
   <p class="help" id="gWho" hidden></p>
   <div class="row" id="dlRow">
@@ -1513,9 +1515,9 @@ const BANKNAMES = {1:'Dimmer',2:'Shutter/Iris',3:'Pan/Tilt',4:'Colour',5:'Zoom/F
    empty, photo reading is off and visitors type the list in.
    When the free quota runs out, the page switches visitors to typing the list in. */
 const R20_AI_PROXY = 'https://r20-proxy.paulsabu-123.workers.dev/';
-/* Downloads are unlocked by a confirmed email. The check runs in a Google Apps Script
-   bound to a Google Sheet (tools/r20-gate/Code.gs): it emails the code and records each
-   download in the sheet. Put its Web app URL here; empty means downloads are open. */
+/* Visitors give their name and email before downloading. A Google Apps Script bound to
+   a Google Sheet (tools/r20-gate/Code.gs) records each sign-up and download in the sheet.
+   Put its Web app URL here; empty means downloads are open. */
 const R20_GATE_URL = 'https://script.google.com/macros/s/AKfycbzdgv2TnY9I_IZYRSyfNZDJfuS_6N0EO2XUTlu5mN3i_VXdSpZiJEyTioDmSP9TkVjDSQ/exec';
 const PCT_FORMULA = '"%3d.%02d%%"(c-a)*100/(b-a),100*((c-a)*100%(b-a))/(b-a)';
 
@@ -2180,54 +2182,36 @@ async function saveFile(filename, data){
     setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 1500); return true;
   }catch(e){ toast('Download blocked here. Use Copy text instead.'); return false; }
 }
-/* ---- email gate */
-let gateMe = lsGet('r20gen.gate');               // {email, token} once confirmed
-const unlocked = () => !R20_GATE_URL || !!(gateMe && gateMe.token);
-async function gateCall(body){
+/* ---- name + email before downloading */
+let gateMe = lsGet('r20gen.gate');               // {name, email} once given
+const unlocked = () => !R20_GATE_URL || !!(gateMe && gateMe.name && gateMe.email);
+function gateCall(body){
   /* plain-text POST: no CORS preflight, which Apps Script can't answer */
-  const r = await fetch(R20_GATE_URL, {method:'POST', body: JSON.stringify(body)});
-  return await r.json();
+  return fetch(R20_GATE_URL, {method:'POST', body: JSON.stringify(body)}).then(r=>r.json());
 }
 function gateUI(){
   const open = unlocked();
   $('#gate').hidden = open; $('#dlRow').hidden = !open; $('#prevBox').hidden = !open;
   $('#gWho').hidden = !(R20_GATE_URL && open);
-  if(R20_GATE_URL && open) $('#gWho').innerHTML = `Downloads unlocked for <b>${esc(gateMe.email)}</b> · <a href="#" id="gOut">use another email</a>`;
-  const o = $('#gOut'); if(o) o.onclick = ev=>{ ev.preventDefault(); gateMe=null; lsSet('r20gen.gate', null); $('#gCodeRow').hidden=true; gateUI(); };
+  if(R20_GATE_URL && open) $('#gWho').innerHTML = `Downloading as <b>${esc(gateMe.name)}</b> (${esc(gateMe.email)}) · <a href="#" id="gOut">change</a>`;
+  const o = $('#gOut'); if(o) o.onclick = ev=>{ ev.preventDefault(); $('#gName').value = gateMe.name||''; $('#gEmail').value = gateMe.email||''; gateMe=null; lsSet('r20gen.gate', null); gateUI(); };
+  if(!open && gateMe && gateMe.email && !$('#gEmail').value) $('#gEmail').value = gateMe.email;   // from the old code check
 }
-function gateSay(m, c){ const g=$('#gMsg'); g.textContent=m; g.style.color = c==='err'?'var(--err)':c==='ok'?'var(--ok)':''; }
+function gateSay(m, c){ const g=$('#gMsg'); g.textContent=m; g.style.color = c==='err'?'var(--err)':''; }
 const emailOk = s => s.length<=254 && /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)*\.[a-z]{2,}$/i.test(s);
-async function gateSend(){
-  const email = $('#gEmail').value.trim().toLowerCase();
+const fixtureNow = () => [state.fx.mfr, state.fx.name, state.fx.mode].map(ascii).filter(Boolean).join(' ');
+function gateGo(){
+  const name = $('#gName').value.replace(/\s+/g,' ').trim(), email = $('#gEmail').value.trim().toLowerCase();
+  if(name.length < 2){ gateSay('Enter your name.', 'err'); $('#gName').focus(); return; }
   if(!emailOk(email)){ gateSay('Enter a valid email address, like name@gmail.com.', 'err'); $('#gEmail').focus(); return; }
-  $('#gSend').disabled = $('#gResend').disabled = true; gateSay('Sending the code…');
-  try{
-    const j = await gateCall({action:'send', email});
-    if(!j.ok) throw new Error(j.error||'Could not send the code.');
-    $('#gCodeRow').hidden = false; $('#gCode').value=''; $('#gCode').focus();
-    gateSay(`Code sent to ${email}. Check your inbox (and spam).`, 'ok');
-  }catch(e){ gateSay(e instanceof TypeError ? 'Couldn\'t reach the server. Check your internet and try again.' : e.message, 'err'); }
-  finally{ $('#gSend').disabled = $('#gResend').disabled = false; }
+  gateMe = {name, email}; lsSet('r20gen.gate', gateMe); gateUI(); toast('Downloads unlocked');
+  gateCall({action:'log', name, email, kind:'Signed up', fixture:fixtureNow(), file:''}).catch(()=>{});
 }
-$('#gSend').onclick = gateSend; $('#gResend').onclick = gateSend;
-$('#gEmail').addEventListener('keydown', e=>{ if(e.key==='Enter') gateSend(); });
-async function gateVerify(){
-  const email = $('#gEmail').value.trim().toLowerCase(), code = $('#gCode').value.replace(/\D/g,'');
-  if(code.length!==6){ gateSay('Type the 6-digit code from the email.', 'err'); return; }
-  $('#gVerify').disabled = true; gateSay('Checking…');
-  try{
-    const j = await gateCall({action:'verify', email, code});
-    if(!j.ok || !j.token) throw new Error(j.error||'That code didn\'t work.');
-    gateMe = {email, token:j.token}; lsSet('r20gen.gate', gateMe); gateUI(); toast('Downloads unlocked');
-  }catch(e){ gateSay(e instanceof TypeError ? 'Couldn\'t reach the server. Check your internet and try again.' : e.message, 'err'); }
-  finally{ $('#gVerify').disabled = false; }
-}
-$('#gVerify').onclick = gateVerify;
-$('#gCode').addEventListener('keydown', e=>{ if(e.key==='Enter') gateVerify(); });
+$('#gGo').onclick = gateGo;
+['gName','gEmail'].forEach(id=>$('#'+id).addEventListener('keydown', e=>{ if(e.key==='Enter') gateGo(); }));
 function logDownload(kind){
-  if(!R20_GATE_URL || !gateMe || !last) return;
-  gateCall({action:'log', email:gateMe.email, token:gateMe.token, kind, file:last.file,
-            fixture:[state.fx.mfr, state.fx.name, state.fx.mode].map(ascii).filter(Boolean).join(' ')}).catch(()=>{});
+  if(!R20_GATE_URL || !unlocked() || !last) return;
+  gateCall({action:'log', name:gateMe.name, email:gateMe.email, kind, file:last.file, fixture:fixtureNow()}).catch(()=>{});
 }
 $('#dlR20').addEventListener('click', ()=>logDownload('R20'));
 $('#dlZip').addEventListener('click', ()=>logDownload('USB zip'));
