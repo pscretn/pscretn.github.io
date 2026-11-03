@@ -2111,12 +2111,17 @@ async function readPhotos(blobs, signal){
   if(!R20_AI_PROXY) throw fail('Photo reading isn\'t available yet.', 'proxy_down');
   const parts = [{text: aiPrompt()}]; for(const b of blobs) parts.push({inline_data:{mime_type:'image/jpeg', data: await blobB64(b)}});
   const body = JSON.stringify({contents:[{role:'user', parts}]});
-  let r;
-  try{ r = await fetch(R20_AI_PROXY, {method:'POST', signal, headers:{'content-type':'application/json'}, body}); }
-  catch(e){ if(e.name==='AbortError') throw e; throw fail('Photo reading is unavailable right now.', 'proxy_down'); }
-  const j = await r.json().catch(()=>({}));
-  if(r.ok && j.text) return extractJson(j.text);
-  throw fail(j.error || ('Photo reading failed (HTTP '+r.status+').'), r.status===429 ? 'quota' : 'proxy_down');
+  /* a busy moment at Google is common: try once more before giving up */
+  for(let attempt = 1; ; attempt++){
+    let r;
+    try{ r = await fetch(R20_AI_PROXY, {method:'POST', signal, headers:{'content-type':'application/json'}, body}); }
+    catch(e){ if(e.name==='AbortError') throw e; if(attempt<2) continue; throw fail('Photo reading is unavailable right now.', 'proxy_down'); }
+    const j = await r.json().catch(()=>({}));
+    if(r.ok && j.text) return extractJson(j.text);
+    if(r.status===429) throw fail(j.error || 'Free limit reached.', 'quota');
+    if(r.status>=500 && attempt<2) continue;
+    throw fail(j.error || ('Photo reading failed (HTTP '+r.status+').'), 'proxy_down');
+  }
 }
 function extractJson(t){ const fence = t.match(/```(?:json)?\s*([\s\S]*?)```/); if(fence) t = fence[1]; const a=t.indexOf('{'), b=t.lastIndexOf('}'); if(a<0||b<a) throw new Error('No JSON in the answer.'); return JSON.parse(t.slice(a,b+1)); }
 function toManual(why){

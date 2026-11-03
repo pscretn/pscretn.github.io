@@ -22,7 +22,12 @@ const MAX_BYTES = 12 * 1024 * 1024;   // a few phone photos, already shrunk by t
 const API = 'https://generativelanguage.googleapis.com/v1beta';
 
 /* Google renames and retires models often, so ask which ones this key can use
-   (cached for an hour) and try the newest plain Flash first, then Flash-Lite. */
+   (cached for an hour) and try the newest plain Flash first, then Flash-Lite.
+   A model that is busy or out of quota is skipped for a while, and none gets
+   more than PER_MODEL_MS, so a visitor never waits on a model that won't answer. */
+const PER_MODEL_MS = 25000;
+const REST_MS = 10 * 60 * 1000;
+const resting = new Map();             // model → time it may be tried again
 let modelCache = { at: 0, list: null };
 function score(n) {
   if (!/^gemini-/.test(n) || /image|tts|live|audio|embed|robotics|native|computer|thinking|learnlm|preview|exp/.test(n)) return -1;
@@ -76,21 +81,37 @@ export default {
 
     let limited = false, last = '';
     const skipped = [];                    // which models refused, and why: shown in the reply for debugging
-    for (const model of await models(env.GEMINI_KEY)) {
-      const r = await fetch(`${API}/models/${model}:generateContent`, {
-        method: 'POST',
-        headers: { 'content-type': 'application/json', 'x-goog-api-key': env.GEMINI_KEY },
-        body: upstream,
-      });
-      const j = await r.json().catch(() => ({}));
-      if (r.ok) {
-        const text = (j.candidates?.[0]?.content?.parts || []).filter((p) => !p.thought).map((p) => p.text || '').join('');
-        if (text) return json({ text, model, skipped });
-        last = 'Empty answer';
-        skipped.push(model + ': empty answer');
+    const all = await models(env.GEMINI_KEY);
+    const now = Date.now();
+    let order = all.filter((m) => !(resting.get(m) > now));
+    if (!order.length) order = all;      // everything resting: try them all anyway
+    for (const model of order) {
+      const t0 = Date.now();
+      const secs = () => ((Date.now() - t0) / 1000).toFixed(1) + 's';
+      let r, j;
+      try {
+        r = await fetch(`${API}/models/${model}:generateContent`, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json', 'x-goog-api-key': env.GEMINI_KEY },
+          body: upstream,
+          signal: AbortSignal.timeout(PER_MODEL_MS),
+        });
+        j = await r.json().catch(() => ({}));
+      } catch {
+        resting.set(model, Date.now() + REST_MS);
+        skipped.push(`${model}: no answer in ${secs()}`);
+        last = 'Timed out';
         continue;
       }
-      skipped.push(model + ': ' + r.status);
+      if (r.ok) {
+        const text = (j.candidates?.[0]?.content?.parts || []).filter((p) => !p.thought).map((p) => p.text || '').join('');
+        if (text) return json({ text, model, skipped, secs: secs() });
+        last = 'Empty answer';
+        skipped.push(`${model}: empty answer`);
+        continue;
+      }
+      skipped.push(`${model}: ${r.status} after ${secs()}`);
+      if (r.status === 429 || r.status >= 500) resting.set(model, Date.now() + REST_MS);
       if (r.status === 429) { limited = true; continue; }   // each model has its own free quota
       last = j?.error?.message || 'HTTP ' + r.status;
     }
