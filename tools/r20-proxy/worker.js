@@ -17,8 +17,37 @@
    page switches the visitor to typing the channel list in. */
 
 const ALLOWED = ['https://pscretn.com', 'https://www.pscretn.com', 'https://pscretn.github.io'];
-const MODELS = ['gemini-2.5-flash', 'gemini-flash-latest', 'gemini-2.5-flash-lite', 'gemini-flash-lite-latest'];
+const FALLBACK_MODELS = ['gemini-flash-latest', 'gemini-2.5-flash', 'gemini-flash-lite-latest', 'gemini-2.5-flash-lite'];
 const MAX_BYTES = 12 * 1024 * 1024;   // a few phone photos, already shrunk by the page
+const API = 'https://generativelanguage.googleapis.com/v1beta';
+
+/* Google renames and retires models often, so ask which ones this key can use
+   (cached for an hour) and try the newest plain Flash first, then Flash-Lite. */
+let modelCache = { at: 0, list: null };
+function score(n) {
+  if (!/^gemini-/.test(n) || /image|tts|live|audio|embed|robotics|native|computer|thinking|learnlm|preview|exp/.test(n)) return -1;
+  const v = parseFloat((n.match(/^gemini-(\d+(?:\.\d+)?)/) || [])[1] || '0');
+  if (/^gemini-[\d.]+-flash$/.test(n)) return 3000 + v * 10;
+  if (n === 'gemini-flash-latest') return 2500;
+  if (/^gemini-[\d.]+-flash-lite$/.test(n)) return 2000 + v * 10;
+  if (n === 'gemini-flash-lite-latest') return 1500;
+  return -1;
+}
+async function models(key) {
+  if (modelCache.list && Date.now() - modelCache.at < 3600e3) return modelCache.list;
+  try {
+    const r = await fetch(`${API}/models?pageSize=1000`, { headers: { 'x-goog-api-key': key } });
+    const j = await r.json();
+    const list = (j.models || [])
+      .filter((m) => (m.supportedGenerationMethods || []).includes('generateContent'))
+      .map((m) => m.name.replace(/^models\//, ''))
+      .filter((n) => score(n) >= 0)
+      .sort((a, b) => score(b) - score(a))
+      .slice(0, 5);
+    if (list.length) { modelCache = { at: Date.now(), list }; return list; }
+  } catch {}
+  return FALLBACK_MODELS;
+}
 
 export default {
   async fetch(req, env) {
@@ -46,8 +75,9 @@ export default {
     const upstream = JSON.stringify({ contents: body.contents, generationConfig: { responseMimeType: 'application/json', temperature: 0 } });
 
     let limited = false, last = '';
-    for (const model of MODELS) {
-      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+    const skipped = [];                    // which models refused, and why: shown in the reply for debugging
+    for (const model of await models(env.GEMINI_KEY)) {
+      const r = await fetch(`${API}/models/${model}:generateContent`, {
         method: 'POST',
         headers: { 'content-type': 'application/json', 'x-goog-api-key': env.GEMINI_KEY },
         body: upstream,
@@ -55,13 +85,15 @@ export default {
       const j = await r.json().catch(() => ({}));
       if (r.ok) {
         const text = (j.candidates?.[0]?.content?.parts || []).filter((p) => !p.thought).map((p) => p.text || '').join('');
-        if (text) return json({ text, model });
+        if (text) return json({ text, model, skipped });
         last = 'Empty answer';
+        skipped.push(model + ': empty answer');
         continue;
       }
+      skipped.push(model + ': ' + r.status);
       if (r.status === 429) { limited = true; continue; }   // each model has its own free quota
       last = j?.error?.message || 'HTTP ' + r.status;
     }
-    return limited ? json({ error: 'Free limit reached' }, 429) : json({ error: last || 'No model answered' }, 502);
+    return limited ? json({ error: 'Free limit reached', skipped }, 429) : json({ error: last || 'No model answered', skipped }, 502);
   },
 };
