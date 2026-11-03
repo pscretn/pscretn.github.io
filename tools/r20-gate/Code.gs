@@ -1,4 +1,7 @@
-/* R20 Personality Generator: email gate (Google Apps Script, bound to a Sheet).
+/**
+ * @OnlyCurrentDoc  Limits the script to this one spreadsheet, not all of your Drive.
+ */
+/* Personality Generator: email gate (Google Apps Script, bound to a Sheet).
 
    Before downloading, a visitor enters their email; this script emails them a
    6-digit code from your Gmail, checks the code, and records every download as
@@ -41,7 +44,7 @@ function doPost(e) {
       to: email,
       name: 'TrilitLabs',
       subject: 'Your TrilitLabs code: ' + code,
-      body: 'Your code for the TrilitLabs R20 Personality Generator is ' + code + '.\n\n' +
+      body: 'Your code for the TrilitLabs Personality Generator is ' + code + '.\n\n' +
             'It works for ' + CODE_MINUTES + ' minutes. If you didn\'t ask for it, ignore this email.\n\n' +
             'TrilitLabs · https://pscretn.com/trilitlabs.html',
     });
