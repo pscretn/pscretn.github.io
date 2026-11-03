@@ -23,7 +23,7 @@ const API = 'https://generativelanguage.googleapis.com/v1beta';
 
 /* Timing. Flash models are often busy, so if one hasn't answered after
    HEDGE_MS the next is asked as well, and the first good answer wins. */
-const HEDGE_MS = 15000;               // start the next model after this long
+const HEDGE_MS = 8000;                // start the next model after this long
 const PER_MODEL_MS = 60000;           // give up on one model after this long
 const TOTAL_MS = 95000;               // the visitor never waits longer than this
 

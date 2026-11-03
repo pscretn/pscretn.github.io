@@ -1,0 +1,7 @@
+# Deploy with: npx wrangler deploy  (from this folder)
+# The Gemini key is a secret set in the Cloudflare dashboard, never in this file.
+name = "r20-proxy"
+main = "worker.js"
+compatibility_date = "2026-11-01"
+workers_dev = true
+preview_urls = false
