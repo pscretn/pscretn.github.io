@@ -21,8 +21,9 @@ const FALLBACK_MODELS = ['gemini-flash-latest', 'gemini-flash-lite-latest'];
 const MAX_BYTES = 12 * 1024 * 1024;   // a few phone photos, already shrunk by the page
 const API = 'https://generativelanguage.googleapis.com/v1beta';
 
-/* Timing. Flash models are often busy, so if one hasn't answered after
-   HEDGE_MS the next is asked as well, and the first good answer wins. */
+/* Timing. Flash models are often busy, so the best Flash and the best
+   Flash-Lite are asked at once, a further model is asked every HEDGE_MS
+   until one answers, and the first good answer wins. */
 const HEDGE_MS = 8000;                // start the next model after this long
 const PER_MODEL_MS = 60000;           // give up on one model after this long
 const TOTAL_MS = 95000;               // the visitor never waits longer than this
@@ -48,11 +49,11 @@ async function models(key) {
       .map((m) => m.name.replace(/^models\//, ''))
       .filter(usable);
     const newest = (re) => names.filter((n) => re.test(n)).sort((a, b) => version(b) - version(a));
-    const list = [...new Set([
-      ...newest(/^gemini-[\d.]+-flash$/).slice(0, 3),
-      ...newest(/^gemini-[\d.]+-flash-lite$/).slice(0, 2),
-      ...names.filter((n) => FALLBACK_MODELS.includes(n)),
-    ])];
+    const flash = newest(/^gemini-[\d.]+-flash$/).slice(0, 3);
+    const lite = newest(/^gemini-[\d.]+-flash-lite$/).slice(0, 2);
+    /* best Flash and best Flash-Lite first: both are asked at once */
+    const list = [...new Set([flash[0], lite[0], ...flash.slice(1), ...lite.slice(1),
+      ...names.filter((n) => FALLBACK_MODELS.includes(n))].filter(Boolean))];
     if (list.length) { modelCache = { at: Date.now(), list }; return list; }
   } catch {}
   return FALLBACK_MODELS;
@@ -132,7 +133,7 @@ export default {
       running.add(p);
     };
 
-    launch();
+    launch(); launch();
     while (running.size) {
       const left = deadline - Date.now();
       if (left <= 0) break;
