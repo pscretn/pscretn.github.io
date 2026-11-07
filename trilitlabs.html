@@ -1689,6 +1689,8 @@ function rangeLabel(label, pct){
   if(pct){ t = t.slice(0,6).trim(); return `"${t} %3d%%"(c-a)*100/(b-a)`; }
   return `"${t.slice(0,11)}"`;
 }
+const NO_STROBE = /\bopen\b|no (strobe|flash)|(strobe|flash) off|^on$|shutter on|lamp on/i;   // the shutter value that leaves the light on steady
+const MANUAL_MODE = /^(manual( rgb)?|tuning|rgb|dmx)( mode| control)?$/i;                     // the mode range where the RGB channels are live
 function generate(fx, chs){
   const W = [];                       // warnings [{lvl,msg}]
   const n = chs.length;
@@ -1735,7 +1737,8 @@ function generate(fx, chs){
   const lines = [];
   const pad = (v,w)=>String(v).padStart(w);
   const shut = i => {
-    const r = chs[i].ranges.find(r=>/\bopen\b|no strobe|^on$|shutter on|lamp on/i.test(r.label||''));
+    const strobeCh = /strob|flash/i.test(chs[i].name||'');   // here "Off" means no strobing, not a closed shutter
+    const r = chs[i].ranges.find(r=>NO_STROBE.test(r.label||'') || strobeCh && /^off$/i.test(r.label||''));
     return r ? r.lo : 255;
   };
   chs.forEach((c,i)=>{
@@ -1782,12 +1785,17 @@ function generate(fx, chs){
   if(fx.palettes){
     const find = fn => chs.findIndex((c,i)=>c.fn===fn && msbOf[i]<0 && !standaloneFine[i]);
     const tbl = (title, chans, rows) => { if(!rows.length) return; const head = `PFTABLE ${`"${title}"`.padEnd(13)}-1`+chans.map(c=>pad(c+1,4)).join('');
-      const body = rows.map(r=>`"${ascii(r[0]).slice(0,11)}"`.padEnd(21)+pad(r[1],2)+r.slice(2).map(v=>pad(v<0?'-1':hex(v),4)).join(''));
+      const body = rows.map(r=>`"${ascii(r[0]).slice(0,11).trim()}"`.padEnd(21)+pad(r[1],2)+r.slice(2).map(v=>pad(v<0?'-1':hex(v),4)).join(''));
       pal.push([head,...body,'PFEND'].join(CR)); };
     const R=find('red'),G=find('green'),B=find('blue'),C=find('cyan'),M=find('magenta'),Y=find('yellow'),P=find('pan'),T=find('tilt'),S=find('shutter'),Z=find('zoom'),CW=find('colour'),CM=find('cmacro'),GB=find('gobo'),GB2=find('gobo2');
     const COLS = [['Open',1,255,255,255],['Red',2,255,0,0],['Amber',3,255,127,0],['Yellow',4,255,255,0],['Green',5,0,255,0],['Cyan',6,0,255,255],['Blue',7,0,0,255],['Lavender',8,181,110,240],['Purple',9,127,0,255],['Magenta',10,255,0,255]];
     const fromRanges = (i, start, max) => (chs[i].ranges||[]).filter(r=>!r.pct && ascii(r.label) && !/no ?func|reserved|none|^off$|blackout/i.test(r.label)).slice(0,max).map((r,k)=>[r.label, start+k, Math.round((clampInt(r.lo,0,255,0)+clampInt(r.hi,0,255,0))/2)]);
-    if(R>=0&&G>=0&&B>=0) tbl('Colour',[R,G,B],COLS);
+    // a fixture with its own auto modes only obeys RGB in its manual mode, so colours must select that mode too
+    const MODE = chs.findIndex((c,i)=>(c.fn==='macro'||c.fn==='control') && msbOf[i]<0 && (c.ranges||[]).some(r=>MANUAL_MODE.test(ascii(r.label))));
+    if(R>=0&&G>=0&&B>=0){
+      if(MODE>=0){ const manual = clampInt(chs[MODE].ranges.find(r=>MANUAL_MODE.test(ascii(r.label))).lo,0,255,0); tbl('Colour',[MODE,R,G,B],COLS.map(r=>[r[0],r[1],manual,r[2],r[3],r[4]])); }
+      else tbl('Colour',[R,G,B],COLS);
+    }
     else if(C>=0&&M>=0&&Y>=0) tbl('Colour',[C,M,Y],COLS.map(r=>[r[0],r[1],255-r[2],255-r[3],255-r[4]]));
     else if(CW>=0) tbl('Colour',[CW],fromRanges(CW,1,20));
     else if(CM>=0) tbl('Colour',[CM],fromRanges(CM,1,20));
@@ -1796,6 +1804,7 @@ function generate(fx, chs){
         if(r.pct && hi>lo){ rows.push(['Slow '+lb, b++, Math.round(lo+(hi-lo)*0.2)]); if(b<=40) rows.push(['Fast '+lb, b++, Math.round(lo+(hi-lo)*0.8)]); } else rows.push([lb, b++, Math.round((lo+hi)/2)]); }
       tbl('Intensity',[S],rows); }
     if(Z>=0) tbl('Beam',[Z],[['Zoom Small',41,0],['Zoom Medium',42,127],['Zoom Large',43,255]]);
+    if(MODE>=0) tbl('Effect',[MODE],fromRanges(MODE,Z>=0?44:41,Z>=0?7:10));
     if(GB>=0) tbl('Gobos',[GB],fromRanges(GB,51,20));
     if(GB2>=0) tbl('Gobos 2',[GB2],fromRanges(GB2,71,20));
   }
@@ -2083,7 +2092,7 @@ function generateD4(fx, modes){
   const locXml = a => {
     if(!a.ranges.length){ const l = a.M.loc ?? 0, pw = a.M.pow ?? l; return `      <Locate Locate="1:${l}" PowerOn="1:${pw}" />`; }
     let k = 1;
-    if(a.fn==='shutter'){ const o = a.ranges.findIndex(r=>/\bopen\b|no strobe|^on$|shutter on/i.test(r.label)); if(o>=0) k = o+1; }
+    if(a.fn==='shutter'){ const o = a.ranges.findIndex(r=>NO_STROBE.test(r.label)); if(o>=0) k = o+1; }
     else { const o = a.ranges.findIndex(r=>/\bopen\b|no ?func|^off$|none|stop/i.test(r.label)); if(o>=0) k = o+1; }
     const v = a.ranges[k-1].pct ? `${k}:0` : `${k}`;
     return `      <Locate Locate="${v}" PowerOn="${v}" />`;
