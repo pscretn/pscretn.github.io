@@ -343,15 +343,24 @@ input.has-value{border-color:var(--rose);background:rgba(255,107,154,.1)}
             <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="2.5"/>
             <circle cx="50" cy="50" r="26" fill="none" stroke="currentColor" stroke-width="1.5"/>
             <text font-size="9.5" font-weight="700" fill="currentColor"><textPath href="#pmRing" textLength="210" lengthAdjust="spacing">SPECIAL DELIVERY ✦ WITH LOVE ✦</textPath></text>
-            <path d="M50,63 C40,56 36,50 38,45 C40,40 46,40 50,45 C54,40 60,40 62,45 C64,50 60,56 50,63Z" fill="currentColor"/>
+            <g transform="translate(50 50)" fill="currentColor">
+              <ellipse cy="-9" rx="5.2" ry="8"/><ellipse cy="-9" rx="5.2" ry="8" transform="rotate(72)"/><ellipse cy="-9" rx="5.2" ry="8" transform="rotate(144)"/><ellipse cy="-9" rx="5.2" ry="8" transform="rotate(216)"/><ellipse cy="-9" rx="5.2" ry="8" transform="rotate(288)"/>
+              <circle r="4.2" fill="#f4c7d2"/><circle r="2" fill="currentColor"/>
+            </g>
           </svg>
           <div class="env-flap"><i></i></div>
           <button class="seal" id="seal" type="button" aria-label="Open the envelope">
             <svg viewBox="0 0 48 48" aria-hidden="true">
               <circle cx="24" cy="24" r="19.5" fill="none" stroke="rgba(255,230,236,.35)" stroke-width="1.1" stroke-dasharray="1.4 2.2"/>
-              <path d="M24,36 C14,29 10,23 12.5,18 C15,13 21.5,13.5 24,18.5 C26.5,13.5 33,13 35.5,18 C38,23 34,29 24,36Z" fill="rgba(90,10,32,.45)" transform="translate(0 1.2)"/>
-              <path d="M24,36 C14,29 10,23 12.5,18 C15,13 21.5,13.5 24,18.5 C26.5,13.5 33,13 35.5,18 C38,23 34,29 24,36Z" fill="rgba(255,255,255,.06)" stroke="#fde6ec" stroke-width="1.8" stroke-linejoin="round"/>
-              <path d="M10.5,24.5 H18 L20.5,20 L23.5,29.5 L26.5,17.5 L29,24.5 H37.5" fill="none" stroke="#fde6ec" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <defs><path id="sealPetal" d="M0,0 C4,-3.2 5.4,-9.4 2.5,-12.6 L0,-10.8 L-2.5,-12.6 C-5.4,-9.4 -4,-3.2 0,0Z"/></defs>
+              <g transform="translate(24 25.2)" fill="rgba(90,10,32,.45)">
+                <use href="#sealPetal"/><use href="#sealPetal" transform="rotate(72)"/><use href="#sealPetal" transform="rotate(144)"/><use href="#sealPetal" transform="rotate(216)"/><use href="#sealPetal" transform="rotate(288)"/>
+              </g>
+              <g transform="translate(24 24)" fill="rgba(255,255,255,.07)" stroke="#fde6ec" stroke-width="1.5" stroke-linejoin="round">
+                <use href="#sealPetal"/><use href="#sealPetal" transform="rotate(72)"/><use href="#sealPetal" transform="rotate(144)"/><use href="#sealPetal" transform="rotate(216)"/><use href="#sealPetal" transform="rotate(288)"/>
+              </g>
+              <circle cx="24" cy="24" r="3" fill="#fde6ec"/>
+              <g fill="#fde6ec"><circle cx="24" cy="19.2" r=".9"/><circle cx="28.6" cy="22.5" r=".9"/><circle cx="26.8" cy="27.9" r=".9"/><circle cx="21.2" cy="27.9" r=".9"/><circle cx="19.4" cy="22.5" r=".9"/></g>
             </svg>
           </button>
         </div>
