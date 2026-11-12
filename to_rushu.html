@@ -582,7 +582,7 @@ const MALAYALAM = [
 const BOUQUETS = [
   {id:'roses', n:'Red roses', tag:'The classic', mean:'The classic. Means: I like you.', note:'Because talking to you has quietly become the best part of my nights.', paper:'#f3d3d9', ribbon:['#c21d3c','#8a0f26']},
   {id:'tulips', n:'Pink tulips', tag:'A happy new beginning', mean:'Means: a happy new beginning.', note:'For something new and nice. Slowly, like you said 🐢', paper:'#fde2ec', ribbon:['#e05a8a','#b13a66']},
-  {id:'mullappoo', n:'Mullappoo', tag:'Kerala jasmine', mean:'Kerala jasmine. Means: warmth and grace.', note:"A little bit of Kerala, from someone who's happy you're here.", paper:'#e9f3e6', ribbon:['#d9a441','#a87a26']},
+  {id:'mullappoo', n:'Jasmine', tag:'Warmth & grace', mean:'Kerala jasmine. Means: warmth and grace.', note:"A little bit of Kerala, from someone who's happy you're here.", paper:'#e9f3e6', ribbon:['#d9a441','#a87a26']},
   {id:'sunflowers', n:'Sunflowers', tag:'Strength & brightness', mean:'Means: strength and brightness.', note:'For surviving night duty and still finding time to smile.', paper:'#f6e7c8', ribbon:['#3f5a85','#2c4166']},
   {id:'lotus', n:'Lotus', tag:'Calm on hard days', mean:'Means: calm, and growing through hard days.', note:'Some calm for the days when the labour room gets loud.', paper:'#f1dcef', ribbon:['#b0559a','#86397a']},
   {id:'cherry', n:'Cherry blossoms', tag:'Gentle, beautiful moments', mean:'Means: gentle, beautiful moments.', note:"Soft and pretty, like the 1 am calls I didn't want to end.", paper:'#fbe1ea', ribbon:['#e57fa3','#c25a80']},
@@ -682,10 +682,16 @@ function daisy(r){
   for (let i = 0; i < 14; i++) s += `<ellipse rx="${f(r*.15)}" ry="${f(r*.42)}" cy="${f(-r*.55)}" transform="rotate(${f(i / 14 * 360)})" fill="#ffd65a" stroke="#e9b23a" stroke-width="${f(r*.03)}"/>`;
   return s + `<circle r="${f(r*.3)}" fill="#e08b2c"/><circle cx="${f(-r*.08)}" cy="${f(-r*.08)}" r="${f(r*.12)}" fill="#f2a944"/>`;
 }
-function jasmine(r){
-  const p = P(r); let s = '';
-  for (let i = 0; i < 6; i++) s += `<path transform="rotate(${i * 60 + 12})" d="M0,0 C${p(.3,-.22)} ${p(.24,-.82)} 0,${f(-r)} C${p(-.24,-.82)} ${p(-.3,-.22)} 0,0Z" fill="#fffdf6" stroke="#d9d2b8" stroke-width="${f(r*.05)}"/>`;
-  return s + `<circle r="${f(r*.17)}" fill="#e9dc8c"/>`;
+/* jasmine as it really looks: rounded, slightly twisted double petals, pale green at the heart */
+function jasmine(r, spin = 0){
+  const g = 'jg' + (++GID);
+  const petal = (L, W, ang) => `<path transform="rotate(${f(ang)})" d="M0,0 C${f(W*1.1)},${f(-L*.25)} ${f(W*1.05)},${f(-L*.85)} ${f(W*.15)},${f(-L)} Q${f(-W*.4)},${f(-L*1.02)} ${f(-W*.75)},${f(-L*.8)} C${f(-W*1.15)},${f(-L*.5)} ${f(-W*.6)},${f(-L*.12)} 0,0Z" fill="url(#${g})" stroke="#d3d0bb" stroke-width="${f(r*.025)}"/>`
+    + `<path transform="rotate(${f(ang)})" d="M0,${f(-L*.12)} Q${f(W*.12)},${f(-L*.5)} ${f(W*.05)},${f(-L*.82)}" fill="none" stroke="#e3e6cf" stroke-width="${f(r*.03)}" stroke-linecap="round"/>`;
+  let s = `<defs><radialGradient id="${g}" cx=".5" cy="1" r="1.05"><stop offset="0" stop-color="#dfe8c2"/><stop offset=".35" stop-color="#f8f9ee"/><stop offset="1" stop-color="#ffffff"/></radialGradient></defs><g transform="rotate(${f(spin)})">`;
+  for (let i = 0; i < 6; i++) s += petal(r, r * .36, i * 60);
+  s += `<circle r="${f(r*.46)}" fill="#8f9a6a" opacity=".16"/>`;
+  for (let i = 0; i < 5; i++) s += petal(r * .56, r * .26, i * 72 + 30);
+  return s + `<circle r="${f(r*.11)}" fill="#cfd98f"/><circle r="${f(r*.05)}" fill="#a9b763"/></g>`;
 }
 function sakura(r, [c, dk]){
   const p = P(r); let s = '';
@@ -766,7 +772,7 @@ const mk = (list, fn) => list.map(([x, y, r], i) => [x, y, r, rr => fn(rr, i)]);
 const SPEC = {
   roses:      { heads: mk(DOME, (r, i) => rose(r * 1.06, ROSE_C[(i * 2) % 3], i * 37)), breath: true },
   tulips:     { heads: mk(DOME, (r, i) => tulip(r * 1.08, TULIP_C[i % 3])) },
-  mullappoo:  { heads: mk(scatter(11, 26, 9, 12), r => jasmine(r)), buds: 'jasmine' },
+  mullappoo:  { heads: mk(scatter(11, 24, 9.5, 12.5), (r, i) => jasmine(r, i * 23)), buds: 'jasmine' },
   sunflowers: { heads: mk(BIG7, r => sunflower(r)) },
   lotus:      { heads: mk(BIG7, (r, i) => lotus(r, LOTUS_C[i % 2])) },
   cherry:     { heads: mk(scatter(5, 15, 12, 15), (r, i) => sakura(r, SAK_C[i % 3])), twigs: true, buds: 'sakura' },
@@ -797,7 +803,9 @@ function bouquetSVG(id){
   if (spec.breath) BREATH.forEach(([x, y]) => { s += babysBreath(x, y, rand); });
   if (spec.buds === 'jasmine'){
     scatter(23, 12, 4.5, 6, 100, 64, 74, 52).forEach(([x, y, r]) => {
-      s += `<ellipse cx="${x}" cy="${y}" rx="${f(r*.42)}" ry="${f(r*.85)}" transform="rotate(${f(Math.atan2(y - 120, x - 100) * 180 / Math.PI + 90)} ${x} ${y})" fill="#fbf6ea" stroke="#d9d2b8" stroke-width=".6"/>`;
+      // pointed jasmine bud on a little green calyx, angled outwards
+      const a = f(Math.atan2(y - 120, x - 100) * 180 / Math.PI + 90);
+      s += `<g transform="translate(${x} ${y}) rotate(${a})"><path d="M0,${f(r*.55)} C${f(r*.55)},${f(r*.1)} ${f(r*.38)},${f(-r*.75)} 0,${f(-r*1.05)} C${f(-r*.38)},${f(-r*.75)} ${f(-r*.55)},${f(r*.1)} 0,${f(r*.55)}Z" fill="#fbfaf1" stroke="#cfccb6" stroke-width=".6"/><path d="M${f(-r*.32)},${f(r*.35)} Q0,${f(r*.9)} ${f(r*.32)},${f(r*.35)}" fill="#6f9a5c"/></g>`;
     });
   }
   if (spec.buds === 'sakura'){
