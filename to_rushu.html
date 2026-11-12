@@ -281,7 +281,7 @@ input.has-value{border-color:var(--rose);background:rgba(255,107,154,.1)}
 .rx-row{padding:8px 0;border-bottom:1px solid rgba(58,27,39,.08)}
 .rx-row:last-child{border-bottom:0}
 .rx-row span{display:block;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-muted)}
-.rx-row p{margin:3px 0 0;font:400 1.04rem/1.45 var(--serif);color:var(--paper-ink);overflow-wrap:anywhere}
+.rx-row p{white-space:pre-line;margin:3px 0 0;font:400 1.04rem/1.45 var(--serif);color:var(--paper-ink);overflow-wrap:anywhere}
 .rx-sign{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding:6px 20px 16px}
 .rx-sign .who{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--paper-muted)}
 .rx-sign .sig{display:block;font:700 2.2rem/1 var(--hand);color:#8a2147;clip-path:inset(0 100% 0 0);margin-top:2px}
@@ -393,7 +393,7 @@ input.has-value{border-color:var(--rose);background:rgba(255,107,154,.1)}
       <header class="head">
         <p class="eyebrow rise" style="--i:0"><span class="steps" aria-hidden="true"><i class="on"></i><i></i></span>Question 1 of 2</p>
         <h2 class="title rise" id="t2" tabindex="-1" style="--i:1">Pick the one <em>you like</em></h2>
-        <p class="sub rise" style="--i:2">Each one comes with a small note. Tap a bouquet to open it.</p>
+        <p class="sub rise" style="--i:2">Each one comes with a small note, and none of them will ever wilt. Tap a bouquet to open it.</p>
       </header>
       <div class="grid blooming" id="grid" role="radiogroup" aria-labelledby="t2"></div>
       <div class="actions sticky" id="bqContinue" hidden>
@@ -585,14 +585,14 @@ const MALAYALAM = [
 ];
 
 const BOUQUETS = [
-  {id:'roses', n:'Red roses', tag:'The classic', mean:'The classic. Means: I like you.', note:'Because talking to you has quietly become the best part of my nights.', phrase:'your red roses', paper:'#f3d3d9', ribbon:['#c21d3c','#8a0f26']},
-  {id:'tulips', n:'Pink tulips', tag:'A happy new beginning', mean:'Means: a happy new beginning.', note:'For something new and nice. Slowly, like you said 🐢', phrase:'your pink tulips', paper:'#fde2ec', ribbon:['#e05a8a','#b13a66']},
-  {id:'mullappoo', n:'Mullappoo', tag:'Kerala jasmine', mean:'Kerala jasmine. Means: warmth and grace.', note:"A little bit of Kerala, from someone who's happy you're here.", phrase:'your mullappoo', paper:'#e9f3e6', ribbon:['#d9a441','#a87a26']},
-  {id:'sunflowers', n:'Sunflowers', tag:'Strength & brightness', mean:'Means: strength and brightness.', note:'For surviving night duty and still finding time to smile.', phrase:'your sunflowers', paper:'#f6e7c8', ribbon:['#3f5a85','#2c4166']},
-  {id:'lotus', n:'Lotus', tag:'Calm on hard days', mean:'Means: calm, and growing through hard days.', note:'Some calm for the days when the labour room gets loud.', phrase:'your lotus flowers', paper:'#f1dcef', ribbon:['#b0559a','#86397a']},
-  {id:'cherry', n:'Cherry blossoms', tag:'Gentle, beautiful moments', mean:'Means: gentle, beautiful moments.', note:"Soft and pretty, like the 1 am calls I didn't want to end.", phrase:'your cherry blossoms', paper:'#fbe1ea', ribbon:['#e57fa3','#c25a80']},
-  {id:'hibiscus', n:'Hibiscus', tag:'Delicate beauty', mean:'Means: delicate beauty.', note:"Bright and bold, like you telling your professors exactly how it's done.", phrase:'your hibiscus', paper:'#f7d9cf', ribbon:['#e0873a','#b5621c']},
-  {id:'mixed', n:'Mixed bouquet', tag:"Couldn't decide", mean:"Couldn't decide. So, a bit of everything.", note:'A bit of everything, like our conversations. Nanyita esta? 😄', phrase:'a bit of everything', paper:'#e6e1f5', ribbon:['#7b6bb0','#5a4c8d']},
+  {id:'roses', n:'Red roses', tag:'The classic', mean:'The classic. Means: I like you.', note:'Because talking to you has quietly become the best part of my nights.', paper:'#f3d3d9', ribbon:['#c21d3c','#8a0f26']},
+  {id:'tulips', n:'Pink tulips', tag:'A happy new beginning', mean:'Means: a happy new beginning.', note:'For something new and nice. Slowly, like you said 🐢', paper:'#fde2ec', ribbon:['#e05a8a','#b13a66']},
+  {id:'mullappoo', n:'Mullappoo', tag:'Kerala jasmine', mean:'Kerala jasmine. Means: warmth and grace.', note:"A little bit of Kerala, from someone who's happy you're here.", paper:'#e9f3e6', ribbon:['#d9a441','#a87a26']},
+  {id:'sunflowers', n:'Sunflowers', tag:'Strength & brightness', mean:'Means: strength and brightness.', note:'For surviving night duty and still finding time to smile.', paper:'#f6e7c8', ribbon:['#3f5a85','#2c4166']},
+  {id:'lotus', n:'Lotus', tag:'Calm on hard days', mean:'Means: calm, and growing through hard days.', note:'Some calm for the days when the labour room gets loud.', paper:'#f1dcef', ribbon:['#b0559a','#86397a']},
+  {id:'cherry', n:'Cherry blossoms', tag:'Gentle, beautiful moments', mean:'Means: gentle, beautiful moments.', note:"Soft and pretty, like the 1 am calls I didn't want to end.", paper:'#fbe1ea', ribbon:['#e57fa3','#c25a80']},
+  {id:'hibiscus', n:'Hibiscus', tag:'Delicate beauty', mean:'Means: delicate beauty.', note:"Bright and bold, like you telling your professors exactly how it's done.", paper:'#f7d9cf', ribbon:['#e0873a','#b5621c']},
+  {id:'mixed', n:'Mixed bouquet', tag:"Couldn't decide", mean:"Couldn't decide. So, a bit of everything.", note:'A bit of everything, like our conversations. Nanyita esta? 😄', paper:'#e6e1f5', ribbon:['#7b6bb0','#5a4c8d']},
 ];
 const BY = Object.fromEntries(BOUQUETS.map(b => [b.id, b]));
 
@@ -1226,8 +1226,8 @@ function buildRx(){
   const rows = [
     ['Patient', `${CONFIG.from}, c/o smiling at his phone at 1 am`],
     ['Dx', 'Butterflies. Persistent, non‑resolving.'],
-    ['Rx', `${b.id === 'mixed' ? '1 mixed bouquet' : `1 bouquet of ${b.n.toLowerCase()}`}, hand‑delivered`],
-    ['EDD · expected date of delivery', state.notYet ? 'Whenever you’re ready 🐢' : whenText()],
+    ['Rx', `${b.id === 'mixed' ? '1 mixed bouquet' : `1 bouquet of ${b.n.toLowerCase()}`}. Digital, so it never wilts 🌸`],
+    ['EDD · expected date of delivery', (state.notYet ? 'Whenever you’re ready 🐢' : whenText()) + `\nDelivering: one ${CONFIG.from}, in person 😄`],
   ];
   if (state.note) rows.push(['Notes', state.note]);
   rows.push(['Advice', 'Take slowly, like you said 🐢']);
@@ -1268,7 +1268,7 @@ function buildFinal(){
     const when = diff === 0 ? 'today' : diff === 1 ? 'tomorrow' : `on ${longDate(state.day)}`;
     const after = state.slot === 'shift' ? ' after your shift' : '';
     $('#t5').innerHTML = 'It’s a <em>date</em>.';
-    $('#finalLine').textContent = `Thank you, ${CONFIG.to}. I'll see you ${when}${after}, with ${b.phrase} in hand.`;
+    $('#finalLine').textContent = `Thank you, ${CONFIG.to}. I'll see you ${when}${after}. Your ${b.id === 'mixed' ? 'bouquet' : b.n.toLowerCase()} will stay right here, and never wilt.`;
     $('#ics').hidden = false;
   }
   $('#resend').href = tgLink();
@@ -1293,7 +1293,7 @@ $('#ics').addEventListener('click', () => {
     const e = new Date(state.day); e.setDate(e.getDate() + 1);
     lines.push(`DTSTART;VALUE=DATE:${ymd(state.day)}`, `DTEND;VALUE=DATE:${ymd(e)}`);
   }
-  const desc = `${CONFIG.from} is bringing ${BY[state.bouquet].phrase}.` + (state.note ? `\nYour note: ${state.note}` : '');
+  const desc = `You picked the ${BY[state.bouquet].n.toLowerCase()}. It's waiting for you at pscretn.com/to_rushu.html and never wilts.` + (state.note ? `\nYour note: ${state.note}` : '');
   lines.push(`SUMMARY:${icsEsc(`Seeing ${CONFIG.from} 💐`)}`, `DESCRIPTION:${icsEsc(desc)}`);
   if (t) lines.push('BEGIN:VALARM', 'TRIGGER:-PT1H', 'ACTION:DISPLAY', `DESCRIPTION:${icsEsc(`Seeing ${CONFIG.from} in an hour ♡`)}`, 'END:VALARM');
   lines.push('END:VEVENT', 'END:VCALENDAR');
