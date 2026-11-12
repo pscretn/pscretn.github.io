@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%B8%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@400;500;600;700&family=Manjari:wght@400;700&display=swap">
 <style>
 :root{
   color-scheme:dark;
@@ -143,6 +143,7 @@ footer i{display:block;width:42px;height:3px;border-radius:3px;background:linear
 .envelope.open .env-letter{transform:translateY(-52%)}
 .seal{position:absolute;left:50%;top:58%;z-index:5;width:68px;height:68px;margin:-34px 0 0 -34px;border:0;padding:0;cursor:pointer;border-radius:47% 53% 50% 50%/52% 48% 52% 48%;background:radial-gradient(circle at 34% 30%,#e0607d,#a3304f 62%,#7d1d39);color:#fde6ec;font:italic 500 32px/1 var(--serif);display:grid;place-items:center;box-shadow:inset 0 0 0 5px rgba(255,255,255,.08),inset 0 -4px 8px rgba(0,0,0,.28),0 6px 16px rgba(80,10,30,.55);transition:transform .45s var(--ease),opacity .4s;animation:beat 2.4s ease-in-out infinite}
 @keyframes beat{0%,48%,100%{transform:scale(1)}12%{transform:scale(1.09)}24%{transform:scale(1)}36%{transform:scale(1.05)}}
+.seal svg{width:56px;height:56px;filter:drop-shadow(0 -1px 0 rgba(0,0,0,.25))}
 .envelope.open .seal{animation:none;transform:scale(.3) rotate(-40deg);opacity:0;pointer-events:none}
 .hint{margin:26px 0 0;font:700 1.45rem/1 var(--hand);color:var(--muted)}
 .scene.active .hint{animation:rise .8s var(--ease) 1.6s both,nudge 2.4s ease-in-out 2.4s infinite}
@@ -240,7 +241,25 @@ footer i{display:block;width:42px;height:3px;border-radius:3px;background:linear
 .bub.typing{display:flex;gap:4px;padding:12px 14px}
 .bub.typing i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.55);animation:dot 1s ease-in-out infinite}
 .bub.typing i:nth-child(2){animation-delay:.15s}.bub.typing i:nth-child(3){animation-delay:.3s}
+.bub.big{display:flex;flex-direction:column;align-items:flex-end;background:none!important;padding:0 2px;font-size:56px;line-height:1.1}
+.bub.big time{margin-top:2px;padding:2px 8px;border-radius:10px;background:rgba(0,0,0,.4);color:rgba(255,255,255,.75)}
+.rq{margin:1px 0 6px;padding:3px 9px;border-left:3px solid var(--blush);border-radius:4px;background:rgba(255,255,255,.09);font-size:13px;line-height:1.35}
+.rq b{display:block;font-weight:600;color:var(--blush)}
 @keyframes bubIn{from{opacity:0;transform:translateY(8px) scale(.96)}}
+
+/* ---------- scene 7: malayalam flip cards ---------- */
+.ml-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;width:100%}
+.ml{appearance:none;border:0;padding:0;background:none;cursor:pointer;height:122px;perspective:900px;color:inherit;font:inherit}
+.scene.active .ml{animation:rise .7s var(--ease) both;animation-delay:calc(var(--i) * 60ms + 300ms)}
+.ml-in{position:relative;display:block;width:100%;height:100%;transform-style:preserve-3d;transition:transform .65s var(--ease)}
+.ml[aria-pressed="true"] .ml-in{transform:rotateY(180deg)}
+.ml-f,.ml-b{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:10px;border-radius:16px;border:1px solid var(--line);text-align:center;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.ml-f{background:var(--glass)}
+.ml-f b{font:italic 400 1.22rem/1.2 var(--serif);color:var(--text)}
+.ml-f small{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.ml-b{transform:rotateY(180deg);background:rgba(255,107,154,.12);border-color:rgba(255,107,154,.38)}
+.ml-b b{font:700 1.4rem/1.35 "Manjari",var(--sans);color:var(--blush)}
+.ml-b small{font-size:12.5px;line-height:1.3;color:var(--soft)}
 @keyframes dot{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(-4px);opacity:1}}
 input[type=date],input[type=time],textarea{width:100%;min-height:48px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--glass);color:var(--text);font:500 15.5px/1.35 var(--sans);-webkit-appearance:none;appearance:none;text-align:left}
 input::-webkit-date-and-time-value{text-align:left}
@@ -327,7 +346,14 @@ input.has-value{border-color:var(--rose);background:rgba(255,107,154,.1)}
             <path d="M50,63 C40,56 36,50 38,45 C40,40 46,40 50,45 C54,40 60,40 62,45 C64,50 60,56 50,63Z" fill="currentColor"/>
           </svg>
           <div class="env-flap"><i></i></div>
-          <button class="seal" id="seal" type="button" aria-label="Open the envelope">R</button>
+          <button class="seal" id="seal" type="button" aria-label="Open the envelope">
+            <svg viewBox="0 0 48 48" aria-hidden="true">
+              <circle cx="24" cy="24" r="19.5" fill="none" stroke="rgba(255,230,236,.35)" stroke-width="1.1" stroke-dasharray="1.4 2.2"/>
+              <path d="M24,36 C14,29 10,23 12.5,18 C15,13 21.5,13.5 24,18.5 C26.5,13.5 33,13 35.5,18 C38,23 34,29 24,36Z" fill="rgba(90,10,32,.45)" transform="translate(0 1.2)"/>
+              <path d="M24,36 C14,29 10,23 12.5,18 C15,13 21.5,13.5 24,18.5 C26.5,13.5 33,13 35.5,18 C38,23 34,29 24,36Z" fill="rgba(255,255,255,.06)" stroke="#fde6ec" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="M10.5,24.5 H18 L20.5,20 L23.5,29.5 L26.5,17.5 L29,24.5 H37.5" fill="none" stroke="#fde6ec" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
         </div>
       </div>
       <p class="hint">tap the seal to open</p>
@@ -460,15 +486,29 @@ input.has-value{border-color:var(--rose);background:rgba(255,107,154,.1)}
     <!-- 6 · from our chats (only shown when CHAT below has lines) -->
     <section class="scene" data-scene="6" aria-labelledby="t6">
       <header class="head">
-        <p class="eyebrow rise" style="--i:0">Before the flowers</p>
-        <h2 class="title rise" id="t6" tabindex="-1" style="--i:1">Somewhere in <em>our chats</em>…</h2>
+        <p class="eyebrow rise" style="--i:0">From our chats · 1:20 am</p>
+        <h2 class="title rise" id="t6" tabindex="-1" style="--i:1">The night of the <em>sticker bouquet</em></h2>
       </header>
       <div class="tg rise" style="--i:2">
-        <div class="tg-bar"><span class="tg-av" id="tgAv">R</span><div><b data-n="to">Rushu</b><small>last seen at 1 am, probably on duty</small></div></div>
-        <div class="tg-body" id="tgBody" aria-live="polite"></div>
+        <div class="tg-bar"><span class="tg-av" id="tgAv">DV</span><div><b id="tgName">Dr. Varma</b><small>last seen recently</small></div></div>
+        <div class="tg-body" id="tgBody" aria-live="polite" title="Tap to show all"></div>
       </div>
       <div class="actions">
-        <button class="btn primary" type="button" data-go="2">Show me the flowers <span aria-hidden="true">→</span></button>
+        <button class="btn primary" type="button" data-go="7">Next <span aria-hidden="true">→</span></button>
+      </div>
+    </section>
+
+    <!-- 7 · malayalam on the go -->
+    <section class="scene" data-scene="7" aria-labelledby="t7">
+      <header class="head">
+        <p class="eyebrow rise" style="--i:0">A little lesson</p>
+        <h2 class="title rise" id="t7" tabindex="-1" style="--i:1">Malayalam, <em>on the go</em></h2>
+        <p class="sub rise" style="--i:2">We're both learning to read and write it, one message at a time. Tap a card to see how it's really written.</p>
+      </header>
+      <div class="ml-grid" id="mlGrid"></div>
+      <p class="need" id="mlCount" aria-live="polite"></p>
+      <div class="actions" style="margin-top:12px">
+        <button class="btn primary" type="button" data-go="2">Now, the flowers <span aria-hidden="true">→</span></button>
       </div>
     </section>
 
@@ -502,15 +542,38 @@ const CONFIG = {
   full: 'Rushmitha',         // her full first name (envelope + prescription)
   // where her answer goes on Telegram. A username (without @) is the most reliable;
   // if it's empty the page falls back to the phone number (country code + number, digits only).
-  telegramUser: '',
+  telegramUser: 'pscretn',
   telegramPhone: '917356131568',
 };
 
-// A few real lines from your Telegram chat, shown as bubbles right after the letter.
-// who: 'her' or 'me'. time is optional. Leave the list empty to skip this part.
+// Real lines from your Telegram chat, shown as bubbles right after the letter.
+// who: 'her' or 'me'. time is optional. reply: quoted message. Leave empty to skip this part.
+const CHAT_NAME = 'Dr. Varma';   // how she's saved in your Telegram
 const CHAT = [
-  // { who: 'her', text: 'Slowly 🐢', time: '1:04 am' },
-  // { who: 'me',  text: 'Slowly it is.', time: '1:05 am' },
+  { who: 'her', text: 'Sheri', time: '1:19 am' },
+  { who: 'her', text: 'Bye goodngt', time: '1:20 am' },
+  { who: 'me',  text: 'You takecare', time: '1:20 am' },
+  { who: 'me',  text: '💐', time: '1:20 am' },
+  { who: 'me',  text: 'Itha kittti ulla', time: '1:29 am', reply: '💐' },
+  { who: 'me',  text: 'Bouquet aayitu😅', time: '1:29 am' },
+  { who: 'her', text: '😂', time: '9:38 am' },
+  { who: 'her', text: 'Kitti', time: '9:38 am' },
+  { who: 'her', text: 'Goodmorning', time: '9:38 am' },
+  { who: 'me',  text: 'Morning', time: '9:39 am' },
+  { who: 'me',  text: 'Rushu', time: '9:39 am' },
+  { who: 'me',  text: 'Night duty kaayinjo', time: '9:39 am' },
+];
+
+// "Malayalam on the go": how we type it → how it's written → what it means
+const MALAYALAM = [
+  { say: 'Sheri', ml: 'ശരി', mean: 'okay' },
+  { say: 'Kitti', ml: 'കിട്ടി', mean: 'got it' },
+  { say: 'Kaayinjo?', ml: 'കഴിഞ്ഞോ?', mean: 'is it over? (night duty)' },
+  { say: 'Entha parupadi?', ml: 'എന്താ പരിപാടി?', mean: 'what’s the plan?' },
+  { say: 'Pathukke', ml: 'പതുക്കെ', mean: 'slowly 🐢' },
+  { say: 'Poochendu', ml: 'പൂച്ചെണ്ട്', mean: 'bouquet 💐' },
+  { say: 'Punchiri', ml: 'പുഞ്ചിരി', mean: 'a smile (and this song)' },
+  { say: 'Namukku kaanaam', ml: 'നമുക്ക് കാണാം', mean: 'let’s meet ☕' },
 ];
 
 const BOUQUETS = [
@@ -966,20 +1029,35 @@ $('.late').style.setProperty('--late', wd + 'ms');
 $('#letter').addEventListener('click', () => scenes[1].classList.add('instant'));
 $('#afterLetter').addEventListener('click', () => go(CHAT.length ? 6 : 2));
 
-/* scene 6: chat bubbles appear one by one, with a typing indicator */
-$('#tgAv').textContent = Array.from(CONFIG.to)[0] || '♡';
+/* scene 6: chat bubbles appear one by one, with a typing indicator (tap to show all) */
+$('#tgName').textContent = CHAT_NAME;
+$('#tgAv').textContent = CHAT_NAME.replace(/^Dr\.?\s*/i, 'D ').split(/\s+/).map(w => Array.from(w)[0] || '').join('').slice(0, 2).toUpperCase();
+const EMOJI_ONLY = /^[\p{Extended_Pictographic}‍️\s]+$/u;
+function bubble(m){
+  const b = document.createElement('div');
+  const big = EMOJI_ONLY.test(m.text) && Array.from(m.text.replace(/\s/g, '')).length <= 6;
+  b.className = 'bub ' + (m.who === 'me' ? 'me' : 'her') + (big ? ' big' : '');
+  if (m.reply){
+    const q = document.createElement('div'), n = document.createElement('b'), t = document.createElement('span');
+    q.className = 'rq'; n.textContent = m.replyName || CONFIG.from; t.textContent = m.reply;
+    q.append(n, t); b.appendChild(q);
+  }
+  b.appendChild(document.createTextNode(m.text));
+  if (m.time){ const t = document.createElement('time'); t.textContent = m.time + (m.who === 'me' ? ' ✓✓' : ''); b.appendChild(t); }
+  return b;
+}
 let chatRun = 0;
+function showAllChat(){
+  const body = $('#tgBody');
+  chatRun++; body.innerHTML = '';
+  CHAT.forEach(m => body.appendChild(bubble(m)));
+  body.scrollTop = body.scrollHeight;
+}
+$('#tgBody').addEventListener('click', showAllChat);
 function playChat(){
   const body = $('#tgBody'), run = ++chatRun;
   body.innerHTML = '';
-  const bubble = m => {
-    const b = document.createElement('div');
-    b.className = 'bub ' + (m.who === 'me' ? 'me' : 'her');
-    b.textContent = m.text;
-    if (m.time){ const t = document.createElement('time'); t.textContent = m.time; b.appendChild(t); }
-    return b;
-  };
-  if (reduce){ CHAT.forEach(m => body.appendChild(bubble(m))); return; }
+  if (reduce) return showAllChat();
   let i = 0;
   const next = () => {
     if (run !== chatRun || i >= CHAT.length) return;
@@ -991,11 +1069,24 @@ function playChat(){
     setTimeout(() => {
       if (run !== chatRun) return;
       typing.replaceWith(bubble(m)); body.scrollTop = body.scrollHeight;
-      setTimeout(next, 380);
-    }, Math.min(1500, 520 + m.text.length * 22));
+      setTimeout(next, 300);
+    }, Math.min(1300, 420 + m.text.length * 22));
   };
   setTimeout(next, 700);
 }
+
+/* scene 7: malayalam flip cards */
+const mlGrid = $('#mlGrid');
+mlGrid.innerHTML = MALAYALAM.map((w, i) => `<button class="ml" type="button" aria-pressed="false" style="--i:${i}" aria-label="${esc(w.say)}: ${esc(w.ml)}, ${esc(w.mean)}"><span class="ml-in"><span class="ml-f" aria-hidden="true"><b>${esc(w.say)}</b><small>how we type it</small></span><span class="ml-b" aria-hidden="true"><b lang="ml">${esc(w.ml)}</b><small>${esc(w.mean)}</small></span></span></button>`).join('');
+function mlCount(){
+  const n = $$('.ml[aria-pressed="true"]', mlGrid).length, all = MALAYALAM.length;
+  $('#mlCount').textContent = n === 0 ? '' : n < all ? `Learned ${n} of ${all}` : `All ${all} learned. Nannayi! (നന്നായി, well done) 👏`;
+}
+mlGrid.addEventListener('click', e => {
+  const c = e.target.closest('.ml'); if (!c) return;
+  c.setAttribute('aria-pressed', String(c.getAttribute('aria-pressed') !== 'true'));
+  mlCount();
+});
 
 /* scene 2: bouquet grid + sheet */
 const grid = $('#grid');
@@ -1120,7 +1211,7 @@ function timeText(){
   return `around ${time12(state.time)}`;
 }
 const whenText = () => state.notYet ? "Not just yet. Let's keep talking 🐢" : `${longDate(state.day)} · ${timeText()}`;
-const esc = s => s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+function esc(s){ return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
 function message(){
   const b = BY[state.bouquet];
   const lines = [`Hi ${CONFIG.from} 🌸`, 'I opened your little letter. Here’s my answer:', '', `💐 Bouquet: ${b.n}`, `📅 When: ${whenText()}`];
