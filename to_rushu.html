@@ -251,17 +251,14 @@ footer i{display:block;width:42px;height:3px;border-radius:3px;background:linear
 
 /* ---------- scene 7: malayalam flip cards ---------- */
 .ml-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;width:100%}
-.ml{appearance:none;border:0;padding:0;background:none;cursor:pointer;height:122px;perspective:900px;color:inherit;font:inherit}
+.ml{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:118px;padding:14px 10px 12px;border-radius:16px;border:1px solid var(--line);background:var(--glass);text-align:center}
 .scene.active .ml{animation:rise .7s var(--ease) both;animation-delay:calc(var(--i) * 60ms + 300ms)}
-.ml-in{position:relative;display:block;width:100%;height:100%;transform-style:preserve-3d;transition:transform .65s var(--ease)}
-.ml[aria-pressed="true"] .ml-in{transform:rotateY(180deg)}
-.ml-f,.ml-b{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:10px;border-radius:16px;border:1px solid var(--line);text-align:center;-webkit-backface-visibility:hidden;backface-visibility:hidden}
-.ml-f{background:var(--glass)}
-.ml-f b{font:italic 400 1.22rem/1.2 var(--serif);color:var(--text)}
-.ml-f small{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.ml-b{transform:rotateY(180deg);background:rgba(255,107,154,.12);border-color:rgba(255,107,154,.38)}
-.ml-b b{font:700 1.4rem/1.35 "Manjari",var(--sans);color:var(--blush)}
-.ml-b small{font-size:12.5px;line-height:1.3;color:var(--soft)}
+.ml b{font:700 1.45rem/1.35 "Manjari",var(--sans);color:var(--blush)}
+.ml i{font:italic 400 1.05rem/1.25 var(--serif);color:var(--text)}
+.ml small{font-size:12.5px;line-height:1.3;color:var(--muted)}
+.ml-motto{display:flex;flex-direction:column;align-items:center;gap:2px;margin:0 0 12px}
+.ml-motto b{font:700 1.5rem/1.3 "Manjari",var(--sans);color:var(--rose-2)}
+.ml-motto span{font-size:12.5px;color:var(--muted)}
 @keyframes dot{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(-4px);opacity:1}}
 input[type=date],input[type=time],textarea{width:100%;min-height:48px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--glass);color:var(--text);font:500 15.5px/1.35 var(--sans);-webkit-appearance:none;appearance:none;text-align:left}
 input::-webkit-date-and-time-value{text-align:left}
@@ -514,11 +511,11 @@ input.has-value{border-color:var(--rose);background:rgba(255,107,154,.1)}
       <header class="head">
         <p class="eyebrow rise" style="--i:0">A little lesson</p>
         <h2 class="title rise" id="t7" tabindex="-1" style="--i:1">Malayalam, <em>on the go</em></h2>
-        <p class="sub rise" style="--i:2">We're both learning to read and write it, one message at a time. Tap a card to see how it's really written.</p>
+        <p class="ml-motto rise" style="--i:2"><b lang="ml">പതുക്കെ പഠിക്കാം</b><span>pathukke padikkaam · let's learn slowly</span></p>
+        <p class="sub rise" style="--i:3">I'll teach you to read and write it, one message at a time. You already know these from our chats.</p>
       </header>
       <div class="ml-grid" id="mlGrid"></div>
-      <p class="need" id="mlCount" aria-live="polite"></p>
-      <div class="actions" style="margin-top:12px">
+      <div class="actions" style="margin-top:22px">
         <button class="btn primary" type="button" data-go="2">Now, the flowers <span aria-hidden="true">→</span></button>
       </div>
     </section>
@@ -575,7 +572,7 @@ const CHAT = [
   { who: 'me',  text: 'Night duty kaayinjo', time: '9:39 am' },
 ];
 
-// "Malayalam on the go": how we type it → how it's written → what it means
+// "Malayalam on the go" (he knows it, she's learning): Malayalam script · how to say it · English meaning
 const MALAYALAM = [
   { say: 'Sheri', ml: 'ശരി', mean: 'okay' },
   { say: 'Kitti', ml: 'കിട്ടി', mean: 'got it' },
@@ -1088,16 +1085,7 @@ function playChat(){
 
 /* scene 7: malayalam flip cards */
 const mlGrid = $('#mlGrid');
-mlGrid.innerHTML = MALAYALAM.map((w, i) => `<button class="ml" type="button" aria-pressed="false" style="--i:${i}" aria-label="${esc(w.say)}: ${esc(w.ml)}, ${esc(w.mean)}"><span class="ml-in"><span class="ml-f" aria-hidden="true"><b>${esc(w.say)}</b><small>how we type it</small></span><span class="ml-b" aria-hidden="true"><b lang="ml">${esc(w.ml)}</b><small>${esc(w.mean)}</small></span></span></button>`).join('');
-function mlCount(){
-  const n = $$('.ml[aria-pressed="true"]', mlGrid).length, all = MALAYALAM.length;
-  $('#mlCount').textContent = n === 0 ? '' : n < all ? `Learned ${n} of ${all}` : `All ${all} learned. Nannayi! (നന്നായി, well done) 👏`;
-}
-mlGrid.addEventListener('click', e => {
-  const c = e.target.closest('.ml'); if (!c) return;
-  c.setAttribute('aria-pressed', String(c.getAttribute('aria-pressed') !== 'true'));
-  mlCount();
-});
+mlGrid.innerHTML = MALAYALAM.map((w, i) => `<div class="ml" style="--i:${i}"><b lang="ml">${esc(w.ml)}</b><i>${esc(w.say)}</i><small>${esc(w.mean)}</small></div>`).join('');
 
 /* scene 2: bouquet grid + sheet */
 const grid = $('#grid');
