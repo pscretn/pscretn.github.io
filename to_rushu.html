@@ -266,6 +266,16 @@ textarea{resize:vertical;min-height:84px;font-weight:400}
 textarea::placeholder{color:#7d6872}
 input:focus,textarea:focus{outline:none;border-color:var(--rose);box-shadow:0 0 0 4px rgba(255,107,154,.16)}
 input.has-value{border-color:var(--rose);background:rgba(255,107,154,.1)}
+.sub b{color:var(--blush);font-weight:600}
+.notnow{appearance:none;width:100%;display:flex;align-items:center;gap:12px;margin-top:4px;padding:14px 16px;border-radius:18px;border:1px solid rgba(255,107,154,.35);background:rgba(255,107,154,.07);color:var(--text);text-align:left;cursor:pointer;transition:background .2s,transform .25s var(--spring)}
+.notnow:hover{background:rgba(255,107,154,.13)}
+.notnow:active{transform:scale(.98)}
+.nn-ico{font-size:24px;line-height:1}
+.notnow b{display:block;font-size:15px;font-weight:600}
+.notnow small{display:block;margin-top:2px;font-size:12.5px;color:var(--muted)}
+.nn-go{margin-left:auto;font-size:18px;color:var(--rose)}
+.or{display:flex;align-items:center;gap:12px;width:100%;margin:20px 0 8px;font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
 .need{margin:12px 0 0;min-height:1.4em;font-size:13px;color:var(--muted)}
 .notyet{margin-top:6px}
 
@@ -407,8 +417,16 @@ input.has-value{border-color:var(--rose);background:rgba(255,107,154,.1)}
       <header class="head" style="margin-bottom:6px">
         <p class="eyebrow rise" style="--i:0"><span class="steps" aria-hidden="true"><i class="on"></i><i class="on"></i></span>Question 2 of 2</p>
         <h2 class="title rise" id="t3" tabindex="-1" style="--i:1">Can I see you <em>in person?</em></h2>
-        <p class="sub rise" style="--i:2">No rush at all. Whenever night duty lets you go, pick what suits you. And if a baby decides to arrive, we'll simply move it.</p>
+        <p class="sub rise" style="--i:2">Only if you'd like to. <b>Not now is completely okay too</b>, and nothing changes. We just keep talking.</p>
       </header>
+
+      <button class="notnow rise" type="button" id="notNowTop" style="--i:3">
+        <span class="nn-ico" aria-hidden="true">🐢</span>
+        <span><b>Not now, and that's completely okay</b><small>Let's keep talking for a while. Tap here and you're done.</small></span>
+        <span class="nn-go" aria-hidden="true">→</span>
+      </button>
+      <p class="or rise" style="--i:3"><span>or, if you'd like to meet</span></p>
+      <p class="sub rise" style="--i:3;font-size:14px">Pick what suits you around night duty. And if a baby decides to arrive, we'll simply move it.</p>
 
       <div class="field rise" style="--i:3">
         <span class="lbl" id="lblDay">Pick a day</span>
@@ -440,7 +458,7 @@ input.has-value{border-color:var(--rose);background:rgba(255,107,154,.1)}
         <button class="btn ghost" type="button" data-go="2">← Back</button>
         <button class="btn primary" type="button" id="toReview" disabled>Done <span aria-hidden="true">→</span></button>
       </div>
-      <button class="link-btn notyet" type="button" id="notYet">Not ready yet? That's completely okay 🐢</button>
+      <button class="link-btn notyet" type="button" id="notYet">Not now? That's completely okay too 🐢</button>
     </section>
 
     <!-- 4 · prescription -->
@@ -1198,6 +1216,7 @@ function validate(){
 validate();
 $('#toReview').addEventListener('click', () => { state.notYet = false; go(4); });
 $('#notYet').addEventListener('click', () => { state.notYet = true; go(4); });
+$('#notNowTop').addEventListener('click', () => { state.notYet = true; go(4); });
 
 /* text helpers */
 function time12(t){
@@ -1230,7 +1249,7 @@ function buildRx(){
     ['Patient', `${CONFIG.from}, c/o smiling at his phone at 1 am`],
     ['Dx', 'Butterflies. Persistent, non‑resolving.'],
     ['Rx', `${b.id === 'mixed' ? '1 mixed bouquet' : `1 bouquet of ${b.n.toLowerCase()}`}. Digital, so it never wilts 🌸`],
-    ['EDD · expected date of delivery', (state.notYet ? 'Whenever you’re ready 🐢' : whenText()) + `\nDelivering: one ${CONFIG.from}, in person 😄`],
+    ['EDD · expected date of delivery', state.notYet ? 'Whenever you’re ready 🐢\nUntil then: more 1 am calls 😄' : whenText() + `\nDelivering: one ${CONFIG.from}, in person 😄`],
   ];
   if (state.note) rows.push(['Notes', state.note]);
   rows.push(['Advice', 'Take slowly, like you said 🐢']);
@@ -1264,7 +1283,7 @@ function buildFinal(){
   const b = BY[state.bouquet];
   if (state.notYet){
     $('#t5').innerHTML = 'Whenever you’re <em>ready</em>.';
-    $('#finalLine').textContent = `No rush, ${CONFIG.to}. The flowers will wait, and so will I.`;
+    $('#finalLine').textContent = `No rush at all, ${CONFIG.to}. Your bouquet stays right here, the 1 am calls continue, and I'm happy just like this.`;
     $('#ics').hidden = true;
   } else {
     const diff = Math.round((state.day - today) / 864e5);
