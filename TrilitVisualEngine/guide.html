@@ -121,7 +121,8 @@
   <nav class="toc" aria-label="Contents">
     <p>Contents</p>
     <a href="#start">Install and start</a>
-    <a href="#screen">The screen</a>
+    <a href="#easy">Easy mode</a>
+    <a href="#screen">Pro mode</a>
     <a href="#play">Play clips</a>
     <a href="#content">Generators, video and text</a>
     <a href="#effects">Effects and animation</a>
@@ -139,13 +140,13 @@
 
   <main>
     <header class="hero">
-      <div class="kicker">Guide &middot; version 0.3</div>
+      <div class="kicker">Guide &middot; version 0.3.2</div>
       <h1>How to use Trilit Visual Engine</h1>
       <p class="lede">Play visuals live, then map them onto walls, stages and objects with one or many projectors. This guide walks through everything, from the first start to a full show.</p>
       <div class="bar"></div>
       <details class="mobile-toc">
         <summary>Contents</summary>
-        <a href="#start">Install</a><a href="#screen">The screen</a><a href="#play">Play clips</a><a href="#content">Video and text</a>
+        <a href="#start">Install</a><a href="#easy">Easy mode</a><a href="#screen">Pro mode</a><a href="#play">Play clips</a><a href="#content">Video and text</a>
         <a href="#effects">Effects</a><a href="#music">Music</a><a href="#map">Mapping</a><a href="#trace">From a photo</a>
         <a href="#points">Moving points</a><a href="#projectors">Projectors</a><a href="#midi">MIDI</a><a href="#artnet">Art-Net</a>
         <a href="#shows">Shows</a><a href="#keys">Shortcuts</a><a href="#help">Help</a>
@@ -159,7 +160,7 @@
         <li>Download the installer from the <a href="../trilitlabs.html#engine">TrilitLabs page</a> and run it. It installs for you only, so it doesn't need administrator rights.</li>
         <li>Windows may say <b>&ldquo;Windows protected your PC&rdquo;</b>, because the app is not code-signed yet. Click <b>More info</b>, then <b>Run anyway</b>.</li>
         <li>On start, a loading screen builds every visual and effect for your graphics card. This takes a few seconds the first time and means nothing stutters later in the show.</li>
-        <li>You land on the welcome show, already playing. Click any picture in the deck to play it.</li>
+        <li>The app opens in <b>Easy mode</b>: your projector picture, with its shapes. The next section shows how to map your first shape in a few clicks.</li>
       </ol>
       <figure>
         <img src="../images/trilit_visual_engine_splash.webp" alt="The start-up screen: the Trilit Visual Engine logo with turning rings and a progress bar" width="1200" height="675" loading="lazy">
@@ -169,14 +170,40 @@
     </section>
 
     <!-- 2 -->
+    <section id="easy">
+      <h2><span class="n">02</span>Easy mode: map your first shape</h2>
+      <p>Easy mode works like Trilit Mapper. The big picture on the left is exactly what your projector shows. Each <b>shape</b> on it plays its own effect, video, picture or text, and you set it up in the four tabs on the right.</p>
+      <figure>
+        <img src="../images/trilit_visual_engine_easy.webp" alt="Easy mode: the projector picture with three shapes, a wall, a moon and a rock, each showing its own effect, and the Content tab with a grid of effects" width="1400" height="788" loading="lazy">
+        <figcaption>Easy mode: pick a shape on the left, then pick what it shows on the right.</figcaption>
+      </figure>
+      <ol class="steps">
+        <li><b>Choose your projector.</b> Next to <b>Projector</b> at the top, pick it from the list (it's the one not marked <b>(main)</b>), then click <span class="ui">Off</span> so it turns gold and says <span class="ui">On</span>. The projector now shows the picture.</li>
+        <li><b>Add a shape.</b> Click <span class="ui">+ Shape</span> and pick one: a rectangle, a circle, a star, a lotus and more. It appears with its own effect already playing.</li>
+        <li><b>Put it on your surface.</b> Drag its corner points on the left while you watch the wall. Drag inside it to move it, and use the mouse wheel to make it bigger or smaller. <span class="ui">Test</span> fills every shape with a grid, which makes lining up easier.</li>
+        <li><b>Choose what it shows</b> in the <b>Content</b> tab: click any effect in the grid, or <span class="ui">Video or image</span> to pick a file, or <span class="ui">Text</span> to type words. You can also drag a video or picture from Explorer straight onto the shape.</li>
+        <li><b>Change how it looks</b> in the <b>Look</b> tab: colours, speed, size, how much it moves with the music, brightness and soft edges.</li>
+        <li><b>More shapes:</b> click <span class="ui">+ Shape</span> again. A new shape is drawn over the ones before it; use the up and down buttons to change which is on top.</li>
+      </ol>
+      <div class="grid2">
+        <div class="card"><h4>Content</h4><p>An effect, a video or picture, or text, just for this shape.</p></div>
+        <div class="card"><h4>Look</h4><p>Colours, speed, size, music reaction, brightness, soft edges and extra effects.</p></div>
+        <div class="card"><h4>Shape</h4><p>Cut it to a circle, ring, star, heart, diya and more; hide it, lock it, or make it a black mask.</p></div>
+        <div class="card"><h4>Fit</h4><p>More points for curved surfaces, a photo of your stage to trace shapes on, and soft edges between two projectors.</p></div>
+      </div>
+      <div class="tip"><p><b>Want the full deck?</b> Click <span class="ui">Pro</span> in the top bar for layers of clips, columns, the crossfader and every setting. <span class="ui">Easy</span> brings you back. The rest of this guide covers both.</p></div>
+    </section>
+
+    <!-- 3 -->
     <section id="screen">
-      <h2><span class="n">02</span>The screen at a glance</h2>
+      <h2><span class="n">03</span>Pro mode at a glance</h2>
+      <p>Click <span class="ui">Pro</span> in the top bar to play visuals like a VJ: a deck of clips in layers, mixed live, then mapped onto your shapes.</p>
       <figure>
         <img src="../images/trilit_visual_engine_deck.webp" alt="The editor: the top bar, the deck of clips in three layers, the preview with a crossfader, the inspector and the browser" width="1400" height="788" loading="lazy">
         <figcaption>The deck, the preview, the inspector and the browser.</figcaption>
       </figure>
       <div class="grid2">
-        <div class="card"><h4>Top bar</h4><p><span class="ui">Show</span> menu, tempo, audio, master level, <span class="ui">Blackout</span>, <span class="ui">Go live</span>, <span class="ui">Mapping</span> and <span class="ui">MIDI</span>.</p></div>
+        <div class="card"><h4>Top bar</h4><p><span class="ui">Show</span> menu, <span class="ui">Easy</span> / <span class="ui">Pro</span>, tempo, audio, master level, <span class="ui">Blackout</span>, <span class="ui">Go live</span>, <span class="ui">Mapping</span> and <span class="ui">MIDI</span>.</p></div>
         <div class="card"><h4>Deck</h4><p>Your clips, in layers (rows) and columns. Click a clip to play it.</p></div>
         <div class="card"><h4>Preview</h4><p>What the show looks like right now, with the A/B crossfader under it.</p></div>
         <div class="card"><h4>Inspector</h4><p>Settings for the selected <b>Clip</b>, its <b>Layer</b>, or the whole <b>Composition</b>.</p></div>
@@ -188,7 +215,7 @@
 
     <!-- 3 -->
     <section id="play">
-      <h2><span class="n">03</span>Play clips</h2>
+      <h2><span class="n">04</span>Play clips</h2>
       <p>The deck works like an instrument. Each <b>layer</b> is a row and plays one clip at a time. Layers stack: the top row is drawn over the ones below.</p>
       <ul>
         <li><b>Click a clip</b> to play it. Click it again to restart it.</li>
@@ -204,9 +231,9 @@
 
     <!-- 4 -->
     <section id="content">
-      <h2><span class="n">04</span>Generators, video, images and text</h2>
+      <h2><span class="n">05</span>Generators, video, images and text</h2>
       <h3>Generators</h3>
-      <p>62 live visuals that draw themselves: plasma, fire, a neon city, a black hole, fireworks, rangoli and Trilit Buddy, a small creature that dances to your music. In the browser, <b>click</b> one to put it in the selected slot, or <b>double-click</b> to put it in and play it. Each has two colours, a speed, a size and how much it reacts to audio. Tick <b>Lock speed to BPM</b> to keep it in time.</p>
+      <p>62 live visuals that draw themselves: plasma, fire, a neon city, a black hole, fireworks, rangoli and Trilit Buddy, a small creature that dances to your music. In the browser, <b>click</b> one to play it in the selected slot, or drag it onto any slot. Each has two colours, a speed, a size and how much it reacts to audio. Tick <b>Lock speed to BPM</b> to keep it in time.</p>
       <h3>Video and images</h3>
       <p>Drag files from Explorer straight onto a slot, or right-click a slot and choose <span class="ui">Video or image...</span>. MP4, MOV, MKV, AVI, WebM and more play with their sound; most videos decode on the graphics card. Select a video clip and the inspector shows:</p>
       <figure>
@@ -228,7 +255,7 @@
 
     <!-- 5 -->
     <section id="effects">
-      <h2><span class="n">05</span>Effects and animation</h2>
+      <h2><span class="n">06</span>Effects and animation</h2>
       <p>55 effects in six groups: <b>Colour</b> (hue, levels, duotone, gradient maps), <b>Blur</b> (glow, zoom and motion blur, tilt shift), <b>Distort</b> (kaleidoscope, transform, bulge, swirl, ripple, polar, liquid, scroll), <b>Stylize</b> (RGB split, halftone, scanlines, VHS, LED wall, cartoon, film grain), <b>Time</b> (trails, feedback, echo, stutter, strobe, beat flash) and <b>Mask</b> (chroma key, luma key, wipes and soft edges).</p>
       <ul>
         <li>Put effects on a <b>clip</b>, on a <b>layer</b> (everything that layer plays) or on the <b>composition</b> (the whole show). Use <span class="ui">+ Add effect</span> in the inspector, or drag one from the browser onto a slot, a layer name or a chain.</li>
@@ -241,7 +268,7 @@
 
     <!-- 6 -->
     <section id="music">
-      <h2><span class="n">06</span>Music and tempo</h2>
+      <h2><span class="n">07</span>Music and tempo</h2>
       <ul>
         <li>Click <span class="ui">Audio</span> and pick a microphone or line input, or <b>System sound (what the PC plays)</b> to listen to whatever your PC is playing. The meter beside it shows the level and flashes on beats. <b>Gain</b> makes quiet sound count for more.</li>
         <li>Set the tempo by dragging the <b>BPM</b> box, or tap <span class="ui">Tap</span> (or <kbd>T</kbd>) in time with the music a few times.</li>
@@ -252,7 +279,7 @@
 
     <!-- 7 -->
     <section id="map">
-      <h2><span class="n">07</span>Mapping a stage</h2>
+      <h2><span class="n">08</span>Mapping a stage</h2>
       <p>Open the <span class="ui">Mapping</span> tab. A <b>screen</b> is one output: one projector or display. On each screen you place <b>slices</b>. A slice takes the show (or one layer on its own) and lands it on a surface: a wall, a box, a sign, a car.</p>
       <figure>
         <img src="../images/trilit_visual_engine_mapping.webp" alt="The mapping editor: slices cut to a rectangle, a circle, a lotus, a ring and a drawn outline, with a window mask, and the shape settings beside it" width="1400" height="788" loading="lazy">
@@ -275,7 +302,7 @@
 
     <!-- 8 -->
     <section id="trace">
-      <h2><span class="n">08</span>Shapes from a photo</h2>
+      <h2><span class="n">09</span>Shapes from a photo</h2>
       <p>The fastest way to map real objects: take a photo of the stage from where the projector stands, and let the app find the outlines.</p>
       <ol class="steps">
         <li>Under <b>Reference photo</b>, click <span class="ui">Load...</span> for a photo from your phone, or <span class="ui">Take...</span> to use a webcam. You can also drop a photo onto the canvas. The photo shows only in the editor, never on the projector.</li>
@@ -293,7 +320,7 @@
 
     <!-- 9 -->
     <section id="points">
-      <h2><span class="n">09</span>Moving points, slices and many points at once</h2>
+      <h2><span class="n">10</span>Moving points, slices and many points at once</h2>
       <div class="table-wrap">
       <table class="table">
         <tr><th>To</th><th>Do this</th></tr>
@@ -310,7 +337,7 @@
 
     <!-- 10 -->
     <section id="projectors">
-      <h2><span class="n">10</span>Several projectors and displays</h2>
+      <h2><span class="n">11</span>Several projectors and displays</h2>
       <p>Connect every projector to the PC and set Windows to <b>Extend</b> the display (press <kbd>Win</kbd>+<kbd>P</kbd>). Then click <span class="ui">Displays</span> in the Mapping tab:</p>
       <ul>
         <li>A map shows your displays as Windows arranges them, which one holds this editor, and which screen uses each one.</li>
@@ -324,7 +351,7 @@
 
     <!-- 11 -->
     <section id="midi">
-      <h2><span class="n">11</span>MIDI keyboards and controllers</h2>
+      <h2><span class="n">12</span>MIDI keyboards and controllers</h2>
       <p>Plug in a MIDI keyboard, pad controller or fader box. Click <span class="ui">MIDI</span> in the top bar and tick your device.</p>
       <h3>Link anything to a key or knob</h3>
       <ol class="steps">
@@ -344,7 +371,7 @@
 
     <!-- 12 -->
     <section id="artnet">
-      <h2><span class="n">12</span>Art-Net and lighting consoles</h2>
+      <h2><span class="n">13</span>Art-Net and lighting consoles</h2>
       <h3>Out: pixels to your lights</h3>
       <p>Tick <b>Send</b> and set the IP address, universe and number of pixels. The app samples a line of RGB pixels across the middle of the show, 170 per universe, so LED strips and fixtures follow the visuals.</p>
       <h3>In: control from a console</h3>
@@ -361,7 +388,7 @@
 
     <!-- 13 -->
     <section id="shows">
-      <h2><span class="n">13</span>Saving shows, templates and Trilit Mapper shows</h2>
+      <h2><span class="n">14</span>Saving shows, templates and Trilit Mapper shows</h2>
       <ul>
         <li>The <span class="ui">Show</span> menu has <b>New show</b>, <b>Open</b>, <b>Save</b> and <b>Save as</b>. Shows are <code>.tve.json</code> files with everything in them: clips, effects, screens, slices, MIDI links and Art-Net settings. Video and image files stay where they are, so keep them with the show.</li>
         <li>The app also saves by itself every minute and when you close it, and opens where you left off.</li>
@@ -376,7 +403,7 @@
 
     <!-- 14 -->
     <section id="keys">
-      <h2><span class="n">14</span>Keyboard shortcuts</h2>
+      <h2><span class="n">15</span>Keyboard shortcuts</h2>
       <div class="table-wrap">
       <table class="table">
         <tr><th>Keys</th><th>What they do</th></tr>
@@ -397,7 +424,7 @@
 
     <!-- 15 -->
     <section id="help">
-      <h2><span class="n">15</span>If something goes wrong</h2>
+      <h2><span class="n">16</span>If something goes wrong</h2>
       <h3>The projector isn't in the list</h3>
       <p>Press <kbd>Win</kbd>+<kbd>P</kbd> and choose <b>Extend</b>. Then open <span class="ui">Displays</span> again. Until a second display is connected, outputs open as normal windows.</p>
       <h3>The picture is on the wrong projector</h3>
