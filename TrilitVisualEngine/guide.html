@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>How to use Trilit Visual Engine</title>
+<meta name="description" content="A step-by-step guide to Trilit Visual Engine: playing clips and effects, video, projection mapping with shapes traced from a photo, several projectors, MIDI and Art-Net.">
+<meta name="theme-color" content="#050608">
+<link rel="icon" href="../images/trilit_visual_engine_icon.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050608; --raised: #0D1117; --raised-2: #121821;
+    --line: rgba(255,255,255,.09); --line-2: rgba(255,255,255,.16);
+    --white: #F2F4F6; --muted: #8D97A3; --amber: #F5AA1F; --mint: #1CC6C6; --blue: #1C93DD;
+    --tri: linear-gradient(90deg, #F5AA1F, #1CC6C6 50%, #1C93DD);
+    --sans: "Inter Tight", ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, "Cascadia Code", Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 1.5rem; }
+  body {
+    margin: 0; color: var(--white); font: 400 1.0625rem/1.65 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    background:
+      radial-gradient(60rem 30rem at 85% -5%, rgba(245,170,31,.12), transparent 60%),
+      radial-gradient(50rem 28rem at -10% 40%, rgba(28,198,198,.08), transparent 60%),
+      var(--bg);
+  }
+  a { color: var(--mint); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  img { max-width: 100%; height: auto; display: block; }
+  ::selection { background: var(--amber); color: var(--bg); }
+
+  .top { border-bottom: 1px solid var(--line); }
+  .top .in { width: min(1240px, 100%); margin: 0 auto; padding: 1rem 16px; display: flex; align-items: center; gap: 1rem; }
+  .top img { width: 40px; height: 40px; border-radius: 10px; }
+  .top b { font-weight: 800; letter-spacing: -.01em; }
+  .top small { display: block; color: var(--muted); font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; }
+  .top .back { margin-left: auto; color: var(--muted); font-size: .95rem; }
+  @media (max-width: 520px) { .top .back span { display: none; } }
+
+  .layout { width: min(1240px, 100%); margin: 0 auto; padding: 0 16px 5rem; display: grid; grid-template-columns: 1fr; gap: 3rem; }
+  @media (min-width: 1000px) { .layout { grid-template-columns: 250px minmax(0, 1fr); } }
+
+  nav.toc { display: none; }
+  @media (min-width: 1000px) {
+    nav.toc { display: block; position: sticky; top: 1.5rem; align-self: start; padding-top: 3rem; max-height: calc(100vh - 3rem); overflow: auto; }
+  }
+  nav.toc p { margin: 0 0 .6rem; color: var(--muted); font-size: .75rem; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; }
+  nav.toc a { display: block; color: var(--muted); padding: .28rem 0 .28rem .8rem; border-left: 2px solid var(--line); font-size: .95rem; }
+  nav.toc a:hover { color: var(--white); border-left-color: var(--amber); text-decoration: none; }
+
+  header.hero { padding: 3.5rem 0 1rem; }
+  .kicker { color: var(--amber); font-size: .8rem; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; }
+  h1 { font-size: clamp(2.1rem, 5vw, 3.4rem); line-height: 1.05; letter-spacing: -.03em; margin: .4rem 0 1rem; font-weight: 800; }
+  .lede { color: #C9D0D8; font-size: 1.2rem; max-width: 46rem; margin: 0; }
+  .bar { height: 3px; width: 120px; background: var(--tri); border-radius: 3px; margin: 1.6rem 0 0; }
+
+  .mobile-toc { margin: 1.5rem 0 0; padding: 1rem 1.2rem; background: var(--raised); border: 1px solid var(--line); border-radius: 14px; }
+  .mobile-toc summary { cursor: pointer; font-weight: 700; }
+  .mobile-toc a { display: inline-block; margin: .35rem .9rem 0 0; font-size: .95rem; }
+  @media (min-width: 1000px) { .mobile-toc { display: none; } }
+
+  section { padding-top: 3rem; }
+  h2 { font-size: clamp(1.5rem, 3vw, 2rem); letter-spacing: -.02em; margin: 0 0 .8rem; font-weight: 800; display: flex; align-items: baseline; gap: .7rem; }
+  h2 .n { font-size: .9rem; color: var(--amber); font-weight: 700; font-family: var(--mono); }
+  h3 { font-size: 1.15rem; margin: 1.8rem 0 .4rem; font-weight: 700; }
+  p { margin: .6rem 0; color: #D3D9E0; }
+  ul, ol { padding-left: 1.3rem; margin: .5rem 0; color: #D3D9E0; }
+  li { margin: .3rem 0; }
+  b, strong { color: var(--white); font-weight: 700; }
+  .ui { display: inline-block; padding: .05rem .45rem; border-radius: 6px; background: var(--raised-2); border: 1px solid var(--line-2); font-size: .92em; font-weight: 600; color: var(--white); white-space: nowrap; }
+  kbd { display: inline-block; min-width: 1.6em; text-align: center; padding: .05rem .4rem; border-radius: 6px; background: #1A212C; border: 1px solid var(--line-2); border-bottom-width: 2px; font: 600 .85em var(--mono); color: var(--white); }
+
+  figure { margin: 1.4rem 0; background: var(--raised); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  figcaption { padding: .7rem 1rem; color: var(--muted); font-size: .92rem; border-top: 1px solid var(--line); }
+
+  .steps { counter-reset: s; list-style: none; padding: 0; }
+  .steps li { counter-increment: s; position: relative; padding: .7rem 0 .7rem 3rem; border-bottom: 1px solid var(--line); }
+  .steps li:last-child { border-bottom: 0; }
+  .steps li::before { content: counter(s); position: absolute; left: 0; top: .7rem; width: 2rem; height: 2rem; border-radius: 50%; display: grid; place-items: center;
+    background: rgba(245,170,31,.14); color: var(--amber); font-weight: 800; font-size: .95rem; }
+
+  .tip { margin: 1.2rem 0; padding: .9rem 1.1rem; border-radius: 12px; background: rgba(28,198,198,.07); border: 1px solid rgba(28,198,198,.28); }
+  .tip.warm { background: rgba(245,170,31,.07); border-color: rgba(245,170,31,.3); }
+  .tip p { margin: .2rem 0; }
+  .tip b:first-child { color: var(--mint); }
+  .tip.warm b:first-child { color: var(--amber); }
+
+  .grid2 { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+  @media (min-width: 720px) { .grid2 { grid-template-columns: 1fr 1fr; } }
+  .card { background: var(--raised); border: 1px solid var(--line); border-radius: 14px; padding: 1rem 1.2rem; }
+  .card h4 { margin: 0 0 .3rem; font-size: 1rem; }
+  .card p { margin: 0; font-size: .97rem; color: #C3CAD3; }
+
+  .table { width: 100%; border-collapse: collapse; margin: .8rem 0; font-size: .97rem; }
+  .table-wrap { overflow-x: auto; }
+  .table th, .table td { text-align: left; padding: .55rem .7rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .table th { color: var(--muted); font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; }
+  .table td:first-child { white-space: nowrap; }
+
+  .cta { display: inline-flex; align-items: center; gap: .6rem; margin-top: 1.4rem; padding: .85rem 1.3rem; border-radius: 12px; background: var(--amber); color: #0B0D10; font-weight: 800; }
+  .cta:hover { text-decoration: none; filter: brightness(1.08); }
+  footer { border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
+  footer .in { width: min(1240px, 100%); margin: 0 auto; padding: 1.5rem 16px 2.5rem; }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="in">
+    <img src="../images/trilit_visual_engine_icon.webp" alt="" width="40" height="40">
+    <div><b>Trilit Visual Engine</b><small>The guide</small></div>
+    <a class="back" href="../trilitlabs.html#engine">&larr; <span>Back to </span>TrilitLabs</a>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="toc" aria-label="Contents">
+    <p>Contents</p>
+    <a href="#start">Install and start</a>
+    <a href="#screen">The screen</a>
+    <a href="#play">Play clips</a>
+    <a href="#content">Generators, video and text</a>
+    <a href="#effects">Effects and animation</a>
+    <a href="#music">Music and tempo</a>
+    <a href="#map">Mapping a stage</a>
+    <a href="#trace">Shapes from a photo</a>
+    <a href="#points">Moving points</a>
+    <a href="#projectors">Several projectors</a>
+    <a href="#midi">MIDI keyboards</a>
+    <a href="#artnet">Art-Net and consoles</a>
+    <a href="#shows">Saving shows</a>
+    <a href="#keys">Keyboard shortcuts</a>
+    <a href="#help">If something goes wrong</a>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <div class="kicker">Guide &middot; version 0.3</div>
+      <h1>How to use Trilit Visual Engine</h1>
+      <p class="lede">Play visuals live, then map them onto walls, stages and objects with one or many projectors. This guide walks through everything, from the first start to a full show.</p>
+      <div class="bar"></div>
+      <details class="mobile-toc">
+        <summary>Contents</summary>
+        <a href="#start">Install</a><a href="#screen">The screen</a><a href="#play">Play clips</a><a href="#content">Video and text</a>
+        <a href="#effects">Effects</a><a href="#music">Music</a><a href="#map">Mapping</a><a href="#trace">From a photo</a>
+        <a href="#points">Moving points</a><a href="#projectors">Projectors</a><a href="#midi">MIDI</a><a href="#artnet">Art-Net</a>
+        <a href="#shows">Shows</a><a href="#keys">Shortcuts</a><a href="#help">Help</a>
+      </details>
+    </header>
+
+    <!-- 1 -->
+    <section id="start">
+      <h2><span class="n">01</span>Install and start</h2>
+      <ol class="steps">
+        <li>Download the installer from the <a href="../trilitlabs.html#engine">TrilitLabs page</a> and run it. It installs for you only, so it doesn't need administrator rights.</li>
+        <li>Windows may say <b>&ldquo;Windows protected your PC&rdquo;</b>, because the app is not code-signed yet. Click <b>More info</b>, then <b>Run anyway</b>.</li>
+        <li>On start, a loading screen builds every visual and effect for your graphics card. This takes a few seconds the first time and means nothing stutters later in the show.</li>
+        <li>You land on the welcome show, already playing. Click any picture in the deck to play it.</li>
+      </ol>
+      <figure>
+        <img src="../images/trilit_visual_engine_splash.webp" alt="The start-up screen: the Trilit Visual Engine logo with turning rings and a progress bar" width="1200" height="675" loading="lazy">
+        <figcaption>The start-up screen builds everything once, so the show runs smoothly.</figcaption>
+      </figure>
+      <div class="tip"><p><b>Runs on any PC.</b> It needs only OpenGL 3.3, which almost every graphics card since about 2010 supports. If your PC has no working graphics driver, the app switches to software drawing by itself. It is slower, but it works.</p></div>
+    </section>
+
+    <!-- 2 -->
+    <section id="screen">
+      <h2><span class="n">02</span>The screen at a glance</h2>
+      <figure>
+        <img src="../images/trilit_visual_engine_deck.webp" alt="The editor: the top bar, the deck of clips in three layers, the preview with a crossfader, the inspector and the browser" width="1400" height="788" loading="lazy">
+        <figcaption>The deck, the preview, the inspector and the browser.</figcaption>
+      </figure>
+      <div class="grid2">
+        <div class="card"><h4>Top bar</h4><p><span class="ui">Show</span> menu, tempo, audio, master level, <span class="ui">Blackout</span>, <span class="ui">Go live</span>, <span class="ui">Mapping</span> and <span class="ui">MIDI</span>.</p></div>
+        <div class="card"><h4>Deck</h4><p>Your clips, in layers (rows) and columns. Click a clip to play it.</p></div>
+        <div class="card"><h4>Preview</h4><p>What the show looks like right now, with the A/B crossfader under it.</p></div>
+        <div class="card"><h4>Inspector</h4><p>Settings for the selected <b>Clip</b>, its <b>Layer</b>, or the whole <b>Composition</b>.</p></div>
+        <div class="card"><h4>Browser</h4><p>Every generator and effect, with a search box. Drag them onto clips and layers.</p></div>
+        <div class="card"><h4>Mapping</h4><p>A tab next to the deck: screens, projectors, shapes, masks and warping.</p></div>
+      </div>
+      <p>The line at the very bottom shows whether outputs are live, whether audio and MIDI are on, and when the show was last saved. Panels can be dragged to new places, and they come back where you left them.</p>
+    </section>
+
+    <!-- 3 -->
+    <section id="play">
+      <h2><span class="n">03</span>Play clips</h2>
+      <p>The deck works like an instrument. Each <b>layer</b> is a row and plays one clip at a time. Layers stack: the top row is drawn over the ones below.</p>
+      <ul>
+        <li><b>Click a clip</b> to play it. Click it again to restart it.</li>
+        <li><b>Click a column number</b> at the top (or press <kbd>1</kbd> to <kbd>9</kbd>) to fire that column on every layer at once. Right-click it to give it a name.</li>
+        <li><span class="ui">Stop</span> stops a layer. <span class="ui">B</span> hides it (bypass). <span class="ui">S</span> shows only that layer (solo).</li>
+        <li>The slider under a layer's name is its opacity. The list beside it is the <b>blend mode</b>: Add, Screen, Multiply, Luma key and more.</li>
+        <li>The small <span class="ui">-</span> / <span class="ui">A</span> / <span class="ui">B</span> button puts the layer on side A or B of the crossfader in the preview.</li>
+        <li>In the <b>Layer</b> tab, <b>Transition</b> sets how many seconds one clip takes to fade into the next.</li>
+        <li><b>Drag a clip</b> onto another slot to swap them. <b>Right-click a slot</b> to pick a generator, add text, load a video or image, copy, paste or clear.</li>
+        <li><span class="ui">+ Add layer</span> adds a row; the <span class="ui">+</span> after the last column adds a column.</li>
+      </ul>
+    </section>
+
+    <!-- 4 -->
+    <section id="content">
+      <h2><span class="n">04</span>Generators, video, images and text</h2>
+      <h3>Generators</h3>
+      <p>62 live visuals that draw themselves: plasma, fire, a neon city, a black hole, fireworks, rangoli and Trilit Buddy, a small creature that dances to your music. In the browser, <b>click</b> one to put it in the selected slot, or <b>double-click</b> to put it in and play it. Each has two colours, a speed, a size and how much it reacts to audio. Tick <b>Lock speed to BPM</b> to keep it in time.</p>
+      <h3>Video and images</h3>
+      <p>Drag files from Explorer straight onto a slot, or right-click a slot and choose <span class="ui">Video or image...</span>. MP4, MOV, MKV, AVI, WebM and more play with their sound; most videos decode on the graphics card. Select a video clip and the inspector shows:</p>
+      <figure>
+        <img src="../images/trilit_visual_engine_video.webp" alt="A video clip selected: the timeline with its start and end handles, play speed, end behaviour, and the picture options" width="1400" height="788" loading="lazy">
+        <figcaption>The timeline: drag to jump, drag the teal ends to choose the part that plays.</figcaption>
+      </figure>
+      <ul>
+        <li><b>Timeline:</b> click or drag to jump. Drag the two <b>teal ends</b> to play only part of the video.</li>
+        <li><b>Play speed</b>, from stopped to four times as fast.</li>
+        <li><b>At the end:</b> loop, play once and hold the last frame, or play once and then stop the layer.</li>
+        <li><b>Fit to the beat:</b> speeds the video up or down so it lasts exactly 1 beat, 1 bar, 4 bars and so on at your tempo.</li>
+        <li><b>Jump with the beat:</b> jumps to a random spot every beat or bar, for a cut-up look.</li>
+        <li><b>Sound:</b> mute it, or set its volume. Sound plays at normal speed. The volume of all video sound together is under <span class="ui">Audio</span> in the top bar.</li>
+        <li><b>Picture:</b> fill the frame, fit it all in, or stretch it; flip it, turn it a quarter at a time, and crop each edge. Images have the same options.</li>
+      </ul>
+      <h3>Text</h3>
+      <p>Right-click a slot and choose <span class="ui">Text</span>. Type your words (several lines are fine), choose the weight, and pick a colour. Tick <b>Letters show a live effect</b> to fill the letters with any generator.</p>
+    </section>
+
+    <!-- 5 -->
+    <section id="effects">
+      <h2><span class="n">05</span>Effects and animation</h2>
+      <p>55 effects in six groups: <b>Colour</b> (hue, levels, duotone, gradient maps), <b>Blur</b> (glow, zoom and motion blur, tilt shift), <b>Distort</b> (kaleidoscope, transform, bulge, swirl, ripple, polar, liquid, scroll), <b>Stylize</b> (RGB split, halftone, scanlines, VHS, LED wall, cartoon, film grain), <b>Time</b> (trails, feedback, echo, stutter, strobe, beat flash) and <b>Mask</b> (chroma key, luma key, wipes and soft edges).</p>
+      <ul>
+        <li>Put effects on a <b>clip</b>, on a <b>layer</b> (everything that layer plays) or on the <b>composition</b> (the whole show). Use <span class="ui">+ Add effect</span> in the inspector, or drag one from the browser onto a slot, a layer name or a chain.</li>
+        <li>Effects run top to bottom. Each has an on/off box, <b>Mix</b> (how much of it you see), and buttons to move it up, duplicate it or remove it.</li>
+        <li>Chroma key removes a green or blue screen; Luma key makes black see-through, so layers below show.</li>
+      </ul>
+      <h3>Make any setting move</h3>
+      <p>Every slider has a <span class="ui">~</span> button. Choose <b>Sine</b>, <b>Saw</b>, <b>Square</b> or <b>Random</b> to move it in time with the BPM, or <b>Audio level</b>, <b>Bass</b> or <b>Beat</b> to move it with the music. <b>Depth</b> is how far it moves, <b>Cycle</b> how long one sweep takes. A teal mark on the slider shows where the value is right now.</p>
+    </section>
+
+    <!-- 6 -->
+    <section id="music">
+      <h2><span class="n">06</span>Music and tempo</h2>
+      <ul>
+        <li>Click <span class="ui">Audio</span> and pick a microphone or line input, or <b>System sound (what the PC plays)</b> to listen to whatever your PC is playing. The meter beside it shows the level and flashes on beats. <b>Gain</b> makes quiet sound count for more.</li>
+        <li>Set the tempo by dragging the <b>BPM</b> box, or tap <span class="ui">Tap</span> (or <kbd>T</kbd>) in time with the music a few times.</li>
+        <li>The round arrow (<b>Resync</b>) makes this moment the start of a bar. The four dots show the beats of the bar.</li>
+        <li><span class="ui">Blackout</span> (or <kbd>B</kbd>) takes everything dark at once and silences video sound. <b>Master</b> fades the whole show.</li>
+      </ul>
+    </section>
+
+    <!-- 7 -->
+    <section id="map">
+      <h2><span class="n">07</span>Mapping a stage</h2>
+      <p>Open the <span class="ui">Mapping</span> tab. A <b>screen</b> is one output: one projector or display. On each screen you place <b>slices</b>. A slice takes the show (or one layer on its own) and lands it on a surface: a wall, a box, a sign, a car.</p>
+      <figure>
+        <img src="../images/trilit_visual_engine_mapping.webp" alt="The mapping editor: slices cut to a rectangle, a circle, a lotus, a ring and a drawn outline, with a window mask, and the shape settings beside it" width="1400" height="788" loading="lazy">
+        <figcaption>Slices cut to shapes, a mask over a window, and the settings for the selected slice.</figcaption>
+      </figure>
+      <ol class="steps">
+        <li>Point your projector at the stage. Choose the projector in the display list at the top of the Mapping tab, then switch the screen <span class="ui">On</span>. Press <kbd>Esc</kbd> on the projector's picture to close it again.</li>
+        <li>Add a slice with <span class="ui">+ Slice</span>, then drag its corner points until it covers the surface exactly, watching the projector. Tick <b>Grid on output</b> to see the grid on the surface itself, or switch on <span class="ui">Test</span> to fill every slice with a test grid while you line things up.</li>
+        <li>For a curved or uneven surface, raise <b>Columns</b> and <b>Rows</b> under <b>Warp</b> (up to 16 &times; 16) and drag the extra points onto the bumps. <b>Soft bend</b> pulls nearby points along; <b>Smooth</b> evens out the curve.</li>
+        <li>Under <b>Shape</b>, cut the slice to a circle, ring, star, heart, lotus, diya and more, or choose <b>Custom</b> and drag its points.</li>
+        <li>Under <b>Shows</b>, choose <b>The composition</b>, or a single layer so that this surface plays its own content. Turn off <b>Show in the composition</b> in that layer's tab if it should appear only on its slice.</li>
+        <li>Tick <b>Mask</b> to make a slice black, to hide windows, doors and light spilling past the edges.</li>
+      </ol>
+      <ul>
+        <li><b>Part of the source</b> chooses which part of the show the slice takes. <span class="ui">Where it sits</span> takes the part behind the slice, so several slices make one big picture.</li>
+        <li><b>Lock</b> stops a finished slice from being moved by accident. Duplicate a slice with the copy button (<kbd>Ctrl</kbd>+<kbd>D</kbd>), and change which slices are drawn on top with the up and down buttons.</li>
+        <li><b>Undo</b> and <b>Redo</b> (<kbd>Ctrl</kbd>+<kbd>Z</kbd>, <kbd>Ctrl</kbd>+<kbd>Y</kbd>) step back and forward through mapping changes.</li>
+      </ul>
+    </section>
+
+    <!-- 8 -->
+    <section id="trace">
+      <h2><span class="n">08</span>Shapes from a photo</h2>
+      <p>The fastest way to map real objects: take a photo of the stage from where the projector stands, and let the app find the outlines.</p>
+      <ol class="steps">
+        <li>Under <b>Reference photo</b>, click <span class="ui">Load...</span> for a photo from your phone, or <span class="ui">Take...</span> to use a webcam. You can also drop a photo onto the canvas. The photo shows only in the editor, never on the projector.</li>
+        <li>Click <span class="ui">Trace</span>. The teal lines show the edges the app sees in the photo.</li>
+        <li><b>Click on the object</b> you want. Its outline appears in gold. If it spills onto the background, <b>right-click the background</b> to hold it back; if it stops short, click more of the object.</li>
+        <li>Adjust <b>Sensitivity</b> (higher stops at fainter edges) and <b>Up to ... points</b> (fewer gives simpler, smoother shapes).</li>
+        <li>Press <kbd>Enter</kbd> or <span class="ui">Make shape</span>. The slice appears exactly in place. Trace the next object, or tick <b>Make a mask</b> to black something out.</li>
+      </ol>
+      <figure>
+        <img src="../images/trilit_visual_engine_trace.webp" alt="Tracing: edges shown in teal over the stage photo, and the outline of the round surface found from one click" width="1400" height="788" loading="lazy">
+        <figcaption>One click on the round surface; the outline follows its edge.</figcaption>
+      </figure>
+      <p>Prefer to draw by hand? Click <span class="ui">Draw</span> (or <span class="ui">Draw mask</span>) and click around the object. Each point snaps to the nearest edge in the photo; hold <kbd>Alt</kbd> to place it freely. Click the first point or press <kbd>Enter</kbd> to finish, <kbd>Backspace</kbd> to undo a point.</p>
+    </section>
+
+    <!-- 9 -->
+    <section id="points">
+      <h2><span class="n">09</span>Moving points, slices and many points at once</h2>
+      <div class="table-wrap">
+      <table class="table">
+        <tr><th>To</th><th>Do this</th></tr>
+        <tr><td>Move a point</td><td>Drag it. Hold <kbd>Ctrl</kbd> for slow, precise moves. Arrow keys move it one pixel; with <kbd>Shift</kbd>, ten.</td></tr>
+        <tr><td>Move a whole slice</td><td>Drag inside it. Clicking inside another slice selects that one.</td></tr>
+        <tr><td>Resize or turn a slice</td><td>Mouse wheel over it resizes it around the pointer; <kbd>Shift</kbd>+wheel turns it.</td></tr>
+        <tr><td>Pick several points</td><td><kbd>Shift</kbd>-click them, or <kbd>Shift</kbd>-drag a box around them. <kbd>Ctrl</kbd>+<kbd>A</kbd> picks them all.</td></tr>
+        <tr><td>Resize several points together</td><td>Drag the white handles of the box around them: a corner resizes both ways, a side one way. <kbd>Shift</kbd> keeps the proportions; <kbd>Alt</kbd> resizes from the middle.</td></tr>
+        <tr><td>Turn several points together</td><td>Drag the round knob above the box. <kbd>Shift</kbd> turns in steps of 15&deg;.</td></tr>
+        <tr><td>Edit a shape's own points</td><td>Tick <b>Edit shape points</b>. Drag points; click a small dot on an edge to add a point; right-click a point to remove it; pick several and press <kbd>Delete</kbd>. The same box handles work here.</td></tr>
+      </table>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section id="projectors">
+      <h2><span class="n">10</span>Several projectors and displays</h2>
+      <p>Connect every projector to the PC and set Windows to <b>Extend</b> the display (press <kbd>Win</kbd>+<kbd>P</kbd>). Then click <span class="ui">Displays</span> in the Mapping tab:</p>
+      <ul>
+        <li>A map shows your displays as Windows arranges them, which one holds this editor, and which screen uses each one.</li>
+        <li><span class="ui">Add an output here</span> puts a new screen on a display. <span class="ui">An output on every free projector</span> does all of them at once.</li>
+        <li><span class="ui">Identify</span> shows each screen's name, big, on its own projector for three seconds, so you know which is which.</li>
+        <li><span class="ui">Go live</span> in the top bar opens every screen at once; the button then shows how many are live.</li>
+      </ul>
+      <h3>Two projectors on one wide surface</h3>
+      <p>Overlap the two pictures a little. In each screen, open <b>Projector overlap (edge blend)</b> and fade the side that overlaps (Right on the left projector, Left on the right one) until the overlap is no brighter than the rest. <b>Curve</b> fine-tunes how the fade looks on your projectors.</p>
+    </section>
+
+    <!-- 11 -->
+    <section id="midi">
+      <h2><span class="n">11</span>MIDI keyboards and controllers</h2>
+      <p>Plug in a MIDI keyboard, pad controller or fader box. Click <span class="ui">MIDI</span> in the top bar and tick your device.</p>
+      <h3>Link anything to a key or knob</h3>
+      <ol class="steps">
+        <li>Click <span class="ui">Learn</span>. Everything you can link gets a teal outline: clips, columns, Stop, bypass and solo, Tap, Blackout, Master, the crossfader, every slider in the inspector, and every shape in the Mapping tab.</li>
+        <li>Click the thing you want to control, then press a key or move a knob. Its outline now shows the key or knob it follows.</li>
+        <li>Press <kbd>Esc</kbd> (or click Learn again) when you're done.</li>
+      </ol>
+      <h3>Play the building like an instrument</h3>
+      <p>In the MIDI window, <span class="ui">Keys play the shapes on this screen</span> gives every shape its own key, starting at C3. Choose how the keys behave first:</p>
+      <ul>
+        <li><b>Only while held:</b> a shape lights while its key is down, brighter the harder you play.</li>
+        <li><b>Flash and fade:</b> a shape flashes and fades out after each note.</li>
+        <li><b>Toggle on and off:</b> each press switches the shape on or off.</li>
+      </ul>
+      <p><span class="ui">Keys fire the columns</span> puts the columns on the keys from C2. Every link is listed in the MIDI window, where you can change a key's mode or remove the link. Links are saved with the show.</p>
+    </section>
+
+    <!-- 12 -->
+    <section id="artnet">
+      <h2><span class="n">12</span>Art-Net and lighting consoles</h2>
+      <h3>Out: pixels to your lights</h3>
+      <p>Tick <b>Send</b> and set the IP address, universe and number of pixels. The app samples a line of RGB pixels across the middle of the show, 170 per universe, so LED strips and fixtures follow the visuals.</p>
+      <h3>In: control from a console</h3>
+      <p>Tick <b>Listen</b> and choose a universe and first channel. Two channel layouts:</p>
+      <div class="table-wrap">
+      <table class="table">
+        <tr><th>Layout</th><th>Channels</th></tr>
+        <tr><td>Trilit Visual Engine (11)</td><td>1 master, 2 crossfader, 3 to 10 opacity of layers 1 to 8, 11 column number to fire</td></tr>
+        <tr><td>Trilit Mapper (8)</td><td>1 dimmer, 2 to 4 colour (red, green, blue), 5 effect (10 and up), 6 speed (128 is normal), 7 strobe, 8 audio react</td></tr>
+      </table>
+      </div>
+      <p>The Trilit Mapper layout means a console already set up for Trilit Mapper works unchanged.</p>
+    </section>
+
+    <!-- 13 -->
+    <section id="shows">
+      <h2><span class="n">13</span>Saving shows, templates and Trilit Mapper shows</h2>
+      <ul>
+        <li>The <span class="ui">Show</span> menu has <b>New show</b>, <b>Open</b>, <b>Save</b> and <b>Save as</b>. Shows are <code>.tve.json</code> files with everything in them: clips, effects, screens, slices, MIDI links and Art-Net settings. Video and image files stay where they are, so keep them with the show.</li>
+        <li>The app also saves by itself every minute and when you close it, and opens where you left off.</li>
+        <li><b>Start from</b> in the Show menu loads the <b>Welcome demo</b> or the <b>Diwali scene</b>: fireworks, marigolds, two rangoli, diyas and a Happy Diwali greeting, each on its own slice, ready to fit to your stage.</li>
+        <li><b>Coming from Trilit Mapper?</b> Choose <b>Import a Trilit Mapper show</b>, or simply open or drop the Mapper's <code>.json</code> file. Each surface becomes its own layer and slice, in the same place, with the same effect, colours, shape and warp. Masks stay masks. Save it to keep it as a Visual Engine show.</li>
+      </ul>
+      <figure>
+        <img src="../images/trilit_visual_engine_diwali.webp" alt="The Diwali scene: marigolds across the top, two rangoli circles, a Happy Diwali greeting and diyas along the bottom" width="1280" height="720" loading="lazy">
+        <figcaption>The Diwali scene, as it appears on the projector.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 14 -->
+    <section id="keys">
+      <h2><span class="n">14</span>Keyboard shortcuts</h2>
+      <div class="table-wrap">
+      <table class="table">
+        <tr><th>Keys</th><th>What they do</th></tr>
+        <tr><td><kbd>1</kbd> &hellip; <kbd>9</kbd></td><td>Fire a column</td></tr>
+        <tr><td><kbd>T</kbd></td><td>Tap tempo</td></tr>
+        <tr><td><kbd>B</kbd></td><td>Blackout on or off</td></tr>
+        <tr><td><kbd>Delete</kbd></td><td>Clear the selected slot (or remove picked shape points)</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>S</kbd></td><td>Save (with <kbd>Shift</kbd>: save as)</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>O</kbd></td><td>Open a show</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Y</kbd></td><td>Undo and redo mapping changes</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>D</kbd></td><td>Duplicate the selected slice</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>A</kbd></td><td>Pick every point of the selected slice</td></tr>
+        <tr><td><kbd>Enter</kbd></td><td>Finish a drawn shape, or make a traced one</td></tr>
+        <tr><td><kbd>Esc</kbd></td><td>On a projector: close that output. In the editor: cancel drawing or tracing, clear picked points, end MIDI learn</td></tr>
+      </table>
+      </div>
+    </section>
+
+    <!-- 15 -->
+    <section id="help">
+      <h2><span class="n">15</span>If something goes wrong</h2>
+      <h3>The projector isn't in the list</h3>
+      <p>Press <kbd>Win</kbd>+<kbd>P</kbd> and choose <b>Extend</b>. Then open <span class="ui">Displays</span> again. Until a second display is connected, outputs open as normal windows.</p>
+      <h3>The picture is on the wrong projector</h3>
+      <p>Click <span class="ui">Identify</span> in Displays, then choose the right display for each screen.</p>
+      <h3>A video has no sound</h3>
+      <p>Sound plays only at normal speed (1.00), so it stops while <b>Fit to the beat</b> or Play speed changes the speed. Check the clip isn't muted, that <b>Video sound</b> under <span class="ui">Audio</span> is turned up, and that Blackout is off.</p>
+      <h3>A video won't open</h3>
+      <p>Most formats work. If one doesn't, convert it to MP4 (H.264) with any video converter.</p>
+      <h3>It feels slow</h3>
+      <p>In the <b>Composition</b> tab, choose a lower resolution such as 1280 &times; 720, use fewer heavy effects (blurs and glows cost most), and install the latest graphics driver.</p>
+      <div class="tip warm"><p><b>Questions or ideas?</b> Write to us through the <a href="../trilitlabs.html#contact">TrilitLabs contact section</a>. We read everything.</p></div>
+      <a class="cta" href="Trilit-Visual-Engine-Setup.exe" download>
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16"/></svg>
+        Download Trilit Visual Engine for Windows
+      </a>
+    </section>
+  </main>
+</div>
+
+<footer><div class="in">Trilit Visual Engine is made by TrilitLabs, a pscretn brand. Windows 10 and 11, 64-bit.</div></footer>
+</body>
+</html>
