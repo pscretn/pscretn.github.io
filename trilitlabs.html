@@ -225,6 +225,18 @@
   .feat li { position: relative; padding: .7rem 0 .7rem 1.8rem; border-bottom: 1px solid var(--line); color: #D5DBE1; font-size: .95rem; }
   .feat li::before { content: "—"; position: absolute; left: 0; color: var(--c, var(--amber)); }
   .feat code { font-family: var(--mono); font-size: .85em; color: var(--white); }
+  .apps { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(24rem, 100%), 1fr)); gap: 1rem; margin-top: 2rem; }
+  .apps .app { display: flex; flex-direction: column; gap: .6rem; padding: 1.3rem 1.3rem 1.2rem; border: 1px solid var(--line-2); border-top: 3px solid var(--c, var(--amber)); border-radius: 1rem; background: rgba(255,255,255,.025); color: var(--white); text-decoration: none; transition: border-color .2s, transform .2s, background .2s; }
+  .apps .app:hover { border-color: var(--c, var(--amber)); background: rgba(255,255,255,.05); transform: translateY(-3px); }
+  .apps .app-top { display: flex; align-items: center; justify-content: space-between; }
+  .apps .app-top img, .apps .glyph { width: 56px; height: 56px; border-radius: 14px; }
+  .apps .glyph { display: grid; place-items: center; background: #0A0D13; border: 1px solid var(--line-2); color: var(--c, var(--amber)); }
+  .apps .glyph svg { width: 28px; height: 28px; }
+  .apps .new { font-size: .6rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: #120C02; background: var(--amber); border-radius: 99px; padding: .25rem .6rem; }
+  .apps .plat { font-size: .68rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--c, var(--amber)); }
+  .apps .app b { font-size: 1.2rem; line-height: 1.2; }
+  .apps .app p { margin: 0; color: #C9D0D8; font-size: .92rem; line-height: 1.55; }
+  .apps .go { margin-top: auto; padding-top: .4rem; font-size: .88rem; font-weight: 600; color: var(--c, var(--amber)); }
 
   /* ---------- WaveLink DMX Classic, for older controllers ---------- */
   .classic {
@@ -508,9 +520,7 @@
   </a>
   <div class="menu">
     <a href="#wirelink">WireLink</a>
-    <a href="#app">Apps</a>
-    <a href="#generator">Personality Generator</a>
-    <a href="#mapper">Mapper</a>
+    <a href="#apps">Software</a>
     <a href="#build">Hardware</a>
     <a href="#supply">Supply</a>
     <a href="#proof">Watch</a>
@@ -521,10 +531,12 @@
 </nav>
 <div class="drawer" id="drawer">
   <a href="#wirelink"><small>I</small>WireLink DMX</a>
+  <a href="#apps"><small>Apps</small>Software</a>
   <a href="#app"><small>II</small>WaveLink App</a>
   <a href="#software"><small>III</small>LightShow</a>
   <a href="#generator"><small>III.b</small>Personality Generator</a>
   <a href="#mapper"><small>III.c</small>Trilit Mapper</a>
+  <a href="#engine"><small>III.d</small>Trilit Visual Engine</a>
   <a href="#build"><small>IV</small>Hardware</a>
   <a href="#supply"><small>V</small>Supply</a>
   <a href="#proof"><small>VI</small>Watch</a>
@@ -555,10 +567,12 @@
         <div>
           <ol>
             <li><a href="#wirelink"><small>I</small>WireLink DMX</a></li>
+            <li><a href="#apps"><small>Apps</small>All software</a></li>
             <li><a href="#app"><small>II</small>WaveLink DMX app</a></li>
             <li><a href="#software"><small>III</small>LightShow software</a></li>
             <li><a href="#generator"><small>III.b</small>Personality generator</a></li>
             <li><a href="#mapper"><small>III.c</small>Trilit Mapper</a></li>
+            <li><a href="#engine"><small>III.d</small>Trilit Visual Engine</a></li>
             <li><a href="#build"><small>IV</small>Wired &amp; wireless controllers</a></li>
             <li><a href="#supply"><small>V</small>Fixtures &amp; lamps</a></li>
             <li><a href="#proof"><small>VI</small>In action</a></li>
@@ -643,6 +657,55 @@
       <div><b>DMX512</b><span>512 channels out</span></div>
       <div><b>Isolated</b><span>DMX output</span></div>
       <div><b>XLR-3</b><span>DMX socket</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Software: every app -->
+<section class="pillar" id="apps" style="--c:var(--blue)">
+  <div class="wrap">
+    <div class="p-head rv">
+      <span class="num">APPS</span>
+      <h2>Software</h2>
+      <ul class="tags"><li>Windows</li><li>Android</li><li>In your browser</li></ul>
+    </div>
+    <p class="lede rv" style="max-width:44rem">Everything we make to run lights and visuals, in one place.</p>
+    <div class="apps rv">
+      <a class="app" href="#engine" style="--c:var(--amber)">
+        <span class="app-top"><img src="images/trilit_visual_engine_icon.webp" alt="" width="56" height="56"><span class="new">New</span></span>
+        <span class="plat">Windows &middot; Preview</span>
+        <b>Trilit Visual Engine</b>
+        <p>Live visuals and projection mapping: layers of clips and effects, shapes drawn over a photo of your stage, and every projector you have.</p>
+        <span class="go">See it &rarr;</span>
+      </a>
+      <a class="app" href="#mapper" style="--c:var(--mint)">
+        <span class="app-top"><img src="images/trilit_mapper_icon.webp" alt="" width="56" height="56"></span>
+        <span class="plat">Windows &middot; Android</span>
+        <b>Trilit Mapper</b>
+        <p>Point a projector at a wall or an object, fit light to it with shapes and warps, and fill it with live effects. On your PC or your tablet.</p>
+        <span class="go">See it &rarr;</span>
+      </a>
+      <a class="app" href="#app" style="--c:var(--mint)">
+        <span class="app-top"><img src="images/wavelink_icon.webp" alt="" width="56" height="56"></span>
+        <span class="plat">Android &middot; Google Play</span>
+        <b>WaveLink DMX</b>
+        <p>A professional DMX lighting controller in your pocket: moving heads, PARs and lasers, live faders and scene recall.</p>
+        <span class="go">See it &rarr;</span>
+      </a>
+      <a class="app" href="#software" style="--c:var(--blue)">
+        <span class="app-top"><img src="images/wavelink_lightshow_icon.webp" alt="" width="56" height="56"></span>
+        <span class="plat">Windows</span>
+        <b>WaveLink DMX LightShow</b>
+        <p>Load a song and get a light show built on its beats and sections, or let it light whatever the PC is playing, live.</p>
+        <span class="go">See it &rarr;</span>
+      </a>
+      <a class="app" href="#generator" style="--c:var(--amber)">
+        <span class="app-top"><span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></span></span>
+        <span class="plat">In your browser</span>
+        <b>Personality Generator</b>
+        <p>Make fixture personality files for Avolites Titan consoles from a fixture's channel list.</p>
+        <span class="go">Open it &rarr;</span>
+      </a>
     </div>
   </div>
 </section>
@@ -1044,6 +1107,78 @@
       <div><b>19</b><span>shapes</span></div>
       <div><b>16&times;16</b><span>mesh warp</span></div>
       <div><b>Art&#8209;Net</b><span>in and out</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- III.d · Trilit Visual Engine -->
+<section class="pillar" id="engine" style="--c:var(--amber)">
+  <div class="wrap">
+    <div class="p-head rv">
+      <span class="num">III.d</span>
+      <h2>Trilit Visual Engine</h2>
+      <ul class="tags"><li>Live visuals</li><li>Projection mapping</li><li>Windows</li><li>Preview</li></ul>
+    </div>
+
+    <figure class="cover rv">
+      <img src="images/trilit_visual_engine_deck.webp"
+           alt="Trilit Visual Engine: a deck of clips in three layers, the live preview with an A/B crossfader, the clip inspector and the browser of generators"
+           width="1400" height="788" loading="lazy" decoding="async">
+      <figcaption>The deck: layers of clips, the live preview and the crossfader, with every setting in the inspector.</figcaption>
+    </figure>
+
+    <div class="split" style="margin-top:clamp(2rem,5vw,3.5rem)">
+      <div class="body rv">
+        <div class="app-id">
+          <img src="images/trilit_visual_engine_icon.webp" alt="Trilit Visual Engine icon" width="64" height="64">
+          <span>Desktop software<b>Trilit Visual Engine</b></span>
+        </div>
+        <p class="lede">Play visuals like an instrument. Map them onto anything.</p>
+        <h3>Play it live.</h3>
+        <p>Build a deck of clips in layers: 62 live generators, your own videos and images, and text whose letters can show a live effect. Fire a clip or a whole column, and mix layers with ten blend modes, an A/B crossfader and smooth transitions. Chain 23 GPU effects on any clip, any layer or the whole show, and let any setting move with the BPM or the music.</p>
+        <h3>Map it onto anything.</h3>
+        <p>Take a photo of your stage, then click around each surface to make a slice in exactly that shape, or a mask that blacks out windows and spill. Cut slices to 19 shapes, bend them with a warp grid of up to 16&times;16 points, and give any layer a slice of its own. Every projector gets its own full-screen output.</p>
+        <h3>Runs on any PC.</h3>
+        <p>It needs only OpenGL 3.3, which almost every graphics card made since about 2010 supports, and video decodes on NVIDIA, AMD and Intel graphics. With no graphics driver at all, it still runs, using software drawing.</p>
+        <div class="cta">
+          <a class="btn btn-hot" href="TrilitVisualEngine/Trilit-Visual-Engine-Setup.exe" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16"/></svg>
+            <span>Download for Windows</span>
+          </a>
+        </div>
+        <p class="dl-note">
+          Preview 0.2 &middot; 52&nbsp;MB &middot; Windows 10 and 11, 64-bit. Installs without administrator rights.
+          <b>First run:</b> Windows may say &ldquo;Windows protected your PC&rdquo;
+          because the app is not code-signed. Click <b>More info</b>, then <b>Run anyway</b>.
+        </p>
+      </div>
+      <div class="body rv">
+        <figure class="cover" style="margin:0">
+          <img src="images/trilit_visual_engine_mapping.webp"
+               alt="The mapping editor: a warped wall with a window mask, a circle showing one layer on its own, and slices cut to a lotus, a ring and a hand-drawn outline"
+               width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption>Mapping: a warped wall with a window mask, a circle with one layer on its own, and slices cut to a lotus, a ring and a hand-drawn outline.</figcaption>
+        </figure>
+        <ul class="feat">
+          <li>Layers of clips, column triggers and an A/B crossfader</li>
+          <li>62 live generators, including 3D showpiece scenes</li>
+          <li>Video with hardware decoding, images and text</li>
+          <li>23 GPU effects on clips, layers or the whole show</li>
+          <li>Any setting can follow the BPM or the music</li>
+          <li>Tap tempo, and sound from a mic or whatever the PC plays</li>
+          <li>Draw shapes and masks over a photo of your stage</li>
+          <li>19 cut-out shapes and a 16&times;16 warp grid</li>
+          <li>Several projectors, each with any number of slices</li>
+          <li>Art&#8209;Net pixel output, and control in from a console</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stats rv">
+      <div><b>62</b><span>generators</span></div>
+      <div><b>23</b><span>effects</span></div>
+      <div><b>19</b><span>shapes</span></div>
+      <div><b>Any PC</b><span>OpenGL 3.3</span></div>
     </div>
   </div>
 </section>
