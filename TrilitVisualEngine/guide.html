@@ -130,9 +130,11 @@
     <a href="#map">Mapping a stage</a>
     <a href="#trace">Shapes from a photo</a>
     <a href="#points">Moving points</a>
+    <a href="#input">Input view and lines</a>
     <a href="#projectors">Several projectors</a>
     <a href="#midi">MIDI keyboards</a>
     <a href="#artnet">Art-Net and consoles</a>
+    <a href="#christmas">Christmas</a>
     <a href="#shows">Saving shows</a>
     <a href="#keys">Keyboard shortcuts</a>
     <a href="#help">If something goes wrong</a>
@@ -140,7 +142,7 @@
 
   <main>
     <header class="hero">
-      <div class="kicker">Guide &middot; version 0.3.2</div>
+      <div class="kicker">Guide &middot; version 0.4.0</div>
       <h1>How to use Trilit Visual Engine</h1>
       <p class="lede">Play visuals live, then map them onto walls, stages and objects with one or many projectors. This guide walks through everything, from the first start to a full show.</p>
       <div class="bar"></div>
@@ -148,8 +150,8 @@
         <summary>Contents</summary>
         <a href="#start">Install</a><a href="#easy">Easy mode</a><a href="#screen">Pro mode</a><a href="#play">Play clips</a><a href="#content">Video and text</a>
         <a href="#effects">Effects</a><a href="#music">Music</a><a href="#map">Mapping</a><a href="#trace">From a photo</a>
-        <a href="#points">Moving points</a><a href="#projectors">Projectors</a><a href="#midi">MIDI</a><a href="#artnet">Art-Net</a>
-        <a href="#shows">Shows</a><a href="#keys">Shortcuts</a><a href="#help">Help</a>
+        <a href="#points">Moving points</a><a href="#input">Input and lines</a><a href="#projectors">Projectors</a><a href="#midi">MIDI</a><a href="#artnet">Art-Net</a>
+        <a href="#christmas">Christmas</a><a href="#shows">Shows</a><a href="#keys">Shortcuts</a><a href="#help">Help</a>
       </details>
     </header>
 
@@ -179,7 +181,7 @@
       </figure>
       <ol class="steps">
         <li><b>Choose your projector.</b> Next to <b>Projector</b> at the top, pick it from the list (it's the one not marked <b>(main)</b>), then click <span class="ui">Off</span> so it turns gold and says <span class="ui">On</span>. The projector now shows the picture.</li>
-        <li><b>Add a shape.</b> Click <span class="ui">+ Shape</span> and pick one: a rectangle, a circle, a star, a lotus and more. It appears with its own effect already playing.</li>
+        <li><b>Add a shape.</b> Click <span class="ui">+ Shape</span> and pick one: a rectangle, a circle, a star, a Christmas tree and more. It appears with its own effect already playing.</li>
         <li><b>Put it on your surface.</b> Drag its corner points on the left while you watch the wall. Drag inside it to move it, and use the mouse wheel to make it bigger or smaller. <span class="ui">Test</span> fills every shape with a grid, which makes lining up easier.</li>
         <li><b>Choose what it shows</b> in the <b>Content</b> tab: click any effect in the grid, or <span class="ui">Video or image</span> to pick a file, or <span class="ui">Text</span> to type words. You can also drag a video or picture from Explorer straight onto the shape.</li>
         <li><b>Change how it looks</b> in the <b>Look</b> tab: colours, speed, size, how much it moves with the music, brightness and soft edges.</li>
@@ -187,9 +189,9 @@
       </ol>
       <div class="grid2">
         <div class="card"><h4>Content</h4><p>An effect, a video or picture, or text, just for this shape.</p></div>
-        <div class="card"><h4>Look</h4><p>Colours, speed, size, music reaction, brightness, soft edges and extra effects.</p></div>
-        <div class="card"><h4>Shape</h4><p>Cut it to a circle, ring, star, heart, diya and more; hide it, lock it, or make it a black mask.</p></div>
-        <div class="card"><h4>Fit</h4><p>More points for curved surfaces, a photo of your stage to trace shapes on, and soft edges between two projectors.</p></div>
+        <div class="card"><h4>Look</h4><p>Colours, speed, size, music reaction, brightness, soft edges, a tint, contrast and colour, and extra effects.</p></div>
+        <div class="card"><h4>Shape</h4><p>Cut it to a circle, ring, star, heart, Christmas tree and more; round its corners or draw only its outline; hide it, lock it, or make it a black mask.</p></div>
+        <div class="card"><h4>Fit</h4><p>More points for curved surfaces, snapping, a photo of your stage to trace shapes on, and soft edges between two projectors.</p></div>
       </div>
       <div class="tip"><p><b>Want the full deck?</b> Click <span class="ui">Pro</span> in the top bar for layers of clips, columns, the crossfader and every setting. <span class="ui">Easy</span> brings you back. The rest of this guide covers both.</p></div>
     </section>
@@ -233,7 +235,7 @@
     <section id="content">
       <h2><span class="n">05</span>Generators, video, images and text</h2>
       <h3>Generators</h3>
-      <p>62 live visuals that draw themselves: plasma, fire, a neon city, a black hole, fireworks, rangoli and Trilit Buddy, a small creature that dances to your music. In the browser, <b>click</b> one to play it in the selected slot, or drag it onto any slot. Each has two colours, a speed, a size and how much it reacts to audio. Tick <b>Lock speed to BPM</b> to keep it in time.</p>
+      <p>67 live visuals that draw themselves: plasma, fire, a neon city, a black hole, fireworks, snowfall and a Christmas tree, and Trilit Buddy, a small creature that dances to your music. In the browser, <b>click</b> one to play it in the selected slot, or drag it onto any slot. Each has two colours, a speed, a size and how much it reacts to audio. Tick <b>Lock speed to BPM</b> to keep it in time.</p>
       <h3>Video and images</h3>
       <p>Drag files from Explorer straight onto a slot, or right-click a slot and choose <span class="ui">Video or image...</span>. MP4, MOV, MKV, AVI, WebM and more play with their sound; most videos decode on the graphics card. Select a video clip and the inspector shows:</p>
       <figure>
@@ -282,19 +284,19 @@
       <h2><span class="n">08</span>Mapping a stage</h2>
       <p>Open the <span class="ui">Mapping</span> tab. A <b>screen</b> is one output: one projector or display. On each screen you place <b>slices</b>. A slice takes the show (or one layer on its own) and lands it on a surface: a wall, a box, a sign, a car.</p>
       <figure>
-        <img src="../images/trilit_visual_engine_mapping.webp" alt="The mapping editor: slices cut to a rectangle, a circle, a lotus, a ring and a drawn outline, with a window mask, and the shape settings beside it" width="1400" height="788" loading="lazy">
+        <img src="../images/trilit_visual_engine_mapping.webp" alt="The mapping editor: slices cut to a rectangle, a circle, a heart, a ring and a drawn outline, with a window mask, and the shape settings beside it" width="1400" height="788" loading="lazy">
         <figcaption>Slices cut to shapes, a mask over a window, and the settings for the selected slice.</figcaption>
       </figure>
       <ol class="steps">
         <li>Point your projector at the stage. Choose the projector in the display list at the top of the Mapping tab, then switch the screen <span class="ui">On</span>. Press <kbd>Esc</kbd> on the projector's picture to close it again.</li>
         <li>Add a slice with <span class="ui">+ Slice</span>, then drag its corner points until it covers the surface exactly, watching the projector. Tick <b>Grid on output</b> to see the grid on the surface itself, or switch on <span class="ui">Test</span> to fill every slice with a test grid while you line things up.</li>
         <li>For a curved or uneven surface, raise <b>Columns</b> and <b>Rows</b> under <b>Warp</b> (up to 16 &times; 16) and drag the extra points onto the bumps. <b>Soft bend</b> pulls nearby points along; <b>Smooth</b> evens out the curve.</li>
-        <li>Under <b>Shape</b>, cut the slice to a circle, ring, star, heart, lotus, diya and more, or choose <b>Custom</b> and drag its points.</li>
+        <li>Under <b>Shape</b>, cut the slice to a circle, ring, star, heart, Christmas tree, snowman and more, or choose <b>Custom</b> and drag its points.</li>
         <li>Under <b>Shows</b>, choose <b>The composition</b>, or a single layer so that this surface plays its own content. Turn off <b>Show in the composition</b> in that layer's tab if it should appear only on its slice.</li>
         <li>Tick <b>Mask</b> to make a slice black, to hide windows, doors and light spilling past the edges.</li>
       </ol>
       <ul>
-        <li><b>Part of the source</b> chooses which part of the show the slice takes. <span class="ui">Where it sits</span> takes the part behind the slice, so several slices make one big picture.</li>
+        <li><b>Input</b> chooses which part of the picture the slice shows, by four corners; see <a href="#input">Input view and lines</a>. <span class="ui">Match output</span> takes the part behind the slice, so several slices make one big picture.</li>
         <li><b>Lock</b> stops a finished slice from being moved by accident. Duplicate a slice with the copy button (<kbd>Ctrl</kbd>+<kbd>D</kbd>), and change which slices are drawn on top with the up and down buttons.</li>
         <li><b>Undo</b> and <b>Redo</b> (<kbd>Ctrl</kbd>+<kbd>Z</kbd>, <kbd>Ctrl</kbd>+<kbd>Y</kbd>) step back and forward through mapping changes.</li>
       </ul>
@@ -330,14 +332,45 @@
         <tr><td>Pick several points</td><td><kbd>Shift</kbd>-click them, or <kbd>Shift</kbd>-drag a box around them. <kbd>Ctrl</kbd>+<kbd>A</kbd> picks them all.</td></tr>
         <tr><td>Resize several points together</td><td>Drag the white handles of the box around them: a corner resizes both ways, a side one way. <kbd>Shift</kbd> keeps the proportions; <kbd>Alt</kbd> resizes from the middle.</td></tr>
         <tr><td>Turn several points together</td><td>Drag the round knob above the box. <kbd>Shift</kbd> turns in steps of 15&deg;.</td></tr>
-        <tr><td>Edit a shape's own points</td><td>Tick <b>Edit shape points</b>. Drag points; click a small dot on an edge to add a point; right-click a point to remove it; pick several and press <kbd>Delete</kbd>. The same box handles work here.</td></tr>
+        <tr><td>Edit a shape's own points</td><td>Click <span class="ui">Points</span>. It works on every shape, circles too: a circle becomes a ring of 24 points. Drag points; click a small dot on an edge to add a point; right-click a point to remove it; pick several and press <kbd>Delete</kbd>. The same box handles work here, and <b>Soft drag</b> pulls the neighbours along for smooth curves.</td></tr>
+        <tr><td>Make two slices meet exactly</td><td>Drag a corner near another slice's point or the screen edge: it snaps onto it, and a pink ring shows where. Hold <kbd>Alt</kbd> to place it freely. Snapping can be turned off under <b>Warp</b>.</td></tr>
       </table>
       </div>
     </section>
 
+    <!-- 10b -->
+    <section id="input">
+      <h2><span class="n">11</span>Input view, rounded corners and lines</h2>
+      <h3>Choose what each slice shows</h3>
+      <p>In Pro mode, click <span class="ui">Input</span> in the Mapping tab. The canvas now shows the picture itself, and every slice's part of it as four corners.</p>
+      <figure>
+        <img src="../images/trilit_visual_engine_input.webp" alt="The Input view: the composition with three slices' parts drawn over it, the middle panel selected with its four corners" width="1400" height="788" loading="lazy">
+        <figcaption>The Input view: three panels share one picture; the middle panel's part is selected.</figcaption>
+      </figure>
+      <ul>
+        <li><b>Drag a corner</b> to stretch, skew or tilt the part a slice shows. <b>Drag inside</b> to move it. The mouse wheel makes it bigger or smaller; <kbd>Shift</kbd>+wheel turns it. Corners snap to the picture's edges and to other slices' corners; hold <kbd>Alt</kbd> to place them freely.</li>
+        <li>The gold edge marks the <b>top</b> of what the slice shows, so you can see when it is flipped or turned.</li>
+        <li>Under <b>Input</b> beside the canvas: <span class="ui">All of it</span> shows the whole picture, <span class="ui">Match output</span> takes the part behind the slice, and <span class="ui">Flip left-right</span>, <span class="ui">Flip up-down</span> and <span class="ui">Turn</span> mirror or rotate it.</li>
+        <li>Click <span class="ui">Input</span> again to go back to placing slices on the projector.</li>
+      </ul>
+      <h3>Rounded corners, outlines and colour</h3>
+      <figure>
+        <img src="../images/trilit_visual_engine_lines.webp" alt="On the projector: the outline of a facade and two round windows drawn in light, a rounded arch filled with an effect, an outlined star and a warm rounded panel" width="1400" height="788" loading="lazy">
+        <figcaption>Outline only, rounded corners and colour for each shape.</figcaption>
+      </figure>
+      <ul>
+        <li><b>Round corners</b> softens the corners of rectangles and of any shape with points. Full rounding turns a rectangle into a pill.</li>
+        <li><b>Outline only</b> draws just a line of light along the edge, as wide as you like. Trace the edges of a building, a window frame or a stage set with it.</li>
+        <li><b>Tint</b>, <b>Contrast</b> and <b>Colour</b> change one shape on its own, to match two projectors or warm up a cold wall. <span class="ui">Reset colour</span> puts them back.</li>
+        <li>A mask with <b>Keep only its inside</b> ticked turns around: everything outside it goes black, so the picture stays inside one outline.</li>
+      </ul>
+      <h3>Names on the projector, and the mapping on its own</h3>
+      <p><span class="ui">Names</span> next to <span class="ui">Test</span> shows each shape's name on the projector, to tell them apart while you map. In the <span class="ui">Show</span> menu, <b>Save the mapping only</b> keeps a venue's screens, slices, masks and photos in a <code>.tvemap</code> file; <b>Load a mapping</b> brings them into any show without touching its clips.</p>
+    </section>
+
     <!-- 10 -->
     <section id="projectors">
-      <h2><span class="n">11</span>Several projectors and displays</h2>
+      <h2><span class="n">12</span>Several projectors and displays</h2>
       <p>Connect every projector to the PC and set Windows to <b>Extend</b> the display (press <kbd>Win</kbd>+<kbd>P</kbd>). Then click <span class="ui">Displays</span> in the Mapping tab:</p>
       <ul>
         <li>A map shows your displays as Windows arranges them, which one holds this editor, and which screen uses each one.</li>
@@ -351,7 +384,7 @@
 
     <!-- 11 -->
     <section id="midi">
-      <h2><span class="n">12</span>MIDI keyboards and controllers</h2>
+      <h2><span class="n">13</span>MIDI keyboards and controllers</h2>
       <p>Plug in a MIDI keyboard, pad controller or fader box. Click <span class="ui">MIDI</span> in the top bar and tick your device.</p>
       <h3>Link anything to a key or knob</h3>
       <ol class="steps">
@@ -371,7 +404,7 @@
 
     <!-- 12 -->
     <section id="artnet">
-      <h2><span class="n">13</span>Art-Net and lighting consoles</h2>
+      <h2><span class="n">14</span>Art-Net and lighting consoles</h2>
       <h3>Out: pixels to your lights</h3>
       <p>Tick <b>Send</b> and set the IP address, universe and number of pixels. The app samples a line of RGB pixels across the middle of the show, 170 per universe, so LED strips and fixtures follow the visuals.</p>
       <h3>In: control from a console</h3>
@@ -386,24 +419,41 @@
       <p>The Trilit Mapper layout means a console already set up for Trilit Mapper works unchanged.</p>
     </section>
 
+    <!-- 12b -->
+    <section id="christmas">
+      <h2><span class="n">15</span>Christmas</h2>
+      <p>Everything for a Christmas show is built in.</p>
+      <figure>
+        <img src="../images/trilit_visual_engine_christmas_output.webp" alt="The Christmas scene on the projector: snow, two strings of fairy lights, a Christmas tree with a star, baubles, a wreath and gift boxes" width="1400" height="788" loading="lazy">
+        <figcaption>The Christmas scene, as it appears on the projector.</figcaption>
+      </figure>
+      <ul>
+        <li><b>The Christmas scene:</b> in the <span class="ui">Show</span> menu, choose <b>Christmas scene</b> for snowfall, fairy lights, a tree, baubles, a wreath and gifts, each on its own shape and ready to drag onto your surfaces. <b>Add the Christmas scene to this show</b> puts the same shapes on top of the show you have open; in Easy mode it is also at the top of the <span class="ui">+ Shape</span> menu.</li>
+        <li><b>Nine Christmas effects:</b> Snowfall, Fairy lights, Christmas tree, Baubles, Candy cane, Gift boxes, Snowflakes, Wreath and Christmas star, first in the effects list. Turn on audio and the lights dance to the music.</li>
+        <li><b>Eight Christmas shapes:</b> tree, bell, bauble, gift, candy cane, stocking, snowman and snowflake.</li>
+        <li><b>The Christmas look:</b> snow in the top bar, holly red and pine green, and a Santa hat on the logo. It comes on by itself from 10 November to 6 January; switch it with <b>Christmas look</b> in the <span class="ui">Show</span> menu.</li>
+      </ul>
+      <figure>
+        <img src="../images/trilit_visual_engine_christmas.webp" alt="Easy mode with the Christmas look: snow over the top bar, the Christmas scene on the canvas and the Christmas effects first in the list" width="1400" height="788" loading="lazy">
+        <figcaption>The Christmas look in Easy mode, with the Christmas scene ready to map.</figcaption>
+      </figure>
+    </section>
+
     <!-- 13 -->
     <section id="shows">
-      <h2><span class="n">14</span>Saving shows, templates and Trilit Mapper shows</h2>
+      <h2><span class="n">16</span>Saving shows, templates and Trilit Mapper shows</h2>
       <ul>
         <li>The <span class="ui">Show</span> menu has <b>New show</b>, <b>Open</b>, <b>Save</b> and <b>Save as</b>. Shows are <code>.tve.json</code> files with everything in them: clips, effects, screens, slices, MIDI links and Art-Net settings. Video and image files stay where they are, so keep them with the show.</li>
         <li>The app also saves by itself every minute and when you close it, and opens where you left off.</li>
-        <li><b>Start from</b> in the Show menu loads the <b>Welcome demo</b> or the <b>Diwali scene</b>: fireworks, marigolds, two rangoli, diyas and a Happy Diwali greeting, each on its own slice, ready to fit to your stage.</li>
+        <li><b>Start from</b> in the Show menu loads the <b>Welcome demo</b> or the <b>Christmas scene</b>, each ready to fit to your stage.</li>
+        <li><b>Save the mapping only</b> and <b>Load a mapping</b> move a venue's screens and slices between shows; see <a href="#input">section 11</a>.</li>
         <li><b>Coming from Trilit Mapper?</b> Choose <b>Import a Trilit Mapper show</b>, or simply open or drop the Mapper's <code>.json</code> file. Each surface becomes its own layer and slice, in the same place, with the same effect, colours, shape and warp. Masks stay masks. Save it to keep it as a Visual Engine show.</li>
       </ul>
-      <figure>
-        <img src="../images/trilit_visual_engine_diwali.webp" alt="The Diwali scene: marigolds across the top, two rangoli circles, a Happy Diwali greeting and diyas along the bottom" width="1280" height="720" loading="lazy">
-        <figcaption>The Diwali scene, as it appears on the projector.</figcaption>
-      </figure>
     </section>
 
     <!-- 14 -->
     <section id="keys">
-      <h2><span class="n">15</span>Keyboard shortcuts</h2>
+      <h2><span class="n">17</span>Keyboard shortcuts</h2>
       <div class="table-wrap">
       <table class="table">
         <tr><th>Keys</th><th>What they do</th></tr>
@@ -417,6 +467,7 @@
         <tr><td><kbd>Ctrl</kbd>+<kbd>D</kbd></td><td>Duplicate the selected slice</td></tr>
         <tr><td><kbd>Ctrl</kbd>+<kbd>A</kbd></td><td>Pick every point of the selected slice</td></tr>
         <tr><td><kbd>Enter</kbd></td><td>Finish a drawn shape, or make a traced one</td></tr>
+        <tr><td><kbd>Alt</kbd> while dragging</td><td>Place a point freely, without snapping</td></tr>
         <tr><td><kbd>Esc</kbd></td><td>On a projector: close that output. In the editor: cancel drawing or tracing, clear picked points, end MIDI learn</td></tr>
       </table>
       </div>
@@ -424,7 +475,7 @@
 
     <!-- 15 -->
     <section id="help">
-      <h2><span class="n">16</span>If something goes wrong</h2>
+      <h2><span class="n">18</span>If something goes wrong</h2>
       <h3>The projector isn't in the list</h3>
       <p>Press <kbd>Win</kbd>+<kbd>P</kbd> and choose <b>Extend</b>. Then open <span class="ui">Displays</span> again. Until a second display is connected, outputs open as normal windows.</p>
       <h3>The picture is on the wrong projector</h3>
