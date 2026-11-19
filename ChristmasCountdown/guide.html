@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Set up Christmas Countdown</title>
+<meta name="description" content="Christmas Countdown, a free Christmas home screen for Google TV and Android TV by TrilitLabs: install it, make it your home screen and screensaver, and connect a Christmas tree that dances to the TV.">
+<meta name="theme-color" content="#050608">
+<link rel="icon" href="../images/christmas_countdown_icon.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050608; --raised: #0D1117; --raised-2: #121821;
+    --line: rgba(255,255,255,.09); --line-2: rgba(255,255,255,.16);
+    --white: #F2F4F6; --muted: #8D97A3; --amber: #F5AA1F; --mint: #1CC6C6; --blue: #1C93DD;
+    --tri: linear-gradient(90deg, #F5AA1F, #1CC6C6 50%, #1C93DD);
+    --sans: "Inter Tight", ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, "Cascadia Code", Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 1.5rem; }
+  body {
+    margin: 0; color: var(--white); font: 400 1.0625rem/1.65 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    background:
+      radial-gradient(60rem 30rem at 85% -5%, rgba(245,170,31,.12), transparent 60%),
+      radial-gradient(50rem 28rem at -10% 40%, rgba(28,198,198,.08), transparent 60%),
+      var(--bg);
+  }
+  a { color: var(--mint); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  img { max-width: 100%; height: auto; display: block; }
+  ::selection { background: var(--amber); color: var(--bg); }
+
+  .top { border-bottom: 1px solid var(--line); }
+  .top .in { width: min(1240px, 100%); margin: 0 auto; padding: 1rem 16px; display: flex; align-items: center; gap: 1rem; }
+  .top img { width: 40px; height: 40px; border-radius: 10px; }
+  .top b { font-weight: 800; letter-spacing: -.01em; }
+  .top small { display: block; color: var(--muted); font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; }
+  .top .back { margin-left: auto; color: var(--muted); font-size: .95rem; }
+  @media (max-width: 520px) { .top .back span { display: none; } }
+
+  .layout { width: min(1240px, 100%); margin: 0 auto; padding: 0 16px 5rem; display: grid; grid-template-columns: 1fr; gap: 3rem; }
+  @media (min-width: 1000px) { .layout { grid-template-columns: 250px minmax(0, 1fr); } }
+
+  nav.toc { display: none; }
+  @media (min-width: 1000px) {
+    nav.toc { display: block; position: sticky; top: 1.5rem; align-self: start; padding-top: 3rem; max-height: calc(100vh - 3rem); overflow: auto; }
+  }
+  nav.toc p { margin: 0 0 .6rem; color: var(--muted); font-size: .75rem; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; }
+  nav.toc a { display: block; color: var(--muted); padding: .28rem 0 .28rem .8rem; border-left: 2px solid var(--line); font-size: .95rem; }
+  nav.toc a:hover { color: var(--white); border-left-color: var(--amber); text-decoration: none; }
+
+  header.hero { padding: 3.5rem 0 1rem; }
+  .kicker { color: var(--amber); font-size: .8rem; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; }
+  h1 { font-size: clamp(2.1rem, 5vw, 3.4rem); line-height: 1.05; letter-spacing: -.03em; margin: .4rem 0 1rem; font-weight: 800; }
+  .lede { color: #C9D0D8; font-size: 1.2rem; max-width: 46rem; margin: 0; }
+  .bar { height: 3px; width: 120px; background: var(--tri); border-radius: 3px; margin: 1.6rem 0 0; }
+
+  .mobile-toc { margin: 1.5rem 0 0; padding: 1rem 1.2rem; background: var(--raised); border: 1px solid var(--line); border-radius: 14px; }
+  .mobile-toc summary { cursor: pointer; font-weight: 700; }
+  .mobile-toc a { display: inline-block; margin: .35rem .9rem 0 0; font-size: .95rem; }
+  @media (min-width: 1000px) { .mobile-toc { display: none; } }
+
+  section { padding-top: 3rem; }
+  h2 { font-size: clamp(1.5rem, 3vw, 2rem); letter-spacing: -.02em; margin: 0 0 .8rem; font-weight: 800; display: flex; align-items: baseline; gap: .7rem; }
+  h2 .n { font-size: .9rem; color: var(--amber); font-weight: 700; font-family: var(--mono); }
+  h3 { font-size: 1.15rem; margin: 1.8rem 0 .4rem; font-weight: 700; }
+  p { margin: .6rem 0; color: #D3D9E0; }
+  ul, ol { padding-left: 1.3rem; margin: .5rem 0; color: #D3D9E0; }
+  li { margin: .3rem 0; }
+  b, strong { color: var(--white); font-weight: 700; }
+  .ui { display: inline-block; padding: .05rem .45rem; border-radius: 6px; background: var(--raised-2); border: 1px solid var(--line-2); font-size: .92em; font-weight: 600; color: var(--white); white-space: nowrap; }
+  kbd { display: inline-block; min-width: 1.6em; text-align: center; padding: .05rem .4rem; border-radius: 6px; background: #1A212C; border: 1px solid var(--line-2); border-bottom-width: 2px; font: 600 .85em var(--mono); color: var(--white); }
+
+  figure { margin: 1.4rem 0; background: var(--raised); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  figcaption { padding: .7rem 1rem; color: var(--muted); font-size: .92rem; border-top: 1px solid var(--line); }
+
+  .steps { counter-reset: s; list-style: none; padding: 0; }
+  .steps li { counter-increment: s; position: relative; padding: .7rem 0 .7rem 3rem; border-bottom: 1px solid var(--line); }
+  .steps li:last-child { border-bottom: 0; }
+  .steps li::before { content: counter(s); position: absolute; left: 0; top: .7rem; width: 2rem; height: 2rem; border-radius: 50%; display: grid; place-items: center;
+    background: rgba(245,170,31,.14); color: var(--amber); font-weight: 800; font-size: .95rem; }
+
+  .tip { margin: 1.2rem 0; padding: .9rem 1.1rem; border-radius: 12px; background: rgba(28,198,198,.07); border: 1px solid rgba(28,198,198,.28); }
+  .tip.warm { background: rgba(245,170,31,.07); border-color: rgba(245,170,31,.3); }
+  .tip p { margin: .2rem 0; }
+  .tip b:first-child { color: var(--mint); }
+  .tip.warm b:first-child { color: var(--amber); }
+
+  .grid2 { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+  @media (min-width: 720px) { .grid2 { grid-template-columns: 1fr 1fr; } }
+  .card { background: var(--raised); border: 1px solid var(--line); border-radius: 14px; padding: 1rem 1.2rem; }
+  .card h4 { margin: 0 0 .3rem; font-size: 1rem; }
+  .card p { margin: 0; font-size: .97rem; color: #C3CAD3; }
+
+  .table { width: 100%; border-collapse: collapse; margin: .8rem 0; font-size: .97rem; }
+  .table-wrap { overflow-x: auto; }
+  .table th, .table td { text-align: left; padding: .55rem .7rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .table th { color: var(--muted); font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; }
+  .table td:first-child { white-space: nowrap; }
+
+  .cta { display: inline-flex; align-items: center; gap: .6rem; margin-top: 1.4rem; padding: .85rem 1.3rem; border-radius: 12px; background: var(--amber); color: #0B0D10; font-weight: 800; }
+  .cta:hover { text-decoration: none; filter: brightness(1.08); }
+  footer { border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
+  footer .in { width: min(1240px, 100%); margin: 0 auto; padding: 1.5rem 16px 2.5rem; }
+
+  pre { margin: .8rem 0; padding: .9rem 1.1rem; background: #0A0D12; border: 1px solid var(--line); border-radius: 12px; overflow-x: auto; }
+  pre code, code.addr { font: 600 .9rem/1.55 var(--mono); color: #E6EBF1; }
+  pre code i { color: var(--amber); font-style: normal; }
+  code.addr { display: inline-block; margin-top: .4rem; padding: .35rem .6rem; background: #0A0D12; border: 1px solid var(--line-2); border-radius: 8px; color: var(--mint); word-break: break-all; }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="in">
+    <img src="../images/christmas_countdown_icon.webp" alt="" width="40" height="40">
+    <div><b>Christmas Countdown</b><small>The setup guide</small></div>
+    <a class="back" href="../trilitlabs.html#freeware">&larr; <span>Back to </span>TrilitLabs</a>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="toc" aria-label="Contents">
+    <p>Contents</p>
+    <a href="#install">Install it</a>
+    <a href="#welcome">The first run</a>
+    <a href="#home">Make it your home screen</a>
+    <a href="#screensaver">Screensaver</a>
+    <a href="#using">Using it</a>
+    <a href="#tree">Christmas tree over USB</a>
+    <a href="#sound">The tree and TV sound</a>
+    <a href="#settings">Settings</a>
+    <a href="#privacy">Privacy</a>
+    <a href="#undo">Undo or remove</a>
+    <a href="#help">If something goes wrong</a>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <div class="kicker">Freeware &middot; Free to use</div>
+      <h1>Set up Christmas Countdown</h1>
+      <p class="lede">A Christmas home screen for Google TV and Android TV: the countdown to Christmas, the time and weather, your apps along the bottom, and a TrilitLabs Christmas tree that dances to whatever the TV plays. Free, no account, no ads.</p>
+      <a class="cta" id="dl" href="Christmas_Countdown_9.0.apk" download>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16"/></svg>
+        Download the APK &middot; 9.0 &middot; 1&nbsp;MB
+      </a>
+      <div class="bar"></div>
+      <details class="mobile-toc">
+        <summary>Contents</summary>
+        <a href="#install">Install it</a>
+        <a href="#welcome">The first run</a>
+        <a href="#home">Home screen</a>
+        <a href="#screensaver">Screensaver</a>
+        <a href="#using">Using it</a>
+        <a href="#tree">Christmas tree</a>
+        <a href="#sound">TV sound</a>
+        <a href="#settings">Settings</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#undo">Undo or remove</a>
+        <a href="#help">If something goes wrong</a>
+      </details>
+      <figure>
+        <img src="../images/christmas_countdown_home.webp" alt="Christmas Countdown on a TV: a snowy night with a decorated tree, a snowman, Santa's sleigh, a countdown in four glass baubles, the time and weather, and the TV's apps along the bottom, each wearing a Santa hat" width="1400" height="788">
+        <figcaption>The home screen. Your apps sit along the bottom, each with a Santa hat; your tree, if you have one, is on the left.</figcaption>
+      </figure>
+    </header>
+
+    <section id="install">
+      <h2><span class="n">01</span>Install it</h2>
+      <p>Christmas Countdown isn't on Google Play, so it's installed from this page. It needs a Google TV or Android TV with Android 6 or newer. It was made on a TCL Google TV.</p>
+      <h3>On the TV, with the Downloader app</h3>
+      <ol class="steps">
+        <li>On the TV, open <b>Google Play</b>, search for <b>Downloader</b> (by AFTVnews) and install it.</li>
+        <li>Let Downloader install apps: <span class="ui">Settings</span> &rsaquo; <span class="ui">Apps</span> &rsaquo; <span class="ui">Security &amp; restrictions</span> &rsaquo; <span class="ui">Unknown sources</span>, then turn on <b>Downloader</b>. If that option is missing, first go to <span class="ui">Settings</span> &rsaquo; <span class="ui">System</span> &rsaquo; <span class="ui">About</span> and press OK on <b>Android TV OS build</b> seven times.</li>
+        <li>Open Downloader and type this address, then press <b>Go</b>:<br><code class="addr" id="apk-url">https://pscretn.com/ChristmasCountdown/Christmas_Countdown_9.0.apk</code></li>
+        <li>When it has downloaded, choose <b>Install</b>, then <b>Open</b>. Downloader can delete the APK afterwards; you won't need it again.</li>
+      </ol>
+      <h3>Or from a computer</h3>
+      <p>With <a href="https://developer.android.com/tools/releases/platform-tools" target="_blank" rel="noopener">Android's platform tools</a> on a computer on the same network: on the TV, turn on <b>USB debugging</b> (and network debugging, if your TV lists it) in <span class="ui">Settings</span> &rsaquo; <span class="ui">System</span> &rsaquo; <span class="ui">Developer options</span>, find the TV's IP address under <span class="ui">Network &amp; Internet</span>, then run:</p>
+      <pre><code>adb connect <i>TV-IP-address</i>:5555
+adb install Christmas_Countdown_9.0.apk</code></pre>
+      <div class="tip"><p><b>Updating?</b> Install the new APK the same way. Your settings, and the Home button helper, stay as they were.</p></div>
+    </section>
+
+    <section id="welcome">
+      <h2><span class="n">02</span>The first run</h2>
+      <p>Open <b>Christmas Countdown</b> from your apps. The first time, it opens its own setup guide on the TV: topics on the left, the steps on the right, and a tick beside each one that's done. Use <kbd>&#9650;</kbd> <kbd>&#9660;</kbd> to choose a topic and <kbd>OK</kbd> to do it: the button at the bottom opens the right page of the TV's settings for you.</p>
+      <figure>
+        <img src="../images/christmas_countdown_guide.webp" alt="The setup guide on the TV: topics on the left (Get started, Home button, Screensaver, Christmas tree, Tree and TV sound, Weather and clock, Remote controls, Undo or remove), and the Home button steps on the right with a green On badge and an Open Accessibility settings button" width="1400" height="788" loading="lazy" decoding="async">
+        <figcaption>The setup guide on the TV. Open it again any time from the <b>TrilitLabs</b> tile at the end of the apps.</figcaption>
+      </figure>
+      <p>Everything below is the same as the guide on the TV, with a few extra fixes that need a computer.</p>
+    </section>
+
+    <section id="home">
+      <h2><span class="n">03</span>Make it your home screen</h2>
+      <p>Google TV doesn't let another app take over the Home button. So Christmas Countdown comes with a small helper: whenever the TV's own home screen appears, the helper opens Christmas Countdown in its place.</p>
+      <ol class="steps">
+        <li>In the setup guide, choose <b>Home button</b> and press <kbd>OK</kbd>. The TV's Accessibility settings open (or find them yourself: <span class="ui">Settings</span> &rsaquo; <span class="ui">System</span> &rsaquo; <span class="ui">Accessibility</span>).</li>
+        <li>Under <b>Services</b>, choose <b>Christmas Countdown home button</b> and turn it on.</li>
+        <li>Android shows the same warning for every accessibility helper. This one only checks which app is in front. It can't read the screen or what you type, and it only listens to the TV's home screen app.</li>
+        <li>Press <kbd>Back</kbd>. From now on, <kbd>Home</kbd> opens the Christmas screen.</li>
+      </ol>
+      <div class="tip"><p><b>The TV's own home is still there.</b> It's the <b>Google TV</b> tile in the apps row (on other TVs, the name of their home screen). Press <kbd>Home</kbd> to come back.</p></div>
+    </section>
+
+    <section id="screensaver">
+      <h2><span class="n">04</span>Screensaver</h2>
+      <p>Christmas Countdown is also a screensaver: the Christmas scene, without the apps, when the TV has been idle.</p>
+      <ol class="steps">
+        <li>In the setup guide, choose <b>Screensaver</b> and press <kbd>OK</kbd> to open the TV's screensaver settings. On Google TV they're in <span class="ui">Settings</span> &rsaquo; <span class="ui">System</span> &rsaquo; <span class="ui">Ambient mode</span>; other TVs call it <b>Screen saver</b> or <b>Daydream</b>.</li>
+        <li>Choose <b>Christmas Countdown</b>.</li>
+      </ol>
+      <h3>Christmas Countdown isn't in the list</h3>
+      <p>Many Google TVs only offer Google's own Ambient mode. Set the screensaver from a computer instead (see <a href="#install">Or from a computer</a> to connect):</p>
+      <pre><code>adb shell settings put secure screensaver_components com.trilitlabs.christmascountdown/.CountdownDream</code></pre>
+      <p>To go back to Google's Ambient mode later:</p>
+      <pre><code>adb shell settings put secure screensaver_components com.google.android.apps.tv.dreamx/.service.Backdrop</code></pre>
+    </section>
+
+    <section id="using">
+      <h2><span class="n">05</span>Using it</h2>
+      <p>Everything works from the remote.</p>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>Where</th><th>What the keys do</th></tr></thead>
+          <tbody>
+            <tr><td>The apps</td><td><kbd>&#9664;</kbd> <kbd>&#9654;</kbd> move along the apps, <kbd>OK</kbd> opens one.</td></tr>
+            <tr><td>Your tree</td><td><kbd>&#9650;</kbd> from the apps goes to the tree (when one is plugged in). <kbd>&#9664;</kbd> <kbd>&#9654;</kbd> browse its effects, <kbd>OK</kbd> lights the one shown, and <kbd>OK</kbd> on the current effect opens all the tree's controls.</td></tr>
+            <tr><td>TrilitLabs tile</td><td>At the end of the apps: the setup guide and the settings.</td></tr>
+            <tr><td>Google TV tile</td><td>The TV's own home screen. <kbd>Home</kbd> brings you back.</td></tr>
+            <tr><td>Anywhere</td><td><kbd>Back</kbd> closes a panel. It never takes you off the home screen.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>A short sleigh-bell chime plays when you come back to the home screen (you can turn it off in <a href="#settings">Settings</a>).</p>
+    </section>
+
+    <section id="tree">
+      <h2><span class="n">06</span>Christmas tree over USB</h2>
+      <p>Optional. A TrilitLabs Christmas tree plugs straight into the TV's USB port, and its lights then appear on the left of the home screen. No tree? Everything else works as normal.</p>
+      <ol class="steps">
+        <li>Plug the tree's USB cable into the TV.</li>
+        <li>The TV asks whether Christmas Countdown may use the USB device: press <kbd>OK</kbd>.</li>
+        <li>The tree appears on the left, with the effect it's showing. Press <kbd>&#9650;</kbd> from the apps to reach it.</li>
+        <li>OK on the current effect opens its controls: <b>Lights</b> on or off, <b>TV sound</b>, <b>Auto-change</b> (a new effect every few seconds or minutes), <b>Brightness</b>, <b>Speed</b>, <b>Colour</b> and every effect.</li>
+      </ol>
+      <div class="tip warm"><p><b>After the TV restarts,</b> Android asks once more whether the app may use the tree. Just press <kbd>OK</kbd>.</p></div>
+    </section>
+
+    <section id="sound">
+      <h2><span class="n">07</span>The tree and TV sound</h2>
+      <p>The tree can dance to whatever the TV is playing. It listens to the TV's own sound output, not a microphone.</p>
+      <ol class="steps">
+        <li>Open the tree's controls (OK on its current effect) and turn <b>TV sound</b> on.</li>
+        <li>The first time, Android asks to let Christmas Countdown <b>record audio</b>: allow it. That is the name Android gives to hearing the TV's sound. Nothing is recorded, stored or sent anywhere.</li>
+        <li>Pick one of the music effects at the end of the list: Beat Pulse, Sound Meter, Spectrum, Disco and more. With nothing playing, the tree goes dark until the music starts.</li>
+      </ol>
+      <div class="tip"><p><b>Which apps work?</b> YouTube, YouTube Music and most apps. A few, like Prime Video, send their sound straight to the TV's speakers, where no app can hear it.</p></div>
+    </section>
+
+    <section id="settings">
+      <h2><span class="n">08</span>Settings</h2>
+      <p>In the <b>TrilitLabs</b> tile, choose the <b>Settings</b> tab. <kbd>&#9664;</kbd> <kbd>&#9654;</kbd> or <kbd>OK</kbd> change a setting.</p>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>Setting</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td>Weather location</td><td>Found from your internet connection. Press OK to search for a city instead, or go back to automatic.</td></tr>
+            <tr><td>Temperature</td><td>&deg;C or &deg;F.</td></tr>
+            <tr><td>Clock</td><td>12-hour (with AM/PM) or 24-hour. Until you choose, it follows the TV.</td></tr>
+            <tr><td>Home chime</td><td>The sleigh-bell chime when you come back to the home screen.</td></tr>
+            <tr><td>Animation</td><td><b>Reduced</b>: less snow, no stage-light beams and fewer frames a second, for slower TVs.</td></tr>
+            <tr><td>TrilitLabs branding</td><td>The TrilitLabs and pscretn logos, product highlights and the lab's signs. <b>Off</b>: festive signs instead.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="privacy">
+      <h2><span class="n">09</span>Privacy</h2>
+      <p>No account, no ads, no tracking. Christmas Countdown uses the internet for just two things:</p>
+      <ul>
+        <li><b>Weather</b>, from <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a>, for your town.</li>
+        <li><b>Your town</b>, worked out from your internet address by <a href="https://www.geojs.io" target="_blank" rel="noopener">GeoJS</a>, once a day, unless you pick a city yourself.</li>
+      </ul>
+      <p>The TV's sound is analysed on the TV, only while TV sound is on, and only its loudness, beat and a few frequency bands go to the tree, over its USB cable. The Home button helper only checks which app is in front.</p>
+    </section>
+
+    <section id="undo">
+      <h2><span class="n">10</span>Undo or remove</h2>
+      <ul>
+        <li><b>Get the TV's own home back:</b> in <span class="ui">Settings</span> &rsaquo; <span class="ui">System</span> &rsaquo; <span class="ui">Accessibility</span>, turn off <b>Christmas Countdown home button</b>.</li>
+        <li><b>Change the screensaver back:</b> choose another one in the TV's screensaver settings, or use the second command under <a href="#screensaver">Screensaver</a>.</li>
+        <li><b>Remove the app:</b> <span class="ui">Settings</span> &rsaquo; <span class="ui">Apps</span> &rsaquo; <b>Christmas Countdown</b> &rsaquo; <span class="ui">Uninstall</span>. That removes the helper and the screensaver too.</li>
+      </ul>
+    </section>
+
+    <section id="help">
+      <h2><span class="n">11</span>If something goes wrong</h2>
+      <div class="grid2">
+        <div class="card"><h4>Home still opens Google TV</h4><p>The helper is off. In the TrilitLabs tile, the setup guide's <b>Home button</b> topic shows whether it's on; press OK there to turn it on.</p></div>
+        <div class="card"><h4>&ldquo;Waiting for your OK&rdquo; on the tree</h4><p>Android needs your permission for the tree's USB cable. Press OK on the tree card and say yes.</p></div>
+        <div class="card"><h4>The tree doesn't move to music</h4><p>Check that TV sound is on and a music effect is chosen, and that the app playing isn't one that bypasses the TV's sound (like Prime Video).</p></div>
+        <div class="card"><h4>The weather is for the wrong town</h4><p>Your internet provider may be in another town. Pick your city under <b>Settings</b> &rsaquo; <b>Weather location</b>.</p></div>
+        <div class="card"><h4>It feels slow</h4><p>Set <b>Settings</b> &rsaquo; <b>Animation</b> to <b>Reduced</b>.</p></div>
+        <div class="card"><h4>&ldquo;Open the TV's Settings and look for&hellip;&rdquo;</h4><p>Your TV keeps that setting somewhere the app can't open directly. Open the TV's Settings and look under <b>System</b>.</p></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer><div class="in">Christmas Countdown is TrilitLabs freeware: free to use. TrilitLabs is a pscretn brand. For Google TV and Android TV, Android 6 or newer.</div></footer>
+<script>
+  // show the APK's real address for typing into Downloader, wherever this page is hosted
+  (function () {
+    try {
+      var a = new URL('Christmas_Countdown_9.0.apk', location.href);
+      if (a.protocol.indexOf('http') === 0) document.getElementById('apk-url').textContent = a.href;
+    } catch (e) {}
+  })();
+</script>
+</body>
+</html>
