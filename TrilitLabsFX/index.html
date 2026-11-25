@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TrilitLabs FX</title>
+<meta name="description" content="TrilitLabs FX: nineteen audio-reactive FFGL plugins for Resolume Arena on Windows. Twelve effects, six generators and a transition. Three are free; buy PRO or ULTIMATE on WhatsApp.">
+<meta name="theme-color" content="#050608">
+<meta property="og:title" content="TrilitLabs FX: plugins for Resolume">
+<meta property="og:description" content="Nineteen audio-reactive GPU plugins for Resolume Arena: glitch, VHS, pixel sort, kaleidoscope, neon generators and more. Try free, buy on WhatsApp.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://pscretn.com/images/tlfx_cover.webp">
+<link rel="icon" href="../images/tlfx_icon.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050608; --raised: #0D1117; --raised-2: #121821;
+    --line: rgba(255,255,255,.09); --line-2: rgba(255,255,255,.16);
+    --white: #F2F4F6; --muted: #8D97A3; --amber: #F5AA1F; --mint: #1CC6C6; --blue: #1C93DD; --wa: #25D366;
+    --tri: linear-gradient(90deg, #F5AA1F, #1CC6C6 50%, #1C93DD);
+    --sans: "Inter Tight", ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, "Cascadia Code", Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 1.5rem; }
+  body {
+    margin: 0; color: var(--white); font: 400 1.0625rem/1.65 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    background:
+      radial-gradient(60rem 30rem at 85% -5%, rgba(28,198,198,.12), transparent 60%),
+      radial-gradient(50rem 28rem at -10% 40%, rgba(245,170,31,.07), transparent 60%),
+      var(--bg);
+  }
+  a { color: var(--mint); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  img { max-width: 100%; height: auto; display: block; }
+  ::selection { background: var(--mint); color: var(--bg); }
+
+  .top { border-bottom: 1px solid var(--line); }
+  .top .in { width: min(1180px, 100%); margin: 0 auto; padding: 1rem 16px; display: flex; align-items: center; gap: .9rem; }
+  .top img { width: 40px; height: 40px; border-radius: 10px; }
+  .top b { font-weight: 800; letter-spacing: -.01em; }
+  .top small { display: block; color: var(--muted); font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; }
+  .top .back { margin-left: auto; color: var(--muted); font-size: .95rem; }
+  @media (max-width: 520px) { .top .back span { display: none; } }
+
+  main { width: min(1180px, 100%); margin: 0 auto; padding: 0 16px 5rem; }
+  .hero { padding: 3.5rem 0 1rem; }
+  .kicker { color: var(--mint); font-size: .8rem; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; }
+  h1 { font-size: clamp(2.4rem, 7vw, 4.4rem); line-height: 1; letter-spacing: -.04em; margin: .4rem 0 1rem; font-weight: 800; }
+  .lede { color: #C9D0D8; font-size: clamp(1.1rem, 2.4vw, 1.35rem); max-width: 48rem; margin: 0; }
+  .bar { height: 3px; width: 120px; background: var(--tri); border-radius: 3px; margin: 1.6rem 0 0; }
+
+  .btn { display: inline-flex; align-items: center; gap: .55rem; padding: .8rem 1.25rem; border-radius: 99px; border: 1px solid var(--line-2);
+         background: rgba(255,255,255,.04); color: var(--white); font: 600 1rem var(--sans); cursor: pointer; text-decoration: none; }
+  .btn:hover { background: rgba(255,255,255,.1); text-decoration: none; }
+  .btn svg { width: 1.1rem; height: 1.1rem; flex: none; }
+  .btn-hot { background: var(--white); color: var(--bg); border-color: transparent; }
+  .btn-hot:hover { background: var(--tri); color: #06121A; }
+  .btn-wa { background: var(--wa); color: #062A14; border-color: transparent; }
+  .btn-wa:hover { background: #3BE07A; }
+  .btn[disabled] { opacity: .45; cursor: not-allowed; }
+  .cta { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1.8rem; }
+  .note { color: var(--muted); font-size: .88rem; margin: .9rem 0 0; max-width: 52rem; }
+  .note b { color: #C9D0D8; }
+
+  section { padding-top: 4rem; }
+  h2 { font-size: clamp(1.6rem, 3.4vw, 2.3rem); letter-spacing: -.025em; margin: 0 0 .6rem; font-weight: 800; }
+  h2 .n { font: 700 .9rem var(--mono); color: var(--mint); margin-right: .6rem; vertical-align: middle; }
+  h3 { font-size: 1.15rem; margin: 2rem 0 .5rem; font-weight: 700; }
+  p { color: #D3D9E0; margin: .6rem 0; }
+  b, strong { color: var(--white); }
+
+  figure { margin: 1.4rem 0 0; background: var(--raised); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+  figcaption { padding: .7rem 1rem; color: var(--muted); font-size: .9rem; border-top: 1px solid var(--line); }
+
+  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 12px; margin-top: 1.2rem; }
+  .gallery.g3 { grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); }
+  .gallery figure { margin: 0; border-radius: 12px; }
+  .gallery figcaption { font-size: .85rem; padding: .55rem .8rem; }
+  .gallery figcaption b { color: var(--white); font-weight: 600; }
+
+  table.plugins { width: 100%; border-collapse: collapse; margin-top: 1.2rem; font-size: .95rem; }
+  .plugins th { text-align: left; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); font-weight: 700; padding: .6rem .6rem .6rem 0; border-bottom: 1px solid var(--line-2); }
+  .plugins td { padding: .65rem .6rem .65rem 0; border-bottom: 1px solid var(--line); vertical-align: top; color: #D3D9E0; }
+  .plugins td:first-child { color: var(--white); font-weight: 600; white-space: nowrap; }
+  .plugins tr.group td { padding-top: 1.4rem; color: var(--mint); font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; font-weight: 700; border-bottom-color: var(--line-2); }
+  .ed { display: inline-block; font: 700 .7rem var(--mono); letter-spacing: .08em; padding: .15rem .45rem; border-radius: 6px; border: 1px solid var(--line-2); white-space: nowrap; }
+  .ed.free { color: var(--wa); border-color: rgba(37,211,102,.45); }
+  .ed.pro { color: var(--blue); border-color: rgba(28,147,221,.5); }
+  .ed.ult { color: var(--amber); border-color: rgba(245,170,31,.5); }
+  @media (max-width: 640px) {
+    .plugins thead { display: none; }
+    .plugins tr { display: grid; grid-template-columns: 1fr auto; border-bottom: 1px solid var(--line); padding: .55rem 0; }
+    .plugins tr.group { border-bottom: 1px solid var(--line-2); }
+    .plugins td { border: 0; padding: .1rem .4rem .1rem 0; }
+    .plugins td:nth-child(2) { grid-column: 1 / -1; grid-row: 2; font-size: .9rem; }
+    .plugins td:nth-child(3) { grid-column: 2; grid-row: 1; }
+    .plugins td:first-child { white-space: normal; }
+  }
+
+  .editions { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 14px; margin-top: 1.4rem; }
+  .edition { position: relative; display: flex; flex-direction: column; padding: 1.4rem 1.4rem 1.5rem; background: var(--raised); border: 1px solid var(--line); border-radius: 18px; }
+  .edition.best { border-color: rgba(245,170,31,.55); box-shadow: 0 20px 60px -30px rgba(245,170,31,.6); }
+  .edition .badge { position: absolute; top: -.7rem; right: 1.2rem; background: var(--amber); color: #1A1204; font: 700 .7rem var(--sans); letter-spacing: .14em; text-transform: uppercase; padding: .25rem .6rem; border-radius: 99px; }
+  .edition h3 { margin: 0; font-size: 1.35rem; letter-spacing: -.01em; }
+  .edition .price { margin: .5rem 0 .2rem; font: 700 1.6rem var(--sans); letter-spacing: -.02em; }
+  .edition .price small { display: block; font-size: .8rem; font-weight: 500; color: var(--muted); letter-spacing: 0; }
+  .edition ul { list-style: none; padding: 0; margin: 1rem 0 1.4rem; flex: 1; }
+  .edition li { position: relative; padding: .35rem 0 .35rem 1.5rem; color: #D3D9E0; font-size: .95rem; }
+  .edition li::before { content: "✓"; position: absolute; left: 0; color: var(--mint); font-weight: 700; }
+  .edition li.no::before { content: "–"; color: var(--muted); }
+  .edition li.no { color: var(--muted); }
+
+  .buy { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: clamp(1.5rem, 4vw, 3rem); margin-top: 1.4rem; align-items: start; }
+  @media (max-width: 860px) { .buy { grid-template-columns: 1fr; } }
+  form.order { background: var(--raised); border: 1px solid var(--line); border-radius: 18px; padding: clamp(1.1rem, 3vw, 1.8rem); }
+  fieldset { border: 0; margin: 0 0 1.2rem; padding: 0; }
+  legend, label.f { display: block; font-weight: 700; margin-bottom: .45rem; }
+  .choice { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .choice label { display: block; cursor: pointer; padding: .8rem 1rem; border: 1px solid var(--line-2); border-radius: 12px; background: var(--raised-2); }
+  .choice label small { display: block; color: var(--muted); font-size: .82rem; }
+  .choice input { position: absolute; opacity: 0; pointer-events: none; }
+  .choice input:checked + label { border-color: var(--mint); box-shadow: inset 0 0 0 1px var(--mint); }
+  .choice input:focus-visible + label { outline: 2px solid var(--mint); outline-offset: 2px; }
+  input[type=text] { width: 100%; padding: .75rem .9rem; border-radius: 10px; border: 1px solid var(--line-2); background: #0A0E14; color: var(--white); font: 500 1rem var(--sans); }
+  input[type=text].mono { font-family: var(--mono); font-size: .95rem; letter-spacing: .02em; }
+  input[type=text]:focus { outline: 2px solid var(--mint); outline-offset: 1px; border-color: transparent; }
+  input[type=text][aria-invalid=true] { border-color: #E5484D; }
+  @media (max-width: 480px) { input[type=text].mono { font-size: 3.2vw; letter-spacing: 0; padding-left: .6rem; padding-right: .6rem; } }
+  .hint { color: var(--muted); font-size: .85rem; margin: .4rem 0 0; }
+  .err { color: #FF8A8D; font-size: .85rem; margin: .4rem 0 0; min-height: 0; }
+  .err:empty { display: none; }
+  .got { color: var(--wa); font-size: .85rem; margin: .4rem 0 0; }
+  .got:empty { display: none; }
+  .copied { color: var(--wa); font-size: .85rem; margin-left: .3rem; }
+
+  .steps { counter-reset: s; list-style: none; padding: 0; margin: .4rem 0 0; }
+  .steps li { counter-increment: s; position: relative; padding: .2rem 0 .9rem 2.6rem; color: #D3D9E0; }
+  .steps li::before { content: counter(s); position: absolute; left: 0; top: .1rem; width: 1.8rem; height: 1.8rem; border-radius: 50%; display: grid; place-items: center;
+                      background: var(--raised-2); border: 1px solid var(--line-2); font: 700 .85rem var(--mono); color: var(--mint); }
+  .ui { display: inline-block; padding: .02rem .45rem; border-radius: 6px; background: var(--raised-2); border: 1px solid var(--line-2); font-size: .92em; font-weight: 600; color: var(--white); white-space: nowrap; }
+  code { font-family: var(--mono); font-size: .88em; color: var(--white); background: var(--raised-2); padding: .05rem .35rem; border-radius: 5px; overflow-wrap: anywhere; }
+
+  details { border-bottom: 1px solid var(--line); padding: .9rem 0; }
+  details summary { cursor: pointer; font-weight: 700; list-style: none; display: flex; justify-content: space-between; gap: 1rem; }
+  details summary::-webkit-details-marker { display: none; }
+  details summary::after { content: "+"; color: var(--mint); font-weight: 700; }
+  details[open] summary::after { content: "–"; }
+  details p { margin: .6rem 0 0; }
+
+  footer { border-top: 1px solid var(--line); }
+  footer .in { width: min(1180px, 100%); margin: 0 auto; padding: 1.4rem 16px 2rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .6rem; color: var(--muted); font-size: .88rem; }
+  footer a { color: var(--muted); text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<div class="top"><div class="in">
+  <img src="../images/tlfx_icon.webp" alt="" width="40" height="40">
+  <div><b>TrilitLabs FX</b><small>Resolume plugins</small></div>
+  <a class="back" href="../trilitlabs.html#resolume">&larr; <span>TrilitLabs</span></a>
+</div></div>
+
+<main>
+<header class="hero">
+  <div class="kicker">FFGL plugins for Resolume Arena</div>
+  <h1>TrilitLabs FX</h1>
+  <p class="lede">Nineteen GPU plugins that live inside Resolume and move with the music: twelve effects, six generators and a transition. Three are free. The rest you can try in full before you buy.</p>
+  <div class="bar"></div>
+  <div class="cta">
+    <a class="btn btn-hot" href="TrilitLabsFX-Setup.exe" download>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16"/></svg>
+      <span>Download for Windows</span>
+    </a>
+    <a class="btn btn-wa" href="#buy">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 2.9 2.9 0 0 0-.9 2.2 5 5 0 0 0 1.1 2.7 11.4 11.4 0 0 0 4.4 3.9c1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.7-.3z"/></svg>
+      <span>Buy on WhatsApp</span>
+    </a>
+  </div>
+  <p class="note">
+    Version 0.5.1 &middot; 3.4&nbsp;MB &middot; Resolume Arena 7 on Windows 10 and 11, 64-bit &middot; installs without administrator rights.
+    <b>First run:</b> Windows may say &ldquo;Windows protected your PC&rdquo; because the installer is not code-signed. Click <b>More info</b>, then <b>Run anyway</b>.
+    Close Resolume while installing; it finds new plugins when it starts.
+  </p>
+</header>
+
+<section id="look">
+  <h2><span class="n">01</span>What they look like</h2>
+  <p>Every frame here comes straight out of the plugins at their default settings, rendered by the same test program we check every release with.</p>
+  <h3>Generators: no clip needed</h3>
+  <div class="gallery g3">
+    <figure><img src="../images/tlfx_neon_tunnel.webp" alt="TL Neon Tunnel: cyan and magenta rings and spokes receding into a black tunnel" width="960" height="540" loading="lazy" decoding="async"><figcaption><b>TL Neon Tunnel</b> &middot; circle to octagon</figcaption></figure>
+    <figure><img src="../images/tlfx_neon_grid.webp" alt="TL Neon Grid: a magenta perspective grid floor under a glowing horizon" width="960" height="540" loading="lazy" decoding="async"><figcaption><b>TL Neon Grid</b> &middot; retro floor with waves</figcaption></figure>
+    <figure><img src="../images/tlfx_geometric.webp" alt="TL Geometric: rows of yellow and blue circles that grow and shrink in a wave" width="960" height="540" loading="lazy" decoding="async"><figcaption><b>TL Geometric</b> &middot; grids of shapes that pulse</figcaption></figure>
+    <figure><img src="../images/tlfx_digital_rain.webp" alt="TL Digital Rain: thin columns of green glyphs falling down a black screen" width="960" height="540" loading="lazy" decoding="async"><figcaption><b>TL Digital Rain</b> &middot; falling glyphs</figcaption></figure>
+    <figure><img src="../images/tlfx_particles.webp" alt="TL Particles: a field of small glowing particles on black" width="960" height="540" loading="lazy" decoding="async"><figcaption><b>TL Particles</b> &middot; drift, float, swirl, warp</figcaption></figure>
+    <figure><img src="../images/tlfx_plasma.webp" alt="TL Plasma: flowing bands of magenta, green, cyan and orange" width="960" height="540" loading="lazy" decoding="async"><figcaption><b>TL Plasma</b> &middot; five palettes</figcaption></figure>
+  </div>
+  <h3>Effects: one frame, seven ways</h3>
+  <div class="gallery">
+    <figure><img src="../images/tlfx_input.webp" alt="The input: the TrilitLabs logo projected onto a villa at night" width="960" height="540" loading="lazy" decoding="async"><figcaption><b>The input</b> &middot; our logo mapped on a villa</figcaption></figure>
+    <figure><img src="../images/tlfx_kaleidoscope.webp" alt="TL Kaleidoscope: the logo folded into a six-way snowflake" width="960" height="540" loading="lazy" decoding="async"><figcaption><b>TL Kaleidoscope</b></figcaption></figure>
+    <figure><img src="../images/tlfx_spiral_vortex.webp" alt="TL Spiral Vortex: the logo twisted into a yellow and blue spiral" width="960" height="540" loading="lazy" decoding="async"><figcaption><b>TL Spiral Vortex</b></figcaption></figure>
+    <figure><img src="../images/tlfx_rgb_glitch.webp" alt="TL RGB Glitch: the logo with displaced bands and coloured blocks" width="960" height="540" loading="lazy" decoding="async"><figcaption><b>TL RGB Glitch</b></figcaption></figure>
+    <figure><img src="../images/tlfx_displacement.webp" alt="TL Displacement: blocks of the logo shifted out of place" width="960" height="540" loading="lazy" decoding="async"><figcaption><b>TL Displacement</b></figcaption></figure>
+    <figure><img src="../images/tlfx_wave.webp" alt="TL Wave: the logo bent into horizontal sine waves" width="960" height="540" loading="lazy" decoding="async"><figcaption><b>TL Wave</b> &middot; free</figcaption></figure>
+    <figure><img src="../images/tlfx_mirror.webp" alt="TL Mirror: the left half of the frame mirrored onto the right" width="960" height="540" loading="lazy" decoding="async"><figcaption><b>TL Mirror</b> &middot; free</figcaption></figure>
+    <figure><img src="../images/tlfx_radial_zoom.webp" alt="TL Radial Zoom: the logo smeared outward from the centre in a zoom blur" width="960" height="540" loading="lazy" decoding="async"><figcaption><b>TL Radial Zoom</b></figcaption></figure>
+  </div>
+</section>
+
+<section id="plugins">
+  <h2><span class="n">02</span>All nineteen plugins</h2>
+  <p>In Resolume, type <b>TL</b> in the browser's search box. Every effect has a <span class="ui">Blend</span> control, and every plugin has <span class="ui">Modulation</span> and <span class="ui">Audio</span> controls: bass, mids, treble, the kick, Resolume's BPM or an LFO can drive any setting.</p>
+  <table class="plugins">
+    <thead><tr><th>Plugin</th><th>What it does</th><th>Edition</th></tr></thead>
+    <tbody>
+      <tr class="group"><td colspan="3">Effects &middot; distortion</td></tr>
+      <tr><td>TL RGB Glitch</td><td>RGB split, displaced bands and corrupted blocks; freeze a glitch you like.</td><td><span class="ed pro">PRO</span></td></tr>
+      <tr><td>TL Chromatic</td><td>Lens chromatic aberration: smooth spectral fringes, radial or directional.</td><td><span class="ed pro">PRO</span></td></tr>
+      <tr><td>TL Liquid Warp</td><td>Fluid, noise-driven distortion with turbulence and flow.</td><td><span class="ed pro">PRO</span></td></tr>
+      <tr><td>TL VHS</td><td>Videotape: tracking errors, scanlines, colour bleed, tape noise and jitter.</td><td><span class="ed pro">PRO</span></td></tr>
+      <tr><td>TL Pixel Sort</td><td>Real pixel sorting by brightness on the GPU, along rows or columns.</td><td><span class="ed pro">PRO</span></td></tr>
+      <tr><td>TL Displacement</td><td>Random block displacement.</td><td><span class="ed pro">PRO</span></td></tr>
+      <tr><td>TL Wave</td><td>Sine-wave ripples: horizontal, vertical, both or radial.</td><td><span class="ed free">FREE</span></td></tr>
+      <tr><td>TL Film Grain</td><td>Photographic grain, strongest in the midtones like real film.</td><td><span class="ed free">FREE</span></td></tr>
+      <tr class="group"><td colspan="3">Effects &middot; geometry</td></tr>
+      <tr><td>TL Kaleidoscope</td><td>2 to 24 segments, mirrored or rotational, with spin and zoom.</td><td><span class="ed pro">PRO</span></td></tr>
+      <tr><td>TL Mirror</td><td>Left, right, top, bottom or four-way, with a movable axis.</td><td><span class="ed free">FREE</span></td></tr>
+      <tr><td>TL Spiral Vortex</td><td>Twists the picture around a centre, either way.</td><td><span class="ed pro">PRO</span></td></tr>
+      <tr><td>TL Radial Zoom</td><td>Zoom blur from a focal point, steady or pulsing.</td><td><span class="ed pro">PRO</span></td></tr>
+      <tr class="group"><td colspan="3">Generators</td></tr>
+      <tr><td>TL Plasma</td><td>Animated plasma in five palettes: Neon, Fire, Ocean, Acid, Mono.</td><td><span class="ed ult">ULTIMATE</span></td></tr>
+      <tr><td>TL Digital Rain</td><td>Falling columns of glyphs with fading trails.</td><td><span class="ed ult">ULTIMATE</span></td></tr>
+      <tr><td>TL Particles</td><td>A GPU particle field: drift, float, swirl or fly through.</td><td><span class="ed ult">ULTIMATE</span></td></tr>
+      <tr><td>TL Neon Tunnel</td><td>A tunnel of neon rings and lines, circle to octagon.</td><td><span class="ed ult">ULTIMATE</span></td></tr>
+      <tr><td>TL Geometric</td><td>Grids of circles, squares, triangles, hexagons or lines that pulse and wave.</td><td><span class="ed ult">ULTIMATE</span></td></tr>
+      <tr><td>TL Neon Grid</td><td>A retro perspective grid with waves, fog and a glowing horizon.</td><td><span class="ed ult">ULTIMATE</span></td></tr>
+      <tr class="group"><td colspan="3">Transition</td></tr>
+      <tr><td>TL Circle Reveal</td><td>A circular wipe from one clip to the next, opening or closing.</td><td><span class="ed ult">ULTIMATE</span></td></tr>
+    </tbody>
+  </table>
+  <p class="note">The generators can draw on a transparent background, to layer them over your clips. Most plugins take under 1&nbsp;ms a frame at 4K on a laptop GTX&nbsp;1650.</p>
+</section>
+
+<section id="editions">
+  <h2><span class="n">03</span>Editions</h2>
+  <p>One installer for all three. Without a licence, every plugin still works &mdash; the paid ones show a small &ldquo;TRILITLABS FX DEMO&rdquo; watermark &mdash; so you can try everything at your own shows first.</p>
+  <div class="editions">
+    <div class="edition">
+      <h3>FREE</h3>
+      <div class="price">&#8377;0<small>no licence needed</small></div>
+      <ul>
+        <li>TL Mirror, TL Wave, TL Film Grain, no watermark</li>
+        <li>Every other plugin to try, with the watermark</li>
+        <li class="no">Audio modulation</li>
+      </ul>
+      <a class="btn" href="TrilitLabsFX-Setup.exe" download>Download</a>
+    </div>
+    <div class="edition">
+      <h3>PRO</h3>
+      <div class="price" data-price="PRO">Price on WhatsApp<small>one-time, for one computer</small></div>
+      <ul>
+        <li>All 12 effects, no watermark</li>
+        <li>Audio modulation: bass, mids, treble, kick, BPM, LFO</li>
+        <li class="no">Generators and the transition</li>
+      </ul>
+      <a class="btn btn-wa" href="#buy" data-edition="PRO">Buy PRO on WhatsApp</a>
+    </div>
+    <div class="edition best">
+      <span class="badge">Everything</span>
+      <h3>ULTIMATE</h3>
+      <div class="price" data-price="ULTIMATE">Price on WhatsApp<small>one-time, for one computer</small></div>
+      <ul>
+        <li>All 19 plugins, no watermark</li>
+        <li>Audio modulation on every plugin</li>
+        <li>The six generators and TL Circle Reveal</li>
+      </ul>
+      <a class="btn btn-wa" href="#buy" data-edition="ULTIMATE">Buy ULTIMATE on WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<section id="buy">
+  <h2><span class="n">04</span>Buy on WhatsApp</h2>
+  <p>Do this on the computer that runs Resolume: your licence is made for that computer.</p>
+  <div class="buy">
+    <form class="order" id="order" novalidate>
+      <fieldset>
+        <legend>Edition</legend>
+        <div class="choice">
+          <input type="radio" name="edition" id="ed-pro" value="PRO"><label for="ed-pro">PRO<small>all 12 effects</small></label>
+          <input type="radio" name="edition" id="ed-ult" value="ULTIMATE" checked><label for="ed-ult">ULTIMATE<small>all 19 plugins</small></label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <label class="f" for="machine">Machine ID</label>
+        <input type="text" class="mono" id="machine" name="machine" autocomplete="off" spellcheck="false" placeholder="XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX" aria-describedby="machine-hint machine-err">
+        <p class="got" id="machine-got"></p>
+        <p class="hint" id="machine-hint">Install TrilitLabs FX, open <b>License Manager</b> from the Start menu and click <span class="ui">Buy a Licence&hellip;</span>: this page opens with the ID filled in. Or click <span class="ui">Copy</span> there and paste it here.</p>
+        <p class="err" id="machine-err" role="alert"></p>
+      </fieldset>
+      <fieldset>
+        <label class="f" for="name">Name on the licence</label>
+        <input type="text" id="name" name="name" autocomplete="name" maxlength="60" placeholder="Your name or your studio's" aria-describedby="name-hint name-err">
+        <p class="hint" id="name-hint">In English letters. It is shown in the License Manager.</p>
+        <p class="err" id="name-err" role="alert"></p>
+      </fieldset>
+      <div class="cta" style="margin-top:.4rem">
+        <button class="btn btn-wa" type="submit">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+          <span>Send order on WhatsApp</span>
+        </button>
+        <button class="btn" type="button" id="copy">Copy the order</button><span class="copied" id="copied" aria-live="polite"></span>
+      </div>
+      <p class="note">Nothing is sent from this page. The button opens WhatsApp with your order written out; you send it. WhatsApp: <a href="https://wa.me/917356131568" target="_blank" rel="noopener">+91 73561 31568</a>.</p>
+    </form>
+    <div>
+      <h3 style="margin-top:0">What happens next</h3>
+      <ol class="steps">
+        <li>We reply on WhatsApp with the price and our Google Pay / UPI QR code.</li>
+        <li>You pay, and send the payment screenshot or the UPI reference number.</li>
+        <li>We send your licence in the chat.</li>
+        <li>Copy the whole licence message, then click <span class="ui">Paste Licence</span> in the License Manager.</li>
+        <li>Restart Resolume. The watermark is gone.</li>
+      </ol>
+      <p class="note">The licence is checked on your computer only: no account, and no internet needed, on stage or anywhere else.</p>
+    </div>
+  </div>
+</section>
+
+<section id="activate">
+  <h2><span class="n">05</span>Activate your licence</h2>
+  <ol class="steps">
+    <li>Open <b>License Manager</b>: Start menu &rarr; TrilitLabs FX &rarr; License Manager.</li>
+    <li>In WhatsApp, copy the whole licence message we sent. It runs from <code>-----BEGIN TRILITLABS LICENSE-----</code> to <code>-----END TRILITLABS LICENSE-----</code>; extra text around it does no harm.</li>
+    <li>Click <span class="ui">Paste Licence</span>. If we sent a <code>.tllicense</code> file instead, click <span class="ui">Install File&hellip;</span>.</li>
+    <li>Restart Resolume. The License Manager now shows your edition and your name.</li>
+  </ol>
+</section>
+
+<section id="faq">
+  <h2><span class="n">06</span>Questions</h2>
+  <details><summary>Which Resolume and which computers?</summary>
+    <p>Resolume Arena 7 on Windows 10 or 11, 64-bit. The plugins are FFGL plugins and run on the graphics card. There is no Mac version yet.</p></details>
+  <details><summary>Do I need the internet at a show?</summary>
+    <p>No. The licence is checked on your computer, offline, every time. Buying and receiving the licence happen on WhatsApp.</p></details>
+  <details><summary>I changed computers, or replaced the motherboard.</summary>
+    <p>The licence belongs to one computer. Send us your new Machine ID and your licence ID (both shown in the License Manager) on WhatsApp, and we reissue your licence.</p></details>
+  <details><summary>I pasted the licence but still see the watermark.</summary>
+    <p>Restart Resolume: it reads licences when it starts. If the License Manager says the licence is for another machine, it was made for a different Machine ID; send us the ID it shows.</p></details>
+  <details><summary>The audio controls do nothing.</summary>
+    <p>Turn <span class="ui">Modulation</span> up from 0: it is off by default, so plugins look the same until you use it. LFO and Tempo work without audio; Bass, Mid, Treble, Level and Beat need audio playing in Resolume.</p></details>
+  <details><summary>Where do the plugins install?</summary>
+    <p>Into <code>Documents\Resolume Arena\Extra Effects\TrilitLabs FX</code>, where Resolume finds them by itself. Updating or uninstalling keeps your licence.</p></details>
+</section>
+</main>
+
+<footer><div class="in">
+  <span>TrilitLabs FX &mdash; by <a href="../trilitlabs.html">TrilitLabs</a>, a <a href="../index.html">pscretn</a> brand &middot; Angamaly, Kerala</span>
+  <span>Resolume is a trademark of its owners; TrilitLabs FX is not made by Resolume.</span>
+</div></footer>
+
+<script>
+(function () {
+  /* Sales run on WhatsApp. Prices: put a number (rupees) to show it, or leave null for "Price on WhatsApp". */
+  var WHATSAPP = '917356131568';
+  var PRICES = { PRO: null, ULTIMATE: null };
+
+  Object.keys(PRICES).forEach(function (ed) {
+    var el = document.querySelector('[data-price="' + ed + '"]');
+    if (el && typeof PRICES[ed] === 'number') {
+      el.firstChild.nodeValue = '₹' + PRICES[ed].toLocaleString('en-IN');
+    }
+  });
+
+  var form = document.getElementById('order');
+  var machine = document.getElementById('machine');
+  var nameIn = document.getElementById('name');
+  var machineErr = document.getElementById('machine-err');
+  var nameErr = document.getElementById('name-err');
+  var got = document.getElementById('machine-got');
+
+  /* the same rules the licence tools apply */
+  function normalizeMachine(v) {
+    var hex = (v || '').replace(/[^0-9a-fA-F]/g, '').toUpperCase();
+    if (hex.length !== 32) return null;
+    return hex.match(/.{4}/g).join('-');
+  }
+  var NAME_OK = /^[A-Za-z0-9 .,'&()\-]{2,60}$/;
+
+  /* The License Manager opens this page as ...#m=<Machine ID>. A fragment never reaches
+     the web server; it is read here and the address is tidied to #buy. */
+  var hash = location.hash || '';
+  if (hash.indexOf('#m=') === 0) {
+    var fromApp = normalizeMachine(decodeURIComponent(hash.slice(3)));
+    if (fromApp) {
+      machine.value = fromApp;
+      got.textContent = 'Filled in by your License Manager.';
+    }
+    try { history.replaceState(null, '', location.pathname + location.search + '#buy'); } catch (e) {}
+    /* jump straight to the order form (the page's smooth scrolling would crawl there) */
+    var target = document.getElementById('buy');
+    var root = document.documentElement;
+    if (target) setTimeout(function () {
+      root.style.scrollBehavior = 'auto';
+      target.scrollIntoView();
+      root.style.scrollBehavior = '';
+    }, 0);
+  }
+
+  document.querySelectorAll('[data-edition]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var r = document.querySelector('input[name="edition"][value="' + a.getAttribute('data-edition') + '"]');
+      if (r) r.checked = true;
+    });
+  });
+
+  function edition() {
+    var r = document.querySelector('input[name="edition"]:checked');
+    return r ? r.value : 'ULTIMATE';
+  }
+
+  function validate() {
+    var ok = true;
+    var m = normalizeMachine(machine.value);
+    if (!m) {
+      machineErr.textContent = machine.value.trim() ? 'A Machine ID has 32 letters and digits (0-9, A-F), like the one in the License Manager.' : 'Paste the Machine ID from the License Manager.';
+      machine.setAttribute('aria-invalid', 'true');
+      ok = false;
+    } else {
+      machine.value = m;
+      machineErr.textContent = '';
+      machine.removeAttribute('aria-invalid');
+    }
+    var n = nameIn.value.replace(/\s+/g, ' ').trim();
+    if (!NAME_OK.test(n)) {
+      nameErr.textContent = n ? 'Please use English letters, digits and . , \' & ( ) - only.' : 'Please give the name for the licence.';
+      nameIn.setAttribute('aria-invalid', 'true');
+      ok = false;
+    } else {
+      nameIn.value = n;
+      nameErr.textContent = '';
+      nameIn.removeAttribute('aria-invalid');
+    }
+    if (!ok) (machineErr.textContent ? machine : nameIn).focus();
+    return ok;
+  }
+
+  /* the layout TrilitLabs' sales script reads: Edition / Machine ID / Name on licence */
+  function orderText() {
+    return "Hi TrilitLabs, I'd like to buy TrilitLabs FX.\n" +
+      'Edition: ' + edition() + '\n' +
+      'Machine ID: ' + machine.value + '\n' +
+      'Name on licence: ' + nameIn.value;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!validate()) return;
+    window.open('https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(orderText()), '_blank', 'noopener');
+  });
+
+  var copied = document.getElementById('copied');
+  document.getElementById('copy').addEventListener('click', function () {
+    if (!validate()) return;
+    var text = orderText();
+    function done() { copied.textContent = 'Copied. Paste it into WhatsApp.'; setTimeout(function () { copied.textContent = ''; }, 4000); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { window.prompt('Copy the order:', text); });
+    } else {
+      window.prompt('Copy the order:', text);
+    }
+  });
+})();
+</script>
+</body>
+</html>
