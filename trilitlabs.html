@@ -528,6 +528,7 @@
   <div class="menu">
     <a href="#wirelink">WireLink</a>
     <a href="#apps">Software</a>
+    <a href="#resolume">Plugins</a>
     <a href="#build">Hardware</a>
     <a href="#supply">Supply</a>
     <a href="#proof">Watch</a>
@@ -1586,7 +1587,7 @@
 
   /* light up the menu item for the section in view; LightShow counts as Apps */
   var links = Array.prototype.slice.call(document.querySelectorAll('.menu a[href^="#"]'));
-  var owner = { wirelink: 'wirelink', app: 'app', software: 'app', generator: 'generator', build: 'build', supply: 'supply', proof: 'proof' };
+  var owner = { wirelink: 'wirelink', app: 'app', software: 'app', generator: 'generator', resolume: 'resolume', build: 'build', supply: 'supply', proof: 'proof' };
   var spy = new IntersectionObserver(function (es) {
     es.forEach(function (e) {
       if (!e.isIntersecting) return;
