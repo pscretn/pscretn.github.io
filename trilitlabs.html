@@ -97,12 +97,19 @@
   .burger.on i:nth-child(2) { top: 50%; transform: translateX(-50%) rotate(-45deg); }
 
   .drawer {
-    position: fixed; inset: 0; z-index: 19; display: flex; flex-direction: column; justify-content: center;
-    padding: 5rem var(--gut) 2rem; background: rgba(5,6,8,.95); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-    opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s; overflow-y: auto;
+    position: fixed; inset: 0; z-index: 19; display: flex; flex-direction: column;
+    padding: calc(5rem + env(safe-area-inset-top)) var(--gut) calc(2rem + env(safe-area-inset-bottom));
+    background: rgba(5,6,8,.95); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+    opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s; overflow-y: auto; overscroll-behavior: contain;
   }
   .drawer.open { opacity: 1; visibility: visible; }
-  .drawer a { font-size: clamp(1.8rem, 8vw, 3rem); font-weight: 700; letter-spacing: -.03em; padding: .35rem 0; border-bottom: 1px solid var(--line); }
+  /* auto margins centre the list when it fits and keep every link reachable when it doesn't
+     (justify-content: center pushed the first links above the top, out of scroll reach) */
+  .drawer a:first-child { margin-top: auto; }
+  .drawer a:last-child { margin-bottom: auto; }
+  .drawer a { font-size: clamp(1.3rem, 6vw, 3rem); line-height: 1.25; font-weight: 700; letter-spacing: -.03em; padding: .3rem 0; border-bottom: 1px solid var(--line); }
+  /* while the menu is open the bar is solid, so links scrolled under it stay readable */
+  .nav.menu-open { background: rgba(5,6,8,.97); border-bottom-color: var(--line); }
   .drawer a small { display: inline-block; min-width: 2.6rem; font-family: var(--mono); font-size: .75rem; font-weight: 500; color: var(--amber); vertical-align: middle; }
 
   @media (max-width: 70rem) {
@@ -1471,6 +1478,7 @@
   function setMenu(open) {
     burger.classList.toggle('on', open);
     drawer.classList.toggle('open', open);
+    nav.classList.toggle('menu-open', open);
     burger.setAttribute('aria-expanded', open ? 'true' : 'false');
     document.body.style.overflow = open ? 'hidden' : '';
   }
