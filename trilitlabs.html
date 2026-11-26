@@ -547,6 +547,7 @@
   <a href="#mapper"><small>III.c</small>Trilit Mapper</a>
   <a href="#engine"><small>III.d</small>Trilit Visual Engine</a>
   <a href="#resolume"><small>III.e</small>Resolume Plugins</a>
+  <a href="#showcontrol"><small>III.f</small>Show Control</a>
   <a href="#build"><small>IV</small>Hardware</a>
   <a href="#supply"><small>V</small>Supply</a>
   <a href="#proof"><small>VI</small>Watch</a>
@@ -585,6 +586,7 @@
             <li><a href="#mapper"><small>III.c</small>Trilit Mapper</a></li>
             <li><a href="#engine"><small>III.d</small>Trilit Visual Engine</a></li>
             <li><a href="#resolume"><small>III.e</small>Resolume plugins</a></li>
+            <li><a href="#showcontrol"><small>III.f</small>Show Control</a></li>
             <li><a href="#build"><small>IV</small>Wired &amp; wireless controllers</a></li>
             <li><a href="#supply"><small>V</small>Fixtures &amp; lamps</a></li>
             <li><a href="#proof"><small>VI</small>In action</a></li>
@@ -689,6 +691,13 @@
         <span class="plat">Resolume Arena &middot; Windows</span>
         <b>TrilitLabs FX</b>
         <p>Twenty-five audio-reactive plugins for Resolume: twelve effects, six generators and seven transitions, all running on the graphics card.</p>
+        <span class="go">See it &rarr;</span>
+      </a>
+      <a class="app" href="#showcontrol" style="--c:var(--blue)">
+        <span class="app-top"><img src="images/tlsc_logo.webp" alt="" width="56" height="56"><span class="new">Soon</span></span>
+        <span class="plat">Windows &middot; In development</span>
+        <b>TrilitLabs Show Control</b>
+        <p>One button blacks out the visuals and the lights together, and one brings them back: Resolume and your lighting console, coordinated and confirmed.</p>
         <span class="go">See it &rarr;</span>
       </a>
       <a class="app" href="#engine" style="--c:var(--amber)">
@@ -1328,6 +1337,77 @@
   </div>
 </section>
 
+<!-- III.f · TrilitLabs Show Control (in development) -->
+<section class="pillar" id="showcontrol" style="--c:var(--blue)">
+  <div class="wrap">
+    <div class="p-head rv">
+      <span class="num">III.f</span>
+      <h2>Show Control</h2>
+      <ul class="tags"><li>Live shows</li><li>Resolume Arena 7</li><li>Lighting consoles</li><li>sACN</li><li>Windows</li><li>In development</li></ul>
+    </div>
+
+    <figure class="cover rv">
+      <img src="images/tlsc_dashboard.webp"
+           alt="The TrilitLabs Show Control dashboard: Resolume and lighting connected, the state RUNNING, scene buttons Intro, Verse, Chorus, Drop and Outro with Drop lit, a live preview of a neon grid from Resolume, and large Emergency blackout, Visuals out, Lights out and Resume buttons"
+           width="1708" height="932" loading="lazy" decoding="async">
+      <figcaption>The operator dashboard, connected to Resolume Arena. The Drop scene is playing TL Neon Grid, one of our TrilitLabs FX generators.</figcaption>
+    </figure>
+
+    <div class="split" style="margin-top:clamp(2rem,5vw,3.5rem)">
+      <div class="body rv">
+        <div class="app-id">
+          <img src="images/tlsc_logo.webp" alt="TrilitLabs Show Control logo" width="64" height="64">
+          <span>In development<b>TrilitLabs Show Control</b></span>
+        </div>
+        <p class="lede">One button blacks out the visuals and the lights together. One brings them back.</p>
+        <h3>Visuals and lights, together.</h3>
+        <p>At a live show the visuals run in Resolume and the lights run on a console, often with two operators. Show Control sits between them. An emergency blackout takes both to black at once, and Resume hands both back exactly as they were. The clips keep playing during a blackout, so the show picks up where it left off.</p>
+        <h3>It checks. It doesn't hope.</h3>
+        <p>Resolume confirms every change: on our test PC, it confirmed a blackout within 18&nbsp;ms of the button press. Every output shows green when it is confirmed, blue when it was sent to a device that can't answer, and red when it wasn't confirmed, so the operator knows what actually happened. If the VJ moves the master during a blackout, Show Control leaves their change alone.</p>
+        <h3>Works with your console.</h3>
+        <p>It can fire the console's own blackout with an OSC message or a MIDI note you map on it: grandMA3 over OSC, Avolites Titan and WaveLink DMX LightShow over MIDI. Or it takes over sACN universes at a higher priority and hands them back cleanly on resume. So far it has been tested with Resolume Arena and with simulated lighting on one PC; real consoles on a show network are next.</p>
+        <h3>Next: it listens.</h3>
+        <p>Show Control will follow the show audio: songs, drops and when the band stops. It can suggest a blackout for you to confirm, or act on its own when it gets a feed from the mixing desk. A room microphone isn't enough, because crowd noise hides the quiet moments.</p>
+        <div class="cta">
+          <a class="btn btn-hot" href="https://wa.me/917356131568?text=Hi%20TrilitLabs%2C%20I%27m%20interested%20in%20Show%20Control." target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.4A9 9 0 1 1 21 12z"/></svg>
+            <span>Ask on WhatsApp</span>
+          </a>
+        </div>
+        <p class="dl-note">
+          In development: not available to download yet. For Windows 10 and 11, 64-bit, with Resolume Arena 7.
+          Everything runs on the show PC; no internet needed.
+        </p>
+      </div>
+      <div class="body rv">
+        <figure class="cover" style="margin:0">
+          <img src="images/tlsc_blackout.webp"
+               alt="The dashboard during an emergency blackout: the state reads EMERGENCY BLACKOUT, Resolume shows confirmed in 17 ms with master 0, the sACN override shows sent with no feedback, and the Resolume preview is black"
+               width="1708" height="932" loading="lazy" decoding="async">
+          <figcaption>Emergency blackout: Resolume confirmed in 17&nbsp;ms, and the sACN takeover was sent in 7&nbsp;ms. Only the operator can resume.</figcaption>
+        </figure>
+        <ul class="feat">
+          <li>Emergency blackout (F12), visuals out (F8), lights out (F9) and resume (F11)</li>
+          <li>An emergency blackout stays until the operator resumes; a double press can't undo it</li>
+          <li>Resolume Arena 7: confirmed master fade or bypass, columns as scene buttons, a live preview of the output</li>
+          <li>Lighting: the console's own blackout by OSC or MIDI, or an sACN priority takeover released cleanly on resume</li>
+          <li>Green, blue or red for every output: confirmed, sent, or not confirmed</li>
+          <li>Automatic blackout set to Off, Suggest or Auto; Auto only with a desk feed</li>
+          <li>Show files saved so a crash can't corrupt them, with the last 20 versions kept</li>
+          <li>An event log of every blackout, resume and scene change, with timings</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stats rv">
+      <div><b>&lt;20&nbsp;ms</b><span>Resolume confirms</span></div>
+      <div><b>4</b><span>operator keys</span></div>
+      <div><b>10,000</b><span>blackout cycles in tests</span></div>
+      <div><b>Local</b><span>no internet needed</span></div>
+    </div>
+  </div>
+</section>
+
 <!-- IV · Hardware -->
 <section class="pillar" id="build" style="--c:var(--amber)">
   <div class="wrap">
@@ -1587,7 +1667,7 @@
 
   /* light up the menu item for the section in view; LightShow counts as Apps */
   var links = Array.prototype.slice.call(document.querySelectorAll('.menu a[href^="#"]'));
-  var owner = { wirelink: 'wirelink', app: 'app', software: 'app', generator: 'generator', resolume: 'resolume', build: 'build', supply: 'supply', proof: 'proof' };
+  var owner = { wirelink: 'wirelink', app: 'app', software: 'app', generator: 'generator', resolume: 'resolume', showcontrol: 'apps', build: 'build', supply: 'supply', proof: 'proof' };
   var spy = new IntersectionObserver(function (es) {
     es.forEach(function (e) {
       if (!e.isIntersecting) return;
